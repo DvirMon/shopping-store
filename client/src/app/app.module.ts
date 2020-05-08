@@ -7,14 +7,12 @@ import { CoreModule } from './share-modules/core.module';
 import { SharedModule } from './share-modules/shared.module'
 
 import { AuthModule } from './auth/auth.module';
+import { HomeModule } from './home/home.module';
 
+import { HomeComponent } from './components/home/home.component';
 import { AppComponent } from './components/app/app.component';
 import { BarComponent } from './components/bar/bar.component';
-import { AboutComponent } from './components/about/about.component';
-import { HomeComponent } from './components/home/home.component';
-import { InfoComponent } from './components/info/info.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AdminModule } from './admin/admin.module'; 
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -23,10 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     BarComponent,
-    AboutComponent,
-    HomeComponent,
-    InfoComponent,
     PageNotFoundComponent,
+    HomeComponent,
  
   ],
   imports: [
@@ -36,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
+    HomeModule,
     AuthModule, 
   ],
   providers: [],

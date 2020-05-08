@@ -1,12 +1,25 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CoreModule } from '../share-modules/core.module';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../share-modules/shared.module';
+import { InfoComponent } from './info/info.component';
+import { AboutComponent } from './about/about.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    InfoComponent,
+    AboutComponent
+  ],
   imports: [
-    CommonModule
+    CoreModule,
+    SharedModule,
+    RouterModule
+  ],
+  exports : [
+    InfoComponent,
+    AboutComponent
   ]
 })
 export class HomeModule { }
