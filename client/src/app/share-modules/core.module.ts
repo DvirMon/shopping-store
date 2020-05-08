@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // import angular modules
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
@@ -16,14 +14,15 @@ import { MaterialModule } from './material.module';
   imports: [
     CommonModule
   ],
-  exports : [
-    NgbModule,
+  providers: [
+
+  ],
+  exports: [
     CommonModule,
+    NgbModule,
     RecaptchaModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     MaterialModule,
 
   ]

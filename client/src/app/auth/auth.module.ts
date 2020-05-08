@@ -13,16 +13,14 @@ import { RegisterComponent } from './register/register.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-   
+
   ],
   imports: [
     CoreModule,
-    // MaterialModule,
-    // CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
   ],
-  exports :[
+  exports: [
     LoginComponent,
     RegisterComponent,
   ]

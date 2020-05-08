@@ -7,8 +7,9 @@ import { RegisterComponent } from './auth/register/register.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: "", redirectTo: "/home", pathMatch: 'full' },
+  { path: "register", component: RegisterComponent },
   // { path: "**", component: PageNotFoundComponent },
 ];
 

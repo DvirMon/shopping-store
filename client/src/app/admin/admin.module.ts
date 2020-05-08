@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CoreModule } from '../share-modules/core.module';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +15,6 @@ import { AdminRoutingModule } from './admin-routing.module';
     AdminComponent,
     BarAdminComponent],
   imports: [
-    CommonModule,
     CoreModule,
     RouterModule,
     SharedModule,
