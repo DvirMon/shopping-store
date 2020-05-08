@@ -14,6 +14,7 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { InfoComponent } from './components/info/info.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AdminModule } from './admin/admin.module';
 
 
 

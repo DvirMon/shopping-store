@@ -20,6 +20,5 @@ import { ProductsComponent } from './products/products.component';
     CustomComponentsModule
   ],
   exports : [
-    
   ]})
 export class ProductsModule { }

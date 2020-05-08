@@ -8,8 +8,8 @@ import { RegisterComponent } from './auth/register/register.component';
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "register", component: RegisterComponent },
-  { path: "**", component: PageNotFoundComponent },
   { path: "", redirectTo: "/home", pathMatch: 'full' },
+  // { path: "**", component: PageNotFoundComponent },
 ];
 
 @NgModule({

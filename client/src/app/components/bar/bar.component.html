@@ -24,6 +24,10 @@
         <li>
           <span>My Shopping Store!</span>
         </li>
+        <li routerLinkActive="active">
+          <button mat-button routerLink="/home">Home
+          </button>
+        </li>
         <li *ngIf="isLogin" routerLinkActive="active">
           <button mat-button routerLink="/recipes">Our Products
           </button>
@@ -33,7 +37,7 @@
         </li>
       </ul>
       <span class="spacer"></span>
-      <button (click)="handleLogOut()" routerLinkActive="active" mat-button>{{isLogin ? 'Logout' : 'Register'}}</button>
+      <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-button>Logout</button>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button> 

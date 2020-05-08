@@ -7,20 +7,24 @@ import { MaterialModule } from '../share-modules/material.module';
 import { CustomComponentsModule } from '../custom-components/custom-components.module';
 
 import { AdminComponent } from './admin/admin.component';
+import { BarAdminComponent } from './bar-admin/bar-admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
 
 
 
 @NgModule({
-  declarations: [AdminComponent],
+  declarations: [
+    AdminComponent,
+    BarAdminComponent],
   imports: [
     CommonModule,
     CoreModule,
     RouterModule,
     MaterialModule,
-    CustomComponentsModule
+    CustomComponentsModule,
+    AdminRoutingModule
   ],
-  exports : [
-    
+  exports: [
   ]
 })
 export class AdminModule { }

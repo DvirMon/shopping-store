@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule } from 'ng-recaptcha'
+import { MaterialModule } from './material.module';
   
 
 
@@ -19,11 +20,13 @@ import { RecaptchaModule } from 'ng-recaptcha'
   ],
   exports : [
     NgbModule,
+    CommonModule,
     RecaptchaModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MaterialModule,
   ]
 })
 export class CoreModule { }

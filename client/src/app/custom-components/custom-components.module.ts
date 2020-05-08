@@ -6,7 +6,7 @@ import { MaterialModule } from '../share-modules/material.module';
 import { MyInputComponent } from './my-input/my-input.component';
 import { UploadInputComponent } from './upload-input/upload-input.component';
 import { DialogComponent } from './dialog/dialog.component';
-
+ 
 
 @NgModule({
   declarations: [
