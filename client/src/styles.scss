@@ -1,0 +1,44 @@
+
+@import "variables";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html,
+body,
+.app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::ng-deep .mat-button-base, .mat-button :focus , button{
+  outline: transparent;
+}
+
+.info {
+  color: white;
+  background-color: #5bc0de;
+  outline: transparent;
+}
+
+.success {
+  color: white;
+  background-color: #5cb85c;
+  outline: transparent;
+}
+
+
+.active {
+  background-color: rgba(240, 236, 236, 0.1);
+}
+
+.dialog-spinner .mat-dialog-container {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.dialog-error .mat-dialog-container {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  box-shadow: none;
+}
