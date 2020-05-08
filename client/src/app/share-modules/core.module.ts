@@ -10,8 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule } from 'ng-recaptcha'
 import { MaterialModule } from './material.module';
-  
-
 
 @NgModule({
   declarations: [],
@@ -27,6 +25,7 @@ import { MaterialModule } from './material.module';
     FormsModule,
     HttpClientModule,
     MaterialModule,
+
   ]
 })
 export class CoreModule { }

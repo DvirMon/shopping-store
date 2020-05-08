@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CoreModule } from '../share-modules/core.module';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../share-modules/material.module';
-import { CustomComponentsModule } from '../custom-components/custom-components.module';
+import { SharedModule } from '../share-modules/shared.module';
+
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -17,11 +16,11 @@ import { RegisterComponent } from './register/register.component';
    
   ],
   imports: [
-    CommonModule,
     CoreModule,
+    // MaterialModule,
+    // CommonModule,
     RouterModule,
-    MaterialModule,
-    CustomComponentsModule
+    SharedModule
   ],
   exports :[
     LoginComponent,

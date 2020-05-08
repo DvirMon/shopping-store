@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { CoreModule } from '../share-modules/core.module';
-import { MaterialModule } from '../share-modules/material.module';
+import { SharedModule } from '../share-modules/shared.module';
 
-import { CustomComponentsModule } from '../custom-components/custom-components.module';
 import { ProductsComponent } from './products/products.component';
 
 
@@ -16,8 +15,7 @@ import { ProductsComponent } from './products/products.component';
     CommonModule,
     CoreModule,
     RouterModule,
-    MaterialModule,
-    CustomComponentsModule
+    SharedModule
   ],
   exports : [
   ]})
