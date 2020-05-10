@@ -6,9 +6,10 @@ global.config = require('./config.json');
 const server = express()
 
 // import controllers
-const cartsController = require('./controllers/cart-controller')
-const ordersController = require('./controllers/order-controller')
-const productsController = require('./controllers/product-controller')
+const cityController = require('./cities/city-controller')
+const cartController = require('./carts/cart-controller')
+const orderController = require('./orders/order-controller')
+const productController = require('./products/product-controller')
 
 // import middleware 
 const handleErrors = require('./middleware/handleErrors')
@@ -17,9 +18,10 @@ const handleErrors = require('./middleware/handleErrors')
 server.use(cors())
 server.use(express.json())
 
-server.use("/api/carts", cartsController)
-server.use("/api/orders", ordersController)
-server.use("/api/products", productsController)
+server.use("/api/cities", cityController)
+server.use("/api/carts", cartController)
+server.use("/api/orders", orderController)
+server.use("/api/products", productController)
 
 server.use(handleErrors)
 

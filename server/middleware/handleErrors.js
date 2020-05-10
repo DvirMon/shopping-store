@@ -22,7 +22,7 @@ const handleError = (err, request, response, next) => {
 
   if (config.production) {
     return response
-      .status(500)
+      .status(500) 
       .send("an error has occurred, please ty again later");
   } else {
     return response.status(500).json(err.message);

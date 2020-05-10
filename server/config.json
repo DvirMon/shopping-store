@@ -3,7 +3,11 @@
   "portAuth": 4000,
   "production": false,
   "mongodb": {
-    "useNewUrlParser": true,
-    "useUnifiedTopology": true
+    "url": "mongodb://localhost:27017/Shopping-Store",
+    "options": {
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true,
+      "useCreateIndex": true
+    }
   }
-} 
+}
