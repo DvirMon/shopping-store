@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../share-modules/shared.module';
 
-import { AdminComponent } from './admin/admin.component';
-import { BarAdminComponent } from './bar-admin/bar-admin.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { BarAdminComponent } from './components/bar-admin/bar-admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 
 
