@@ -14,6 +14,10 @@ body,
   outline: transparent;
 }
 
+::ng-deep .mat-form-field{
+  display: block;
+}
+
 .info {
   color: white;
   background-color: #5bc0de;

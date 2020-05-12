@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const cityLogic = require("./city-logic");
+const cityLogic = require("../business-layer-logic/city-logic");
 
 router.get("/", async (request, response, next) => {
   try {

@@ -6,7 +6,7 @@ global.config = require('./config.json');
 const server = express()
 
 // import controllers
-const authController = require('./auth/auth.controller')
+const authController = require('./controllers/auth.controller')
 
 // import middleware 
 const handleErrors = require('./middleware/handleErrors')
