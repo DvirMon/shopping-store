@@ -1,4 +1,22 @@
-<form>
-<app-input></app-input>
-<button  routerLink="/register" mat-button>Register</button>
-</form>
+<mat-grid-list cols="1" rowHeight="20%">
+  <mat-grid-tile>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-grid-list cols="1" rowHeight="20%">
+  <form [formGroup]="loginForm" #formInfo="ngForm">
+  <mat-grid-tile>
+    <app-input  [control]="email" placeHolder="email" type="text">
+    </app-input>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-input  [control]="password" placeHolder="password" type="password">
+    </app-input>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-button type="button" (click)="onLogin()">Login</button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-button type="button" (click)="onLogin()">Sign-In</button>
+  </mat-grid-tile>
+  </form>
+</mat-grid-list>

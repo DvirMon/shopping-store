@@ -36,11 +36,12 @@ router.post(
       }
 
       user.password = undefined;
+      user.personalId = undefined;
 
-      // get token
+      // set token
       const token = await jwt.setLoginToken(user);
 
-      response.json({ user, token });
+      response.json(token);
     } catch (err) {
       next(err);
     }
