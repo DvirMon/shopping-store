@@ -1,8 +1,8 @@
-export class AuthModel {
+export class UserModel {
 
   public constructor(
     public _id?: string,
-    public iAdmin?: boolean,
+    public isAdmin?: boolean,
     public email?: string,
     public firstName?: string,
     public lastName?: string,

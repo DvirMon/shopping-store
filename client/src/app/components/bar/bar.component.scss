@@ -22,10 +22,6 @@ button {
   outline: transparent;
 }
 
-// .mat-icon-button {
-//   margin: 2%;
-// }
-
 .spacer {
   flex: 1 0.5 auto;
 }
@@ -41,4 +37,8 @@ ul {
   button {
     height: 64px;
   }
+}
+
+.welcome {
+  font-size: 20px;
 }

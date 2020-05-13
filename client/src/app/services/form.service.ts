@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ActionType } from '../redux/action-type';
+import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
+
+  public serverError = new Subject<string>()
 
   public pattern = {
     name: /^[a-zA-Z ]{3,25}$/,
@@ -22,8 +27,53 @@ export class FormService {
   public loginForm() {
     return this.fb.group({
       email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
-      password: ['', Validators.required, Validators.pattern(this.pattern.password), []],
+      password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)], []],
     })
   }
+  public registerForm() {
+    return this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
+      password: ['', [Validators.required, Validators.pattern(this.pattern.password)], []],
+    })
+  }
+
+  public getErrorMessage(control: FormControl, placeHolder: string) {
+
+    if (control.hasError('required')) {
+      return `${placeHolder} is required`
+    }
+
+    if (control.hasError('min')) {
+      return 'Value in not valid ';
+    }
+
+    if (placeHolder === "password" && control.hasError('maxlength') || control.hasError('minlength')) {
+      return `${placeHolder} length must be 8-24 characters long`;
+    }
+
+    if (control.hasError('maxlength')) {
+      return `${placeHolder} length must be less or equal to ${control.errors.maxlength.requiredLength} characters long`;
+    }
+
+    if (control.hasError('minlength')) {
+      return `${placeHolder} length must be at least ${control.errors.minlength.requiredLength} characters long`;
+    }
+
+    if (control.hasError('pattern')) {
+      return `invalid ${placeHolder} format`;
+    }
+
+    if (control.hasError('uniqueEmail')) {
+      return 'email is not valid';
+
+    }
+  }
+
+
+  public handleStore(type: ActionType, payload?: any) {
+    store.dispatch({ type, payload })
+  }
 }
+
+
 

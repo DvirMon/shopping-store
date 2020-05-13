@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { store } from 'src/app/redux/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,21 +14,42 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup
 
-  public isLogin: boolean = true
-  public hide: boolean = true;
+  public isLogin: boolean
+  public isCartActive: boolean = false
   public serverError: string
+  public store = store
 
   constructor(
     private formService: FormService,
     private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
 
-    this.loginForm = this.formService.loginForm()
+    this.createLoginForm()
+    this.storeSubscribe()
+    this.isLogin = store.getState().auth.isLogin
+
+    // subscription section
+
+  }
+  public storeSubscribe() {
+      store.subscribe(() =>
+      this.isLogin = store.getState().auth.isLogin
+      )
   }
 
+  // end of subscription section
+
+
   // form section
+  public createLoginForm() {
+    this.loginForm = this.formService.loginForm()
+    store.subscribe(() =>
+      console.log(store.getState().auth))
+
+  }
 
   get email() {
     return this.loginForm.get('email')
@@ -35,17 +58,11 @@ export class LoginComponent implements OnInit {
   get password() {
     return this.loginForm.get('password')
   }
-
-
   // end form section
 
 
   public onLogin() {
-
+    this.authService.login(this.loginForm.value)
+    this.router.navigateByUrl('/home')
   }
-
-  public switchMode() {
-    this.isLogin = !this.isLogin
-  }
-
 }

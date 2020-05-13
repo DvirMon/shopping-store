@@ -1,5 +1,7 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-input',
@@ -15,21 +17,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/f
 })
 export class MyInputComponent implements OnInit, ControlValueAccessor {
 
-
-  public value: any
-  public error: string
   @Input() public control: FormControl
   @Input() public type: string
-  @Input() public placeHolder: string
   @Input() public hint: string
+  @Input() public placeHolder: string
+  @Input() public serverErrorMode: boolean
+ 
+  public value: any
+  public error: string
+  public serverError: string
 
   onChange: (event) => void
   onTouched: () => void
   disabled: boolean
-  
-  constructor() { }
+
+  constructor(
+    private formService: FormService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+
+    this.authService.serverError.subscribe(
+      (error) =>{
+        this.serverError = error
+        this.control.setErrors({ 'invalid': true });
+      }
+    )
   }
 
   // handle default value
@@ -39,8 +53,6 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   public registerOnChange(fn: any): void {
     this.onChange = fn
-
-
   }
 
   public registerOnTouched(fn: any): void {
@@ -58,13 +70,11 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   }
 
   public validate() {
-
-    // this.error = this.formService.getErrorMessage(this.control)
-
-    // this.control.valueChanges.subscribe(
-    //   () => {
-    //     this.error = this.formService.getErrorMessage(this.control)
-    //   }
-    // )
+    this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+    this.control.valueChanges.subscribe(
+      () => {
+        this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+      }
+    )
   }
 }

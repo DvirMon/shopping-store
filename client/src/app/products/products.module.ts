@@ -5,6 +5,7 @@ import { CoreModule } from '../share-modules/core.module';
 import { SharedModule } from '../share-modules/shared.module';
 
 import { ProductsComponent } from './products/products.component';
+import { ProductsRoutingModule } from './products-routing.module';
 
 
 
@@ -13,7 +14,8 @@ import { ProductsComponent } from './products/products.component';
   imports: [
     CoreModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ProductsRoutingModule
   ],
   exports : [
   ]})

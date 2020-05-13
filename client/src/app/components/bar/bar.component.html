@@ -1,49 +1,48 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <!-- <mat-sidenav  #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" [(opened)]="opened">
-    <mat-toolbar>Your Cart</mat-toolbar>
+  <mat-sidenav *ngIf="isLogin" #drawer class="sidenav" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false" [(opened)]="opened">
+    <mat-toolbar>My Cart</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item>Link 1</a>
       <a mat-list-item>Link 2</a>
       <a mat-list-item>Link 3</a>
     </mat-nav-list>
-  </mat-sidenav>   -->
+  </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <!-- <button *ngIf="isLogin" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <button *ngIf="isLogin" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="openSideBar()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button> -->
+      </button>
       <ul class="main-links">
         <li>
           <span>My Shopping Store!</span>
         </li>
-        <li routerLinkActive="active">
+        <li *ngIf="isLogin" routerLinkActive="active">
           <button mat-button routerLink="/home">Home
           </button>
         </li>
-        <li routerLinkActive="active">
-          <button *ngIf="isLogin" mat-button routerLink="/admin">Admin </button>
+        <li *ngIf="isAdmin" routerLinkActive="active">
+          <button mat-button routerLink="/admin">Admin</button>
         </li>
         <li *ngIf="isLogin" routerLinkActive="active">
-          <button mat-button routerLink="/recipes">Our Products
+          <button mat-button routerLink="/products">Our Products
           </button>
         </li>
         <li *ngIf="isLogin" routerLinkActive="active">
-          <button mat-button routerLink="/shopping-list">See Order</button>
+          <button mat-button routerLink="/order">See Order</button>
         </li>
       </ul>
       <span class="spacer"></span>
-      <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-button>Logout</button>
+      <span *ngIf="isLogin" class="welcome">Welcome Back ! </span>
+      <span *ngIf="isLogin">{{' '+ user.firstName + ' '+ user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <span>Send Data</span>
-        </button>
-        <button mat-menu-item>
-          <span>Fetch Data</span>
+        <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-menu-item>
+          <span>Logout</span>
         </button>
       </mat-menu>
     </mat-toolbar>
