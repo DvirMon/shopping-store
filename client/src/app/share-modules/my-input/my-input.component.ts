@@ -43,28 +43,28 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
         this.serverError = error
         this.control.setErrors({ 'invalid': true });
       }
-    )
-  }
+      )
+    }
 
-  // handle default value
-  public writeValue(value: any): void {
-    this.value = value ? value : ""
-  }
-
-  public registerOnChange(fn: any): void {
-    this.onChange = fn
-  }
-
-  public registerOnTouched(fn: any): void {
-    this.onTouched = fn
-  }
-
-  public setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled
-  }
-
-  public handleChange(value: any) {
-    this.value = value
+    // handle default value
+    public writeValue(value: any): void {
+      this.value = value ? value : ""
+    }
+    
+    public registerOnChange(fn: any): void {
+      this.onChange = fn
+    }
+    
+    public registerOnTouched(fn: any): void {
+      this.onTouched = fn
+    }
+    
+    public setDisabledState?(isDisabled: boolean): void {
+      this.disabled = isDisabled
+    }
+    
+    public handleChange(value: any) {
+      this.value = value
 
 
   }

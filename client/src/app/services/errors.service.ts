@@ -6,15 +6,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ErrorsService {
 
-  
+
   constructor() {
-    
+
   }
-  
+
   public handleError(error) {
 
     if (error instanceof HttpErrorResponse) {
       if (error.status === 409) {
+        console.log(error)
         return
       }
       // this.dialogService.handleErrorDialog(error);
@@ -22,6 +23,6 @@ export class ErrorsService {
     else {
       console.error(error);
     }
-  } 
-  
+  }
+
 }

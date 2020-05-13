@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { FormService } from './form.service';
 import { ActionType } from '../redux/action-type';
@@ -18,6 +18,7 @@ export interface Login {
 export class AuthService {
 
   public serverError = new Subject<string>()
+  public loginDate = new BehaviorSubject<any>(null)
   private tokenHelper: JwtHelperService = new JwtHelperService()
 
   private url: string = " http://localhost:4000/api/auth/"
@@ -29,16 +30,16 @@ export class AuthService {
   ) { }
 
 
-
   public login(data) {
     this.http.post<string>(this.url + "login", data).subscribe(
       (response) => {
         const payload = this.tokenHelper.decodeToken(response)
         this.formService.handleStore(ActionType.Login, { token: response, user: payload.user })
+        this.router.navigateByUrl('/home')
+
       },
       (error) => this.serverError.next(error.error)
     )
-
   }
 
   public autoLogin() {

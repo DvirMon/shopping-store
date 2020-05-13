@@ -35,9 +35,9 @@ export class LoginComponent implements OnInit {
 
   }
   public storeSubscribe() {
-      store.subscribe(() =>
+    store.subscribe(() =>
       this.isLogin = store.getState().auth.isLogin
-      )
+    )
   }
 
   // end of subscription section
@@ -46,9 +46,6 @@ export class LoginComponent implements OnInit {
   // form section
   public createLoginForm() {
     this.loginForm = this.formService.loginForm()
-    store.subscribe(() =>
-      console.log(store.getState().auth))
-
   }
 
   get email() {
@@ -63,6 +60,5 @@ export class LoginComponent implements OnInit {
 
   public onLogin() {
     this.authService.login(this.loginForm.value)
-    this.router.navigateByUrl('/home')
   }
 }

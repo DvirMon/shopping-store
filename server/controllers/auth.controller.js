@@ -12,6 +12,7 @@ router.post(
   validation.loginValidation,
   async (request, response, next) => {
     try {
+
       // get user from db
       const user = await authLogic.getUserAsync(request.body.email);
 
