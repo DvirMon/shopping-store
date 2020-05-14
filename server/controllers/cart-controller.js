@@ -45,17 +45,16 @@ router.get("/", async (request, response, next) => {
 // });
 
 // get latest cart of user
-router.get("/:userId", async (request, response, next) => {
+router.get("/latest/:userId", async (request, response, next) => {
   try {
     const cart = await cartLogic.getLatestCartAsync(request.params.userId);
-    if (!cart) {
-      response.json(null);
-    }
     response.json(cart);
   } catch (err) {
     next(err);
   }
 });
+
+
 
 router.post("/", async (request, response, next) => {
   try {

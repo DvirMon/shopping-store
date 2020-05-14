@@ -11,7 +11,7 @@ const addCartAsync = async (cart) => {
 const getLatestCartAsync = async (userId) => {
   return await Cart.findOne({ userId })
     .sort([["createDate", -1]])
-    .select("isActive")
+    .select("isActive createDate")
     .exec();
 };
 

@@ -15,17 +15,8 @@ router.get("/", async (request, response, next) => {
   }
 });
 
-// get latest order purchase
-router.get("/:cardId", async (request, response, next) => {
-  try {
-    const order = await orderLogic.getLatestOrderAsync(cart._id);
-    response.json(order);
-  } catch (err) {
-    next(err);
-  } 
-});
-
-router.get("/total-docs", async (request, response, next) => {
+// get total orders in store
+router.get("/total", async (request, response, next) => {
   try {
     const totalDocs = await orderLogic.getTotalDocsAsync();
     response.json(totalDocs);
@@ -34,10 +25,21 @@ router.get("/total-docs", async (request, response, next) => {
   }
 });
 
+// get order dates
 router.get("/dates", async (request, response, next) => {
   try {
     const totalDocs = await orderLogic.countOrdersByDate();
     response.json(totalDocs);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// get latest order purchase
+router.get("/latest/:cartId", async (request, response, next) => {
+  try {
+    const order = await orderLogic.getLatestOrderAsync(request.params.cartId);
+    response.json(order);
   } catch (err) {
     next(err);
   }

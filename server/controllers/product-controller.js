@@ -14,6 +14,16 @@ router.get("/", async (request, response, next) => {
   }
 });
 
+// get total store products
+router.get("/total", async (request, response, next) => {
+  try {
+    const totalDocs = await productLogic.getTotalDocsAsync();
+    response.json(totalDocs);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/category/:categoryId", async (request, response, next) => {
   try {
     const products = await productLogic.getAllProductsByCategoryAsync(
@@ -42,14 +52,7 @@ router.get("/search/:query", async (request, response, next) => {
   }
 });
 
-router.get("/total-docs", async (request, response, next) => {
-  try {
-    const totalDocs = await productLogic.getTotalDocsAsync();
-    response.json(totalDocs);
-  } catch (err) {
-    next(err);
-  }
-});
+
 
 router.post("/", async (request, response, next) => {
   try {

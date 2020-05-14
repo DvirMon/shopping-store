@@ -7,10 +7,10 @@ const getAllCartItemsByCartAsync = async (cartId) => {
 const getCurrentTotalPriceAsync = async (cartId) => {
   // add match?
   return await CartItem.aggregate([
-    { $match: { cartId } },
+    // { $match: { cartId: "5eb921aba66e913e9005dba3" } },
     {
       $group: {
-        _id: cartId,
+        _id: "$cartId",
         currentTotalPrice: { $sum: "$totalPrice" },
       },
     },

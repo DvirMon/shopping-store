@@ -23,12 +23,10 @@ router.get("/:cartId", async (request, response, next) => {
   try {
     // validate if cart exist? for postmen?
     const cartCurrentTotalPrice = await cartItemLogic.getCurrentTotalPriceAsync(
-      cart._id
+      request.params.cartId
     );
-    response.json({
-      action: "total_price",
-      payload: cartCurrentTotalPrice[0],
-    });
+    const currentTotalPrice = cartCurrentTotalPrice[0].currentTotalPrice;
+    response.json(currentTotalPrice);
   } catch (err) {
     next(err);
   }

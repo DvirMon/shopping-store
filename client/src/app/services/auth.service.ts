@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { store } from '../redux/store';
 
-
 export interface Login {
   email: string,
   password: string
