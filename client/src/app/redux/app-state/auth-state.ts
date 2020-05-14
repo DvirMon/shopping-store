@@ -1,22 +1,21 @@
-import { UserModel } from 'src/app/models/user-model';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { User } from 'src/app/services/auth.service';
 
-
+  
 export class AuthAppState {
-
+ 
   public isLogin: boolean
   public isAdmin: boolean;
-  public user: UserModel = new UserModel();
-  public token: any
+  public user: User;
+  public refreshToken: any
+  public accessToken: any
   public socket: any
-  public tokenHelper: JwtHelperService = new JwtHelperService()
    
   constructor() {
-    this.token = JSON.parse(sessionStorage.getItem("jwt"))
-    this.isLogin = this.token !== null;
+    this.refreshToken = JSON.parse(sessionStorage.getItem("jwt"))
+    this.isLogin = this.refreshToken !== null;
 
     if (this.isLogin) {
-      this.user =this.tokenHelper.decodeToken(this.token)['user']
+      this.user = JSON.parse(sessionStorage.getItem("user"))
       if (this.user.isAdmin) {
         this.isAdmin = true
       }

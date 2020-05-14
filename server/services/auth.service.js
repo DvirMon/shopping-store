@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 global.config = require("../config.json");
 
 // function to create an access token
-const setLoginToken = (user) => {
+const setAccessToken = (user) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
       { user },
-      config.secret.act,
-      { expiresIn: "20m" },
+      config.secret.access,
+      { expiresIn: "30m" },
       (err, result) => {
         if (err) {
           reject(err);
@@ -23,8 +23,8 @@ const setLoginToken = (user) => {
 const setRefreshToken = (user) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
-      { sub: user.uuid, role: user.isAdmin },
-      config.secret.ref,
+      { user },
+      config.secret.refresh,
       { expiresIn: "3d" },
       (err, result) => {
         if (err) {
@@ -37,7 +37,9 @@ const setRefreshToken = (user) => {
 };
 // end of function
 
+// verify user
+
 module.exports = {
-  setLoginToken,
+  setAccessToken,
   setRefreshToken,
 };

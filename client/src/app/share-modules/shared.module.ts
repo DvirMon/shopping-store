@@ -6,6 +6,8 @@ import { UploadInputComponent } from './upload-input/upload-input.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { TextareaComponent } from './textarea/textarea.component';
 import { ErrorsService } from '../services/errors.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
 
 
 @NgModule({
@@ -24,6 +26,11 @@ import { ErrorsService } from '../services/errors.service';
     DialogComponent,
     TextareaComponent
   ], providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    },
     {
       provide: ErrorHandler,
       useClass: ErrorsService

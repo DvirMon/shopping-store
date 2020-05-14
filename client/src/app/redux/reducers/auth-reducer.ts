@@ -11,10 +11,17 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
   switch (action.type) {
     case ActionType.Login:
       newAppState.isLogin = true;
-      newAppState.token = action.payload['token']
+      newAppState.accessToken = action.payload['accessToken']
       newAppState.user = action.payload['user']
       newAppState.user['isAdmin'] ? newAppState.isAdmin = true : newAppState.isAdmin = false
-      sessionStorage.setItem("jwt", JSON.stringify(action.payload['token']));
+      sessionStorage.setItem("user", JSON.stringify(action.payload['user']));
+      break
+    case ActionType.AddAccessToken:
+      newAppState.accessToken = action.payload
+      break
+    case ActionType.AddRefreshToken:
+      newAppState.refreshToken = action.payload
+      sessionStorage.setItem("jwt", JSON.stringify(action.payload));
       break
     case ActionType.UpdateSocket:
       newAppState.socket = action.payload
@@ -23,7 +30,7 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.isLogin = false
       newAppState.isAdmin = null
       newAppState.user = null
-      newAppState.token = null
+      newAppState.refreshToken = null
       sessionStorage.clear();
   }
   return newAppState

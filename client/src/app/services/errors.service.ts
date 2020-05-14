@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,18 +8,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ErrorsService {
 
 
-  constructor() {
+  constructor(
+    private authService: AuthService
+  ) {
 
   }
 
   public handleError(error) {
 
     if (error instanceof HttpErrorResponse) {
+
       if (error.status === 409) {
-        console.log(error)
         return
       }
-      // this.dialogService.handleErrorDialog(error);
     }
     else {
       console.error(error);

@@ -4,6 +4,7 @@ export enum ActionType {
   Login,
   Logout,
   AddAccessToken,
+  AddRefreshToken,
   UpdateSocket,
 
   
