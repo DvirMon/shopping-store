@@ -17,26 +17,11 @@
       </button>
       <ul class="main-links">
         <li>
-          <span>My Shopping Store!</span>
-        </li>
-        <li *ngIf="isLogin" routerLinkActive="active">
-          <button mat-button routerLink="/home">Home
-          </button>
-        </li>
-        <li *ngIf="isAdmin" routerLinkActive="active">
-          <button mat-button routerLink="/admin">Admin</button>
-        </li>
-        <li *ngIf="isLogin" routerLinkActive="active">
-          <button mat-button routerLink="/products">Our Products
-          </button>
-        </li>
-        <li *ngIf="isLogin" routerLinkActive="active">
-          <button mat-button routerLink="/order">See Order</button>
+          <span>Shopping-Store</span>
         </li>
       </ul>
       <span class="spacer"></span>
-      <span *ngIf="isLogin" class="welcome">Welcome Back ! </span>
-      <span *ngIf="isLogin">{{' '+ user.firstName + ' '+ user.lastName}}</span>
+      <span *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>

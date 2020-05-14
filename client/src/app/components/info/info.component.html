@@ -1,20 +1,30 @@
 <mat-grid-list class="image" cols="1" rowHeight="30vh">
   <mat-grid-tile>
-    info works!
+    <!-- <img src="assets/images/info-cover.jpg"> -->
   </mat-grid-tile>
 </mat-grid-list>
 
 <mat-grid-list class="info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
-    info works!
+    Available products in our store : {{totalProducts}}
   </mat-grid-tile>
   <mat-grid-tile>
-    info works!
+    Number of orders submitted in our store : {{totalOrders}} 
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list class="login-info" cols="1" cols="1" rowHeight="50vh">
+<mat-grid-list *ngIf="isLogin && !isAdmin" class="login-info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
-    info works!
+    {{info.messageDate}} : {{info.date | date:"MM/dd"}}
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <p>{{info.messagePrice}} : {{info.price | currency:"ILS"}}</p>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list *ngIf="info?.message && !isAdmin" class="login-info" cols="1" cols="1" rowHeight="50vh">
+  <mat-grid-tile>
+    <p>Hay There!</p>
+    <p>this is your first visit in our store</p>
   </mat-grid-tile>
 </mat-grid-list>

@@ -15,34 +15,6 @@ router.get("/", async (request, response, next) => {
   }
 });
 
-// check for active cart and latest purchase
-// router.get("/:userId", async (request, response, next) => {
-//   try {
-//     // get latest cart
-//     const cart = await cartLogic.getLatestCartAsync(request.params.userId);
-
-//     // check if cart is active
-//     if (cart.isActive) {
-//       const cartCurrentTotalPrice = await cartItemLogic.getCurrentTotalPriceAsync(
-//         cart._id
-//       );
-//       return response.json({
-//         action: "total_price",
-//         payload: cartCurrentTotalPrice[0],
-//       });
-//     }
-//     // if false get latest order
-//     const order = await orderLogic.getLatestOrderAsync(cart._id);
-
-//     // if client dose`nt have any orders
-//     if (!order) {
-//       response.json({ action: "new_client", payload: "Welcome! start your first purchase" });
-//     }
-//     response.json({ action: "latest_order", payload: order });
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 // get latest cart of user
 router.get("/latest/:userId", async (request, response, next) => {
@@ -53,8 +25,6 @@ router.get("/latest/:userId", async (request, response, next) => {
     next(err);
   }
 });
-
-
 
 router.post("/", async (request, response, next) => {
   try {

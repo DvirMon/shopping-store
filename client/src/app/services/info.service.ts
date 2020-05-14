@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
-import { forkJoin, from } from 'rxjs'
-import { tap, switchMap, take, map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { forkJoin } from 'rxjs'
+import { switchMap, take, map } from 'rxjs/operators'
 
-export interface Cart {
-  _id: string,
-  isActive: boolean,
-  createDate: Date
+
+export interface Info {
+  message: string,
+  messageDate: string,
+  messagePrice: string,
+  date: Date,
+  price: number
 }
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class InfoService {
+
+  public info: Info;
 
   constructor(
 
@@ -37,21 +40,50 @@ export class InfoService {
     return this.http.get<any>(`http://localhost:3000/api/carts/latest/${userId}`).pipe(
       take(1),
       switchMap(cart => {
+
         if (cart === null) {
-          return of({ message: "new client" })
+          const info = { ...this.info }
+          info.message = "new client"
+          return of(info)
         }
         if (cart.isActive) {
-          return this.http.get(`http://localhost:3000/api/cart-items/${cart._id}`).pipe(
+          return this.http.get<number>(`http://localhost:3000/api/cart-items/${cart._id}`).pipe(
             map(currentCartPrice => {
-              cart.currentCartPrice = currentCartPrice
-              return cart
+              return this.handleCartData(cart, currentCartPrice)
             })
           )
         }
-        return this.http.get(`http://localhost:3000/api/orders/latest/${cart._id}`)
+        return this.http.get<any>(`http://localhost:3000/api/orders/latest/${cart._id}`).pipe(
+          map(order => {
+            const info = this.handleOrderData(order)
+            return info
+          })
+        )
       })
     )
 
+  }
+
+  private handleCartData(cart, price) {
+    const info: Info = {
+      message: "",
+      messageDate: "You have Open Cart from",
+      date: cart.createDate,
+      messagePrice: "Your current cart price is",
+      price: price,
+    }
+    return info
+  }
+
+  private handleOrderData(order) {
+    const info: Info = {
+      message: "",
+      messageDate: "You Last Purchase was in",
+      date: order.orderDate,
+      messagePrice: "For",
+      price: order.totalPrice,
+    }
+    return info
   }
 
 

@@ -3,6 +3,12 @@ mat-grid-list, mat-grid-tile, form {
   width: 100%
 }
 
+form {
+  width: 80%;
+  margin: auto;
+  background-color:rgba($color: #ffffff, $alpha: 0.9) ;
+}
+
 
 .mat-icon {
   font-size: 20px;

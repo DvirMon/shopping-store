@@ -1,6 +1,6 @@
-<mat-form-field class="full-width">
-  <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" control="control"
-    (input)="handleChange($event.target.value)" autocomplete="off" (blur)="validate()" [formControl]="control" required>
+<mat-form-field class="full-width" appearance="fill">
+  <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" [formControl]="control"
+    control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required>
   <mat-hint>{{control.pending ? 'Loading...' : 'Please enter '+ hint}}</mat-hint>
   <mat-error>{{serverError ?  serverError : error}}</mat-error>
   <mat-error *ngIf=control.errors?.uniqueEmail>email is already in use</mat-error>

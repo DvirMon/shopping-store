@@ -1,16 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { InfoService } from 'src/app/services/info.service';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ɵConsole } from '@angular/core';
+import { InfoService, Info } from 'src/app/services/info.service';
+import { ActivatedRoute, ActivationEnd, Data } from '@angular/router';
+import { store } from 'src/app/redux/store';
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss']
 })
+
 export class InfoComponent implements OnInit {
 
+  // static info
   public totalProducts: number;
   public totalOrders: number;
+
+  // store arguments
+  public isLogin: boolean
+  public isAdmin: boolean
+
+  // info on login
+  public info: Info = {
+    message: "",
+    messageDate: "",
+    messagePrice: "",
+    date: new Date(),
+    price: 0
+  }
+
 
   constructor(
     private infoService: InfoService,
@@ -20,16 +37,43 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.storeSubscribe()
+    this.routeSubscription()
+    this.getStoreInfo()
+
+  }
+
+  // subscription section
+
+  private storeSubscribe() {
+    store.subscribe(() => {
+      this.isAdmin = store.getState().auth.isAdmin
+      this.isLogin = store.getState().auth.isLogin
+    })
+    this.isLogin = store.getState().auth.isLogin
+    this.isAdmin = store.getState().auth.isAdmin
+  }
+
+  private routeSubscription() {
+    this.activeRoute.data.subscribe((data: Data) => {
+      this.info = data.info
+    })
+  }
+
+  // end of subscription section
+
+  //----------------------------------------------------//
+
+  // request section
+
+  private getStoreInfo() {
     this.infoService.getStoreInfo().subscribe(
       (response) => {
         this.totalProducts = response[0]
         this.totalOrders = response[1]
       }
     )
-
-    this.infoService.getNotification("5eb91f8ce3dc2031bc286d62").subscribe(
-      (response) => console.log(response)
-    )
   }
 
+  // end of request section
 }

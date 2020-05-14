@@ -4,14 +4,16 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthGuard } from './guards/auth.guard';
+import { InfoResolver } from './resolvers/info-resolver.service';
 
 
 const routes: Routes = [
   { path: "login", component: HomeComponent },
   {
-    path: "home",
+    path: "home/:userId",
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: { info: InfoResolver }
   },
   { path: "register", component: RegisterComponent },
   { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },

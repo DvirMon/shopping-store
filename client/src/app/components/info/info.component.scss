@@ -3,14 +3,10 @@ mat-grid-tile {
   width: 100%;
 }
 
-.image {
-  background-color: green;
-}
 
 .info {
-  background-color: blue;
-}
-
-.login-info {
-  background-color: red;
+  width: 80%;
+  margin: auto;
+  font-size: 20px;
+  background-color : rgba($color: #000000, $alpha: 0.5) ;
 }

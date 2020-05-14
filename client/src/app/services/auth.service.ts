@@ -51,9 +51,11 @@ export class AuthService {
           this.formService.handleStore(ActionType.AddAccessToken, accessToken)
           return this.getRefreshToken()
             .pipe(
-              tap((refreshToken: string) => {
+              map((refreshToken: string) => {
                 this.formService.handleStore(ActionType.AddRefreshToken, refreshToken)
-                return refreshToken
+                const payload = this.tokenHelper.decodeToken(refreshToken)
+                const user = payload.user
+                return user._id
               }))
         }))
   }
@@ -102,12 +104,13 @@ export class AuthService {
 
   public autoLogin() {
     const token = store.getState().auth.refreshToken
+    const user = store.getState().auth.user
     // this.authToken()
     if (!token) {
       this.logout()
       return
     }
-    this.router.navigateByUrl(`/home`)
+    this.router.navigateByUrl(`/home/${user._id}`)
   }
 
   public logout() {
