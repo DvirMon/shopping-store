@@ -8,6 +8,7 @@ import { TextareaComponent } from './textarea/textarea.component';
 import { ErrorsService } from '../services/errors.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
+import { SelectComponent } from './select/select.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AuthInterceptorService } from '../interceptors/auth-interceptor.service
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    TextareaComponent
+    TextareaComponent,
+    SelectComponent
   ],
   imports: [
     CoreModule,
@@ -24,7 +26,8 @@ import { AuthInterceptorService } from '../interceptors/auth-interceptor.service
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    TextareaComponent
+    TextareaComponent,
+    SelectComponent
   ], providers: [
     {
       provide: HTTP_INTERCEPTORS,

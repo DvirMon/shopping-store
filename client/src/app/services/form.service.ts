@@ -30,10 +30,21 @@ export class FormService {
       password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)], []],
     })
   }
+
   public registerForm() {
     return this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
-      password: ['', [Validators.required, Validators.pattern(this.pattern.password)], []],
+      authDetails: this.fb.group({
+        personalId: ['', [Validators.required], []],
+        email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
+        password: ['', [Validators.required, Validators.pattern(this.pattern.password)]],
+        confirmPassword: ['', [Validators.required, Validators.pattern(this.pattern.password)]],
+      }),
+      personalDetails: this.fb.group({
+        city: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        firstName: ['', [Validators.required]],
+        lastName: ['', [Validators.required]],
+      }),
     })
   }
 

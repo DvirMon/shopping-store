@@ -110,12 +110,12 @@ export class AuthService {
       this.logout()
       return
     }
-    this.router.navigateByUrl(`/home/${user._id}`)
+    // this.router.navigateByUrl(`/home/${user._id}`)
   }
 
   public logout() {
     this.formService.handleStore(ActionType.Logout)
-    this.router.navigateByUrl(`/login`)
+    this.router.navigateByUrl(`/register`)
   }
 
 

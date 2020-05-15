@@ -39,7 +39,7 @@ const UserSchema = mongoose.Schema(
       validate: [/^[a-zA-Z ]{3,25}$/, "first name must contain only letters"],
     },
     lastName: {
-      type: String,
+      type: String, 
       required: true,
       minlength: [3],
       maxlength: [30],

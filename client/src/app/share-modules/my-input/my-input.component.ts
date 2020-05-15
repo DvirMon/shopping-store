@@ -20,6 +20,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   @Input() public control: FormControl
   @Input() public type: string
   @Input() public hint: string
+  @Input() public controlName: string
   @Input() public placeHolder: string
   @Input() public serverErrorMode: boolean
  

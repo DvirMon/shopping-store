@@ -27,34 +27,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.createLoginForm()
+    this.createForm()
     this.storeSubscribe()
     this.isLogin = store.getState().auth.isLogin
 
-    // subscription section
-
   }
+
+
+  // subscription section
   public storeSubscribe() {
     store.subscribe(() =>
       this.isLogin = store.getState().auth.isLogin
     )
   }
-
   // end of subscription section
 
 
   // form section
-  public createLoginForm() {
+  public createForm() {
     this.loginForm = this.formService.loginForm()
   }
 
-  get email() {
-    return this.loginForm.get('email')
-  }
-
-  get password() {
-    return this.loginForm.get('password')
-  }
   // end form section
 
 

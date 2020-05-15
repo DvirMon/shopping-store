@@ -1,4 +1,81 @@
-<form>
-  <app-input></app-input>
-  <button routerLink="/register" mat-button>Register</button>
-  </form> 
+<div>
+  <form [formGroup]="registerForm">
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="authDetails">
+        <ng-template matStepLabel>Authentication Details</ng-template>
+        <mat-grid-list [formGroup]="authDetails" cols="1" rowHeight="100px">
+          <mat-grid-tile>
+            <app-input [control]="authDetails.controls['personalId']" placeHolder="Personal identification number"
+              type="text" hint="your personal identification number" controlName="personalId">
+            </app-input>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="authDetails.controls['email']" placeHolder="Email" type="text"
+              hint="valid email format : dom@gmail.com" controlName="email">
+            </app-input>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="authDetails.controls['password']" placeHolder="Password" type="password"
+              hint="your password" controlName="password">
+            </app-input>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="authDetails.controls['confirmPassword']" placeHolder="Confirmation Password"
+              type="password" hint="confirmation password" controlName="confirmPassword">
+            </app-input>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="1" rowHeight="22vh">
+          <mat-grid-tile>
+            <button [disabled]=authDetails.invalid mat-button matStepperNext type="button">Next</button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-step>
+      <mat-step [stepControl]="personalDetails">
+        <ng-template matStepLabel>Personal Details</ng-template>
+        <mat-grid-list [formGroup]="personalDetails" cols="1" rowHeight="100px">
+          <mat-grid-tile>
+            <mat-form-field field appearance="fill">
+              <mat-label>Select City:</mat-label>
+              <mat-select (selectionChange)="onSelect($event)" formControlName="city">
+                <mat-option *ngFor="let city of cityList" value="city">{{city}}</mat-option>
+              </mat-select>
+              <mat-error>Please Choose an option</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="personalDetails.controls['street']" placeHolder="Street" type="text"
+              hint="your street" controlName="street">
+            </app-input>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="personalDetails.controls['firstName']" placeHolder="First name" type="text"
+              hint="your name" controlName="firstName">
+            </app-input>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-input [control]="personalDetails.controls['lastName']" placeHolder="Last Name" type="text"
+              hint="your last name" controlName="lastName">
+            </app-input>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="22vh">
+          <mat-grid-tile>
+            <button mat-button matStepperPrevious type="button">Back</button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button [disabled]=registerForm.invalid mat-button matStepperNext type="button">Next</button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <mat-grid-list cols="1" rowHeight="77.5vh">
+          <mat-grid-tile>
+            <button [disabled]="registerForm.invalid" mat-raised-button>Save and Send</button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>
