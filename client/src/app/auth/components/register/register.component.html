@@ -27,7 +27,7 @@
         </mat-grid-list>
         <mat-grid-list cols="1" rowHeight="22vh">
           <mat-grid-tile>
-            <button [disabled]=authDetails.invalid mat-button matStepperNext type="button">Next</button>
+            <button [disabled]=authDetails.invalid (click)="onSubmit()" mat-button matStepperNext type="button">Next</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>

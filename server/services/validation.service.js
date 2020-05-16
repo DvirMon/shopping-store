@@ -13,7 +13,7 @@ const loginValidation = (request, response, next) => {
   const schema = Joi.object().keys({
     email: Joi.string().regex(pattern.email).required(),
     password: Joi.string().min(8).max(24).required(),
-  });
+  }); 
 
   const error = schema.validate(request.body, { abortEarly: false }).error;
   return returnMessage(error, next);

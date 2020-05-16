@@ -49,7 +49,11 @@ export class RegisterComponent implements OnInit {
   }
   // end form section
 
+  
   // request section 
+  public validUniqueEmailAndId() {
+    // this.authService.validUniqueEmail()
+  }
 
   public onSubmit() {
     this.authService.register(this.registerForm.value)

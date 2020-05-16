@@ -55,7 +55,7 @@ router.post(
 router.get(
   "/refresh-token",
   authorize(0, config.secret.access),
-  async (request, response) => {
+  async (request, response, next) => {
     try {
       const payload = request.user;
 
@@ -71,11 +71,9 @@ router.get(
 router.get(
   "/access-token",
   authorize(0, config.secret.refresh),
-  async (request, response) => {
+  async (request, response, next) => {
     try {
       const payload = request.user;
-      console.log(payload)
-
       const accessToken = await jwt.setAccessToken(payload);
 
       response.json(accessToken);
@@ -87,9 +85,10 @@ router.get(
 
 router.post(
   "/register",
-  validation.matchPasswordValidation,
+  // validation.matchPasswordValidation,
   async (request, response, next) => {
     try {
+      console.log(request.body);
       const user = await authLogic.addUserAsync(new User(request.body));
 
       // set token
@@ -103,25 +102,24 @@ router.post(
 );
 
 // valid for unique id
-router.post("/register/unique-personalId", async (request, response, next) => {
+router.post("/unique-personalId", async (request, response, next) => {
   try {
     const countId = await authLogic.validUniquePersonalIdAsync(
       request.body.personalId
     );
-    response.json(!countId);
+    response.json(!!countId);
   } catch (err) {
     next(err);
   }
 });
 
 // valid for unique email
-// I didn't valid email format because I will valid it in the register request
-router.post("/register/valid-email", async (request, response, next) => {
+router.post("/unique-email", async (request, response, next) => {
   try {
     const countEmail = await authLogic.validUniqueEmailAsync(
       request.body.email
     );
-    response.json(!countEmail);
+    response.json(!!countEmail);
   } catch (err) {
     next(err);
   }

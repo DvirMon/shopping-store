@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Subject, Observable, of } from 'rxjs';
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
 import { CustomValidationService } from './custom-validation.service';
+import { HttpClient } from '@angular/common/http';
+import { distinctUntilChanged, take, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +24,16 @@ export class FormService {
 
   constructor(
     private fb: FormBuilder,
-    private customValidation: CustomValidationService
+    private customValidation: CustomValidationService,
+    public http: HttpClient
   ) { }
 
 
   public loginForm() {
     return this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
+      email: ['',
+        [Validators.required, Validators.pattern(this.pattern.email)]
+      ],
       password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)], []],
     })
   }
@@ -38,11 +43,12 @@ export class FormService {
       authDetails: this.fb.group({
         personalId: ['',
           [Validators.required, Validators.minLength(8), Validators.maxLength(9)],
-          []
+          [this.customValidation.personalIdUniqueValidation.bind(this)]
+
         ],
         email: ['',
           [Validators.required, Validators.pattern(this.pattern.email)],
-          []
+          [this.customValidation.emailUniqueAsyncValidation.bind(this)]
         ],
         password: ['', [
           Validators.required,
@@ -60,15 +66,19 @@ export class FormService {
         street: ['', [Validators.required]],
         firstName: ['', [
           Validators.required,
+          Validators.pattern(this.pattern.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
         lastName: ['', [
           Validators.required,
+          Validators.pattern(this.pattern.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
       }),
     })
   }
+
+
 
   public getErrorMessage(control: FormControl, placeHolder: string) {
 
@@ -95,13 +105,6 @@ export class FormService {
       return `invalid ${placeHolder} format`;
     }
 
-    if (control.hasError('uniqueEmail')) {
-      return 'email is not valid';
-    }
-    // console.log(control.hasError('mustMatch'))
-    // if (control.hasError('mustMatch')) {
-    //   return 'Passwords are not match';
-    // }
   }
 
   public passwordCustomErrorMessage(control, placeHolder) {
@@ -114,7 +117,6 @@ export class FormService {
     }
 
   }
-
 
   public handleStore(type: ActionType, payload?: any) {
     store.dispatch({ type, payload })

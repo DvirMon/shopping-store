@@ -5,8 +5,9 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { FormService } from './form.service';
 import { ActionType } from '../redux/action-type';
 import { Router } from '@angular/router';
-import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { store } from '../redux/store';
+import { config } from "../../main-config"
 
 export interface Login {
   email: string,
@@ -33,7 +34,8 @@ export class AuthService {
   public loginDate = new BehaviorSubject<any>(null)
   private tokenHelper: JwtHelperService = new JwtHelperService()
 
-  private url: string = "http://localhost:4000/api/auth"
+  private url: string = `http://localhost:${config.portAuth}/api/auth`
+
 
   constructor(
     private http: HttpClient,
@@ -85,11 +87,16 @@ export class AuthService {
     return this.http.get(this.url + "/access-token")
   }
 
-  // personalId validation request  - http://localhost:4000/api/auth/register/unique-personalId
+  // personalId validation request  - http://localhost:4000/api/auth/unique-personalId
   public validUniquePersonalId(data) {
-    return this.http.post(this.url + "/register/unique-personalId", data)
+    return this.http.post(this.url + "/unique-personalId", data)
   }
 
+  // personalId validation request  - http://localhost:4000/api/auth/unique-personalId
+  public validUniqueEmail(data) {
+    return this.http.post(this.url + "/unique-email", data)
+  }
+  
   // end of request section
 
   public handleAuthGuardSuccess(response) {
@@ -109,12 +116,12 @@ export class AuthService {
       this.logout()
       return
     }
-    // this.router.navigateByUrl(`/home/${user._id}`)
+    this.router.navigateByUrl(`/home/${user._id}`)
   }
 
   public logout() {
     this.formService.handleStore(ActionType.Logout)
-    this.router.navigateByUrl(`/register`)
+    this.router.navigateByUrl(`/login`)
   }
 
 

@@ -9,22 +9,22 @@ export const config = {
   development: false,
   port: 3000,
   portAuth: 4000,
-  globalSettings: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    },
-    {
-      provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: { hasBackdrop: false }
-    },
-    {
-      provide: ErrorHandler,
-      useClass: ErrorsService
-    },
+  // globalSettings: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: AuthInterceptorService,
+  //     multi: true
+  //   },
+  //   {
+  //     provide: MAT_DIALOG_DEFAULT_OPTIONS,
+  //     useValue: { hasBackdrop: false }
+  //   },
+  //   {
+  //     provide: ErrorHandler,
+  //     useClass: ErrorsService
+  //   },
  
-  ]
+  // ]
 
 };
  

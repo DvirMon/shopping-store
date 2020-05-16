@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { DialogService } from './dialog.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-  public token: string
+  private token: string
+  private contentType: string
   public bearer: string = "Bearer-AccessToken"
 
   constructor(
-    // private dialogService: DialogService,
+    private dialogService: DialogService,
     private router: Router,
     private authService: AuthService
 
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
 
     this.token = store.getState().auth.accessToken
 
@@ -30,11 +33,13 @@ export class AuthInterceptorService implements HttpInterceptor {
       this.bearer = "Bearer-RefreshToken"
     }
 
-
     const modified = request.clone({
-      headers: request.headers.append('authorization', `${this.bearer} : ${this.token}`)
-    });
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `${this.bearer} : ${this.token}`
+      })
 
+    });
     // this.dialogService.handleSpinnerDialog();
 
     return this.handInterceptor(next, modified)

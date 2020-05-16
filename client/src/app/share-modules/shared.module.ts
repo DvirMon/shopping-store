@@ -9,6 +9,7 @@ import { ErrorsService } from '../services/errors.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
 import { SelectComponent } from './select/select.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,6 +34,10 @@ import { SelectComponent } from './select/select.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
+    },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: { hasBackdrop: false }
     },
     {
       provide: ErrorHandler,

@@ -88,11 +88,14 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   }
 
   public validate() {
+
     this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
     this.control.valueChanges.subscribe(
       () => {
         this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
       }
     )
+
+
   }
 }
