@@ -16,7 +16,7 @@
           </mat-grid-tile>
           <mat-grid-tile>
             <app-input [control]="authDetails.controls['password']" placeHolder="Password" type="password"
-              hint="your password" controlName="password">
+              hint="your password, or click on the icon to generate one" controlName="password">
             </app-input>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -38,14 +38,14 @@
             <mat-form-field field appearance="fill">
               <mat-label>Select City:</mat-label>
               <mat-select (selectionChange)="onSelect($event)" formControlName="city">
-                <mat-option *ngFor="let city of cityList" value="city">{{city}}</mat-option>
+                <mat-option *ngFor="let city of cityList" value="{{city}}">{{city}}</mat-option>
               </mat-select>
               <mat-error>Please Choose an option</mat-error>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <app-input [control]="personalDetails.controls['street']" placeHolder="Street" type="text"
-              hint="your street" controlName="street">
+              hint="your street" controlName="street" required>
             </app-input>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -69,10 +69,18 @@
         </mat-grid-list>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <mat-grid-list cols="1" rowHeight="77.5vh">
+        <ng-template matStepLabel>Confirm</ng-template>
+        <mat-grid-list cols="1" rowHeight="8.5vh">
+          <mat-grid-tile>Email : {{auth.email.value}}</mat-grid-tile>
+          <mat-grid-tile>Password : {{auth.password.value}}</mat-grid-tile>
+          <mat-grid-tile>Name : {{personal.firstName.value}}</mat-grid-tile>
+          <mat-grid-tile>Last Name : {{personal.lastName.value}}</mat-grid-tile>
+          <mat-grid-tile>City : {{personal.city.value}}</mat-grid-tile>
+          <mat-grid-tile>Street : {{personal.street.value}}</mat-grid-tile>
           <mat-grid-tile>
-            <button [disabled]="registerForm.invalid" mat-raised-button>Save and Send</button>
+            <button [disabled]="registerForm.invalid" (click)="onSubmit()" type="button" mat-raised-button>Create new
+              Account
+            </button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>

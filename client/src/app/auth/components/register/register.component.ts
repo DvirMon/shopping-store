@@ -9,13 +9,14 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
- 
-  public registerForm : FormGroup
-  public cityList : string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva"]
 
-  constructor( 
-    private formService : FormService,
-    private authService : AuthService,
+  public registerForm: FormGroup
+  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva"]
+
+  constructor(
+    private formService: FormService,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit(): void {
@@ -30,13 +31,27 @@ export class RegisterComponent implements OnInit {
   get personalDetails() {
     return this.registerForm.get('personalDetails') as FormGroup
   }
-  
+
   get authDetails() {
     return this.registerForm.get('authDetails') as FormGroup
   }
 
+  get personal() {
+    return this.registerForm.controls['personalDetails']['controls']
+  }
+
+  get auth() {
+    return this.registerForm.controls['authDetails']['controls']
+  }
+
   public onSelect(event) {
-    
+    console.log(this.personal)
   }
   // end form section
+
+  // request section 
+
+  public onSubmit() {
+    this.authService.register(this.registerForm.value)
+  }
 }

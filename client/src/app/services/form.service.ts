@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+import { CustomValidationService } from './custom-validation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class FormService {
   };
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private customValidation: CustomValidationService
   ) { }
 
 
@@ -34,16 +36,36 @@ export class FormService {
   public registerForm() {
     return this.fb.group({
       authDetails: this.fb.group({
-        personalId: ['', [Validators.required], []],
-        email: ['', [Validators.required, Validators.pattern(this.pattern.email)], []],
-        password: ['', [Validators.required, Validators.pattern(this.pattern.password)]],
-        confirmPassword: ['', [Validators.required, Validators.pattern(this.pattern.password)]],
-      }),
+        personalId: ['',
+          [Validators.required, Validators.minLength(8), Validators.maxLength(9)],
+          []
+        ],
+        email: ['',
+          [Validators.required, Validators.pattern(this.pattern.email)],
+          []
+        ],
+        password: ['', [
+          Validators.required,
+          Validators.pattern(this.pattern.password),
+          Validators.minLength(8),
+          Validators.maxLength(24)]],
+        confirmPassword: ['',
+          [Validators.required, Validators.pattern(this.pattern.password)]],
+      },
+        {
+          validator: [this.customValidation.MustMatch('password', 'confirmPassword')],
+        }),
       personalDetails: this.fb.group({
         city: ['', [Validators.required]],
         street: ['', [Validators.required]],
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
+        firstName: ['', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30)]],
+        lastName: ['', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30)]],
       }),
     })
   }
@@ -54,12 +76,12 @@ export class FormService {
       return `${placeHolder} is required`
     }
 
-    if (control.hasError('min')) {
-      return 'Value in not valid ';
+    if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
+      return this.passwordCustomErrorMessage(control, placeHolder)
     }
 
-    if (placeHolder === "password" && control.hasError('maxlength') || control.hasError('minlength')) {
-      return `${placeHolder} length must be 8-24 characters long`;
+    if (control.hasError('min')) {
+      return 'Value in not valid ';
     }
 
     if (control.hasError('maxlength')) {
@@ -69,15 +91,28 @@ export class FormService {
     if (control.hasError('minlength')) {
       return `${placeHolder} length must be at least ${control.errors.minlength.requiredLength} characters long`;
     }
-
     if (control.hasError('pattern')) {
       return `invalid ${placeHolder} format`;
     }
 
     if (control.hasError('uniqueEmail')) {
       return 'email is not valid';
-
     }
+    // console.log(control.hasError('mustMatch'))
+    // if (control.hasError('mustMatch')) {
+    //   return 'Passwords are not match';
+    // }
+  }
+
+  public passwordCustomErrorMessage(control, placeHolder) {
+    if (control.hasError('maxlength') || control.hasError('minlength')) {
+      return `${placeHolder} length must be 8-24 characters long`;
+    }
+
+    if (control.hasError('pattern')) {
+      return ` ${placeHolder} must contain at least one lowercase, uppercase and numeric character`;
+    }
+
   }
 
 

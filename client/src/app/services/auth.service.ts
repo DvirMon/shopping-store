@@ -101,7 +101,6 @@ export class AuthService {
     this.formService.handleStore(ActionType.Logout)
   }
 
-
   public autoLogin() {
     const token = store.getState().auth.refreshToken
     const user = store.getState().auth.user

@@ -22,6 +22,9 @@ import { MatListModule } from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 
 import {MatSelectModule} from '@angular/material/select';
+
+import {MatTooltipModule} from '@angular/material/tooltip';
+
  
 @NgModule({
   declarations: [],
@@ -47,7 +50,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatDividerModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }
