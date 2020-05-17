@@ -47,7 +47,9 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
     this.authService.serverError.subscribe(
       (error) => {
         this.serverError = error
-        this.control.setErrors({ 'invalid': true });
+        if (this.serverError) {
+          this.control.setErrors({ serverError: true });
+        }
       }
     )
   }

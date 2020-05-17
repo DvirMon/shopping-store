@@ -29,17 +29,19 @@ export class AuthInterceptorService implements HttpInterceptor {
     this.token = store.getState().auth.accessToken
 
     if (request.url === "http://localhost:4000/api/auth/access-token") {
+      console.log(1)
       this.token = store.getState().auth.refreshToken
       this.bearer = "Bearer-RefreshToken"
     }
-
+    
     const modified = request.clone({
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `${this.bearer} : ${this.token}`
       })
-
+      
     });
+    console.log(modified)
     // this.dialogService.handleSpinnerDialog();
 
     return this.handInterceptor(next, modified)

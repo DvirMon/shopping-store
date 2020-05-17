@@ -1,12 +1,14 @@
 <mat-form-field class="full-width" appearance="fill">
   <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" [formControl]="control"
     control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required>
-  <button *ngIf="placeHolder ==='Password'" mat-icon-button matSuffix matTooltip="Recommended password : {{password}}"
+  <button *ngIf="placeHolder ==='Password'" mat-icon-button matSuffix matTooltip="Generate strong password"
     matTooltipPosition="right" (click)="pushPassword()" (mouseenter)="generatePassword()">
     <mat-icon>vpn_key</mat-icon>
   </button>
-  <mat-hint>{{control.pending ? 'Loading...' : 'Please enter '+ hint}}</mat-hint>
-  <mat-error>{{serverError ?  serverError : error}}</mat-error>
+  <mat-hint *ngIf="placeHolder !== 'Password'">{{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
+  <mat-hint *ngIf="placeHolder === 'Password'">Recommended password : {{password}}</mat-hint>
+  <mat-error>{{error}}</mat-error>
+  <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>
   <mat-error *ngIf=control.errors?.unique>This {{placeHolder.toLocaleLowerCase()}} is already in use</mat-error>
   <mat-error *ngIf=control.errors?.mustMatch>passwords are not match</mat-error>
 </mat-form-field>

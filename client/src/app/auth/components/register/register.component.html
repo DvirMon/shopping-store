@@ -1,6 +1,6 @@
 <div>
   <form [formGroup]="registerForm">
-    <mat-horizontal-stepper #stepper>
+    <mat-horizontal-stepper #stepper linear>
       <mat-step [stepControl]="authDetails">
         <ng-template matStepLabel>Authentication Details</ng-template>
         <mat-grid-list [formGroup]="authDetails" cols="1" rowHeight="100px">
@@ -27,7 +27,8 @@
         </mat-grid-list>
         <mat-grid-list cols="1" rowHeight="22vh">
           <mat-grid-tile>
-            <button [disabled]=authDetails.invalid (click)="onSubmit()" mat-button matStepperNext type="button">Next</button>
+            <button [disabled]=authDetails.invalid mat-button matStepperNext
+              type="button">Next</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
@@ -37,7 +38,7 @@
           <mat-grid-tile>
             <mat-form-field field appearance="fill">
               <mat-label>Select City:</mat-label>
-              <mat-select (selectionChange)="onSelect($event)" formControlName="city">
+              <mat-select formControlName="city">
                 <mat-option *ngFor="let city of cityList" value="{{city}}">{{city}}</mat-option>
               </mat-select>
               <mat-error>Please Choose an option</mat-error>
@@ -78,7 +79,7 @@
           <mat-grid-tile>City : {{personal.city.value}}</mat-grid-tile>
           <mat-grid-tile>Street : {{personal.street.value}}</mat-grid-tile>
           <mat-grid-tile>
-            <button [disabled]="registerForm.invalid" (click)="onSubmit()" type="button" mat-raised-button>Create new
+            <button [disabled]=registerForm.invalid (click)="onSubmit()" type="button" mat-raised-button>Create new
               Account
             </button>
           </mat-grid-tile>

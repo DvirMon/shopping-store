@@ -15,9 +15,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { info: InfoResolver }
   },
-  { path: "register", component: RegisterComponent },
+  {
+    path: "register", component: RegisterComponent,
+
+  },
   { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-  { path: "products", loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
+  { path: "products/:categoryId", loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
   { path: "order", loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
   { path: "", redirectTo: "/login", pathMatch: 'full' },
   { path: "**", component: PageNotFoundComponent },

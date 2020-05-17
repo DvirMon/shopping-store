@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
-import { map, debounceTime, distinctUntilChanged, switchMap, take } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { config } from "../../main-config"
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +38,10 @@ export class CustomValidationService {
 
     if (!control || String(control.value).length === 0 || control.errors) {
       return of(null)
-    }
+    } 
     return control.valueChanges.pipe(
-      debounceTime(1500),
+      startWith(''),
+      debounceTime(300),
       distinctUntilChanged(),
       take(1),
       switchMap((payload: string) => {

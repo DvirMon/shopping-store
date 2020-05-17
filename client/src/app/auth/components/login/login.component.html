@@ -1,10 +1,10 @@
 <mat-grid-list cols="1" rowHeight="150px">
   <mat-grid-tile>
-    <button *ngIf="isLogin" color="primary" mat-raised-button type="button" routerLink="/products"
+    <button *ngIf="isLogin" color="primary" mat-raised-button type="button" routerLink="/products/5e91e29b9c08fc560ce2cf35"
       (click)="onLogin()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
   </mat-grid-tile>
 </mat-grid-list>
-<form *ngIf="!isLogin" [formGroup]="loginForm">
+<form *ngIf="!isLogin" [formGroup]="loginForm" class="mat-elevation-z1">
   <mat-grid-list cols="1" rowHeight="100px">
     <mat-grid-tile>
       <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="text"
@@ -12,7 +12,7 @@
       </app-input>
     </mat-grid-tile>
     <mat-grid-tile>
-      <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Password"
+      <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Login password"
         type="password" hint="your password">
       </app-input>
     </mat-grid-tile>

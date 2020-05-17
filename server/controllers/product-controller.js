@@ -14,6 +14,15 @@ router.get("/", async (request, response, next) => {
   }
 });
 
+router.get("/categories", async (request, response, next) => {
+  try {
+    const categories = await productLogic.getAllCategories();
+    response.json(categories);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // get total store products
 router.get("/total", async (request, response, next) => {
   try {

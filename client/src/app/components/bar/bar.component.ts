@@ -2,10 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, User } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { store } from 'src/app/redux/store';
-import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-bar',
@@ -14,10 +13,10 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class BarComponent implements OnInit {
 
+  public user: User
   public opened: boolean;
   public isLogin: boolean
   public isAdmin: boolean
-  public user: UserModel
   public login: Subscription
   @ViewChild('drawer') drawer;
 

@@ -5,10 +5,10 @@ import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bar-admin',
-  templateUrl: './bar-admin.component.html',
-  styleUrls: ['./bar-admin.component.scss']
+  templateUrl: './admin-bar.component.html',
+  styleUrls: ['./admin-bar.component.scss']
 })
-export class BarAdminComponent {
+export class AdminBarComponent {
 
   public open : boolean
 
@@ -17,7 +17,7 @@ export class BarAdminComponent {
       map(result => result.matches),
       shareReplay()
     );
-
+ 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
 }

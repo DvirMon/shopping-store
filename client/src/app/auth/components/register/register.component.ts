@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormService } from 'src/app/services/form.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, User } from 'src/app/services/auth.service';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formService: FormService,
     private authService: AuthService,
+    private router: Router
 
   ) { }
 
@@ -44,18 +46,16 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls['authDetails']['controls']
   }
 
-  public onSelect(event) {
-    console.log(this.personal)
-  }
+
   // end form section
 
-  
+
   // request section 
-  public validUniqueEmailAndId() {
-    // this.authService.validUniqueEmail()
-  }
 
   public onSubmit() {
-    this.authService.register(this.registerForm.value)
+    const user: User = { ...this.personalDetails.value, ...this.authDetails.value }
+    this.authService.register(user).subscribe(
+      (userId) => this.router.navigateByUrl(`/home/${userId}`)
+    )
   }
 }

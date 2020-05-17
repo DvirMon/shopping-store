@@ -23,19 +23,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
       
-      // verify token? 
-    return this.authService.getAccessToken().pipe(
-      map(data => {
-        const isAuth = !!data
-        this.authService.handleAuthGuardSuccess(data)
-        return isAuth
-      })  
-      ,  
-      catchError(error => {
-        this.authService.handleAuthGuardError(error)
-        return of(false)
-      })
-    )
-
+      // verify token?  
+    return this.authService.getAccessToken()
   }
 }

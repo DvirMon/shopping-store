@@ -16,10 +16,11 @@ export class FormService {
 
   public pattern = {
     name: /^[a-zA-Z ]{3,25}$/,
-    creditCard: /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
+    personalId: /^[0-9]{8,9}$/,
+    email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
     positive: /^[1-9]+[0-9]*$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-    email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+    creditCard: /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
   };
 
   constructor(
@@ -41,10 +42,12 @@ export class FormService {
   public registerForm() {
     return this.fb.group({
       authDetails: this.fb.group({
-        personalId: ['',
-          [Validators.required, Validators.minLength(8), Validators.maxLength(9)],
+        personalId: ['', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(9),
+          Validators.pattern(this.pattern.personalId)],
           [this.customValidation.personalIdUniqueValidation.bind(this)]
-
         ],
         email: ['',
           [Validators.required, Validators.pattern(this.pattern.email)],
@@ -63,7 +66,10 @@ export class FormService {
         }),
       personalDetails: this.fb.group({
         city: ['', [Validators.required]],
-        street: ['', [Validators.required]],
+        street: ['', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30)]],
         firstName: ['', [
           Validators.required,
           Validators.pattern(this.pattern.name),

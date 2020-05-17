@@ -20,6 +20,8 @@ export class ErrorsService {
     if (error instanceof HttpErrorResponse) {
 
       if (error.status === 409) {
+        this.dialogService.handleErrorDialog(error.error);
+        console.log(error)
         return
       }
 
@@ -27,7 +29,9 @@ export class ErrorsService {
 
     }
     else {
+      console.log(JSON.parse(error))
       console.error(error);
+      this.dialogService.handleErrorDialog(error);
     }
   }
 

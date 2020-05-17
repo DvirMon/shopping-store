@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, BehaviorSubject, Observable, throwError } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { FormService } from './form.service';
 import { ActionType } from '../redux/action-type';
 import { Router } from '@angular/router';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { config } from "../../main-config"
 
@@ -47,7 +47,45 @@ export class AuthService {
 
   // login request - http://localhost:4000/api/auth/login
   public login(loginInfo: any) {
-    return this.http.post(this.url + "/login", loginInfo)
+    return this.handleUser("/login", loginInfo)
+  }
+
+  // register request - http://localhost:4000/api/auth/register
+  public register(registerInfo: User) {
+    return this.handleUser("/register", registerInfo)
+  }
+
+  // refresh token request - http://localhost:4000/api/auth/refresh-token
+  public getRefreshToken() {
+    return this.http.get(this.url + "/refresh-token")
+  }
+
+  // access token request - http://localhost:4000/api/auth/access-token
+  // public getAccessToken() {
+  //   return this.http.get(this.url + "/access-token")
+  // }
+
+  public getAccessToken() {
+    return this.http.get(this.url + "/access-token").pipe(
+      map(data => {
+        const isAuth = !!data
+        this.handleAuthGuardSuccess(data)
+        return isAuth
+      })
+      ,
+      catchError(error => {
+        this.handleAuthGuardError(error)
+        return of(false)
+      })
+    )
+  }
+
+  // end of request section
+
+  // logic section
+
+  public handleUser(path: string, data) {
+    return this.http.post(this.url + path, data)
       .pipe(
         switchMap((accessToken: string) => {
           this.formService.handleStore(ActionType.AddAccessToken, accessToken)
@@ -62,45 +100,9 @@ export class AuthService {
         }))
   }
 
-  // register request - http://localhost:4000/api/auth/register
-  public register(registerInfo: any) {
-    return this.http.post(this.url + "/register", registerInfo)
-      .pipe(
-        switchMap((accessToken: string) => {
-          this.formService.handleStore(ActionType.AddAccessToken, accessToken)
-          return this.getRefreshToken()
-            .pipe(
-              tap((refreshToken: string) => {
-                this.formService.handleStore(ActionType.AddRefreshToken, refreshToken)
-                return refreshToken
-              }))
-        }))
-  }
-
-  // refresh token request - http://localhost:4000/api/auth/refresh-token
-  public getRefreshToken() {
-    return this.http.get(this.url + "/refresh-token")
-  }
-
-  // access token request - http://localhost:4000/api/auth/access-token
-  public getAccessToken() {
-    return this.http.get(this.url + "/access-token")
-  }
-
-  // personalId validation request  - http://localhost:4000/api/auth/unique-personalId
-  public validUniquePersonalId(data) {
-    return this.http.post(this.url + "/unique-personalId", data)
-  }
-
-  // personalId validation request  - http://localhost:4000/api/auth/unique-personalId
-  public validUniqueEmail(data) {
-    return this.http.post(this.url + "/unique-email", data)
-  }
-  
-  // end of request section
-
   public handleAuthGuardSuccess(response) {
     const payload = this.tokenHelper.decodeToken(response)
+    console.log(response)
     this.formService.handleStore(ActionType.Login, { accessToken: response, user: payload.user })
   }
 
@@ -116,7 +118,9 @@ export class AuthService {
       this.logout()
       return
     }
-    this.router.navigateByUrl(`/home/${user._id}`)
+    // change!!!!!!!!!!!!!!!! 
+    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf35`)
+    this.getAccessToken().subscribe()
   }
 
   public logout() {

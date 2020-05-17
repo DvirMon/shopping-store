@@ -59,11 +59,11 @@ export class LoginComponent implements OnInit {
       err => {
         this.authService.serverError.next(err.error)
       }
-      )
-    }
-    
-    public onRegister() {
-      this.router.navigateByUrl(`/register`)
+    )
+  }
+
+  public onRegister() {
+    this.router.navigateByUrl(`/register`)
 
   }
 }

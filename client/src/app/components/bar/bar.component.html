@@ -1,20 +1,6 @@
-<mat-sidenav-container class="sidenav-container">
-
-  <mat-sidenav *ngIf="isLogin" #drawer class="sidenav" fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false" [(opened)]="opened">
-    <mat-toolbar>My Cart</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item>Link 1</a>
-      <a mat-list-item>Link 2</a>
-      <a mat-list-item>Link 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button *ngIf="isLogin" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="openSideBar()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+<mat-sidenav-container class="sidenav-container" >
+  <mat-sidenav-content  >
+    <mat-toolbar class="mat-elevation-z10" color="primary">
       <ul class="main-links">
         <li>
           <span>Shopping-Store</span>
@@ -24,7 +10,7 @@
       <span *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
-      </button>
+      </button> 
       <mat-menu #menu="matMenu">
         <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-menu-item>
           <span>Logout</span>

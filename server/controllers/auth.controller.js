@@ -85,7 +85,7 @@ router.get(
 
 router.post(
   "/register",
-  // validation.matchPasswordValidation,
+  validation.matchPasswordValidation,
   async (request, response, next) => {
     try {
       console.log(request.body);
