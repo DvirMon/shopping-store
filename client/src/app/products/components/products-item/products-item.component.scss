@@ -1,14 +1,18 @@
-.img-size {
-  width: 200px;
-  height: 200px;
+.item {
+  width: 300px;
+  height: 280px;
   margin: auto;
-  margin-top: 10px;
-  // padding-top: 3%;
+  padding-top: 15px;
+  box-sizing: border-box;
+  border-right: lightblue 1px solid;
 }
 
-mat-card {
-  width: 300px;
-  background-color: transparent;
-  box-shadow: none;
-  padding: 0;
+.img-size {
+  margin: auto;
+  width: 200px;
+  height: 180px;
+}
+
+.price {
+  font-size: 20px;
 }

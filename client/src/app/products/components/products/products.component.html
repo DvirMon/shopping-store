@@ -1,7 +1,10 @@
 <app-products-bar [categories]="categories">
-  <mat-grid-list cols="4" rowHeight="370px">
-    <mat-grid-tile *ngFor="let product of products">
-      <app-products-item [product]="product"></app-products-item>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="product-container">
+    <mat-grid-list cols="4" rowHeight="300px" *ngFor="let products of collection">
+      <mat-grid-tile *ngFor="let product of products">
+          <app-products-item [product]="product"></app-products-item>
+        </mat-grid-tile>
+      </mat-grid-list>
+    <mat-divider [inset]="true"></mat-divider>
+  </div>
 </app-products-bar>

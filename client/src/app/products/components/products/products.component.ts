@@ -11,6 +11,7 @@ import { ProductModel } from 'src/app/models/product-model';
 export class ProductsComponent implements OnInit {
   public categories: Category[] = []
   public products: ProductModel[] = []
+  public collection : [ProductModel[]]
 
   constructor(
 
@@ -29,7 +30,7 @@ export class ProductsComponent implements OnInit {
 
   private routeSubscription() {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.products = data.products
+      this.collection = data.products
     })
   }
 

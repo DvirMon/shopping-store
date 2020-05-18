@@ -7,20 +7,20 @@
   </mat-grid-tile>
 </mat-grid-list>
 
+<mat-grid-list *ngIf="!isAdmin && !info?.message" class="login-info info" cols="1" cols="1" rowHeight="10vh">
+  <mat-grid-tile>
+    {{info.messageDate}} : {{info.date | date:"MM/dd"}}
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <p>{{info.messagePrice}} : {{info.price | currency:"ILS"}}</p>
+  </mat-grid-tile>
+</mat-grid-list>
+
 <mat-grid-list class="info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
     Available products in our store : {{totalProducts}}
   </mat-grid-tile>
   <mat-grid-tile>
     Number of orders submitted in our store : {{totalOrders}}
-  </mat-grid-tile>
-</mat-grid-list>
-
-<mat-grid-list *ngIf="!isAdmin && !info?.message" class="login-info" cols="1" cols="1" rowHeight="10vh">
-  <mat-grid-tile>
-    {{info.messageDate}} : {{info.date | date:"MM/dd"}}
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <p>{{info.messagePrice}} : {{info.price | currency:"ILS"}}</p>
   </mat-grid-tile>
 </mat-grid-list>

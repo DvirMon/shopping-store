@@ -1,16 +1,12 @@
-<!-- <mat-card class="product-card">
-  <mat-card-content> {{product.categoryId.name}}</mat-card-content>
-  <mat-card-actions>
-  </mat-card-actions>
-</mat-card> -->
-<div>
-  <div>
+
+<div class="item">
+  <div class="img-container">
     <img mat-card-image class="img-size"
-    src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png"
-    alt="Photo of a {{product.name}}">
+      src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png"
+      alt="Photo of a {{product.name}}">
   </div>
-  <mat-card-content> {{product.price}}</mat-card-content>
-  <mat-card-content>{{product.name}}</mat-card-content>
-  <!-- <div>{{product.price}}</div>
-  <div>{{product.name}}</div> -->
+  <mat-card-content>
+    <p class="price">{{product.price | currency}}</p>
+  </mat-card-content>
+  <mat-card-content class="name">{{product.name}}</mat-card-content>
 </div>
