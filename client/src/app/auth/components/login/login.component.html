@@ -1,7 +1,7 @@
 <mat-grid-list cols="1" rowHeight="150px">
   <mat-grid-tile>
-    <button *ngIf="isLogin" color="primary" mat-raised-button type="button" routerLink="/products/5e91e29b9c08fc560ce2cf32"
-      (click)="onLogin()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
+    <button *ngIf="isLogin" color="primary" mat-raised-button type="button"
+      (click)="onProducts()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
   </mat-grid-tile>
 </mat-grid-list>
 <form *ngIf="!isLogin" [formGroup]="loginForm" class="mat-elevation-z1">

@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
   public onSubmit() {
     const user: UserModel = { ...this.personalDetails.value, ...this.authDetails.value }
     this.authService.register(user).subscribe(
-      (userId) => this.router.navigateByUrl(`/home/${userId}`)
+      (userId : string) => this.router.navigateByUrl(`/home/${userId}`)
     )
   }
 }

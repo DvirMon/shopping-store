@@ -7,12 +7,12 @@ const CartItemSchema = mongoose.Schema(
     productId: { type: mongoose.Types.ObjectId, ref: Product, required: true },
     quantity: {
       type: Number,
-      required: true,
+      // required: true,
       validate: [/^[1-9]+[0-9]*$/, "quantity can`t be negative or equal to 0"],
     },
     totalPrice: {
       type: Number,
-      required: true,
+      // required: true,
       validate: [/^[1-9]+[0-9]*$/, "price can`t be negative or equal to 0"],
     },
 

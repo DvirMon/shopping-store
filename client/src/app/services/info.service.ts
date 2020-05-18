@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import { switchMap, take, map } from 'rxjs/operators'
+import { FormService } from './form.service';
+import { ActionType } from '../redux/action-type';
+import { CartItemModel } from '../models/cart-item-model';
+import { CartModel } from '../models/cart-model';
 
 
 export interface Info {
@@ -11,6 +15,11 @@ export interface Info {
   messagePrice: string,
   date: Date,
   price: number
+}
+
+interface CurrentCart {
+  price : number,
+  cartItems : CartItemModel[]
 }
 
 @Injectable({
@@ -23,7 +32,8 @@ export class InfoService {
 
   constructor(
 
-    private http: HttpClient
+    private http: HttpClient,
+    private formService: FormService
   ) { }
 
   // request section
@@ -37,7 +47,7 @@ export class InfoService {
 
   public getNotification(userId) {
 
-    return this.http.get<any>(`http://localhost:3000/api/carts/latest/${userId}`).pipe(
+    return this.http.get<CartModel>(`http://localhost:3000/api/carts/latest/${userId}`).pipe(
       take(1),
       switchMap(cart => {
         if (cart === null) {
@@ -45,11 +55,16 @@ export class InfoService {
           info.message = "new client"
           return of(info)
         }
-        console.log(1)
+        this.formService.handleStore(ActionType.IsCartActive, cart.isActive)
+        
         if (cart.isActive) {
-          return this.http.get<number>(`http://localhost:3000/api/cart-items/${cart._id}`).pipe(
-            map(currentCartPrice => {
-              return this.handleCartData(cart, currentCartPrice)
+
+          this.formService.handleStore(ActionType.AddCart, cart)
+
+          return this.http.get<CurrentCart>(`http://localhost:3000/api/cart-item/${cart._id}`).pipe(
+            map((response : CurrentCart) => {
+              this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
+              return this.handleCartData(cart, response.price)
             })
           )
         }

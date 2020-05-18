@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const CartItem = require("../models/cartItem-model");
-const cartItemLogic = require("../business-layer-logic/cartsItem-logic");
+const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 
 router.post("/", async (request, response, next) => {
   try {
@@ -18,15 +18,18 @@ router.post("/", async (request, response, next) => {
   }
 });
 
-// get current cart date and total price
+// get current cart date, total price and items
 router.get("/:cartId", async (request, response, next) => {
   try {
-    // validate if cart exist? for postmen?
-    const cartCurrentTotalPrice = await cartItemLogic.getCurrentTotalPriceAsync(
+    const currentCart = await cartItemLogic.getCurrentCartAsync(
       request.params.cartId
     );
-    const currentTotalPrice = cartCurrentTotalPrice[0].currentTotalPrice;
-    response.json(currentTotalPrice);
+
+    if (!currentCart) {
+      return next({ status: 404, message: "cart is not exist" });
+    }
+
+    response.json(currentCart);
   } catch (err) {
     next(err);
   }

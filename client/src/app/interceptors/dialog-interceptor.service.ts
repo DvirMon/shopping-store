@@ -32,8 +32,8 @@ export class DialogInterceptorService implements HttpInterceptor {
             this.dialogService.dialog.closeAll()
           }
         }),
-      catchError((error: HttpErrorResponse) => {
-        this.dialogService.dialog.closeAll()
+        catchError((error: HttpErrorResponse) => {
+          this.dialogService.dialog.closeAll()
         return throwError(error);
       }))
   }

@@ -1,11 +1,11 @@
 <div [ngSwitch]="data.type">
-  <div *ngSwitchCase="'dialog'">
+  <div *ngSwitchCase="'error'">
       <div>
           <p>
-              Message: {{data.reason}}
+              Message: {{errorData.reason}}
           </p>
-          <p *ngIf="data.status">
-              Status: {{data.status}}
+          <p *ngIf="errorData.status">
+              Status: {{errorData.status}}
           </p>
       </div>
       <div mat-dialog-actions>

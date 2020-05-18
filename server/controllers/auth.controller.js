@@ -90,10 +90,9 @@ router.post(
     try {
       const user = await authLogic.addUserAsync(new User(request.body));
 
-      // set token
-      const token = await jwt.setAccessToken(user);
-
-      response.status(201).json(token);
+      // get accessToken
+      const accessToken = await jwt.setAccessToken(user);
+      response.json({ user, accessToken });
     } catch (err) {
       next(err);
     }

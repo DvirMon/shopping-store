@@ -29,7 +29,7 @@ server.use('/uploads', express.static('uploads'));
 
 // controllers 
 server.use("/api/carts", cartController)
-server.use("/api/cart-items", cartItemController)
+server.use("/api/cart-item", cartItemController)
 server.use("/api/orders", orderController)
 server.use("/api/products", productController)
 

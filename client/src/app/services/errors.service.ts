@@ -17,16 +17,18 @@ export class ErrorsService {
 
   public handleError(error) {
 
+
+    console.log(error)
     if (error instanceof HttpErrorResponse) {
 
       
       if (error.status === 409) {
         return
       } 
-      
       this.dialogService.handleErrorDialog(error);
     }
     else {
+      // this.dialogService.handleErrorDialog(error);
       console.error(error);
     }
   }

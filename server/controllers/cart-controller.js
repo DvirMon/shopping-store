@@ -3,8 +3,7 @@ const router = express.Router();
 
 const Cart = require("../models/cart-model");
 const cartLogic = require("../business-layer-logic/cart-logic");
-const orderLogic = require("../business-layer-logic/order-logic");
-const cartItemLogic = require("../business-layer-logic/cartsItem-logic");
+const authLogic = require("../business-layer-logic/auth-logic");
 
 router.get("/", async (request, response, next) => {
   try {
@@ -14,7 +13,6 @@ router.get("/", async (request, response, next) => {
     next(err);
   }
 });
-
 
 // get latest cart of user
 router.get("/latest/:userId", async (request, response, next) => {
@@ -26,8 +24,16 @@ router.get("/latest/:userId", async (request, response, next) => {
   }
 });
 
+// get new cart
 router.post("/", async (request, response, next) => {
   try {
+    // valid if user exist
+    const user = await authLogic.isUserExist(request.body.userId);
+ 
+    if (!user) {
+      return next({ status: 404, message: "user is not exist" });
+    }
+
     const cart = await cartLogic.addCartAsync(new Cart(request.body));
     response.status(201).json(cart);
   } catch (err) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵConsole } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ import { ActionType } from '../redux/action-type';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { config } from "../../main-config"
+import { CartService } from './cart.service';
 
 export interface Login {
   email: string,
@@ -34,11 +35,11 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private formService: FormService,
     private router: Router,
+    private formService: FormService,
   ) { }
 
-  // request section
+  // request section 
 
   // login request - http://localhost:4000/api/auth/login
   public login(loginInfo: any) {
@@ -73,17 +74,17 @@ export class AuthService {
 
   // end of request section
 
-  // logic section
+  // login actions section
   public handleUser(path: string, data) {
     return this.http.post(this.url + path, data)
       .pipe(
         switchMap((response: any) => {
           this.formService.handleStore(ActionType.AddAccessToken, response.accessToken)
           return this.getRefreshToken()
-            .pipe(
-              map((response: any) => {
+          .pipe(
+            map((response: any) => {
                 this.formService.handleStore(ActionType.AddRefreshToken, response.refreshToken)
-                return response.user
+                return response.user._id
               }))
         }))
   }
@@ -101,12 +102,12 @@ export class AuthService {
   public autoLogin() {
     const token = store.getState().auth.refreshToken
     const user = store.getState().auth.user
+    const isCartActive = store.getState().cart.isCartActive
     if (!token) {
       this.logout()
       return
     }
-    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
-    // this.router.navigateByUrl(`/home/${user._id}`)
+    this.router.navigateByUrl(`/home/${user._id}`)
     this.getAccessToken().subscribe()
   }
   

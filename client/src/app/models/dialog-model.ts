@@ -1,8 +1,6 @@
 import { ProductModel } from './product-model';
+import { Injectable } from '@angular/core';
 
-export class DialogModel {
-  constructor(public type?: string, public reason?: string, public status?: number) { }
-}
 
 export abstract class DialogData {
   constructor(public type?: string) { }
@@ -11,8 +9,8 @@ export abstract class DialogData {
 export class ProductDialogData extends DialogData {
 
   constructor(
-    public product: ProductModel,
-    type: string
+    type?: string,
+    public product?: ProductModel,
   ) {
     super(type)
     this.type = "product"
@@ -21,16 +19,20 @@ export class ProductDialogData extends DialogData {
 
 export class SpinnerDialogData extends DialogData {
   constructor(
-    type: string
+    type?: string
   ) {
     super(type)
     this.type = "spinner"
   }
 }
 
-export class ErrorDialogModel extends DialogData {
+export class ErrorDialogData extends DialogData {
 
-  constructor(type, public reason?: string, public status?: number) {
+  constructor(
+    type?,
+    public reason?: string,
+    public status?: number
+  ) {
     super(type)
     this.type = "error"
   }

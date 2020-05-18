@@ -1,6 +1,5 @@
 import { UserModel } from 'src/app/models/user-model';
 
-  
 export class AuthAppState {
  
   public isLogin: boolean

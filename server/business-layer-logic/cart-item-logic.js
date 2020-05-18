@@ -1,20 +1,31 @@
 const CartItem = require("../models/cartItem-model");
+const mongoose = require("mongoose");
 
 const getAllCartItemsByCartAsync = async (cartId) => {
   return await CartItem.find({ cartId }).exec();
 };
 
-const getCurrentTotalPriceAsync = async (cartId) => {
+const getCurrentCartAsync = async (cartId) => {
   // add match?
-  return await CartItem.aggregate([
-    // { $match: { cartId: "5eb921aba66e913e9005dba3" } },
+
+  cartId = mongoose.Types.ObjectId(cartId);
+
+  const cartTotalPrice = await CartItem.aggregate([
+    {
+      $match: { cartId },
+    },
     {
       $group: {
         _id: "$cartId",
-        currentTotalPrice: { $sum: "$totalPrice" },
+        totalPrice: { $sum: "$totalPrice" },
       },
     },
   ]);
+
+  const cartItems = await CartItem.find({ cartId }).exec();
+  return cartTotalPrice.length === 0
+    ? null
+    : { price: cartTotalPrice[0].totalPrice, cartItems };
 };
 
 const addCartItemAsync = async (cartItem) => {
@@ -27,7 +38,7 @@ const deleteCartItemAsync = async (_id) => {
 
 module.exports = {
   getAllCartItemsByCartAsync,
-  getCurrentTotalPriceAsync,
+  getCurrentCartAsync,
   addCartItemAsync,
   deleteCartItemAsync,
 };

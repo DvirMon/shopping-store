@@ -16,6 +16,7 @@ export interface Category {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductsService {
 
   public baseUrl: string = `http://localhost:${config.port}/api/products`
