@@ -5,7 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { DialogService } from './dialog.service';
+import { DialogService } from '../services/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +13,17 @@ import { DialogService } from './dialog.service';
 export class AuthInterceptorService implements HttpInterceptor {
 
   private token: string
-  private contentType: string
-  public bearer: string = "Bearer-AccessToken"
+  public bearer: string 
 
   constructor(
     private dialogService: DialogService,
-    private router: Router,
-    private authService: AuthService
 
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-
     this.token = store.getState().auth.accessToken
+    this.bearer = "Bearer-AccessToken"
 
     if (request.url === "http://localhost:4000/api/auth/access-token") {
       this.token = store.getState().auth.refreshToken
@@ -39,31 +36,8 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Authorization': `${this.bearer} : ${this.token}`
       })
     });
-    // console.log(modified) 
-    this.dialogService.handleSpinnerDialog();
 
-    return this.handInterceptor(next, modified)
-  }
-
-
-  public handInterceptor(next, clone) {
-    return next.handle(clone).pipe(
-      tap(
-        (event: HttpEvent<any>) => {
-
-          if (event instanceof HttpResponse) {
-            // console.log(event)
-            this.dialogService.dialog.closeAll()
-          }
-          return event;
-        }),
-      catchError((error: HttpErrorResponse) => {
-
-        this.dialogService.dialog.closeAll()
-
-        return throwError(error);
-      }))
-  }
+    return next.handle(modified)  }
 
  
 }

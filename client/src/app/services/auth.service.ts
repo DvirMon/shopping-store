@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { FormService } from './form.service';
-import { ActionType } from '../redux/action-type';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
-import { store } from '../redux/store';
-import { config } from "../../main-config"
+
+import { Subject, BehaviorSubject, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
+
+import { FormService } from './form.service';
 import { UserModel } from '../models/user-model';
+
+import { store } from '../redux/store';
+import { ActionType } from '../redux/action-type';
+
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { config } from "../../main-config"
 
 export interface Login {
   email: string,
   password: string
 }
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -107,9 +109,10 @@ export class AuthService {
     // this.router.navigateByUrl(`/home/${user._id}`)
     this.getAccessToken().subscribe()
   }
-
+  
   public logout() {
     this.formService.handleStore(ActionType.Logout)
+    clearTimeout(this.expiredTimer)
     this.router.navigateByUrl(`/login`)
   }
 

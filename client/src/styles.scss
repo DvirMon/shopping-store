@@ -1,4 +1,3 @@
-
 @import "variables";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
@@ -10,11 +9,13 @@ body,
   padding: 0;
 }
 
-::ng-deep .mat-button-base, .mat-button :focus , button{
+::ng-deep .mat-button-base,
+.mat-button :focus,
+button {
   outline: transparent;
 }
 
-::ng-deep .mat-form-field{
+::ng-deep .mat-form-field {
   display: block;
 }
 
@@ -30,7 +31,6 @@ body,
   outline: transparent;
 }
 
-
 .active {
   background-color: rgba(240, 236, 236, 0.1);
 }
@@ -44,5 +44,12 @@ body,
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+  box-shadow: none;
+}
+
+.dialog-product .mat-dialog-container {
+  color: black;
+  background-color: initial;
+  border-color: initial;
   box-shadow: none;
 }

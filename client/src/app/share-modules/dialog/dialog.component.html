@@ -10,7 +10,7 @@
       </div>
       <div mat-dialog-actions>
           <button mat-button>No Thanks</button>
-          <button (click)="closeDialog()" mat-button cdkFocusInitial>Ok</button>
+          <button mat-dialog-close mat-button cdkFocusInitial>Ok</button>
       </div>
   </div>
   <mat-spinner *ngSwitchCase="'spinner'"></mat-spinner>

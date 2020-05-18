@@ -8,6 +8,7 @@ import { TextareaComponent } from './textarea/textarea.component';
 import { ErrorsService } from '../services/errors.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
+import { DialogInterceptorService } from '../interceptors/dialog-interceptor.service';
 import { SelectComponent } from './select/select.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
@@ -34,6 +35,11 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true
+    },
+    { 
+      provide: HTTP_INTERCEPTORS,
+      useClass: DialogInterceptorService,
       multi: true
     },
     {

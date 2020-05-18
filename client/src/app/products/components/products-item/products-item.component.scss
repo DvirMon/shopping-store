@@ -1,13 +1,27 @@
 .item {
-  width: 300px;
-  height: 280px;
+  position: relative;
   margin: auto;
+  justify-content: center;
+  width: 330.65px;
+  height: 280px;
   padding-top: 15px;
+  padding-left: 20px;
   box-sizing: border-box;
-  border-right: lightblue 1px solid;
+  cursor: pointer;
+}
+
+.item:hover {
+  border: lightcoral 1px solid;
+}
+
+.img-container {
+  position: relative;
+  text-align: center;
+  margin: auto;
 }
 
 .img-size {
+  position: relative;
   margin: auto;
   width: 200px;
   height: 180px;

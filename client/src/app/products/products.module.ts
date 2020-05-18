@@ -13,13 +13,18 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
 
 
 @NgModule({
-  declarations: [ProductsComponent, ProductsBarComponent, ProductsItemComponent, ProductsDialogComponent],
+  declarations: [
+    ProductsComponent,
+    ProductsBarComponent,
+    ProductsItemComponent,
+    ProductsDialogComponent],
   imports: [
     CoreModule,
     RouterModule,
     SharedModule,
     ProductsRoutingModule
   ],
-  exports : [
-  ]})
+  exports: [
+  ]
+})
 export class ProductsModule { }

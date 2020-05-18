@@ -12,11 +12,6 @@ export class DialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: DialogModel,
-    public dialog: MatDialog
   ) { }
 
-  public closeDialog(): void {
-    this.dialog.closeAll()
   }
-
-}

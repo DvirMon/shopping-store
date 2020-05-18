@@ -1,24 +1,22 @@
 .product-container {
   background-color: lightgrey;
-  // height: 100%;
 }
 
 mat-grid-list {
   margin: auto;
-  width: 90%;
+  width: 97%;
   background-color: white;
 }
 
 mat-grid-tile {
-  // border-bottom: 1px solid lightblue;
-  padding: 12px, 0;
+  position: absolute;
+  top: 100px;
+  justify-content: center;
 }
 
-// mat-divider {
-//   position: absolute;
-//   z-index: 5;
-// }
 
-.vertical-divider {
-  border: 1px solid lightblue;
+mat-divider {
+  padding-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

@@ -13,7 +13,7 @@ const sanitize = require("./middleware/handleTags");
 const cartController = require('./controllers/cart-controller')
 const cartItemController = require('./controllers/cart-item-controller')
 const orderController = require('./controllers/order-controller')
-const productController = require('./controllers/product-controller')
+const productController = require('./controllers-router/products.router')
 
  
 // middleware

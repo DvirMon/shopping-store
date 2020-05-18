@@ -1,4 +1,4 @@
-<mat-grid-list *ngIf="info?.message && !isAdmin" class="login-info info" cols="1" cols="1" rowHeight="10vh">
+<mat-grid-list *ngIf="!isAdmin && info?.message" class="login-info info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
     Hay There!
   </mat-grid-tile>
@@ -7,7 +7,7 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list *ngIf="!isAdmin && !info?.message" class="login-info info" cols="1" cols="1" rowHeight="10vh">
+<mat-grid-list *ngIf="isLogin && !isAdmin && !info?.message" class="login-info info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
     {{info.messageDate}} : {{info.date | date:"MM/dd"}}
   </mat-grid-tile>

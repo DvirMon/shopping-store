@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ProductModel } from 'src/app/models/product-model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-products-dialog',
@@ -8,9 +9,12 @@ import { ProductModel } from 'src/app/models/product-model';
 })
 export class ProductsDialogComponent implements OnInit {
 
-  public Product : ProductModel;
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public Product: ProductModel,
+
+  ) { }
 
   ngOnInit(): void {
   }
