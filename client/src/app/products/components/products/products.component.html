@@ -1,3 +1,7 @@
 <app-products-bar [categories]="categories">
-  <router-outlet></router-outlet>
+  <mat-grid-list cols="4" rowHeight="370px">
+    <mat-grid-tile *ngFor="let product of products">
+      <app-products-item [product]="product"></app-products-item>
+    </mat-grid-tile>
+  </mat-grid-list>
 </app-products-bar>

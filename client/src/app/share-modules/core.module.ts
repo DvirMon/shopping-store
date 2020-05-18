@@ -9,10 +9,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule } from 'ng-recaptcha'
 import { MaterialModule } from './material.module';
 
+
+
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [
 

@@ -21,7 +21,7 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       break
     case ActionType.AddRefreshToken:
       newAppState.refreshToken = action.payload
-      sessionStorage.setItem("jwt", JSON.stringify(action.payload));
+      sessionStorage.setItem("jwt", action.payload);
       break
     case ActionType.UpdateSocket:
       newAppState.socket = action.payload

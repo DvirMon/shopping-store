@@ -15,7 +15,6 @@ import { HomeComponent } from './components/home/home.component';
 import { InfoComponent } from './components/info/info.component';
 import { AboutComponent } from './components/about/about.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
- 
 
 
 @NgModule({
@@ -26,7 +25,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     HomeComponent,
     InfoComponent,
     AboutComponent,
- 
+
   ],
   imports: [
     BrowserModule,
@@ -35,7 +34,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    AuthModule, 
+    AuthModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

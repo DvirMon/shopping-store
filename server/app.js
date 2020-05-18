@@ -1,9 +1,13 @@
 require('./data-access-layer/dal')
-const express = require("express");
-const cors = require("cors");
 global.config = require('./config.json');
-
+const express = require("express");
 const server = express()
+
+// import middleware 
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const handleErrors = require('./middleware/handleErrors')
+const sanitize = require("./middleware/handleTags");
 
 // import controllers
 const cartController = require('./controllers/cart-controller')
@@ -11,13 +15,19 @@ const cartItemController = require('./controllers/cart-item-controller')
 const orderController = require('./controllers/order-controller')
 const productController = require('./controllers/product-controller')
 
-// import middleware 
-const handleErrors = require('./middleware/handleErrors')
  
 // middleware
 server.use(cors())
-server.use(express.json())
- 
+server.use("/api/", rateLimit({
+  windowMs: 1000, 
+  max: 5, 
+  message: "Are You a Hacker?" 
+}));
+server.use(express.json());
+server.use(sanitize); 
+server.use('/uploads', express.static('uploads'));
+
+// controllers 
 server.use("/api/carts", cartController)
 server.use("/api/cart-items", cartItemController)
 server.use("/api/orders", orderController)

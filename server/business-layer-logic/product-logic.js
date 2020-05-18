@@ -1,5 +1,5 @@
 const Product = require("../models/product-model");
-const Category = require("../models/category-model")
+const Category = require("../models/category-model");
 
 // get all products
 const getAllProductsAsync = async () => {
@@ -18,7 +18,8 @@ const getTotalDocsAsync = async () => {
 
 // get products by category
 const getAllProductsByCategoryAsync = async (categoryId) => {
-  return await Product.find({ categoryId }).exec();
+  return await Product.find({ categoryId })
+    .exec();
 };
 
 const addProductAsync = async (product) => {
@@ -32,8 +33,7 @@ const updateProductAsync = async (product) => {
 
 const getAllCategories = async () => {
   return await Category.find({}).exec();
-
-}
+};
 
 module.exports = {
   getAllProductsAsync,
@@ -42,5 +42,5 @@ module.exports = {
   getAllProductsByCategoryAsync,
   addProductAsync,
   updateProductAsync,
-  getAllCategories
+  getAllCategories,
 };

@@ -39,6 +39,7 @@ router.get("/dates", async (request, response, next) => {
 router.get("/latest/:cartId", async (request, response, next) => {
   try {
     const order = await orderLogic.getLatestOrderAsync(request.params.cartId);
+    console.log(order)
     response.json(order);
   } catch (err) {
     next(err);

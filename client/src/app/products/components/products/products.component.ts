@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, ProductsService, Product } from 'src/app/services/products.service';
-import { Router, ActivatedRoute, Data } from '@angular/router';
+import { Category, ProductsService } from 'src/app/services/products.service';
+import { ActivatedRoute, Data } from '@angular/router';
+import { ProductModel } from 'src/app/models/product-model';
 
 @Component({
   selector: 'app-products',
@@ -9,7 +10,7 @@ import { Router, ActivatedRoute, Data } from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
   public categories: Category[] = []
-  public products: Product[] = []
+  public products: ProductModel[] = []
 
   constructor(
 
@@ -19,17 +20,15 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.productsService.getProductsCategories().subscribe(
       (response) => this.categories = response
     )
-    
+
     this.routeSubscription()
   }
 
   private routeSubscription() {
     this.activeRoute.data.subscribe((data: Data) => {
-      console.log(data.products)
       this.products = data.products
     })
   }

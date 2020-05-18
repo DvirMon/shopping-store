@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: "home/:userId",
     component: HomeComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard], 
     resolve: { info: InfoResolver }
   },
   {

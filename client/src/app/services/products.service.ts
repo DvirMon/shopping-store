@@ -2,19 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { config } from '../../main-config'
 import { Observable } from 'rxjs';
+import { ProductModel } from '../models/product-model';
 
 
 export interface Category {
   _id : string,
   name : string
-}
-
-export interface Product {
-  _id : string,
-  name : string,
-  price : number,
-  categoryId : string,
-  imagePath : string,
 }
 
 @Injectable({
@@ -32,7 +25,7 @@ export class ProductsService {
     return this.http.get<Category[]>(this.baseUrl + "/categories")
   }
 
-  public getProductsByCategory(categoryId) : Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl + `/category/${categoryId}`)
+  public getProductsByCategory(categoryId) : Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`)
   }
 }

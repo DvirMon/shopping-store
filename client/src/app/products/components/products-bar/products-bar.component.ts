@@ -12,7 +12,7 @@ import { Category } from 'src/app/services/products.service';
 export class ProductsBarComponent {
 
   @Input() public categories: Category[] = []
-  public open: boolean = true
+  public open: boolean = false
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

@@ -4,6 +4,7 @@ import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { store } from 'src/app/redux/store';
 import { Router } from '@angular/router';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   public isLogin: boolean
   public isCartActive: boolean = false
   public serverError: string
-  public store = store
+  public user : UserModel = new UserModel()
 
   constructor(
     private formService: FormService,
@@ -53,8 +54,8 @@ export class LoginComponent implements OnInit {
 
   public onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
-      (userId) => {
-        this.router.navigateByUrl(`/home/${userId}`)
+      (user : UserModel) => {
+        this.router.navigateByUrl(`/home/${user._id}`)
       },
       err => {
         this.authService.serverError.next(err.error)

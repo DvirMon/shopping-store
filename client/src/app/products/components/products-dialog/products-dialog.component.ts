@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductModel } from 'src/app/models/product-model';
 
 @Component({
   selector: 'app-products-dialog',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./products-dialog.component.scss']
 })
 export class ProductsDialogComponent implements OnInit {
+
+  public Product : ProductModel;
 
   constructor() { }
 

@@ -8,22 +8,14 @@ import { Router } from '@angular/router';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { config } from "../../main-config"
+import { UserModel } from '../models/user-model';
 
 export interface Login {
   email: string,
   password: string
 }
 
-export interface User {
-  _id: string,
-  isAdmin: boolean,
-  email: string,
-  firstName: string,
-  lastName: string,
-  token: string,
-  city: string,
-  street: string,
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,15 +24,16 @@ export class AuthService {
 
   public serverError = new Subject<string>()
   public loginDate = new BehaviorSubject<any>(null)
-  private tokenHelper: JwtHelperService = new JwtHelperService()
 
+  private tokenHelper: JwtHelperService = new JwtHelperService()
   private url: string = `http://localhost:${config.portAuth}/api/auth`
+  private expiredTimer: any
 
 
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private router: Router
+    private router: Router,
   ) { }
 
   // request section
@@ -51,7 +44,7 @@ export class AuthService {
   }
 
   // register request - http://localhost:4000/api/auth/register
-  public register(registerInfo: User) {
+  public register(registerInfo: UserModel) {
     return this.handleUser("/register", registerInfo)
   }
 
@@ -61,10 +54,6 @@ export class AuthService {
   }
 
   // access token request - http://localhost:4000/api/auth/access-token
-  // public getAccessToken() {
-  //   return this.http.get(this.url + "/access-token")
-  // }
-
   public getAccessToken() {
     return this.http.get(this.url + "/access-token").pipe(
       map(data => {
@@ -74,7 +63,7 @@ export class AuthService {
       })
       ,
       catchError(error => {
-        this.handleAuthGuardError(error)
+        this.handleAuthGuardError()
         return of(false)
       })
     )
@@ -83,43 +72,39 @@ export class AuthService {
   // end of request section
 
   // logic section
-
   public handleUser(path: string, data) {
     return this.http.post(this.url + path, data)
       .pipe(
-        switchMap((accessToken: string) => {
-          this.formService.handleStore(ActionType.AddAccessToken, accessToken)
+        switchMap((response: any) => {
+          this.formService.handleStore(ActionType.AddAccessToken, response.accessToken)
           return this.getRefreshToken()
             .pipe(
-              map((refreshToken: string) => {
-                this.formService.handleStore(ActionType.AddRefreshToken, refreshToken)
-                const payload = this.tokenHelper.decodeToken(refreshToken)
-                const user = payload.user
-                return user._id
+              map((response: any) => {
+                this.formService.handleStore(ActionType.AddRefreshToken, response.refreshToken)
+                return response.user
               }))
         }))
   }
 
-  public handleAuthGuardSuccess(response) {
-    const payload = this.tokenHelper.decodeToken(response)
-    console.log(response)
-    this.formService.handleStore(ActionType.Login, { accessToken: response, user: payload.user })
+  public handleAuthGuardSuccess(accessToken) {
+    const payload = this.tokenHelper.decodeToken(accessToken)
+    this.formService.handleStore(ActionType.Login, { accessToken, user: payload.user })
+    // this.autoLogout(accessToken)
   }
 
-  public handleAuthGuardError(error: HttpErrorResponse) {
+  public handleAuthGuardError() {
     this.formService.handleStore(ActionType.Logout)
   }
 
   public autoLogin() {
     const token = store.getState().auth.refreshToken
     const user = store.getState().auth.user
-    // this.authToken()
     if (!token) {
       this.logout()
       return
     }
-    // change!!!!!!!!!!!!!!!! 
-    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf35`)
+    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
+    // this.router.navigateByUrl(`/home/${user._id}`)
     this.getAccessToken().subscribe()
   }
 
@@ -127,6 +112,29 @@ export class AuthService {
     this.formService.handleStore(ActionType.Logout)
     this.router.navigateByUrl(`/login`)
   }
+
+  public autoLogout(jwt: string) {
+    const expirationTokenDate = this.getTokenExpirationDate(jwt)
+    this.expiredTimer = setTimeout(() => {
+      this.logout()
+    }, expirationTokenDate)
+  }
+
+  // token logic
+
+  public isTokenExpired(jwt: string): boolean {
+    const token = store.getState().auth[jwt]
+    const expired = this.tokenHelper.isTokenExpired(token)
+    return !expired
+  }
+
+  public getTokenExpirationDate(jwt: string): number {
+    const token = store.getState().auth[jwt]
+    const expirationDate = this.tokenHelper.getTokenExpirationDate(token);
+    const expirationTokenDate = new Date(expirationDate).getTime() - new Date().getTime()
+    return expirationTokenDate
+  }
+
 
 
 } 

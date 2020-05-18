@@ -40,12 +40,12 @@ export class InfoService {
     return this.http.get<any>(`http://localhost:3000/api/carts/latest/${userId}`).pipe(
       take(1),
       switchMap(cart => {
-
         if (cart === null) {
           const info = { ...this.info }
           info.message = "new client"
           return of(info)
         }
+        console.log(1)
         if (cart.isActive) {
           return this.http.get<number>(`http://localhost:3000/api/cart-items/${cart._id}`).pipe(
             map(currentCartPrice => {
@@ -54,6 +54,7 @@ export class InfoService {
           )
         }
         return this.http.get<any>(`http://localhost:3000/api/orders/latest/${cart._id}`).pipe(
+          take(1),
           map(order => {
             const info = this.handleOrderData(order)
             return info
@@ -64,7 +65,7 @@ export class InfoService {
 
   }
 
-  private handleCartData(cart, price) {
+  private handleCartData(cart, price): Info {
     const info: Info = {
       message: "",
       messageDate: "You have Open Cart from",
@@ -75,7 +76,7 @@ export class InfoService {
     return info
   }
 
-  private handleOrderData(order) {
+  private handleOrderData(order): Info {
     const info: Info = {
       message: "",
       messageDate: "You Last Purchase was in",

@@ -41,10 +41,10 @@ router.post(
       user.password = undefined;
       user.personalId = undefined;
 
-      // set token
-      const token = await jwt.setAccessToken(user);
+      // get accessToken
+      const accessToken = await jwt.setAccessToken(user);
 
-      response.json(token);
+      response.json({ user, accessToken });
     } catch (err) {
       next(err);
     }
@@ -57,11 +57,11 @@ router.get(
   authorize(0, config.secret.access),
   async (request, response, next) => {
     try {
-      const payload = request.user;
+      const user = request.user;
 
-      const refreshToken = await jwt.setRefreshToken(payload);
+      const refreshToken = await jwt.setRefreshToken(user);
 
-      response.json(refreshToken);
+      response.json({ user, refreshToken });
     } catch (err) {
       next(err);
     }
@@ -88,7 +88,6 @@ router.post(
   validation.matchPasswordValidation,
   async (request, response, next) => {
     try {
-      console.log(request.body);
       const user = await authLogic.addUserAsync(new User(request.body));
 
       // set token

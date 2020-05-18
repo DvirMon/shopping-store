@@ -1,11 +1,13 @@
 const express = require("express");
-
 const router = express.Router();
 
 const Product = require("../models/product-model");
 const productLogic = require("../business-layer-logic/product-logic");
+const authorize = require("../middleware/handleAuth");
+const key = config.secret.access;
 
-router.get("/", async (request, response, next) => {
+
+router.get("/", authorize(false, key), async (request, response, next) => {
   try {
     const products = await productLogic.getAllProductsAsync();
     response.json(products);
@@ -14,14 +16,18 @@ router.get("/", async (request, response, next) => {
   }
 });
 
-router.get("/categories", async (request, response, next) => {
-  try {
-    const categories = await productLogic.getAllCategories();
-    response.json(categories);
-  } catch (err) {
-    next(err);
+router.get(
+  "/categories",
+  authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const categories = await productLogic.getAllCategories();
+      response.json(categories);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // get total store products
 router.get("/total", async (request, response, next) => {
@@ -33,47 +39,56 @@ router.get("/total", async (request, response, next) => {
   }
 });
 
-router.get("/category/:categoryId", async (request, response, next) => {
-  try {
-    const products = await productLogic.getAllProductsByCategoryAsync(
-      request.params.categoryId
-    );
+router.get(
+  "/category/:categoryId",
+  authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const products = await productLogic.getAllProductsByCategoryAsync(
+        request.params.categoryId
+      );
 
-    if (products.length === 0) {
-      next({ status: 404, message: "no content" });
+      if (products.length === 0) {
+        next({ status: 404, message: "no content" });
+      }
+
+      response.json(products);
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
-
-    response.json(products);
-  } catch (err) {
-    console.log(err)
-    next(err);
   }
-});
+);
 
-router.get("/search/:query", async (request, response, next) => {
-  try {
-    const products = await productLogic.searchProductsAsync(
-      request.params.query
-    );
-    response.json(products);
-  } catch (err) {
-    next(err);
+router.get(
+  "/search/:query",
+  authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const products = await productLogic.searchProductsAsync(
+        request.params.query
+      );
+      response.json(products);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
-
-
-router.post("/", async (request, response, next) => {
+// add product only admin 
+router.post("/", authorize(true, key), async (request, response, next) => {
   try {
     const product = await productLogic.addProductAsync(
       new Product(request.body)
-    );
+      );
     response.status(201).json(product);
   } catch (err) {
     next(err);
   }
 });
-router.put("/:_id", async (request, response, next) => {
+
+// update product only admin 
+router.put("/:_id", authorize(true, key), async (request, response, next) => {
   try {
     const product = request.body;
     product._id = request.params._id;

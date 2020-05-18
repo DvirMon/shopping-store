@@ -18,6 +18,7 @@ export class InfoResolver implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> | Observable<string> | any {
+    // console.log(this.infoService.getNotification(route.params.userId))
     return this.infoService.getNotification(route.params.userId)
   }
 }

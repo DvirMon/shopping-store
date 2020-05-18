@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormService } from 'src/app/services/form.service';
-import { AuthService, User } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-register',
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit {
   // request section 
 
   public onSubmit() {
-    const user: User = { ...this.personalDetails.value, ...this.authDetails.value }
+    const user: UserModel = { ...this.personalDetails.value, ...this.authDetails.value }
     this.authService.register(user).subscribe(
       (userId) => this.router.navigateByUrl(`/home/${userId}`)
     )

@@ -29,7 +29,6 @@ export class AuthInterceptorService implements HttpInterceptor {
     this.token = store.getState().auth.accessToken
 
     if (request.url === "http://localhost:4000/api/auth/access-token") {
-      console.log(1)
       this.token = store.getState().auth.refreshToken
       this.bearer = "Bearer-RefreshToken"
     }
@@ -39,10 +38,9 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Content-Type': 'application/json',
         'Authorization': `${this.bearer} : ${this.token}`
       })
-      
     });
-    console.log(modified)
-    // this.dialogService.handleSpinnerDialog();
+    // console.log(modified) 
+    this.dialogService.handleSpinnerDialog();
 
     return this.handInterceptor(next, modified)
   }
@@ -54,27 +52,18 @@ export class AuthInterceptorService implements HttpInterceptor {
         (event: HttpEvent<any>) => {
 
           if (event instanceof HttpResponse) {
-
-            // this.dialogService.dialog.closeAll()
+            // console.log(event)
+            this.dialogService.dialog.closeAll()
           }
-
           return event;
         }),
       catchError((error: HttpErrorResponse) => {
 
-        // this.dialogService.dialog.closeAll()
+        this.dialogService.dialog.closeAll()
 
         return throwError(error);
       }))
   }
 
-  private handleTokenExpired(error) {
-    if (error.status === 401 && store.getState().auth.isLogin) {
-      this.authService.getAccessToken().subscribe(
-        (response) => console.log(response),
-        (err) => console.log(err)
-      )
-    }
-  }
-
+ 
 }

@@ -56,7 +56,9 @@ export class InfoComponent implements OnInit {
 
   private routeSubscription() {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.info = data.info
+      if (data.info) {
+        this.info = data.info
+      }
     })
   }
 
