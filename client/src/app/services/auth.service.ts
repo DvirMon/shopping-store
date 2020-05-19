@@ -25,6 +25,16 @@ export interface Login {
 })
 export class AuthService {
 
+  public spinnerOpen: Subject<boolean> = new Subject<boolean>();
+  public onOpen(event) {
+    this.spinnerOpen.next(true);
+  }
+
+  public spinnerClose: Subject<boolean> = new Subject<boolean>();
+  public onClose(event) {
+    this.spinnerOpen.next(false);
+  }
+
   public serverError = new Subject<string>()
   public loginDate = new BehaviorSubject<any>(null)
 
@@ -81,8 +91,8 @@ export class AuthService {
         switchMap((response: any) => {
           this.formService.handleStore(ActionType.AddAccessToken, response.accessToken)
           return this.getRefreshToken()
-          .pipe(
-            map((response: any) => {
+            .pipe(
+              map((response: any) => {
                 this.formService.handleStore(ActionType.AddRefreshToken, response.refreshToken)
                 return response.user._id
               }))
@@ -110,7 +120,7 @@ export class AuthService {
     this.router.navigateByUrl(`/home/${user._id}`)
     this.getAccessToken().subscribe()
   }
-  
+
   public logout() {
     this.formService.handleStore(ActionType.Logout)
     clearTimeout(this.expiredTimer)

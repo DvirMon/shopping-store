@@ -1,11 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, NgZone } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogComponent } from '../share-modules/dialog/dialog.component';
 import { SpinnerDialog, ErrorDialog, DialogData, ProductDialog, Dialog } from '../models/dialog-model';
 import { ProductsDialogComponent } from '../products/components/products-dialog/products-dialog.component';
 import { ProductModel } from '../models/product-model';
-
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,11 @@ import { ProductModel } from '../models/product-model';
 
 export class DialogService {
 
+
   constructor(
     public dialog: MatDialog,
+    public spinnerRef: MatDialogRef<DialogComponent>,
+    private ngZone: NgZone
   ) { }
 
   public dialogConfig: MatDialogConfig = new MatDialogConfig()
@@ -23,11 +26,6 @@ export class DialogService {
   public productDialog: Dialog = new ProductDialog(this.dialog, { type: "product" })
 
 
-  // main function for opening dialog
-  public openDialog(component, data: DialogData) {
-    this.dialog.open(component, this.handleConfig(data));
-  }
-
   // open error dialog
   public handleErrorDialog(error: HttpErrorResponse) {
     const data = this.handleErrorData(error)
@@ -35,16 +33,19 @@ export class DialogService {
   }
 
   // open spinner dialog
-  public handleSpinnerDialog() {
+  public openSpinner() : MatDialogRef<DialogComponent> {
     const data = this.spinnerDialog.data
-    this.spinnerDialog.dialog.open(DialogComponent, this.handleConfig(data))
+    return this.dialog.open(DialogComponent, this.handleConfig(data));
+  }
+
+  public closeSpinner() {
+    this.spinnerRef.close(true)
   }
 
   // open product dialog
   public handleProductDialog(product: ProductModel) {
     const data = this.handleProductData(product)
-    this.productDialog.dialog.open(DialogComponent, this.handleConfig(data))
-    // this.openDialog(ProductsDialogComponent, this.handleProductData(product))
+    this.productDialog.dialog.open(ProductsDialogComponent, this.handleConfig(data))
   }
 
   // handle dialog configuration
@@ -67,11 +68,12 @@ export class DialogService {
         dialogConfig.panelClass = "dialog-spinner"
         break
       case "product":
+        dialogConfig.autoFocus = false;
         dialogConfig.height = '500px'
-        dialogConfig.width = '650px'
+        dialogConfig.width = '880px'
         dialogConfig.disableClose = false;
         dialogConfig.data = data;
-        dialogConfig.panelClass = "product-spinner"
+        dialogConfig.panelClass = "dialog-product"
         break
     }
 

@@ -20,7 +20,7 @@ const productController = require('./controllers-router/products.router')
 server.use(cors())
 server.use("/api/", rateLimit({
   windowMs: 1000, 
-  max: 5, 
+  max: 10, 
   message: "Are You a Hacker?" 
 }));
 server.use(express.json());

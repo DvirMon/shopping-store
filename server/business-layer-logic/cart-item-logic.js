@@ -32,6 +32,11 @@ const addCartItemAsync = async (cartItem) => {
   return cartItem.save();
 };
 
+const updateCartItemAsync = async (cartItem) => {
+  const info = await CartItem.updateOne({ _id: cartItem._id }, cartItem).exec();
+  return info.n ? cartItem : null;
+};
+
 const deleteCartItemAsync = async (_id) => {
   return CartItem.deleteOne({ _id }).exec();
 };
@@ -40,5 +45,6 @@ module.exports = {
   getAllCartItemsByCartAsync,
   getCurrentCartAsync,
   addCartItemAsync,
+  updateCartItemAsync,
   deleteCartItemAsync,
 };

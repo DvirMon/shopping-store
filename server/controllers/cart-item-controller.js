@@ -35,9 +35,24 @@ router.get("/:cartId", async (request, response, next) => {
   }
 });
 
+router.put("/:_id", async (request, response, next) => {
+  try {
+    const cartItem = request.body;
+    cartItem._id = request.params._id;
+    const updatedCartItem = await cartItemLogic.updateCartItemAsync(cartItem);
+    if (updatedCartItem === null) {
+      return next({ status: 404, message: "item do not exist" });
+    }
+
+    response.json(updatedCartItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete("/:_id", async (request, response, next) => {
   try {
-    await cartItemLogic.deleteCartItemAsync(request.params_id);
+    await cartItemLogic.deleteCartItemAsync(request.params._id);
     response.sendStatus(204);
   } catch (err) {
     next(err);

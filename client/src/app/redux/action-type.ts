@@ -9,9 +9,10 @@ export enum ActionType {
 
   // Cart ActionType
   AddCart,
-  AddCartItem,
   IsCartActive,
   SetCartItems,
-  UpdatedCart
+  AddCartItem,
+  UpdatedItemCart,
+  DeleteCartItem,
   
 } 

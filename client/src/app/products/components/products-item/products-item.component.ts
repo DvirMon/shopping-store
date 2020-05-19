@@ -19,7 +19,6 @@ export class ProductsItemComponent {
   ) {}
 
   public handleProductDialog() {
-
     this.dialogService.handleProductDialog(this.product)
   }
 }

@@ -10,9 +10,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
 import { DialogInterceptorService } from '../interceptors/dialog-interceptor.service';
 import { SelectComponent } from './select/select.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
+const dialogMock = {
+  close: () => { }
+};
 
 @NgModule({
   declarations: [
@@ -20,7 +23,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     UploadInputComponent,
     DialogComponent,
     TextareaComponent,
-    SelectComponent
+    SelectComponent,
   ],
   imports: [
     CoreModule,
@@ -30,26 +33,26 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     UploadInputComponent,
     DialogComponent,
     TextareaComponent,
-    SelectComponent
+    SelectComponent,
   ], providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
     },
-    { 
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: DialogInterceptorService,
       multi: true
     },
-    {
-      provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: { hasBackdrop: false }
-    },
-    {
-      provide: ErrorHandler,
-      useClass: ErrorsService
-    },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
+    { provide: MatDialogRef, useValue: DialogComponent },
+    { provide: MAT_DIALOG_DATA, useValue: [] },
+    { provide: ErrorHandler, useClass: ErrorsService },
+  ],
+  entryComponents: [
+    DialogComponent,
   ]
+
 })
 export class SharedModule { }

@@ -1,7 +1,7 @@
 <div [ngSwitch]="data.type">
   <div *ngSwitchCase="'error'">
       <div>
-          <p> 
+          <p>
               Message: {{data.message}}
           </p>
           <p *ngIf="data.status">

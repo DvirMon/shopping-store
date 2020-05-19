@@ -37,8 +37,6 @@ export class AuthInterceptorService implements HttpInterceptor {
       })
     });
 
-    console.log(modified)
-
     return next.handle(modified)  }
 
  

@@ -25,7 +25,6 @@ export class ProductDialog extends Dialog {
   ) {
     super(dialog, data)
     this.data.type = "product"
-    this.data.product = new ProductModel()
   }
 
 

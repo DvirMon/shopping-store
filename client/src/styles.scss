@@ -38,6 +38,9 @@ button {
 .dialog-spinner .mat-dialog-container {
   box-shadow: none;
   background-color: transparent;
+  padding: initial;
+  z-index: 5;
+  overflow: hidden;
 }
 
 .dialog-error .mat-dialog-container {
@@ -45,11 +48,15 @@ button {
   background-color: #f8d7da;
   border-color: #f5c6cb;
   box-shadow: none;
+  padding: 24px;
+  z-index: 10;
+  overflow: hidden;
 }
-
+ 
 .dialog-product .mat-dialog-container {
   color: black;
-  background-color: initial;
   border-color: initial;
   box-shadow: none;
+  padding: 0;
+  overflow: hidden;
 }

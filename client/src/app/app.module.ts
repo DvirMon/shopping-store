@@ -38,6 +38,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

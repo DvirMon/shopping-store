@@ -2,6 +2,7 @@
 import { Action } from "../action";
 import { ActionType } from "../action-type";
 import { CartAppState } from '../app-state/cart-state';
+import { CartModel } from 'src/app/models/cart-model';
 
 
 export const cartReducer = (oldAppState = new CartAppState(), action: Action): CartAppState => {
@@ -21,6 +22,28 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.AddCartItem:
       newAppState.cartItems.push(action.payload)
       break
+    case ActionType.UpdatedItemCart:
+      updateLogic(newAppState, action.payload)
+      break
+    case ActionType.DeleteCartItem:
+      for (const _id of action.payload) {
+        const indexToDelete = newAppState.cartItems.findIndex(doc => doc._id === _id)
+        if (indexToDelete >= 0) {
+          newAppState.cartItems.splice(indexToDelete, 1)
+        }
+      }
+      break
   }
   return newAppState
+}
+const updateLogic = (newAppState: CartAppState, payload: CartModel) => {
+  newAppState.cartItems.find(itemToUpdate => {
+    if (itemToUpdate._id === payload._id) {
+      for (const prop in payload) {
+        if (prop in itemToUpdate) {
+          itemToUpdate[prop] = payload[prop]
+        }
+      }
+    }
+  })
 }

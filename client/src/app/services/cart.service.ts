@@ -15,7 +15,8 @@ import { switchMap, tap } from 'rxjs/operators';
 export class CartService {
 
 
-  public baseUrl = "http://localhost:3000/api/carts"
+  public cartUrl: string = "http://localhost:3000/api/carts";
+  public itemCartUrl: string = "http://localhost:3000/api/cart-item"
 
   constructor(
     private http: HttpClient,
@@ -25,11 +26,11 @@ export class CartService {
   // request section
   public getNewCart(cartItem: CartItemModel) {
     const userId = store.getState().auth.user._id
-    this.http.post<CartModel>(this.baseUrl, { userId }).pipe(
+    this.http.post<CartModel>(this.cartUrl, { userId }).pipe(
       switchMap(cart => {
         this.formService.handleStore(ActionType.AddCart, cart)
         cartItem.cartId = cart._id
-        return this.http.post("http://localhost:3000/api/cart-item", cartItem)
+        return this.http.post(this.itemCartUrl, cartItem)
       })).subscribe(
         (cartItem: CartItemModel) => {
           this.formService.handleStore(ActionType.AddCartItem, cartItem)
@@ -38,9 +39,12 @@ export class CartService {
   }
 
   public addCartItem(cartItem: CartItemModel) {
-    this.http.post("http://localhost:3000/api/cart-item", cartItem).subscribe(
-      (cartItem) => this.formService.handleStore(ActionType.AddCartItem, cartItem)
-    )
+    return this.http.post(this.itemCartUrl, cartItem)
+  }
+
+  public updateCartItem(cartItem: CartItemModel) {
+    return this.http.put(this.itemCartUrl + `/${cartItem._id}`, cartItem)
+
   }
 
   // end of cart section
