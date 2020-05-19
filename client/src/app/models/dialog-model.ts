@@ -1,41 +1,57 @@
 import { ProductModel } from './product-model';
-import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 
-export abstract class DialogData {
-  constructor(public type?: string) { }
+export abstract class Dialog {
+  constructor(
+    public dialog: MatDialog,
+    public data: DialogData
+  ) { }
+
 }
 
-export class ProductDialogData extends DialogData {
-
-  constructor(
-    type?: string,
-    public product?: ProductModel,
-  ) {
-    super(type)
-    this.type = "product"
-  }
+export interface DialogData {
+  type: string
+  status?: number
+  message?: string
+  product?: ProductModel
 }
 
-export class SpinnerDialogData extends DialogData {
+export class ProductDialog extends Dialog {
+
   constructor(
-    type?: string
+    dialog: MatDialog,
+    data: DialogData,
   ) {
-    super(type)
-    this.type = "spinner"
+    super(dialog, data)
+    this.data.type = "product"
+    this.data.product = new ProductModel()
   }
+
+
 }
 
-export class ErrorDialogData extends DialogData {
+export class SpinnerDialog extends Dialog {
+  constructor(
+    dialog: MatDialog,
+    data: DialogData,
+  ) {
+    super(dialog, data)
+    this.data.type = "spinner"
+  }
+
+}
+
+export class ErrorDialog extends Dialog {
 
   constructor(
-    type?,
-    public reason?: string,
-    public status?: number
+    dialog: MatDialog,
+    data: DialogData,
   ) {
-    super(type)
-    this.type = "error"
+    super(dialog, data)
+    this.data.type = "error"
   }
+
 
 
 }

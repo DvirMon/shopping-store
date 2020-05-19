@@ -11,6 +11,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogInterceptorService implements HttpInterceptor {
 
+  public spinner : MatDialogRef<DialogComponent> 
 
   constructor(
     private dialogService: DialogService,

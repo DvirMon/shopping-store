@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductDialogData } from 'src/app/models/dialog-model';
+import { ProductDialog, DialogData } from 'src/app/models/dialog-model';
 import { CartService } from 'src/app/services/cart.service';
 import { store } from 'src/app/redux/store';
 import { CartItemModel } from 'src/app/models/cart-item-model';
-import { FormService } from 'src/app/services/form.service';
 import { CartModel } from 'src/app/models/cart-model';
 
 @Component({
@@ -18,11 +17,11 @@ export class ProductsDialogComponent implements OnInit {
   public cart : CartModel = new CartModel()
   public cartItems: CartItemModel[] = []
   public cartItem: CartItemModel = new CartItemModel(
-    this.product.product._id
+    this.data.product._id
   )
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public product: ProductDialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private cartService: CartService,
 
   ) { }
@@ -41,7 +40,7 @@ export class ProductsDialogComponent implements OnInit {
 
   public AddToCart() {
 
-    this.cartItem.totalPrice = this.product.product.price
+    this.cartItem.totalPrice = this.data.product.price
 
     console.log(this.cartItems.length)
     if (this.cartItems.length === 0) {
