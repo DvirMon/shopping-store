@@ -14,7 +14,6 @@ export class ProductsItemComponent {
 
 
   constructor(
-    private productService : ProductsService,
     private dialogService : DialogService
   ) {}
 

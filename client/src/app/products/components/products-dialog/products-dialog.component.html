@@ -7,8 +7,7 @@
   </div>
   <div class="dialog-content">
     <div class="dialog-image">
-    <img src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png" height="350px"
-    width="350px">
+    <app-product-thumbnail [product]="product" [imageHeight]="350" [imageWidth]="350"></app-product-thumbnail>
   </div>
   <div class="dialog-details">
     <div iv class="dialog-text">

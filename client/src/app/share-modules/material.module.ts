@@ -19,16 +19,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
-import {MatMenuModule} from '@angular/material/menu';
-
-import {MatSelectModule} from '@angular/material/select';
-
-import {MatTooltipModule} from '@angular/material/tooltip';
-
-import {MatCardModule} from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
- 
 @NgModule({
   declarations: [],
   imports: [
@@ -55,7 +52,8 @@ import {MatCardModule} from '@angular/material/card';
     MatMenuModule,
     MatSelectModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule
   ]
 })
 export class MaterialModule { }

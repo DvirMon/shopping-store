@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../share-modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../share-modules/core.module';
-import { OrderComponent } from './order/order.component';
+import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from './order-routing.module';
 
 
 
 @NgModule({
-  declarations: [OrderComponent],
+  declarations: [
+    OrderComponent
+  ],
   imports: [
     CoreModule,
     RouterModule,

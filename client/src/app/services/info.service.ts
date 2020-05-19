@@ -64,6 +64,7 @@ export class InfoService {
           return this.http.get<CurrentCart>(`http://localhost:3000/api/cart-item/${cart._id}`).pipe(
             map((response : CurrentCart) => {
               this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
+              this.formService.handleStore(ActionType.SetCartPrice, response.price)
               return this.handleCartData(cart, response.price)
             })
           )

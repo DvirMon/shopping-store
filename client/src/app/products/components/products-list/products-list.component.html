@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <a *ngFor="let cartItem of cartItems" mat-list-item>{{cartItem.productId}}</a>
+</mat-nav-list>
+<mat-grid-list cols="5" rowHeight="10vh" gutterSize="0">
+  <mat-grid-tile mat-icon class="my-cart">
+    <mat-icon [matBadge]="cartItems.length" matBadgeColor="warn">shopping_cart</mat-icon>
+  </mat-grid-tile>
+  <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
+  <mat-grid-tile colspan="2" class="payment" (click)="goToOrder()">Payment</mat-grid-tile>
+</mat-grid-list>

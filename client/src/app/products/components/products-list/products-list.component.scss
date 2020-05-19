@@ -1,0 +1,27 @@
+.mat-toolbar {
+  background: #5bc0de;
+  color: white;
+}
+
+mat-nav-list {
+  height: 77%;
+  overflow: auto;
+}
+
+.payment {
+  background-color: #5bc0de;
+  color: white;
+  font-size: 30px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.my-cart {
+  background-color: lightgray;
+  color: white;
+  font-size: 25px;
+  
+  mat-icon {
+    font-size: 40px;
+  }
+}

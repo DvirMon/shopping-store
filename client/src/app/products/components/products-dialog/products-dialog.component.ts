@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductDialog, DialogData } from 'src/app/models/dialog-model';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService, CartActionInfo } from 'src/app/services/cart.service';
 import { store } from 'src/app/redux/store';
 import { CartItemModel } from 'src/app/models/cart-item-model';
 import { CartModel } from 'src/app/models/cart-model';
@@ -16,6 +16,7 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class ProductsDialogComponent implements OnInit {
 
+  
 
   public product: ProductModel = new ProductModel()
   public cart: CartModel = new CartModel()
@@ -26,7 +27,6 @@ export class ProductsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private productDialogRef: MatDialogRef<ProductsDialogComponent>,
     private formService: FormService,
     private cartService: CartService,
 
@@ -37,6 +37,7 @@ export class ProductsDialogComponent implements OnInit {
     this.product = this.data.product;
     this.handleStoreSubscribe();
     this.handleUpdate();
+
   }
 
   // subscribe section
@@ -58,7 +59,7 @@ export class ProductsDialogComponent implements OnInit {
 
   public handleRequest() {
 
-    this.cartItem.totalPrice = this.handleCartItemPrice()
+    this.cartItem.totalPrice = this.getCartItemPrice()
 
     if (this.cartItems.length === 0) {
       this.cartService.getNewCart(this.cartItem)
@@ -67,23 +68,27 @@ export class ProductsDialogComponent implements OnInit {
     this.editMode
       ? this.updateCartItem()
       : this.AddCartItem()
+
   }
 
   public AddCartItem(): void {
     this.cartService.addCartItem(this.cartItem).subscribe(
-      (cartItem: CartItemModel) => {
-        this.formService.handleStore(ActionType.AddCartItem, cartItem)
-        this.cartItem = cartItem
+      (response : CartActionInfo) => {
+        this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
+        console.log(response)
+        this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
+        this.cartItem = response.cartItem
         this.editMode = true
       }
-    )
-  }
-
-  public updateCartItem(): void {
-    console.log(this.cartItem)
+      )
+    }
+    
+    public updateCartItem(): void {
     this.cartService.updateCartItem(this.cartItem).subscribe(
-      (cartItem: CartItemModel) => {
-        this.formService.handleStore(ActionType.UpdatedItemCart, cartItem)
+      (response : CartActionInfo) => {
+        this.formService.handleStore(ActionType.UpdatedItemCart, response.cartItem)
+        this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
+        this.cartItem = response.cartItem
       }
     )
   }
@@ -132,8 +137,9 @@ export class ProductsDialogComponent implements OnInit {
 
   }
 
-  public handleCartItemPrice(): number {
+  public getCartItemPrice(): number {
     return this.cartItem.quantity * this.product.price
   }
+
 
 }

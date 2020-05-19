@@ -1,11 +1,10 @@
 <div class="item" (click)="handleProductDialog()">
   <div class="img-container">
-    <img mat-card-image class="img-size"
-      src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png"
-      alt="Photo of a {{product.name}}">
+    <app-product-thumbnail [product]="product" class="img-size" [imageHeight]="200" [imageWidth]="200"></app-product-thumbnail>
+    <mat-card-content>
+      <p class="price">{{product.price | currency}}</p>
+    </mat-card-content>
+    <mat-card-content class="name">
+      <p>{{product.name}}</p>
+    </mat-card-content>
   </div>
-  <mat-card-content>
-    <p class="price">{{product.price | currency}}</p>
-  </mat-card-content>
-  <mat-card-content class="name">{{product.name}}</mat-card-content>
-</div>

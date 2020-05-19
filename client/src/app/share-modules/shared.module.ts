@@ -53,6 +53,6 @@ const dialogMock = {
   entryComponents: [
     DialogComponent,
   ]
-
+  
 })
 export class SharedModule { }

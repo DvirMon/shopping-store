@@ -7,4 +7,5 @@ export class CartAppState {
   public cart: CartModel = new CartModel()
   public isCartActive: boolean = false
   public cartItems : CartItemModel[] = []
+  public cartTotalPrice : number = 0
 }

@@ -11,6 +11,7 @@ export enum ActionType {
   AddCart,
   IsCartActive,
   SetCartItems,
+  SetCartPrice,
   AddCartItem,
   UpdatedItemCart,
   DeleteCartItem,

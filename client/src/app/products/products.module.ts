@@ -3,12 +3,14 @@ import { RouterModule } from '@angular/router';
 
 import { CoreModule } from '../share-modules/core.module';
 import { SharedModule } from '../share-modules/shared.module';
+import { ProductsRoutingModule } from './products-routing.module';
 
 import { ProductsComponent } from './components/products/products.component';
-import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsBarComponent } from './components/products-bar/products-bar.component';
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
+import { ProductsListComponent } from './components/products-list/products-list.component';
+import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
 
 
@@ -17,7 +19,10 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     ProductsComponent,
     ProductsBarComponent,
     ProductsItemComponent,
-    ProductsDialogComponent],
+    ProductsDialogComponent,
+    ProductsListComponent,
+    ProductThumbnailComponent
+  ],
   imports: [
     CoreModule,
     RouterModule,

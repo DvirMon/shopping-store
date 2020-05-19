@@ -15,6 +15,9 @@
         <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-menu-item>
           <span>Logout</span>
         </button>
+        <button *ngIf="isLogin" routerLink="/home/{{user._id}}" routerLinkActive="active" mat-menu-item>
+          <span>Home</span>
+        </button>
       </mat-menu>
     </mat-toolbar>
     <ng-content></ng-content>

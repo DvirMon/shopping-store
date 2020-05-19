@@ -8,6 +8,10 @@ import { CartItemModel } from '../models/cart-item-model';
 import { switchMap, tap } from 'rxjs/operators';
 
 
+export interface CartActionInfo {
+  cartTotalPrice: number
+  cartItem: CartItemModel
+}
 
 @Injectable({
   providedIn: 'root'
