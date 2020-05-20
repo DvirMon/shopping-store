@@ -55,10 +55,11 @@ button {
  
 .dialog-product .mat-dialog-container {
   color: black;
-  border-color: initial;
+  // border: 0.5px solid #048bf3;
   box-shadow: none;
   padding: 0;
   overflow: hidden;
+  box-shadow: initial;
 }
 
 

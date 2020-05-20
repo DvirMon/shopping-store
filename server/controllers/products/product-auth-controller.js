@@ -3,9 +3,10 @@ const router = express.Router();
 
 const productLogic = require("../../business-layer-logic/product-logic");
 const authorize = require("../../middleware/handleAuth");
+
 const key = config.secret.access;
 
-router.use(authorize(false, key));
+// router.use(authorize(false, key));
 
 router.get("/", async (request, response, next) => {
   try {

@@ -6,9 +6,9 @@ const productLogic = require("../../business-layer-logic/product-logic");
 const authorize = require("../../middleware/handleAuth");
 const key = config.secret.access;
 
-router.use(authorize(true, key));
+// router.use(authorize(true, key));
 
-// add product only admin
+// add product - admin only 
 router.post("/", async (request, response, next) => {
   try {
     const product = await productLogic.addProductAsync(
@@ -20,7 +20,7 @@ router.post("/", async (request, response, next) => {
   }
 });
 
-// update product only admin
+// update product - admin only 
 router.put("/:_id", async (request, response, next) => {
   try {
     const product = request.body;

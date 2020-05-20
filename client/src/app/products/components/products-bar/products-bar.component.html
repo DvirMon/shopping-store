@@ -4,10 +4,8 @@
     <mat-toolbar>
       <span>My Cart</span>
       <span class="spacer"></span>
-      <span>Delete Cart</span>
-      <button mat-icon-button type="button">
-        <mat-icon>delete</mat-icon>
-      </button>
+      <button mat-button type="button">Delete Cart</button>
+      <mat-icon>delete</mat-icon>
     </mat-toolbar>
     <app-products-list></app-products-list>
 
@@ -20,14 +18,13 @@
           <span>|</span>
           <button mat-button routerLink="/products/{{category._id}}">{{category.name}}
           </button>
-          <!-- <span>|</span> -->
         </li>
       </ul>
       <span class="spacer"></span>
-      <span>My Cart</span>
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
+      <button type="button" aria-label="Toggle sidenav" mat-button (click)="drawer.toggle()">
+        My Cart
       </button>
+      <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>
