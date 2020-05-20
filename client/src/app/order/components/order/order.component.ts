@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { OrderModel } from 'src/app/models/order-model';
 
 @Component({
   selector: 'app-order',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(OrderModel) public order: OrderModel
+  ) { }
 
   ngOnInit(): void {
+
   }
 
 }

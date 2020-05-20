@@ -36,3 +36,6 @@ server.use("/api/products", productController)
 server.use(handleErrors)
 
 server.listen(config.port, () => console.log(`Listening to http://localhost:${config.port}`))
+
+
+

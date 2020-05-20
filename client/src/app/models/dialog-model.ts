@@ -1,5 +1,6 @@
 import { ProductModel } from './product-model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Injectable, Inject } from '@angular/core';
 
 
 export abstract class Dialog {
@@ -17,38 +18,42 @@ export interface DialogData {
   product?: ProductModel
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ProductDialog extends Dialog {
 
   constructor(
     dialog: MatDialog,
-    data: DialogData,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
   ) {
-    super(dialog, data)
-    this.data.type = "product"
+    super(dialog, { type: "product" })
   }
-
-
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class SpinnerDialog extends Dialog {
   constructor(
     dialog: MatDialog,
-    data: DialogData,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
   ) {
-    super(dialog, data)
-    this.data.type = "spinner"
+    super(dialog, { type: "spinner" })
   }
 
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ErrorDialog extends Dialog {
 
   constructor(
     dialog: MatDialog,
-    data: DialogData,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
   ) {
-    super(dialog, data)
-    this.data.type = "error"
+    super(dialog, { type: "error" })
   }
 
 

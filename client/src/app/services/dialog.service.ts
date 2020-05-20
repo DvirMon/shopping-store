@@ -1,11 +1,12 @@
 import { Injectable, Inject, NgZone } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogComponent } from '../share-modules/dialog/dialog.component';
 import { SpinnerDialog, ErrorDialog, DialogData, ProductDialog, Dialog } from '../models/dialog-model';
 import { ProductsDialogComponent } from '../products/components/products-dialog/products-dialog.component';
 import { ProductModel } from '../models/product-model';
 import { BehaviorSubject } from 'rxjs';
+import { inject } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root',
@@ -16,36 +17,28 @@ export class DialogService {
 
   constructor(
     public dialog: MatDialog,
-    public spinnerRef: MatDialogRef<DialogComponent>,
-    private ngZone: NgZone
+    public productDialog: ProductDialog,
+    public errorDialog: ErrorDialog,
+    public spinnerDialog: SpinnerDialog,
+    @Inject(MAT_DIALOG_DEFAULT_OPTIONS) public dialogConfig: MatDialogConfig
   ) { }
-
-  public dialogConfig: MatDialogConfig = new MatDialogConfig()
-  public spinnerDialog: Dialog = new SpinnerDialog(this.dialog, { type: "spinner" });
-  public errorDialog: Dialog = new ErrorDialog(this.dialog, { type: "error" })
-  public productDialog: Dialog = new ProductDialog(this.dialog, { type: "product" })
-
 
   // open error dialog
   public handleErrorDialog(error: HttpErrorResponse) {
-    const data = this.handleErrorData(error)
-    this.errorDialog.dialog.open(DialogComponent, this.handleConfig(data))
+    this.errorDialog.data = this.handleErrorData(error)
+    this.errorDialog.dialog.open(DialogComponent, this.handleConfig(this.errorDialog.data))
   }
 
   // open spinner dialog
-  public openSpinner() : MatDialogRef<DialogComponent> {
+  public openSpinner(): MatDialogRef<DialogComponent> {
     const data = this.spinnerDialog.data
     return this.dialog.open(DialogComponent, this.handleConfig(data));
   }
 
-  public closeSpinner() {
-    this.spinnerRef.close(true)
-  }
-
   // open product dialog
   public handleProductDialog(product: ProductModel) {
-    const data = this.handleProductData(product)
-    this.productDialog.dialog.open(ProductsDialogComponent, this.handleConfig(data))
+    this.productDialog.data.product = product
+    this.productDialog.dialog.open(ProductsDialogComponent, this.handleConfig(this.productDialog.data))
   }
 
   // handle dialog configuration
@@ -81,14 +74,7 @@ export class DialogService {
   }
 
 
-  public handleProductData(product: ProductModel): any {
-    const data = { ...this.productDialog.data }
-    data.product = product
-    return data
-  }
-
-
-  public handleErrorData(error: HttpErrorResponse): any {
+  public handleErrorData(error: HttpErrorResponse): DialogData {
     const data = { ...this.errorDialog.data }
     this.handleErrorMessage(error)
     data.message = error?.message ? error.message : 'Error'

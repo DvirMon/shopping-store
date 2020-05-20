@@ -1,34 +1,38 @@
+
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProductDialog, DialogData } from 'src/app/models/dialog-model';
-import { CartService, CartActionInfo } from 'src/app/services/cart.service';
-import { store } from 'src/app/redux/store';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { CartItemModel } from 'src/app/models/cart-item-model';
 import { CartModel } from 'src/app/models/cart-model';
 import { ProductModel } from 'src/app/models/product-model';
-import { ActionType } from 'src/app/redux/action-type';
+import { DialogData } from 'src/app/models/dialog-model';
+
 import { FormService } from 'src/app/services/form.service';
+import { CartService, CartActionInfo } from 'src/app/services/cart.service';
+
+import { store } from 'src/app/redux/store';
+import { ActionType } from 'src/app/redux/action-type';
 
 @Component({
   selector: 'app-products-dialog',
   templateUrl: './products-dialog.component.html',
   styleUrls: ['./products-dialog.component.scss']
 })
+
 export class ProductsDialogComponent implements OnInit {
 
-  
-
-  public product: ProductModel = new ProductModel()
   public cart: CartModel = new CartModel()
   public cartItems: CartItemModel[] = []
   public cartItem: CartItemModel = new CartItemModel()
-
+  
   public editMode: boolean = false
-
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formService: FormService,
     private cartService: CartService,
+    public product: ProductModel
 
   ) { }
 
@@ -37,7 +41,6 @@ export class ProductsDialogComponent implements OnInit {
     this.product = this.data.product;
     this.handleStoreSubscribe();
     this.handleUpdate();
-
   }
 
   // subscribe section
@@ -73,19 +76,18 @@ export class ProductsDialogComponent implements OnInit {
 
   public AddCartItem(): void {
     this.cartService.addCartItem(this.cartItem).subscribe(
-      (response : CartActionInfo) => {
+      (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
-        console.log(response)
         this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
         this.cartItem = response.cartItem
         this.editMode = true
       }
-      )
-    }
-    
-    public updateCartItem(): void {
+    )
+  }
+
+  public updateCartItem(): void {
     this.cartService.updateCartItem(this.cartItem).subscribe(
-      (response : CartActionInfo) => {
+      (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.UpdatedItemCart, response.cartItem)
         this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
         this.cartItem = response.cartItem

@@ -11,10 +11,12 @@ import { AuthInterceptorService } from '../interceptors/auth-interceptor.service
 import { DialogInterceptorService } from '../interceptors/dialog-interceptor.service';
 import { SelectComponent } from './select/select.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { OrderModel } from '../models/order-model';
+import { ProductModel } from '../models/product-model';
 
 
 const dialogMock = {
-  close: () => { }
+  show: () => { }
 };
 
 @NgModule({
@@ -45,14 +47,28 @@ const dialogMock = {
       useClass: DialogInterceptorService,
       multi: true
     },
+    {
+      provide: OrderModel,
+      useValue: {}
+    },
+    {
+      provide: ProductModel,
+      useValue: new ProductModel()
+    },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
     { provide: MatDialogRef, useValue: DialogComponent },
-    { provide: MAT_DIALOG_DATA, useValue: [] },
-    { provide: ErrorHandler, useClass: ErrorsService },
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
+    },
+    {
+      provide: ErrorHandler,
+      useClass: ErrorsService
+    },
   ],
   entryComponents: [
     DialogComponent,
   ]
-  
+
 })
 export class SharedModule { }
