@@ -11,23 +11,14 @@ mat-toolbar {
     width: 100%;
   }
 }
+.single-autocomplete {
+  height: 500px !important;
+}
 
 mat-option {
   background-color: white !important;
   height: inherit;
-  padding: 1.5%;
   box-sizing: border-box;
-
-  .search-image {
-    float: left;
-    width: 20%;
-    max-height: 80px;
-  }
-  
-  .search-content {
-    float: right;
-    width: 80%;
-  }
 }
 
 mat-option:hover {

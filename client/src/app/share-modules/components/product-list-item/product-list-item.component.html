@@ -1,0 +1,9 @@
+<div class="search-image">
+  <app-product-thumbnail [product]="product" [imageHeight]="80" [imageWidth]="80"></app-product-thumbnail>
+</div>
+<mat-card-content class="search-content">
+  <span class="price">{{product.price | currency}}</span>
+</mat-card-content>
+<mat-card-content class="search-content">
+  <span>{{product.name}}</span>
+</mat-card-content>

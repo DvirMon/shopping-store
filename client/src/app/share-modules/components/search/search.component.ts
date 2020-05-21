@@ -5,6 +5,8 @@ import { startWith, map, debounceTime, distinctUntilChanged, tap, take, switchMa
 import { ProductsService } from 'src/app/services/products.service';
 import { ProductModel } from 'src/app/models/product-model';
 import { ProductDialog } from 'src/app/models/dialog-model';
+import {  MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-search',
@@ -13,8 +15,9 @@ import { ProductDialog } from 'src/app/models/dialog-model';
 })
 export class SearchComponent implements OnInit {
 
-
   @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
+  @ViewChild('option') option: ElementRef;
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>
   public filteredOptions: Observable<string[]>;
@@ -23,6 +26,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private productService: ProductsService,
+    private dialogService : DialogService
   ) { }
 
   ngOnInit() {
@@ -43,6 +47,8 @@ export class SearchComponent implements OnInit {
         if (!searchTerm) {
           return []
         }
+
+        
         return this.searchEntries = this.productService.searchProducts(searchTerm).pipe(
           tap((response: ProductModel[]) => {
             if (response.length === 0) {
@@ -55,9 +61,10 @@ export class SearchComponent implements OnInit {
         )
       }))
   }
-
-  public onSelect(event) {
-    event.stopPropagation();
-  }
+ 
+  public onSelect(product) {
+    this.panel.openPanel()
+    this.dialogService.handleProductDialog(product)
+    }
 
 }
