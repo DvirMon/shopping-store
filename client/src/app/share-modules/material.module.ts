@@ -24,6 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 
 @NgModule({
@@ -53,7 +55,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatSelectModule,
     MatTooltipModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

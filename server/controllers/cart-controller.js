@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Cart = require("../models/cart-model");
 const cartLogic = require("../business-layer-logic/cart-logic");
+const cartItemLogic = require('../business-layer-logic/cart-item-logic')
 const authLogic = require("../business-layer-logic/auth-logic");
 
 router.get("/", async (request, response, next) => {
@@ -27,9 +28,10 @@ router.get("/latest/:userId", async (request, response, next) => {
 // get new cart
 router.post("/", async (request, response, next) => {
   try {
-    // valid if user exist
+
+    // valid if user exist (for postmen)
     const user = await authLogic.isUserExist(request.body.userId);
- 
+
     if (!user) {
       return next({ status: 404, message: "user is not exist" });
     }
@@ -52,6 +54,13 @@ router.patch("/:_id", async (request, response, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+// delete cart and cart items
+router.delete("/:_id", async (request, response) => {
+  await cartLogic.deleteCartAsync(request.params._id);
+  await cartItemLogic.deleteAllCartItemsAsync(request.params._id)
+  response.sendStatus(204);
 });
 
 module.exports = router;

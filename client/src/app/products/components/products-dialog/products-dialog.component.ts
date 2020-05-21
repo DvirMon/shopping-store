@@ -65,7 +65,13 @@ export class ProductsDialogComponent implements OnInit {
     this.cartItem.totalPrice = this.getCartItemPrice()
 
     if (this.cartItems.length === 0) {
-      this.cartService.getNewCart(this.cartItem)
+      this.cartService.getNewCart(this.cartItem).subscribe(
+        (response: CartActionInfo) => {
+          this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
+          this.handleRequestSuccess(response)
+          this.editMode = true
+        }
+      )
       return
     }
     this.editMode
@@ -78,21 +84,25 @@ export class ProductsDialogComponent implements OnInit {
     this.cartService.addCartItem(this.cartItem).subscribe(
       (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
-        this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
-        this.cartItem = response.cartItem
-        this.editMode = true
+        this.formService.handleStore(ActionType.IsCartActive, true)
+        this.handleRequestSuccess(response)
       }
-    )
+      )
   }
 
   public updateCartItem(): void {
     this.cartService.updateCartItem(this.cartItem).subscribe(
       (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.UpdatedItemCart, response.cartItem)
-        this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
-        this.cartItem = response.cartItem
+        this.handleRequestSuccess(response)
       }
-    )
+      )
+    }
+    
+    public handleRequestSuccess(response : CartActionInfo) {
+      this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
+      this.cartItem = response.cartItem
+    
   }
 
   // end of request section

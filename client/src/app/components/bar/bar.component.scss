@@ -5,10 +5,16 @@
 .mat-toolbar {
   position: relative;
   top: 0;
-  z-index: 10;}
+  z-index: 10;
+}
 
 button {
   outline: transparent;
+}
+
+.app-search {
+position: absolute;
+left: 20px;
 }
 
 .spacer {
@@ -19,13 +25,9 @@ ul {
   margin: 0;
 }
 
+
 .main-links > li {
   display: inline-block;
-  margin-left: 3%;
-
-  button {
-    height: 64px;
-  }
 }
 
 .welcome {

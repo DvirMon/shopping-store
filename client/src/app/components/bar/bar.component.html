@@ -1,16 +1,16 @@
-<mat-sidenav-container class="sidenav-container" >
-  <mat-sidenav-content  >
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
     <mat-toolbar class="mat-elevation-z10" color="primary">
       <ul class="main-links">
         <li>
-          <span>Shopping-Store</span>
+          <span>Grocery-Online</span>
         </li>
       </ul>
       <span class="spacer"></span>
       <span *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
-      </button> 
+      </button>
       <mat-menu #menu="matMenu">
         <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-menu-item>
           <span>Logout</span>

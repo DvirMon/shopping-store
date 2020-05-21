@@ -7,7 +7,7 @@ import { CartModel } from 'src/app/models/cart-model';
 
 export const cartReducer = (oldAppState = new CartAppState(), action: Action): CartAppState => {
 
-  const newAppState = { ...oldAppState }
+  let newAppState = { ...oldAppState }
 
   switch (action.type) {
     case ActionType.AddCart:
@@ -28,6 +28,9 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.UpdatedItemCart:
       updateLogic(newAppState, action.payload)
       break
+    case ActionType.ResetCartState:
+      newAppState = new CartAppState()
+      break
     case ActionType.DeleteCartItem:
       for (const _id of action.payload) {
         const indexToDelete = newAppState.cartItems.findIndex(doc => doc._id === _id)
@@ -36,6 +39,8 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
         }
       }
       break
+    case ActionType.Logout:
+      newAppState = new CartAppState()
   }
   return newAppState
 }

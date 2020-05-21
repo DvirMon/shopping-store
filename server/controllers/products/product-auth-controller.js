@@ -34,7 +34,7 @@ router.get("/category/:categoryId", async (request, response, next) => {
 
     if (products.length === 0) {
       next({ status: 404, message: "no content" });
-    }
+    } 
 
     response.json(products);
   } catch (err) {
@@ -45,12 +45,13 @@ router.get("/category/:categoryId", async (request, response, next) => {
 
 router.get(
   "/search/:query",
-
   async (request, response, next) => {
+    console.log(1)
     try {
       const products = await productLogic.searchProductsAsync(
         request.params.query
       );
+      console.log(products)
       response.json(products);
     } catch (err) {
       next(err);

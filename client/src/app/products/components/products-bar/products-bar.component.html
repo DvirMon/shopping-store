@@ -1,17 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="open" position="end">
-    <mat-toolbar>
-      <span>My Cart</span>
-      <span class="spacer"></span>
-      <button mat-button type="button">Delete Cart</button>
-      <mat-icon>delete</mat-icon>
-    </mat-toolbar>
     <app-products-list></app-products-list>
-
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="info">
+    <mat-toolbar >
       <span>Products</span>
       <ul class="main-links">
         <li routerLinkActive="active" *ngFor="let category of categories">
@@ -26,6 +19,8 @@
       </button>
       <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
     </mat-toolbar>
+    <mat-divider ></mat-divider>
+    <app-search></app-search>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -12,22 +12,31 @@
 }
 
 .sidenav {
-  width: 400px;
+  width: 350px;
   box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
+.mat-sidenav-content .mat-toolbar {
+  // background-image: url("/assets/images/products-bar.jpg");
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  ul {
+    z-index: 2;
+    margin: 0;
+  }
+}
+
+mat-divider {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
   z-index: 1;
-}
-
-ul {
-  margin: 0;
 }
 
 .spacer {
@@ -38,4 +47,3 @@ ul {
   display: inline-block;
   margin-left: 1%;
 }
-

@@ -4,7 +4,6 @@ import { CoreModule } from '../share-modules/core.module';
 import { MyInputComponent } from './my-input/my-input.component';
 import { UploadInputComponent } from './upload-input/upload-input.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { TextareaComponent } from './textarea/textarea.component';
 import { ErrorsService } from '../services/errors.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
@@ -13,6 +12,7 @@ import { SelectComponent } from './select/select.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OrderModel } from '../models/order-model';
 import { ProductModel } from '../models/product-model';
+import { SearchComponent } from './search/search.component';
 
 
 const dialogMock = {
@@ -24,8 +24,8 @@ const dialogMock = {
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    TextareaComponent,
     SelectComponent,
+    SearchComponent
   ],
   imports: [
     CoreModule,
@@ -34,8 +34,8 @@ const dialogMock = {
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    TextareaComponent,
     SelectComponent,
+    SearchComponent
   ], providers: [
     {
       provide: HTTP_INTERCEPTORS,

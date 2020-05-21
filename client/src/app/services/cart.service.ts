@@ -30,16 +30,12 @@ export class CartService {
   // request section
   public getNewCart(cartItem: CartItemModel) {
     const userId = store.getState().auth.user._id
-    this.http.post<CartModel>(this.cartUrl, { userId }).pipe(
+    return this.http.post<CartModel>(this.cartUrl, { userId }).pipe(
       switchMap(cart => {
         this.formService.handleStore(ActionType.AddCart, cart)
         cartItem.cartId = cart._id
-        return this.http.post(this.itemCartUrl, cartItem)
-      })).subscribe(
-        (cartItem: CartItemModel) => {
-          this.formService.handleStore(ActionType.AddCartItem, cartItem)
-        }
-      )
+        return this.addCartItem(cartItem)
+      }))
   }
 
   public addCartItem(cartItem: CartItemModel) {
@@ -48,12 +44,16 @@ export class CartService {
 
   public updateCartItem(cartItem: CartItemModel) {
     return this.http.put(this.itemCartUrl + `/${cartItem._id}`, cartItem)
-
   }
 
+  public deleteCartAndCartItems(_id) {
+    this.http.delete(this.cartUrl + `/${_id}`).subscribe(
+      () => this.formService.handleStore(ActionType.ResetCartState)
+    )
+  }
+
+  
+
   // end of cart section
-
-
-  //logic action section
 
 }

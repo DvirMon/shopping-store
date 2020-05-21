@@ -1,0 +1,28 @@
+<mat-toolbar>
+  <form class="search-form">
+    <mat-form-field class="search-input" [floatLabel]="'never'">
+      <input type="text" aria-label="Number" placeholder="Search..." matInput #searchInput [matAutocomplete]="auto"
+        [formControl]="searchControl">
+      <mat-icon>search</mat-icon>
+    </mat-form-field>
+  </form>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngIf="searchTerm">
+        No search result was found...
+      </mat-option>
+      <mat-option *ngFor="let option of searchEntries | async" (click)="onSelect($event)">
+        <div class="search-image">
+          <img mat-card-image
+          src="http://localhost:3000/uploads/products/{{option.categoryId}}/{{option.imagePath}}.png"
+          alt="Photo of a {{option.name}}" height="80px">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="search-content">
+          <span>{{option.name}}</span>
+        </div>
+        <div class="search-content">
+          <span>{{option.price}}</span>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+</mat-toolbar>

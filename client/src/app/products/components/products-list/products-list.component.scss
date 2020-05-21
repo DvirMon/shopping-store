@@ -8,6 +8,10 @@ mat-nav-list {
   overflow: auto;
 }
 
+.spacer {
+  flex: 1 0.5 auto;
+}
+
 .payment {
   background-color: #5bc0de;
   color: white;
@@ -20,7 +24,7 @@ mat-nav-list {
   background-color: lightgray;
   color: white;
   font-size: 25px;
-  
+
   mat-icon {
     font-size: 40px;
   }

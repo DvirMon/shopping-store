@@ -11,7 +11,7 @@ const searchProductsAsync = async (query) => {
   return await Product.find({ name: { $regex: query, $options: "i" } }).exec();
 };
 
-// set total amount of products docs
+// get total amount of products docs
 const getTotalDocsAsync = async () => {
   return Product.estimatedDocumentCount();
 };

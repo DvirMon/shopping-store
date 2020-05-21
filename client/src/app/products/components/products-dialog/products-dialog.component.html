@@ -19,7 +19,7 @@
       </button>
       <mat-form-field>
         <input matInput type="number" class="input-size" name="quantity" #cartItemQuantity="ngModel"
-        [(ngModel)]="cartItem.quantity">
+        [(ngModel)]="cartItem.quantity" min="1">
       </mat-form-field>
       <button (click)="onRemoveQuantity()" [disableRipple]="true" mat-icon-button>
         <mat-icon>remove_circle_outline</mat-icon>

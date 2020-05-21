@@ -27,10 +27,12 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.socket = action.payload
       break
     case ActionType.Logout:
+      // newAppState = new AuthAppState()
       newAppState.isLogin = false
       newAppState.isAdmin = null
       newAppState.user = null
       newAppState.refreshToken = null
+      newAppState.accessToken = null
       sessionStorage.clear();
   }
   return newAppState

@@ -123,7 +123,7 @@ export class AuthService {
 
   public logout() {
     this.formService.handleStore(ActionType.Logout)
-    clearTimeout(this.expiredTimer)
+    // clearTimeout(this.expiredTimer)
     this.router.navigateByUrl(`/login`)
   }
 

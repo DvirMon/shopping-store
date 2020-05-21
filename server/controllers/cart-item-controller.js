@@ -50,13 +50,12 @@ router.put("/:_id", async (request, response, next) => {
   }
 });
 
-router.delete("/:_id", async (request, response, next) => {
-  try {
-    await cartItemLogic.deleteCartItemAsync(request.params._id);
-    response.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
+
+// delete cart item
+router.delete("/:_id", async (request, response) => {
+  await cartItemLogic.deleteCartItemAsync(request.params._id)
+  response.sendStatus(204);
 });
+
 
 module.exports = router;
