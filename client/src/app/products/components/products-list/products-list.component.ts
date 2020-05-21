@@ -63,4 +63,8 @@ export class ProductsListComponent implements OnInit {
     this.cartService.deleteCartAndCartItems(this.cart._id)
   }
 
+  public handleCartItemList() {
+    
+  }
+
 }

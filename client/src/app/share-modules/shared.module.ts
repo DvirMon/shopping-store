@@ -16,10 +16,10 @@ import { ProductModel } from '../models/product-model';
 import { MyInputComponent } from './components/my-input/my-input.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { SelectComponent } from './components/select/select.component';
 import { SearchComponent } from './components/search/search.component';
-import { ProductListItemComponent } from './components/product-list-item/product-list-item.component';
-import { ProductThumbnailComponent } from '../products/components/product-thumbnail/product-thumbnail.component';
+import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
+import { CartListItemComponent } from './components/cart-list-item/cart-list-item.component';
+import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
 
  
 @NgModule({
@@ -27,10 +27,10 @@ import { ProductThumbnailComponent } from '../products/components/product-thumbn
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    SelectComponent,
     SearchComponent,
+    SearchListItemComponent,
     ProductThumbnailComponent,
-    ProductListItemComponent
+    CartListItemComponent
   ],
   imports: [
     CoreModule,
@@ -39,10 +39,10 @@ import { ProductThumbnailComponent } from '../products/components/product-thumbn
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
-    SelectComponent,
     SearchComponent,
+    SearchListItemComponent,
     ProductThumbnailComponent,
-    ProductListItemComponent
+    CartListItemComponent
   ], providers: [
     {
       provide: HTTP_INTERCEPTORS,

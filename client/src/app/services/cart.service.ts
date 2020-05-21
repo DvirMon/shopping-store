@@ -46,6 +46,13 @@ export class CartService {
     return this.http.put(this.itemCartUrl + `/${cartItem._id}`, cartItem)
   }
 
+  public deleteCartItem(_id) {
+    this.http.delete(this.itemCartUrl + `/${_id}`).subscribe(
+      () => this.formService.handleStore(ActionType.DeleteCartItem, _id)
+    )
+
+  }
+
   public deleteCartAndCartItems(_id) {
     this.http.delete(this.cartUrl + `/${_id}`).subscribe(
       () => this.formService.handleStore(ActionType.ResetCartState)

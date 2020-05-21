@@ -1,7 +1,7 @@
 <mat-toolbar>
   <form class="search-form">
     <mat-form-field class="search-input" [floatLabel]="'never'">
-      <input type="text" aria-label="Number" placeholder="Search..." matInput #searchInput [matAutocomplete]="auto"
+      <input type="text" aria-label="Number" placeholder="search..." matInput #searchInput [matAutocomplete]="auto"
         [formControl]="searchControl">
       <mat-icon>search</mat-icon>
     </mat-form-field>
@@ -11,7 +11,7 @@
       No search result was found...
     </mat-option>
     <mat-option *ngFor="let option of searchEntries | async" (click)="onSelect(option)">
-      <app-product-list-item [product]="option"></app-product-list-item>
+      <app-search-list-item  [product]="option"></app-search-list-item>
     </mat-option>
   </mat-autocomplete>
 </mat-toolbar>

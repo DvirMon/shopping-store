@@ -5,7 +5,7 @@
   <mat-icon>delete</mat-icon>
 </mat-toolbar>
 <mat-nav-list>
-  <a *ngFor="let cartItem of cartItems" mat-list-item>{{cartItem.productId}}</a>
+  <app-cart-list-item *ngFor="let cartItem of cartItems" [cartItem]="cartItem"></app-cart-list-item>
 </mat-nav-list>
 <mat-grid-list cols="5" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile mat-icon class="my-cart">

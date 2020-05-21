@@ -1,0 +1,12 @@
+<mat-grid-list cols="4" class="cart-item" *ngIf="product" rowHeight="6vh">
+  <mat-grid-tile rowspan="2">
+    <app-product-thumbnail [product]="product" [imageHeight]="80" [imageWidth]="80"></app-product-thumbnail>
+  </mat-grid-tile>
+  <mat-grid-tile class="text" rowspan="1" colspan="3" class="search-content">
+    <span>{{product.name}}</span>
+  </mat-grid-tile>
+  <mat-grid-tile class="text" style="text-align: left;" rowspan="1" colspan="3" class="search-content">
+    {{product.price | currency}}
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-divider></mat-divider>

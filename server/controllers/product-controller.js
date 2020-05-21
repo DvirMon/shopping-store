@@ -7,7 +7,7 @@ const authorize = require("../middleware/handleAuth");
 const key = config.secret.access;
 
 
-router.get("/", authorize(false, key), async (request, response, next) => {
+router.get("/", async (request, response, next) => {
   try {
     const products = await productLogic.getAllProductsAsync();
     response.json(products);
@@ -15,6 +15,9 @@ router.get("/", authorize(false, key), async (request, response, next) => {
     next(err);
   }
 });
+
+
+
 
 router.get(
   "/categories",
@@ -34,6 +37,17 @@ router.get("/total", async (request, response, next) => {
   try {
     const totalDocs = await productLogic.getTotalDocsAsync();
     response.json(totalDocs);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+
+router.get("/:_id", async (request, response, next) => {
+  try {
+    const product = await productLogic.getProductAsync(request.params._id);
+    response.json(product);
   } catch (err) {
     next(err);
   }
@@ -74,6 +88,7 @@ router.get(
     }
   }
 );
+
 
 // add product only admin 
 router.post("/", authorize(true, key), async (request, response, next) => {

@@ -16,6 +16,8 @@ import { InfoComponent } from './components/info/info.component';
 import { AboutComponent } from './components/about/about.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
+import { BoldSearchResultDirective } from './directives/bold-search-result.directive';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     HomeComponent,
     InfoComponent,
     AboutComponent,
+    BoldSearchResultDirective,
 
   ],
   imports: [

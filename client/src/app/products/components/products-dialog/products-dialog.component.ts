@@ -71,21 +71,22 @@ export class ProductsDialogComponent implements OnInit {
           this.handleRequestSuccess(response)
           this.editMode = true
         }
-      )
-      return
-    }
-    this.editMode
+        )
+        return
+      }
+      this.editMode
       ? this.updateCartItem()
       : this.AddCartItem()
-
-  }
-
-  public AddCartItem(): void {
-    this.cartService.addCartItem(this.cartItem).subscribe(
-      (response: CartActionInfo) => {
-        this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
-        this.formService.handleStore(ActionType.IsCartActive, true)
-        this.handleRequestSuccess(response)
+      
+    }
+    
+    public AddCartItem(): void {
+      this.cartService.addCartItem(this.cartItem).subscribe(
+        (response: CartActionInfo) => {
+          this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
+          this.formService.handleStore(ActionType.IsCartActive, true)
+          this.handleRequestSuccess(response)
+          this.editMode = true
       }
       )
   }

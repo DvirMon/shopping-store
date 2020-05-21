@@ -13,13 +13,13 @@ const sanitize = require("./middleware/handleTags");
 const cartController = require('./controllers/cart-controller')
 const cartItemController = require('./controllers/cart-item-controller')
 const orderController = require('./controllers/order-controller')
-const productController = require('./controllers-router/products.router')
+const productController = require('./controllers/product-controller')
 
  
 // middleware
 server.use(cors())
 server.use("/api/", rateLimit({
-  windowMs: 1000, 
+  windowMs: 5000, 
   max: 10, 
   message: "Are You a Hacker?" 
 }));

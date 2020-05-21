@@ -3,7 +3,7 @@ mat-toolbar {
 
   .search-form {
     min-width: 150px;
-    width: 80%;
+    width: 50%;
     font-size: 20px;
   }
 
@@ -11,8 +11,9 @@ mat-toolbar {
     width: 100%;
   }
 }
+
 .single-autocomplete {
-  height: 500px !important;
+justify-content: center;
 }
 
 mat-option {

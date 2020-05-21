@@ -6,6 +6,10 @@ const getAllProductsAsync = async () => {
   return await Product.find({}).exec();
 };
 
+const getProductAsync = async (_id) => {
+  return await Product.findOne({ _id }).exec();
+};
+
 // search function - get products by query
 const searchProductsAsync = async (query) => {
   return await Product.find({ name: { $regex: query, $options: "i" } }).exec();
@@ -18,8 +22,7 @@ const getTotalDocsAsync = async () => {
 
 // get products by category
 const getAllProductsByCategoryAsync = async (categoryId) => {
-  return await Product.find({ categoryId })
-    .exec();
+  return await Product.find({ categoryId }).exec();
 };
 
 const addProductAsync = async (product) => {
@@ -37,6 +40,7 @@ const getAllCategories = async () => {
 
 module.exports = {
   getAllProductsAsync,
+  getProductAsync,
   getTotalDocsAsync,
   searchProductsAsync,
   getAllProductsByCategoryAsync,

@@ -1,3 +1,5 @@
+import { ProductModel } from './product-model';
+
 export class CartItemModel {
 
   public constructor(

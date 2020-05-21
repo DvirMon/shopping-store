@@ -29,3 +29,12 @@ mat-nav-list {
     font-size: 40px;
   }
 }
+
+mat-list-item {
+  height: auto;
+}
+
+app-product-list-item {
+  width: 100%;
+  display: block;
+}

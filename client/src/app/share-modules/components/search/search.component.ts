@@ -41,14 +41,12 @@ export class SearchComponent implements OnInit {
 
   public getSearchTerm(): Observable<ProductModel[]> {
     return this.searchControl.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(600),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => {
         if (!searchTerm) {
           return []
         }
-
-        
         return this.searchEntries = this.productService.searchProducts(searchTerm).pipe(
           tap((response: ProductModel[]) => {
             if (response.length === 0) {

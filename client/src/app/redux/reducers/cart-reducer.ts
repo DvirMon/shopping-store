@@ -32,11 +32,9 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
       newAppState = new CartAppState()
       break
     case ActionType.DeleteCartItem:
-      for (const _id of action.payload) {
-        const indexToDelete = newAppState.cartItems.findIndex(doc => doc._id === _id)
-        if (indexToDelete >= 0) {
-          newAppState.cartItems.splice(indexToDelete, 1)
-        }
+      const indexToDelete = newAppState.cartItems.findIndex(doc => doc._id === action.payload)
+      if (indexToDelete >= 0) {
+        newAppState.cartItems.splice(indexToDelete, 1)
       }
       break
     case ActionType.Logout:

@@ -14,6 +14,12 @@ export interface Category {
   name: string
 }
 
+export interface ProductCartInfo {
+  name: string
+  imagePath: string,
+  
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,11 +36,21 @@ export class ProductsService {
   ) { }
 
   public getProductsCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.baseUrl + "/auth/categories")
+    return this.http.get<Category[]>(this.baseUrl + "/categories")
+  }
+
+  public getProductNameAndImage(_id) {
+    return this.http.get(this.baseUrl + `/${_id}`).pipe(
+      map((product : ProductModel) => {
+        delete product.price
+        delete product._id
+        return product
+      })
+    )
   }
 
   public getProductsByCategory(categoryId): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(this.baseUrl + `/auth/category/${categoryId}`).pipe(
+    return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`).pipe(
       map(response => {
         const collection = []
         const temp = [...response]
@@ -49,7 +65,7 @@ export class ProductsService {
   }
 
   public searchProducts(value: string) {
-    return this.http.get(this.baseUrl + `/auth/search/${value}`)
+    return this.http.get(this.baseUrl + `/search/${value}`)
   }
 
   // end of requests section
