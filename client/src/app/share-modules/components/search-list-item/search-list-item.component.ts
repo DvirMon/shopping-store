@@ -9,5 +9,6 @@ import { ProductModel } from 'src/app/models/product-model';
 export class SearchListItemComponent {
 
   @Input() public product: ProductModel = new ProductModel()
+  @Input() public searchTerm: string
 
 }

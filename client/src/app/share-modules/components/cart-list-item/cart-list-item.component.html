@@ -8,13 +8,16 @@
   <mat-grid-tile rowspan="1" class="align-left">
     {{cartItem.totalPrice | currency}}
   </mat-grid-tile>
-  <mat-grid-tile rowspan="2">
+  <mat-grid-tile rowspan="1">
     <button mat-icon-button (click)="deleteCartItem()">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-grid-tile>
   <mat-grid-tile rowspan="1" class="align-left">
     {{cartItem.quantity}} units
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="1">
+    <button mat-button color="warn" (click)="updateItem()">Update</button>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-divider></mat-divider>

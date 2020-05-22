@@ -1,17 +1,17 @@
 <mat-toolbar>
   <form class="search-form">
     <mat-form-field class="search-input" [floatLabel]="'never'">
-      <input type="text" aria-label="Number" placeholder="search..." matInput #searchInput [matAutocomplete]="auto"
+      <input type="text" placeholder="Search..." matInput #searchInput [matAutocomplete]="auto"
         [formControl]="searchControl">
       <mat-icon>search</mat-icon>
     </mat-form-field>
-  </form>
+  </form> 
   <mat-autocomplete class="single-autocomplete" autoActiveFirstOption #panel #auto="matAutocomplete">
-    <mat-option *ngIf="searchTerm">
+    <mat-option *ngIf="results">
       No search result was found...
-    </mat-option>
+    </mat-option> 
     <mat-option *ngFor="let option of searchEntries | async" (click)="onSelect(option)">
-      <app-search-list-item  [product]="option"></app-search-list-item>
+      <app-search-list-item [product]="option" [searchTerm]="searchControl.value"></app-search-list-item>
     </mat-option>
   </mat-autocomplete>
-</mat-toolbar>
+</mat-toolbar> 

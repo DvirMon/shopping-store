@@ -5,7 +5,7 @@ import { startWith, map, debounceTime, distinctUntilChanged, tap, take, switchMa
 import { ProductsService } from 'src/app/services/products.service';
 import { ProductModel } from 'src/app/models/product-model';
 import { ProductDialog } from 'src/app/models/dialog-model';
-import {  MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
@@ -17,28 +17,34 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
-  @ViewChild('option') option: ElementRef;
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>
-  public filteredOptions: Observable<string[]>;
-  public searchTerm: boolean = false
+  public results: boolean = false
 
 
   constructor(
     private productService: ProductsService,
-    private dialogService : DialogService
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
+    this.search()
+  }
 
+  // main search function
+  public search() {
     this.getSearchTerm().subscribe(
       () => {
         this.searchInput.nativeElement.focus()
+      },
+      (err) => {
+        console.log(err)
+        this.search
       }
     )
-
   }
-
+  
+  // function that listen to user search query
   public getSearchTerm(): Observable<ProductModel[]> {
     return this.searchControl.valueChanges.pipe(
       debounceTime(600),
@@ -47,22 +53,27 @@ export class SearchComponent implements OnInit {
         if (!searchTerm) {
           return []
         }
-        return this.searchEntries = this.productService.searchProducts(searchTerm).pipe(
-          tap((response: ProductModel[]) => {
-            if (response.length === 0) {
-              this.searchTerm = true
-              return
-            }
-            this.searchTerm = false
-            return this.searchEntries
-          })
-        )
+        return this.getResults(searchTerm)
       }))
+    }
+    
+    // function to fetch result from server
+  public getResults(searchTerm): Observable<ProductModel[]> {
+    return this.searchEntries = this.productService.searchProducts(searchTerm).pipe(
+      tap((response: ProductModel[]) => {
+        if (response.length === 0) {
+          this.results = true
+          return
+        }
+        this.results = false
+        return this.searchEntries
+      })
+    )
   }
- 
+
   public onSelect(product) {
     this.panel.openPanel()
     this.dialogService.handleProductDialog(product)
-    }
+  }
 
 }

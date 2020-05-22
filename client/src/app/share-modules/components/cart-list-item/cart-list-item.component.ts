@@ -3,6 +3,7 @@ import { ProductModel } from 'src/app/models/product-model';
 import { CartItemModel } from 'src/app/models/cart-item-model';
 import { ProductsService } from 'src/app/services/products.service';
 import { CartService } from 'src/app/services/cart.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-cart-list-item',
@@ -18,12 +19,17 @@ export class CartListItemComponent implements OnInit {
   constructor(
     private productService: ProductsService,
     private cartService: CartService,
+    private dialogService : DialogService
   ) { }
 
   ngOnInit(): void {
     this.productService.getProductNameAndImage(this.cartItem.productId).subscribe(
       (response) => this.product = response
     )
+  }
+
+  public updateItem() {
+    this.dialogService.handleProductDialog(this.product)
   }
 
   public deleteCartItem() {

@@ -20,6 +20,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 import { CartListItemComponent } from './components/cart-list-item/cart-list-item.component';
 import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
+import { HighLightPipe } from '../pipes/high-light.pipe';
 
  
 @NgModule({
@@ -30,7 +31,9 @@ import { SearchListItemComponent } from './components/search-list-item/search-li
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
-    CartListItemComponent
+    CartListItemComponent,
+    HighLightPipe,
+
   ],
   imports: [
     CoreModule,
@@ -42,7 +45,8 @@ import { SearchListItemComponent } from './components/search-list-item/search-li
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
-    CartListItemComponent
+    CartListItemComponent,
+    HighLightPipe,
   ], providers: [
     {
       provide: HTTP_INTERCEPTORS,

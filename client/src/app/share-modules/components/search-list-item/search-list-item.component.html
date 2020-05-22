@@ -3,7 +3,7 @@
     <app-product-thumbnail [product]="product" [imageHeight]="80" [imageWidth]="80"></app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile class="text" rowspan="1" colspan="3" class="search-content">
-    <span>{{product.name}}</span>
+    <span [innerHTML]="product.name | highLight: searchTerm : 'strong'"></span>
   </mat-grid-tile>
   <mat-grid-tile class="text" style="text-align: left;" rowspan="1" colspan="3" class="search-content">
     {{product.price | currency}}

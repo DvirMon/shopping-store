@@ -42,8 +42,6 @@ export class ProductsService {
   public getProductNameAndImage(_id) {
     return this.http.get(this.baseUrl + `/${_id}`).pipe(
       map((product : ProductModel) => {
-        delete product.price
-        delete product._id
         return product
       })
     )
