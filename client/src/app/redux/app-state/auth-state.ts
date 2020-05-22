@@ -1,4 +1,4 @@
-import { UserModel } from 'src/app/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 export class AuthAppState {
  

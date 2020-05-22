@@ -1,6 +1,6 @@
-import { UserModel } from 'src/app/models/user-model';
-import { CartModel } from 'src/app/models/cart-model';
-import { CartItemModel } from 'src/app/models/cart-item-model';
+import { UserModel } from 'src/app/utilities/models/user-model';
+import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 
 export class CartAppState {
 

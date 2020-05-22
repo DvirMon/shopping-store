@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './share-modules/core.module';
-import { SharedModule } from './share-modules/shared.module'
+import { SharedModule } from './share-components/shared-components.module'
 
 import { AuthModule } from './auth/auth.module';
 

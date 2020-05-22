@@ -3,24 +3,26 @@ import { CoreModule } from '../share-modules/core.module';
 
 // import for global providers
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptorService } from '../interceptors/auth-interceptor.service';
-import { DialogInterceptorService } from '../interceptors/dialog-interceptor.service';
-import { ErrorsService } from '../services/errors.service';
+import { AuthInterceptorService } from '../utilities/interceptors/auth-interceptor.service';
+import { DialogInterceptorService } from '../utilities/interceptors/dialog-interceptor.service';
+import { ErrorsService } from '../utilities/services/errors.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 // import models for providers 
-import { OrderModel } from '../models/order-model';
-import { ProductModel } from '../models/product-model';
+import { OrderModel } from '../utilities/models/order-model';
+import { ProductModel } from '../utilities/models/product-model';
 
 // shared components 
 import { MyInputComponent } from './components/my-input/my-input.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { SearchComponent } from './components/search/search.component';
+import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 import { CartListItemComponent } from './components/cart-list-item/cart-list-item.component';
-import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
-import { HighLightPipe } from '../pipes/high-light.pipe';
+
+
+import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
  
 @NgModule({
@@ -34,7 +36,7 @@ import { HighLightPipe } from '../pipes/high-light.pipe';
     CartListItemComponent,
     HighLightPipe,
 
-  ],
+  ], 
   imports: [
     CoreModule,
   ],

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { DialogData } from 'src/app/models/dialog-model';
+import { DialogData } from 'src/app/utilities/models/dialog-model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({

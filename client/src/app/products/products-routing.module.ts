@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProductsComponent } from './components/products/products.component';
-import { ProductsResolver } from '../resolvers/products-resolver.service';
-import { ProductsGuard } from '../guards/products.guard';
+import { ProductsResolver } from '../utilities/resolvers/products-resolver.service';
+import { ProductsGuard } from '../utilities/guards/products.guard';
 
 
 const routes: Routes = [

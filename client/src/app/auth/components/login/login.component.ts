@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService } from 'src/app/services/form.service';
-import { AuthService } from 'src/app/services/auth.service';
+
+import { FormService } from 'src/app/utilities/services/form.service';
+import { AuthService } from 'src/app/utilities/services/auth.service';
+import { UserModel } from 'src/app/utilities/models/user-model';
+import { CartService } from 'src/app/utilities/services/cart.service';
+
 import { store } from 'src/app/redux/store';
 import { Router } from '@angular/router';
-import { UserModel } from 'src/app/models/user-model';
-import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-login',

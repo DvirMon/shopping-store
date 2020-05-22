@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from './form.service';
-import { ActionType } from '../redux/action-type';
+import { ActionType } from '../../redux/action-type';
 import { CartModel } from '../models/cart-model';
-import { store } from '../redux/store';
+import { store } from '../../redux/store';
 import { CartItemModel } from '../models/cart-item-model';
 import { switchMap, tap } from 'rxjs/operators';
 

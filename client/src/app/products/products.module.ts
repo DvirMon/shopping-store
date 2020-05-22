@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CoreModule } from '../share-modules/core.module';
-import { SharedModule } from '../share-modules/shared.module';
+import { SharedModule } from '../share-components/shared-components.module';
 import { ProductsRoutingModule } from './products-routing.module';
 
 import { ProductsComponent } from './components/products/products.component';

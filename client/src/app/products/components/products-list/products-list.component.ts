@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from 'src/app/models/product-model';
-import { CartModel } from 'src/app/models/cart-model';
-import { CartItemModel } from 'src/app/models/cart-item-model';
+import { ProductModel } from 'src/app/utilities/models/product-model';
+import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { store } from 'src/app/redux/store';
 import { Router } from '@angular/router';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/utilities/services/cart.service';
 
 @Component({
   selector: 'app-products-list',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { store } from '../redux/store';
+import { store } from '../../redux/store';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({

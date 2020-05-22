@@ -3,8 +3,8 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthGuard } from './guards/auth.guard';
-import { InfoResolver } from './resolvers/info-resolver.service';
+import { AuthGuard } from './utilities/guards/auth.guard';
+import { InfoResolver } from './utilities/resolvers/info-resolver.service';
 
 
 const routes: Routes = [

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductModel } from 'src/app/models/product-model';
-import { CartItemModel } from 'src/app/models/cart-item-model';
-import { ProductsService } from 'src/app/services/products.service';
-import { CartService } from 'src/app/services/cart.service';
-import { DialogService } from 'src/app/services/dialog.service';
+import { ProductModel } from 'src/app/utilities/models/product-model';
+import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
+import { ProductsService } from 'src/app/utilities/services/products.service';
+import { CartService } from 'src/app/utilities/services/cart.service';
+import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 @Component({
   selector: 'app-cart-list-item',

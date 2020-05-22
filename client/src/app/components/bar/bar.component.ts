@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/utilities/services/auth.service';
 import { Router } from '@angular/router';
 import { store } from 'src/app/redux/store';
-import { UserModel } from 'src/app/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-bar',

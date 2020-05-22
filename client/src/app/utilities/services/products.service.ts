@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { config } from '../../main-config'
+import { config } from '../../../main-config'
 import { Observable } from 'rxjs';
 import { ProductModel } from '../models/product-model';
 import { map, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ProductsDialogComponent } from '../products/components/products-dialog/products-dialog.component';
+import { ProductsDialogComponent } from '../../products/components/products-dialog/products-dialog.component';
 import { FormControl } from '@angular/forms';
 
 

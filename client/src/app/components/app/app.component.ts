@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { DialogInterceptorService } from 'src/app/interceptors/dialog-interceptor.service';
-import { DialogService } from 'src/app/services/dialog.service';
+import { AuthService } from 'src/app/utilities/services/auth.service';
+import { DialogInterceptorService } from 'src/app/utilities/interceptors/dialog-interceptor.service';
+import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 @Component({
   selector: 'app-root',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { store } from '../redux/store';
+import { store } from '../../redux/store';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/dialog.service';

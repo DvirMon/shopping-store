@@ -1,9 +1,9 @@
 import { Injectable, Inject, NgZone } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DialogComponent } from '../share-modules/components/dialog/dialog.component';
+import { DialogComponent } from '../../share-components/components/dialog/dialog.component';
 import { SpinnerDialog, ErrorDialog, DialogData, ProductDialog, Dialog } from '../models/dialog-model';
-import { ProductsDialogComponent } from '../products/components/products-dialog/products-dialog.component';
+import { ProductsDialogComponent } from '../../products/components/products-dialog/products-dialog.component';
 import { ProductModel } from '../models/product-model';
 import { BehaviorSubject } from 'rxjs';
 import { inject } from '@angular/core/testing';

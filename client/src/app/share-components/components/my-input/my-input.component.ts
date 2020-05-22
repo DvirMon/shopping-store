@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-import { FormService } from 'src/app/services/form.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { FormService } from 'src/app/utilities/services/form.service';
+import { AuthService } from 'src/app/utilities/services/auth.service';
 // const generator = require('generate-password')
 
 import { generate } from 'generate-password'

@@ -1,5 +1,5 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { InfoService, Info } from 'src/app/services/info.service';
+import { InfoService, Info } from 'src/app/utilities/services/info.service';
 import { ActivatedRoute, ActivationEnd, Data } from '@angular/router';
 import { store } from 'src/app/redux/store';
 

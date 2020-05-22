@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subject, Observable, of } from 'rxjs';
-import { ActionType } from '../redux/action-type';
-import { store } from '../redux/store';
+import { ActionType } from '../../redux/action-type';
+import { store } from '../../redux/store';
 import { CustomValidationService } from './custom-validation.service';
 import { HttpClient } from '@angular/common/http';
 import { distinctUntilChanged, take, switchMap, map } from 'rxjs/operators';

@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChildren, ElementRef, ViewChild, AfterViewInit }
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, tap, take, switchMap } from 'rxjs/operators';
-import { ProductsService } from 'src/app/services/products.service';
-import { ProductModel } from 'src/app/models/product-model';
-import { ProductDialog } from 'src/app/models/dialog-model';
+import { ProductsService } from 'src/app/utilities/services/products.service';
+import { ProductModel } from 'src/app/utilities/models/product-model';
+import { ProductDialog } from 'src/app/utilities/models/dialog-model';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { DialogService } from 'src/app/services/dialog.service';
+import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 @Component({
   selector: 'app-search',
