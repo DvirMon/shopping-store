@@ -61,10 +61,18 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
+mat-grid-list {
+}
 .btn-add {
   border-top: 1px solid #c7cbd7;
   padding-top: 20px;
   width: 50%;
-  text-align: right;
   float: right;
+}
+
+mat-grid-tile {
+  width: auto;
+  padding-top: 20px;
+  justify-content: left;
+  text-align: left;
 }

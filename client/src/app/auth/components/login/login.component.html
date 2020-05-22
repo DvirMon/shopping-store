@@ -7,8 +7,7 @@
 <form *ngIf="!isLogin" [formGroup]="loginForm" class="mat-elevation-z1">
   <mat-grid-list cols="1" rowHeight="100px">
     <mat-grid-tile>
-      <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="text"
-        hint="valid email format : dom@gmail.com">
+      <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="text">
       </app-input>
     </mat-grid-tile>
     <mat-grid-tile>

@@ -5,7 +5,12 @@
     matTooltipPosition="right" (click)="pushPassword()" (mouseenter)="generatePassword()">
     <mat-icon>vpn_key</mat-icon>
   </button>
-  <mat-hint *ngIf="placeHolder !== 'Password'">{{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
+  <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Email'">
+    {{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
+  <mat-hint *ngIf="placeHolder === 'Email' && control.untouched">Please enter valid email format : dom@gmail.com
+  </mat-hint>
+  <mat-hint *ngIf="placeHolder === 'Email' && control.touched">Thank you! we will mot share your email addresses with sponsors or
+    any third parties</mat-hint>
   <mat-hint *ngIf="placeHolder === 'Password'">Recommended password : {{password}}</mat-hint>
   <mat-error>{{error}}</mat-error>
   <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>

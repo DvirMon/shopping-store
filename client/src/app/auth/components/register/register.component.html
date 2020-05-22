@@ -10,8 +10,7 @@
             </app-input>
           </mat-grid-tile>
           <mat-grid-tile>
-            <app-input [control]="authDetails.controls['email']" placeHolder="Email" type="text"
-              hint="valid email format : dom@gmail.com" controlName="email">
+            <app-input [control]="authDetails.controls['email']" placeHolder="Email" type="text" controlName="email">
             </app-input>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -27,8 +26,7 @@
         </mat-grid-list>
         <mat-grid-list cols="1" rowHeight="22vh">
           <mat-grid-tile>
-            <button [disabled]=authDetails.invalid mat-button matStepperNext
-              type="button">Next</button>
+            <button [disabled]=authDetails.invalid mat-button matStepperNext type="button">Next</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>

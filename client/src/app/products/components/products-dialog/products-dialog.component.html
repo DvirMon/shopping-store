@@ -7,27 +7,35 @@
   </div>
   <div class="dialog-content">
     <div class="dialog-image">
-    <app-product-thumbnail [product]="product" [imageHeight]="350" [imageWidth]="350"></app-product-thumbnail>
+      <app-product-thumbnail [product]="product" [imageHeight]="350" [imageWidth]="350"></app-product-thumbnail>
+    </div>
+    <div class="dialog-details">
+      <div iv class="dialog-text">
+        {{product.price |currency}}
+      </div>
+      <div class="dialog-input">
+        <button matPrefix [disableRipple]="true" mat-icon-button>
+          <mat-icon (click)="onAddQuantity()">add_circle_outline</mat-icon>
+        </button>
+        <mat-form-field>
+          <input matInput type="number" class="input-size" name="quantity" #cartItemQuantity="ngModel"
+            [(ngModel)]="cartItem.quantity">
+          </mat-form-field>
+          units
+        <button matTooltip="{{minQuantity ? 'min quantity is 1 unit' : ''}}" (click)="onRemoveQuantity()"
+          [disableRipple]="true" mat-icon-button matSuffix matTooltipPosition="right">
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+      </div>
+      <mat-grid-list class="btn-add" cols="2" rowHeight="5vh">
+        <mat-grid-tile>
+          Total Price : {{cartItem.totalPrice | currency}}
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-flat-button color="warn" [disabled]="cartItemQuantity.invalid"
+            (click)="handleRequest()">{{editMode ? 'Update Item' :'Add To Cart'}}</button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
-  <div class="dialog-details">
-    <div iv class="dialog-text">
-      {{product.price |currency}}
-    </div>
-    <div class="dialog-input">
-      <button [disableRipple]="true" mat-icon-button>
-        <mat-icon (click)="onAddQuantity()">add_circle_outline</mat-icon>
-      </button>
-      <mat-form-field>
-        <input matInput type="number" class="input-size" name="quantity" #cartItemQuantity="ngModel"
-        [(ngModel)]="cartItem.quantity" min="1">
-      </mat-form-field>
-      <button (click)="onRemoveQuantity()" [disableRipple]="true" mat-icon-button>
-        <mat-icon>remove_circle_outline</mat-icon>
-      </button>
-    </div>
-    <div class="btn-add">
-      <button mat-flat-button color="warn" (click)="handleRequest()">{{editMode ? 'Update Item' :'Add To Cart'}}</button>
-    </div>
-  </div>
-</div>
 </div>

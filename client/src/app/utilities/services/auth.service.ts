@@ -2,7 +2,7 @@ import { Injectable, ɵConsole } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { Subject, BehaviorSubject, of } from 'rxjs';
+import { Subject, BehaviorSubject, of, Observable } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { FormService } from './form.service';
@@ -20,20 +20,15 @@ export interface Login {
   password: string
 }
 
+export interface AuthData {
+  token: string
+  user: UserModel
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  public spinnerOpen: Subject<boolean> = new Subject<boolean>();
-  public onOpen(event) {
-    this.spinnerOpen.next(true);
-  }
-
-  public spinnerClose: Subject<boolean> = new Subject<boolean>();
-  public onClose(event) {
-    this.spinnerOpen.next(false);
-  }
 
   public serverError = new Subject<string>()
   public loginDate = new BehaviorSubject<any>(null)
@@ -62,13 +57,13 @@ export class AuthService {
   }
 
   // refresh token request - http://localhost:4000/api/auth/refresh-token
-  public getRefreshToken() {
-    return this.http.get(this.url + "/refresh-token")
+  public getRefreshToken() : Observable<AuthData>{
+    return this.http.get<AuthData>(this.url + "/refresh-token")
   }
 
   // access token request - http://localhost:4000/api/auth/access-token
-  public getAccessToken() {
-    return this.http.get(this.url + "/access-token").pipe(
+  public getAccessToken(): Observable<boolean> {
+    return this.http.get<String>(this.url + "/access-token").pipe(
       map(data => {
         const isAuth = !!data
         this.handleAuthGuardSuccess(data)
@@ -85,31 +80,31 @@ export class AuthService {
   // end of request section
 
   // login actions section
-  public handleUser(path: string, data) {
-    return this.http.post(this.url + path, data)
+  public handleUser(path: string, data): Observable<string> {
+    return this.http.post<AuthData>(this.url + path, data)
       .pipe(
-        switchMap((response: any) => {
-          this.formService.handleStore(ActionType.AddAccessToken, response.accessToken)
+        switchMap((response: AuthData) => {
+          this.formService.handleStore(ActionType.AddAccessToken, response.token)
           return this.getRefreshToken()
             .pipe(
-              map((response: any) => {
-                this.formService.handleStore(ActionType.AddRefreshToken, response.refreshToken)
+              map((response: AuthData) => {
+                this.formService.handleStore(ActionType.AddRefreshToken, response.token)
                 return response.user._id
               }))
         }))
   }
 
-  public handleAuthGuardSuccess(accessToken) {
+  public handleAuthGuardSuccess(accessToken) : void {
     const payload = this.tokenHelper.decodeToken(accessToken)
     this.formService.handleStore(ActionType.Login, { accessToken, user: payload.user })
     // this.autoLogout(accessToken)
   }
 
-  public handleAuthGuardError() {
+  public handleAuthGuardError() : void{
     this.formService.handleStore(ActionType.Logout)
   }
 
-  public autoLogin() {
+  public autoLogin(): void {
     const token = store.getState().auth.refreshToken
     const user = store.getState().auth.user
     const isCartActive = store.getState().cart.isCartActive
@@ -118,16 +113,15 @@ export class AuthService {
       return
     }
     this.router.navigateByUrl(`/home/${user._id}`)
-    this.getAccessToken().subscribe()
   }
 
-  public logout() {
+  public logout() : void{
     this.formService.handleStore(ActionType.Logout)
     // clearTimeout(this.expiredTimer)
     this.router.navigateByUrl(`/login`)
   }
 
-  public autoLogout(jwt: string) {
+  public autoLogout(jwt: string): void {
     const expirationTokenDate = this.getTokenExpirationDate(jwt)
     this.expiredTimer = setTimeout(() => {
       this.logout()

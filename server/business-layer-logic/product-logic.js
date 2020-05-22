@@ -12,7 +12,7 @@ const getProductAsync = async (_id) => {
 
 // search function - get products by query
 const searchProductsAsync = async (query) => {
-  return await Product.find({ name: { $regex: query, $options: "i" } }).exec();
+  return await Product.find({ name: { $regex: query, $options: "i"} }).limit(10).exec();
 };
 
 // get total amount of products docs

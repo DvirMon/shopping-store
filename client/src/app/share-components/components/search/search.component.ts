@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
+  
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>
   public results: boolean = false

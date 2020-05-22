@@ -35,7 +35,7 @@ export class FormService {
       email: ['',
         [Validators.required, Validators.pattern(this.pattern.email)]
       ],
-      password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)], []],
+      password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)]],
     })
   }
 
@@ -83,7 +83,6 @@ export class FormService {
       }),
     })
   }
-
 
 
   public getErrorMessage(control: FormControl, placeHolder: string) {
