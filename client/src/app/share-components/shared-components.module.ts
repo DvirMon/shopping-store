@@ -23,6 +23,7 @@ import { CartListItemComponent } from './components/cart-list-item/cart-list-ite
 
 
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
+import { CartListComponent } from './components/cart-list/cart-list.component';
 
  
 @NgModule({
@@ -34,8 +35,9 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     SearchListItemComponent,
     ProductThumbnailComponent,
     CartListItemComponent,
+    CartListComponent,
     HighLightPipe,
-
+    
   ], 
   imports: [
     CoreModule,
@@ -48,6 +50,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     SearchListItemComponent,
     ProductThumbnailComponent,
     CartListItemComponent,
+    CartListComponent,
     HighLightPipe,
   ], providers: [
     {

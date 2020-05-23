@@ -9,7 +9,6 @@ import { ProductsComponent } from './components/products/products.component';
 import { ProductsBarComponent } from './components/products-bar/products-bar.component';
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
-import { ProductsListComponent } from './components/products-list/products-list.component';
 
 
 
@@ -19,7 +18,6 @@ import { ProductsListComponent } from './components/products-list/products-list.
     ProductsBarComponent,
     ProductsItemComponent,
     ProductsDialogComponent,
-    ProductsListComponent,
     
   ],
   imports: [

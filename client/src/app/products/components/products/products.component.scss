@@ -10,8 +10,10 @@ mat-grid-list {
 
 mat-grid-tile {
   position: absolute;
+  left: 50px;
   top: 100px;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
 }
 
 

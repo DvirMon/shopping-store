@@ -1,10 +1,11 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="open" position="end">
-    <app-products-list></app-products-list>
+    <!-- <app-products-list></app-products-list> -->
+    <app-cart-list></app-cart-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar >
+    <mat-toolbar>
       <span>Products</span>
       <ul class="main-links">
         <li routerLinkActive="active" *ngFor="let category of categories">

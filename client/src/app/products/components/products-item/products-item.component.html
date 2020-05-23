@@ -1,10 +1,9 @@
-<div class="item" (click)="handleProductDialog()">
-  <div class="img-container">
-    <app-product-thumbnail [product]="product" class="img-size" [imageHeight]="200" [imageWidth]="200"></app-product-thumbnail>
-    <mat-card-content>
-      <p class="price">{{product.price | currency}}</p>
-    </mat-card-content>
-    <mat-card-content class="name">
-      <p>{{product.name}}</p>
-    </mat-card-content>
-  </div>
+<mat-grid-list class="item" cols="2" rowHeight="1:0.5" (click)="handleProductDialog()">
+  <mat-grid-tile rowspan="3">
+    <app-product-thumbnail [product]="product" class="img-size" [imageHeight]="200" [imageWidth]="200">
+    </app-product-thumbnail>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="1"></mat-grid-tile>
+  <mat-grid-tile rowspan="1" class="price">{{product.price | currency}}</mat-grid-tile>
+  <mat-grid-tile rowspan="1" class="name">{{product.name}}</mat-grid-tile>
+</mat-grid-list>

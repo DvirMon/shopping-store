@@ -1,0 +1,31 @@
+<mat-toolbar>
+  <span>My Cart</span>
+  <span class="spacer"></span>
+  <mat-form-field *ngIf="orderMode" [floatLabel]="'never'">
+    <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl">
+    <mat-icon>search</mat-icon>
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button *ngIf="!orderMode" mat-button type="button" (click)="deleteAllCartItems()">Delete Cart</button>
+  <mat-icon *ngIf="!orderMode">delete</mat-icon>
+  <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to
+    store</button>
+</mat-toolbar>
+<mat-nav-list>
+  <app-cart-list-item 
+  *ngFor="let cartItem of cartItems" 
+  [cartItem]="cartItem" 
+  [orderMode]="orderMode"
+  [searchTerm]="searchControl.value">
+  </app-cart-list-item>
+</mat-nav-list>
+<mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
+  <mat-grid-tile mat-icon class="my-cart">
+    <mat-icon [matBadge]="cartItems.length" matBadgeColor="warn">shopping_cart</mat-icon>
+  </mat-grid-tile>
+  <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
+  <mat-grid-tile colspan="2" class="payment" (click)="goToOrder()">Payment</mat-grid-tile>
+</mat-grid-list>
+<mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
+  <mat-grid-tile class="my-cart">Total : {{cartTotalPrice | currency}}</mat-grid-tile>
+</mat-grid-list>

@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { store } from 'src/app/redux/store';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/utilities/services/cart.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  selector: 'app-cart-list',
+  templateUrl: './cart-list.component.html',
+  styleUrls: ['./cart-list.component.scss']
 })
-export class ProductsListComponent implements OnInit {
+export class CartListComponent implements OnInit {
 
+  @Input() public orderMode: boolean = false
 
   public product: ProductModel = new ProductModel()
   public cart: CartModel = new CartModel()
@@ -20,10 +22,11 @@ export class ProductsListComponent implements OnInit {
   public cartItem: CartItemModel = new CartItemModel()
   public cartTotalPrice: number
 
+  public searchControl = new FormControl();
 
   constructor(
     private router: Router,
-    private cartService : CartService
+    private cartService: CartService
 
   ) { }
 
@@ -63,8 +66,8 @@ export class ProductsListComponent implements OnInit {
     this.cartService.deleteCartAndCartItems(this.cart._id)
   }
 
-  public handleCartItemList() {
-    
+  public backToSore() {
+    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
   }
 
 }
