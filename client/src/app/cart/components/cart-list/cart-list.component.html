@@ -1,7 +1,7 @@
 <mat-toolbar>
   <span>My Cart</span>
   <span class="spacer"></span>
-  <mat-form-field *ngIf="orderMode" [floatLabel]="'never'">
+  <mat-form-field class="search-input" *ngIf="orderMode" [floatLabel]="'never'">
     <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl">
     <mat-icon>search</mat-icon>
   </mat-form-field>

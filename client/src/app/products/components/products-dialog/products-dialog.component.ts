@@ -71,7 +71,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   }
 
   public onAddQuantity(): void {
-
     this.cartItem.quantity++
     this.minQuantity = false
   }
@@ -171,7 +170,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       this.editMode = true;
     }
     else {
-      this.invokeCartItem();
+      this.cartItemDefaultValues();
     }
 
   }
@@ -184,7 +183,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     })
   }
 
-  private invokeCartItem(): void {
+  // default values in cart item
+  private cartItemDefaultValues(): void {
     this.cartItem.cartId = this.cart._id
     this.cartItem.productId = this.product._id
     this.cartItem.quantity = 1

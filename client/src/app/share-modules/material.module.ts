@@ -25,6 +25,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 @NgModule({
@@ -51,7 +55,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTooltipModule,
     MatCardModule,
     MatBadgeModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialModule { }

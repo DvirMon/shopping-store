@@ -9,6 +9,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { ProductsBarComponent } from './components/products-bar/products-bar.component';
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
+import { CartModule } from '../cart/cart.module';
 
 
 
@@ -24,6 +25,7 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     CoreModule,
     RouterModule,
     SharedModule,
+    CartModule,
     ProductsRoutingModule
   ],
   exports: [

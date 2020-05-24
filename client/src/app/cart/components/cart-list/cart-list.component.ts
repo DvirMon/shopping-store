@@ -17,9 +17,9 @@ export class CartListComponent implements OnInit {
   @Input() public orderMode: boolean = false
 
   public product: ProductModel = new ProductModel()
-  public cart: CartModel = new CartModel()
   public cartItems: CartItemModel[] = []
   public cartItem: CartItemModel = new CartItemModel()
+  public cart: CartModel = new CartModel()
   public cartTotalPrice: number
 
   public searchControl = new FormControl();

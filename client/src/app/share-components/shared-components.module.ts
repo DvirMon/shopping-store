@@ -8,10 +8,6 @@ import { DialogInterceptorService } from '../utilities/interceptors/dialog-inter
 import { ErrorsService } from '../utilities/services/errors.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-// import models for providers 
-import { OrderModel } from '../utilities/models/order-model';
-import { ProductModel } from '../utilities/models/product-model';
-
 // shared components 
 import { MyInputComponent } from './components/my-input/my-input.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
@@ -19,13 +15,11 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
-import { CartListItemComponent } from './components/cart-list-item/cart-list-item.component';
 
 
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
-import { CartListComponent } from './components/cart-list/cart-list.component';
-
  
+
 @NgModule({
   declarations: [
     MyInputComponent,
@@ -34,11 +28,9 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
-    CartListItemComponent,
-    CartListComponent,
     HighLightPipe,
     
-  ], 
+  ],
   imports: [
     CoreModule,
   ],
@@ -49,10 +41,9 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
-    CartListItemComponent,
-    CartListComponent,
     HighLightPipe,
-  ], providers: [
+  ],
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
@@ -62,14 +53,6 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
       provide: HTTP_INTERCEPTORS,
       useClass: DialogInterceptorService,
       multi: true
-    },
-    {
-      provide: OrderModel,
-      useValue: {}
-    },
-    {
-      provide: ProductModel,
-      useValue: new ProductModel()
     },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
     { provide: MatDialogRef, useValue: DialogComponent },

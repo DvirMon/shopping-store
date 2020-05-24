@@ -17,7 +17,7 @@ const OrderSchema = mongoose.Schema(
     },
     city: { type: String, required: true, minlength: [3], maxlength: [30] },
     street: { type: String, required: true, minlength: [5], maxlength: [30] },
-    shipmentDate: { type: Date, required: true },
+    shippingDate: { type: Date, required: true },
     orderDate: { type: Date, required: true, default: Date.now },
     creditCard: {
       type: String,

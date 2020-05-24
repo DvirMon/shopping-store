@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('authDetails') as FormGroup
   }
 
+  // get values access on dom
   get personal() {
     return this.registerForm.controls['personalDetails']['controls']
   }

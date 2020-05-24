@@ -1,6 +1,6 @@
-<mat-grid-list class="item" cols="2" rowHeight="1:0.5" (click)="handleProductDialog()">
-  <mat-grid-tile rowspan="3">
-    <app-product-thumbnail [product]="product" class="img-size" [imageHeight]="200" [imageWidth]="200">
+<mat-grid-list class="item" cols="3" rowHeight="1:0.5" gutter="20" (click)="handleProductDialog()">
+  <mat-grid-tile rowspan="3" colspan="2">
+    <app-product-thumbnail [product]="product" [imageHeight]="150" [imageWidth]="150">
     </app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile rowspan="1"></mat-grid-tile>

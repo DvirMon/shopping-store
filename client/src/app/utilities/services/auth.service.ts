@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   // refresh token request - http://localhost:4000/api/auth/refresh-token
-  public getRefreshToken() : Observable<AuthData>{
+  public getRefreshToken(): Observable<AuthData> {
     return this.http.get<AuthData>(this.url + "/refresh-token")
   }
 
@@ -94,13 +94,13 @@ export class AuthService {
         }))
   }
 
-  public handleAuthGuardSuccess(accessToken) : void {
+  public handleAuthGuardSuccess(accessToken): void {
     const payload = this.tokenHelper.decodeToken(accessToken)
     this.formService.handleStore(ActionType.Login, { accessToken, user: payload.user })
     // this.autoLogout(accessToken)
   }
 
-  public handleAuthGuardError() : void{
+  public handleAuthGuardError(): void {
     this.formService.handleStore(ActionType.Logout)
   }
 
@@ -112,13 +112,14 @@ export class AuthService {
       this.logout()
       return
     }
+    // this.router.navigateByUrl(`/home/${user._id}`)
     this.router.navigateByUrl(`/home/${user._id}`)
   }
 
-  public logout() : void{
+  public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
     // clearTimeout(this.expiredTimer)
-    this.router.navigateByUrl(`/login`)
+    return this.router.navigateByUrl(`/login`)
   }
 
   public autoLogout(jwt: string): void {
@@ -130,9 +131,13 @@ export class AuthService {
 
   // token logic
 
-  public isTokenExpired(jwt: string): boolean {
+  public isTokenExpired(jwt: string): boolean | Promise<boolean> {
     const token = store.getState().auth[jwt]
     const expired = this.tokenHelper.isTokenExpired(token)
+    if (expired) {
+      this.logout();
+      return ;
+    }
     return !expired
   }
 

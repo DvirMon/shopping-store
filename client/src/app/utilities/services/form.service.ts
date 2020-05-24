@@ -84,6 +84,22 @@ export class FormService {
     })
   }
 
+  public orderForm() {
+    return this.fb.group({
+      address: this.fb.group({
+        city: ['', [Validators.required]],
+        street: ['', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30)]],
+      }),
+      shippingDate: ['', [Validators.required]],
+      creditCard: ['',
+        [Validators.required, Validators.pattern(this.pattern.creditCard)]
+      ],
+    })
+  }
+
 
   public getErrorMessage(control: FormControl, placeHolder: string) {
 

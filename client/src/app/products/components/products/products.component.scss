@@ -16,9 +16,18 @@ mat-grid-tile {
   flex-direction: row;
 }
 
-
 mat-divider {
-  padding-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+app-products-item {
+  height: 80%;
+  width: inherit;
+  justify-content: center;
+}
+
+
+app-products-item:hover {
+  border: red 1px solid;
 }
