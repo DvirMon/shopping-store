@@ -42,9 +42,9 @@ router.post(
       user.personalId = undefined;
 
       // get accessToken
-      const accessToken = await jwt.setAccessToken(user);
+      const token = await jwt.setAccessToken(user);
 
-      response.json({ user, accessToken });
+      response.json({ user, token });
     } catch (err) {
       next(err);
     }
@@ -58,10 +58,10 @@ router.get(
   async (request, response, next) => {
     try {
       const user = request.user;
-
-      const refreshToken = await jwt.setRefreshToken(user);
-
-      response.json({ user, refreshToken });
+      
+      // get refreshToken
+      const token = await jwt.setRefreshToken(user);
+      response.json({ user, token });
     } catch (err) {
       next(err);
     }
@@ -91,8 +91,8 @@ router.post(
       const user = await authLogic.addUserAsync(new User(request.body));
 
       // get accessToken
-      const accessToken = await jwt.setAccessToken(user);
-      response.json({ user, accessToken });
+      const token = await jwt.setAccessToken(user);
+      response.json({ user, token });
     } catch (err) {
       next(err);
     }

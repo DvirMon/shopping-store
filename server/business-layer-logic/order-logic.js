@@ -16,15 +16,26 @@ const getLatestOrderAsync = async (cartId) => {
   return await Order.findOne({ cartId }).select("totalPrice orderDate").exec();
 };
 
-const countOrdersByDate = async (query) => {
-  return Order.aggregate([
+const countOrdersByDate = async () => {
+  const temp = await Order.aggregate([
     {
       $group: {
-        _id: "$shipmentDate",
+        _id: { $dayOfYear: "$shippingDate" },
         orders: { $sum: 1 },
       },
     },
+    {
+      $match: {
+        orders: { $gte: 3 },
+      },
+    },
   ]);
+
+  const dates = temp.map(obj => {
+    return obj._id
+  })
+
+  return dates;
 };
 
 module.exports = {

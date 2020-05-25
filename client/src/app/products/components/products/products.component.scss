@@ -22,12 +22,10 @@ mat-divider {
 }
 
 app-products-item {
-  height: 80%;
+  height: 100%;
   width: inherit;
   justify-content: center;
+  // position: relative;
 }
 
 
-app-products-item:hover {
-  border: red 1px solid;
-}

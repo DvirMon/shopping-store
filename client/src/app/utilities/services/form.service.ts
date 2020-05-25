@@ -14,13 +14,14 @@ export class FormService {
 
   public serverError = new Subject<string>()
 
-  public pattern = {
+  public regex = {
     name: /^[a-zA-Z ]{3,25}$/,
     personalId: /^[0-9]{8,9}$/,
     email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
     positive: /^[1-9]+[0-9]*$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-    creditCard: /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
+    creditCard: /^(?:4\d{3}|5[1-5]\d{2}|6011|3[47]\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}$/
+    // creditCard: /^(?:4\d{3}|5[1-5]\d{2}|6011|3[47]\d{2})([- ]?\d{4}){3}$/
   };
 
   constructor(
@@ -33,7 +34,7 @@ export class FormService {
   public loginForm() {
     return this.fb.group({
       email: ['',
-        [Validators.required, Validators.pattern(this.pattern.email)]
+        [Validators.required, Validators.pattern(this.regex .email)]
       ],
       password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)]],
     })
@@ -46,20 +47,20 @@ export class FormService {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(9),
-          Validators.pattern(this.pattern.personalId)],
+          Validators.pattern(this.regex.personalId)],
           [this.customValidation.personalIdUniqueValidation.bind(this)]
         ],
         email: ['',
-          [Validators.required, Validators.pattern(this.pattern.email)],
+          [Validators.required, Validators.pattern(this.regex.email)],
           [this.customValidation.emailUniqueAsyncValidation.bind(this)]
         ],
         password: ['', [
           Validators.required,
-          Validators.pattern(this.pattern.password),
+          Validators.pattern(this.regex.password),
           Validators.minLength(8),
           Validators.maxLength(24)]],
         confirmPassword: ['',
-          [Validators.required, Validators.pattern(this.pattern.password)]],
+          [Validators.required, Validators.pattern(this.regex.password)]],
       },
         {
           validator: [this.customValidation.MustMatch('password', 'confirmPassword')],
@@ -72,12 +73,12 @@ export class FormService {
           Validators.maxLength(30)]],
         firstName: ['', [
           Validators.required,
-          Validators.pattern(this.pattern.name),
+          Validators.pattern(this.regex.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
         lastName: ['', [
           Validators.required,
-          Validators.pattern(this.pattern.name),
+          Validators.pattern(this.regex.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
       }),
@@ -95,10 +96,10 @@ export class FormService {
       }),
       shippingDate: ['', [Validators.required]],
       creditCard: ['',
-        [Validators.required, Validators.pattern(this.pattern.creditCard)]
+        [Validators.required, Validators.pattern(this.regex.creditCard)]
       ],
     })
-  }
+  } 
 
 
   public getErrorMessage(control: FormControl, placeHolder: string) {
@@ -110,7 +111,7 @@ export class FormService {
     if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
       return this.passwordCustomErrorMessage(control, placeHolder)
     }
-
+ 
     if (control.hasError('min')) {
       return 'Value in not valid ';
     }

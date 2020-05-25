@@ -1,70 +1,20 @@
-<div>
+<div class="payment">
   <form [formGroup]="orderForm">
     <mat-vertical-stepper #stepper>
       <mat-step [stepControl]="address">
         <ng-template matStepLabel>Address : Enter your home address</ng-template>
-        <mat-grid-list [formGroup]="address" cols="2" rowHeight="100px">
-          <mat-grid-tile>
-            <mat-form-field field appearance="fill">
-              <mat-label>Select City:</mat-label>
-              <mat-select [formControl]="address.controls['city']" [(value)]="selectedValue">
-                <mat-option *ngFor="let city of cityList" [value]="city">
-                  {{city}}</mat-option>
-              </mat-select>
-               <mat-hint>Double click on the icon for auto complete</mat-hint>
-              <mat-error>Please Choose an option</mat-error>
-            </mat-form-field>
-            <button mat-icon-button matSuffix (dblclick)="addressAutoComplete('city')">
-              <mat-icon>home</mat-icon>
-            </button>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <app-input [control]="address.controls['street']" placeHolder="Street" type="text" controlName="street"
-              required>
-            </app-input>
-            <button mat-icon-button matSuffix (dblclick)="addressAutoComplete('street')">
-              <mat-icon>home</mat-icon>
-            </button>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="1" rowHeight="5vh">
-          <mat-grid-tile>
-            <button [disabled]=address.invalid matStepperNext mat-button type="button">Next</button>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-address [controlGroup]="address" [user]="user"></app-address>
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
-        <mat-grid-list cols="1" rowHeight="100px">
-          <mat-grid-tile>
-            <mat-form-field>
-              <mat-label>Choose a date</mat-label>
-              <input matInput [matDatepicker]="picker" name="date" [formControl]="shippingDate">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="2" rowHeight="5vh">
-          <mat-grid-tile>
-            <button mat-button matStepperPrevious type="button">Back</button>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <button [disabled]=orderForm.invalid mat-button matStepperNext type="button">Next</button>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-date-input [control]="shippingDate"></app-date-input>
       </mat-step>
       <mat-step [stepControl]="creditCard">
         <ng-template matStepLabel>Payment</ng-template>
-        <mat-grid-list cols="1" rowHeight="100px">
-          <mat-grid-tile>
-            <app-input [control]="creditCard" placeHolder="Last Name" type="text" hint="credit card">
-            </app-input>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-credit-card [control]="creditCard"></app-credit-card>
         <mat-grid-list cols="1" rowHeight="5vh">
           <mat-grid-tile>
-            <button mat-button type="button" (click)="onPayment()">Confirm And Pay</button>
+            <button mat-button disabled="orderForm.invalid" type="button" (click)="onPayment()">Confirm And Pay</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>

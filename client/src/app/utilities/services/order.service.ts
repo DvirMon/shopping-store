@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-
-export interface Order {
-  userId: string,
-  cartId: string,
-  shipmentDate: Date,
-  orderDate: Date,
-  totalPrice: number,
-  creditCard: string
-  city: string
-  street: string
-}
+import { HttpClient } from '@angular/common/http';
+import { OrderModel } from '../models/order-model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  constructor() { }
+  public baseUrl: string = "http://localhost:3000/api/orders/dates"
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+
+  public handleNewOrder(data: OrderModel) {
+    this.http.post<OrderModel>(this.baseUrl, data)
+  }
+
+  public getOccupiedDates(): Observable<number[]> {
+    return this.http.get<number[]>(this.baseUrl)
+  }
+
+
 }

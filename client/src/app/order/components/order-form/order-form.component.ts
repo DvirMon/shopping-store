@@ -1,13 +1,20 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+
+import { MatSelect } from '@angular/material/select';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import { FormService } from 'src/app/utilities/services/form.service';
-import { OrderService } from 'src/app/utilities/services/order.service';
-import { OrderModel } from 'src/app/utilities/models/order-model';
-import { store } from 'src/app/redux/store';
-import { CartModel } from 'src/app/utilities/models/cart-model';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { map, tap } from 'rxjs/operators';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { OrderService } from 'src/app/utilities/services/order.service';
+
+import { CartModel } from 'src/app/utilities/models/cart-model';
+import { OrderModel } from 'src/app/utilities/models/order-model';
+
+import { store } from 'src/app/redux/store';
+
+import { tap, map, debounceTime, take } from 'rxjs/operators';
+import { ActivatedRoute, Data } from '@angular/router';
+
 
 @Component({
   selector: 'app-order-form',
@@ -17,18 +24,21 @@ import { MatSelect, MatSelectChange } from '@angular/material/select';
 export class OrderFormComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSelect) mySelect: MatSelect
+  @ViewChild('cc') cc: ElementRef
 
-  public orderForm: FormGroup
-  public cartTotalPrice: number
-  public selectedValue: string = "aaaa"
-  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva", "Haifa"]
+  public orderForm: FormGroup;
+  public cartTotalPrice: number;
+  public ccFormat: string;
+  public selectedValue: string;
+  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva", "Haifa", "Ashdod", "Natania"];
 
   constructor(
     private formService: FormService,
     private orderService: OrderService,
     private order: OrderModel,
-    private user: UserModel,
-    public cart: CartModel
+    public user: UserModel,
+    public cart: CartModel,
+    private activeRoute: ActivatedRoute
 
   ) { }
 
@@ -37,6 +47,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     this.createForm()
     this.handleStoreSubscribe()
     this.orderDefaultValues()
+    // this.creditCardFormat()
   }
 
   ngAfterViewInit() {
@@ -60,19 +71,17 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   }
 
   private formValueSubscription(): void {
-    this.orderForm.valueChanges.pipe(
-      tap(controls => {
-
+    this.orderForm.valueChanges.subscribe(
+      (controls) => {
         if (!this.orderForm.errors) {
           this.order.shippingDate = controls.shippingDate
           this.order.creditCard = controls.creditCard
           this.order.city = controls.address.city
           this.order.street = controls.address.street
         }
-      })
-    ).subscribe()
+      }
+    )
   }
-
   // end of subscribe section
 
   // form section
@@ -93,15 +102,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     return this.orderForm.get('creditCard') as FormControl
   }
 
-
-  // end of form section
-
-  private orderDefaultValues() {
-    this.order.cartId = this.cart._id
-    this.order.userId = this.user._id
-    this.order.totalPrice = this.cartTotalPrice
-  }
-
+  // auto fille address input 
   public addressAutoComplete(controlName: string) {
     if (controlName === "street") {
       this.address.patchValue({ "street": this.user.street })
@@ -112,10 +113,44 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   }
 
+  // end of form section
+
+  // order request section 
+
   public onPayment() {
 
     console.log(this.order)
+    this.orderService.handleNewOrder(this.order)
   }
+
+  // end of request section
+
+
+  // order logic section
+
+  private orderDefaultValues() {
+    this.order.cartId = this.cart._id
+    this.order.userId = this.user._id
+    this.order.totalPrice = this.cartTotalPrice
+  }
+
+  // public creditCardFormat() {
+
+  //   this.creditCard.valueChanges.pipe(
+  //     debounceTime(500),
+  //     take(1),
+  //     map(value => {
+  //       this.ccFormat = [...value].map((chr, idx) => (idx + 1) % 4 ? chr : chr + ' ').join('').trim();
+  //       return this.ccFormat
+  //     }
+  //     )).subscribe(
+  //       () => {
+  //         if (this.ccFormat.length > 4) {
+  //           this.creditCard.setValue(this.ccFormat)
+  //         }
+  //       }
+  //     )
+  // }
 
 
 }

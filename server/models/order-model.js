@@ -11,7 +11,7 @@ const OrderSchema = mongoose.Schema(
       type: Number,
       required: true,
       validate: [
-        validation.pattern.positive,
+        validation.regex.positive,
         "price can`t be negative or equal to 0",
       ],
     },
@@ -20,9 +20,9 @@ const OrderSchema = mongoose.Schema(
     shippingDate: { type: Date, required: true },
     orderDate: { type: Date, required: true, default: Date.now },
     creditCard: {
-      type: String,
-      required: true,
-      validate: [validation.pattern.creditCard, "invalid credit card number"],
+      type: String, 
+      required: true, 
+      validate: [validation.regex.creditCard, "invalid credit card number"],
     },
   },
   { versionKey: false }

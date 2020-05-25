@@ -1,9 +1,9 @@
-<mat-grid-list class="item" cols="3" rowHeight="1:0.5" gutter="20" (click)="handleProductDialog()">
-  <mat-grid-tile rowspan="3" colspan="2">
-    <app-product-thumbnail [product]="product" [imageHeight]="150" [imageWidth]="150">
+<mat-grid-list class="item" cols="3" rowHeight="30px" (click)="handleProductDialog()">
+  <mat-grid-tile rowspan="8" colspan="2">
+    <app-product-thumbnail [product]="product" [imageHeight]="200" [imageWidth]="180">
     </app-product-thumbnail>
   </mat-grid-tile>
-  <mat-grid-tile rowspan="1"></mat-grid-tile>
-  <mat-grid-tile rowspan="1" class="price">{{product.price | currency}}</mat-grid-tile>
-  <mat-grid-tile rowspan="1" class="name">{{product.name}}</mat-grid-tile>
+  <mat-grid-tile rowspan="3"></mat-grid-tile>
+  <mat-grid-tile rowspan="2" class="price">{{product.price | currency}}</mat-grid-tile>
+  <mat-grid-tile rowspan="2" class="name">{{product.name}}</mat-grid-tile>
 </mat-grid-list>

@@ -86,8 +86,9 @@ export class AuthService {
         switchMap((response: AuthData) => {
           this.formService.handleStore(ActionType.AddAccessToken, response.token)
           return this.getRefreshToken()
-            .pipe(
-              map((response: AuthData) => {
+          .pipe(
+            map((response: AuthData) => {
+              console.log(response)
                 this.formService.handleStore(ActionType.AddRefreshToken, response.token)
                 return response.user._id
               }))

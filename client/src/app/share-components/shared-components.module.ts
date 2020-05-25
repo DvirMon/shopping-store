@@ -16,7 +16,6 @@ import { SearchComponent } from './components/search/search.component';
 import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
-
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
  
 
@@ -33,6 +32,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
   ],
   imports: [
     CoreModule,
+
   ],
   exports: [
     MyInputComponent,

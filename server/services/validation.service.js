@@ -1,8 +1,8 @@
 const Joi = require("Joi");
 
-const pattern = {
-  name: /^[a-zA-Z ]{3,25}$/,
-  creditCard: /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
+const regex = {
+  name: /^([a-zA-Z ]{3,25})(\s[a-zA-Z ]{3,25})?$/,
+  creditCard: /^(?:4\d{3}|5[1-5]\d{2}|6011|3[47]\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}$/,
   positive: /^[1-9]+[0-9]*$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
   email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
@@ -11,7 +11,7 @@ const pattern = {
 // auth validation for login
 const loginValidation = (request, response, next) => {
   const schema = Joi.object().keys({
-    email: Joi.string().regex(pattern.email).required(),
+    email: Joi.string().regex(regex.email).required(),
     password: Joi.string().min(8).max(24).required(),
   }); 
 
@@ -38,7 +38,7 @@ const matchPasswordValidation = (request, response, next) => {
 const dateFormatValidation = (request, response, next) => {
   const schema = Joi.object()
     .keys({
-      shipmentDate: Joi.date().iso().required(),
+      shippingDate: Joi.date().iso().required(),
       orderDate: Joi.date().iso(),
     })
     .unknown();
@@ -82,5 +82,5 @@ module.exports = {
   loginValidation,
   matchPasswordValidation,
   dateFormatValidation,
-  pattern,
+  regex,
 };

@@ -6,13 +6,19 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderFormComponent } from './components/order-form/order-form.component';
 import { CartModule } from '../cart/cart.module';
+import { DateInputComponent } from './components/date-input/date-input.component';
+import { AddressComponent } from './components/address/address.component';
+import { CreditCardComponent } from './components/credit-card/credit-card.component';
 
 
 
 @NgModule({
   declarations: [
     OrderComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    DateInputComponent,
+    AddressComponent,
+    CreditCardComponent
   ],
   imports: [
     CoreModule,

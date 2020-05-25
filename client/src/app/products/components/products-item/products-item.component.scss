@@ -1,21 +1,33 @@
-mat-grid-list {
+mat-grid-list,
+mat-grid-tile {
+  height: 100%;
+  padding: 0;
+}
 
+mat-grid-list {
   width: 300px;
-  justify-content: center;
   box-sizing: border-box;
-  // border-left: 1px solid #c7cbd7;
   cursor: pointer;
+  margin-top: 2px;
+}
+
+mat-grid-tile {
+  justify-content: left !important;
+}
+
+mat-grid-list:hover {
+  border: red 1px solid;
 }
 
 app-product-thumbnail {
   padding-top: 10px;
 }
 
-mat-grid-tile .mat-figure {
+.mat-grid-tile .mat-figure {
   justify-content: left !important;
-  width: auto;
 }
 
 .price {
   font-size: 20px;
+  text-align: left;
 }
