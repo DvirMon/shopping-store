@@ -3,6 +3,8 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 import { CartService } from 'src/app/utilities/services/cart.service';
+import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { ReceiptItemData } from 'src/app/utilities/models/receipt-model';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 @Component({
@@ -16,13 +18,14 @@ export class CartListItemComponent implements OnInit {
   @Input() public orderMode: boolean = false
   @Input() public searchTerm: string
 
-  public product: ProductModel = new ProductModel()
   public rowSpan: number;
 
   constructor(
     private productService: ProductsService,
     private cartService: CartService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private receiptService: ReceiptService,
+    public product: ProductModel
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +34,13 @@ export class CartListItemComponent implements OnInit {
     this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
 
     this.productService.getProductNameAndImage(this.cartItem.productId).subscribe(
-      (response) => this.product = response
+      (response) => {
+        this.product = response
+        if (!this.orderMode) {
+
+          this.receiptService.setRecipeItem(this.product, this.cartItem)
+        }
+      }
     )
   }
 
@@ -48,4 +57,5 @@ export class CartListItemComponent implements OnInit {
 
     this.cartService.deleteCartItem(this.cartItem._id)
   }
+
 }

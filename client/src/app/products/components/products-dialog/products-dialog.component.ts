@@ -6,17 +6,16 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
-import { DialogData } from 'src/app/utilities/models/dialog-model';
 
 import { FormService } from 'src/app/utilities/services/form.service';
 import { CartService, CartActionInfo } from 'src/app/utilities/services/cart.service';
+import { DialogData } from 'src/app/utilities/services/dialog.service';
 
 import { store } from 'src/app/redux/store';
 import { ActionType } from 'src/app/redux/action-type';
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormControl, NgModel, Validators } from '@angular/forms';
-import { tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products-dialog',
@@ -47,7 +46,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.product = this.data.product;
+    this.product = this.data.payload;
     this.handleStoreSubscribe();
     this.handleUpdate();
 

@@ -6,6 +6,7 @@ import { store } from 'src/app/redux/store';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/utilities/services/cart.service';
 import { FormControl } from '@angular/forms';
+import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -16,17 +17,19 @@ export class CartListComponent implements OnInit {
 
   @Input() public orderMode: boolean = false
 
-  public product: ProductModel = new ProductModel()
   public cartItems: CartItemModel[] = []
-  public cartItem: CartItemModel = new CartItemModel()
-  public cart: CartModel = new CartModel()
   public cartTotalPrice: number
-
+  
   public searchControl = new FormControl();
-
-  constructor(
+  
+  constructor( 
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService, 
+    private receiptService : ReceiptService,
+    public product: ProductModel,
+    public cartItem: CartItemModel,
+    public cart: CartModel
+
 
   ) { }
 
@@ -51,23 +54,33 @@ export class CartListComponent implements OnInit {
   }
 
   // end of subscribe section
-
+  
   // logic section
 
   public goToOrder() {
+
+    if (this.cartItems.length === 0) {
+      alert("your cart is empty")
+      return
+    } 
+
+    this.receiptService.handleReceiptData()
+    
     this.router.navigateByUrl(`/order/${this.cart._id}`)
   }
-
+   
   public deleteAllCartItems() {
     const answer = confirm("Delete Cart?")
     if (!answer) {
-      return
+      return 
     }
     this.cartService.deleteCartAndCartItems(this.cart._id)
   }
 
   public backToSore() {
+    this.receiptService.resetReceiptState()
     this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
   }
-
+  
+  // end of logic section
 }

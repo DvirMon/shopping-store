@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 
  export class ProductModel {
 
@@ -10,9 +9,4 @@ import { Injectable } from '@angular/core';
     public imagePath?: string,
   ) { }
 
-  static show(product : ProductModel) {
-    for (const key in product) {
-      console.log(`${key} : ${product[key]}`) 
-    }
-  }
 }

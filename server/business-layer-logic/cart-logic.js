@@ -14,7 +14,7 @@ const getLatestCartAsync = async (userId) => {
     .exec();
 };
 
-const updatedCartStatusAsync = async (cart) => {
+const disActivatedCartAsync = async (cart) => {
   const info = await Cart.updateOne({ _id: cart._id }, cart).exec();
   return info.n ? cart : null;
 };
@@ -27,6 +27,6 @@ module.exports = {
   getAllCartsAsync,
   addCartAsync,
   getLatestCartAsync,
-  updatedCartStatusAsync,
+  disActivatedCartAsync,
   deleteCartAsync,
 };

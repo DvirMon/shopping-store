@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Order = require("../models/order-model");
 const orderLogic = require("../business-layer-logic/order-logic");
+const cartLogic = require("../business-layer-logic/cart-logic");
 const validation = require("../services/validation.service");
 
 router.get("/", async (request, response, next) => {
@@ -43,15 +44,17 @@ router.get("/latest/:cartId", async (request, response, next) => {
   } catch (err) {
     next(err);
   }
-}); 
+});
 
 router.post(
   "/",
   validation.dateFormatValidation,
   async (request, response, next) => {
     try {
-      const order = await orderLogic.addOrderAsync(new Order(request.body));
-      response.status(201).json(order);
+      const order = request.body;
+      const addedOrder = await orderLogic.addOrderAsync(new Order(order));
+
+      response.status(201).json(addedOrder);
     } catch (err) {
       next(err);
     }

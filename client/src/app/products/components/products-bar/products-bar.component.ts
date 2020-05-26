@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Category } from 'src/app/utilities/services/products.service';
+import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 
 @Component({
   selector: 'app-products-bar',

@@ -55,7 +55,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
       multi: true
     },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
-    { provide: MatDialogRef, useValue: DialogComponent },
+    // { provide: MatDialogRef, useValue: DialogComponent },
     {
       provide: MAT_DIALOG_DATA,
       useValue: {}

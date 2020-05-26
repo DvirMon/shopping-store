@@ -9,6 +9,7 @@ import { CartModule } from '../cart/cart.module';
 import { DateInputComponent } from './components/date-input/date-input.component';
 import { AddressComponent } from './components/address/address.component';
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
+import { OrderDialogComponent } from './components/order-dialog/order-dialog.component';
 
 
 
@@ -18,7 +19,8 @@ import { CreditCardComponent } from './components/credit-card/credit-card.compon
     OrderFormComponent,
     DateInputComponent,
     AddressComponent,
-    CreditCardComponent
+    CreditCardComponent,
+    OrderDialogComponent
   ],
   imports: [
     CoreModule,

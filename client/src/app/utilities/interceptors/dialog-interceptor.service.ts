@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { DialogService } from '../services/dialog.service';
 
@@ -12,6 +12,8 @@ export class DialogInterceptorService implements HttpInterceptor {
 
   constructor(
     private dialogService: DialogService,
+
+    
     private ngZone: NgZone,
   ) { }
 
@@ -20,7 +22,7 @@ export class DialogInterceptorService implements HttpInterceptor {
     let spinnerRef;
 
     this.ngZone.run(() => {
-      spinnerRef = this.dialogService.openSpinner();
+      spinnerRef = this.dialogService.openSpinner()
     });
 
 

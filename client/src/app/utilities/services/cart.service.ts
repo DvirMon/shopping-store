@@ -42,24 +42,33 @@ export class CartService {
     return this.http.post(this.itemCartUrl, cartItem)
   }
 
+  public disActiveCart(cartId: string) {
+    return this.http.patch(this.cartUrl + `/${cartId}`, { isActive: false })
+  }
+
   public updateCartItem(cartItem: CartItemModel) {
     return this.http.put(this.itemCartUrl + `/${cartItem._id}`, cartItem)
   }
 
   public deleteCartItem(_id) {
     this.http.delete(this.itemCartUrl + `/${_id}`).subscribe(
-      () => this.formService.handleStore(ActionType.DeleteCartItem, _id)
+      () => {
+        this.formService.handleStore(ActionType.DeleteCartItem, _id)
+        this.formService.handleStore(ActionType.DeleteReceiptItem, _id)
+      }
     )
 
   }
 
   public deleteCartAndCartItems(_id) {
     this.http.delete(this.cartUrl + `/${_id}`).subscribe(
-      () => this.formService.handleStore(ActionType.ResetCartState)
+      () => {
+        this.formService.handleStore(ActionType.ResetCartState)
+      }
     )
   }
 
-  
+
 
   // end of cart section
 

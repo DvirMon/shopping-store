@@ -14,6 +14,8 @@ import { store } from 'src/app/redux/store';
 
 import { tap, map, debounceTime, take } from 'rxjs/operators';
 import { ActivatedRoute, Data } from '@angular/router';
+import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 
 @Component({
@@ -23,22 +25,18 @@ import { ActivatedRoute, Data } from '@angular/router';
 })
 export class OrderFormComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatSelect) mySelect: MatSelect
-  @ViewChild('cc') cc: ElementRef
 
   public orderForm: FormGroup;
   public cartTotalPrice: number;
-  public ccFormat: string;
-  public selectedValue: string;
-  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva", "Haifa", "Ashdod", "Natania"];
 
   constructor(
     private formService: FormService,
     private orderService: OrderService,
+    private receiptService : ReceiptService,
+    private dialogService : DialogService,
     private order: OrderModel,
     public user: UserModel,
     public cart: CartModel,
-    private activeRoute: ActivatedRoute
 
   ) { }
 
@@ -47,7 +45,6 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     this.createForm()
     this.handleStoreSubscribe()
     this.orderDefaultValues()
-    // this.creditCardFormat()
   }
 
   ngAfterViewInit() {
@@ -102,29 +99,23 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     return this.orderForm.get('creditCard') as FormControl
   }
 
-  // auto fille address input 
-  public addressAutoComplete(controlName: string) {
-    if (controlName === "street") {
-      this.address.patchValue({ "street": this.user.street })
-      return
-    }
-    this.address.patchValue({ "city": this.user.city })
-    this.selectedValue = this.user.city
-
-  }
-
   // end of form section
 
   // order request section 
 
   public onPayment() {
 
-    console.log(this.order)
     this.orderService.handleNewOrder(this.order)
   }
+ 
+   
+  public openDialog() {
+    this.dialogService.handleOrderDialog(this.order)
+
+  }
+
 
   // end of request section
-
 
   // order logic section
 
@@ -134,23 +125,6 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     this.order.totalPrice = this.cartTotalPrice
   }
 
-  // public creditCardFormat() {
-
-  //   this.creditCard.valueChanges.pipe(
-  //     debounceTime(500),
-  //     take(1),
-  //     map(value => {
-  //       this.ccFormat = [...value].map((chr, idx) => (idx + 1) % 4 ? chr : chr + ' ').join('').trim();
-  //       return this.ccFormat
-  //     }
-  //     )).subscribe(
-  //       () => {
-  //         if (this.ccFormat.length > 4) {
-  //           this.creditCard.setValue(this.ccFormat)
-  //         }
-  //       }
-  //     )
-  // }
 
 
 }

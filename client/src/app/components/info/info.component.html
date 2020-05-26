@@ -9,7 +9,7 @@
 
 <mat-grid-list *ngIf="isLogin && !isAdmin && !info?.message" class="login-info info" cols="1" cols="1" rowHeight="10vh">
   <mat-grid-tile>
-    {{info.messageDate}} : {{info.date | date:"MM/dd"}}
+    {{info.messageDate}} : {{info.date | date:"dd/MM"}}
   </mat-grid-tile>
   <mat-grid-tile>
     <p>{{info.messagePrice}} : {{info.price | currency:"ILS"}}</p>

@@ -88,7 +88,6 @@ export class AuthService {
           return this.getRefreshToken()
           .pipe(
             map((response: AuthData) => {
-              console.log(response)
                 this.formService.handleStore(ActionType.AddRefreshToken, response.token)
                 return response.user._id
               }))
@@ -119,6 +118,7 @@ export class AuthService {
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
+    alert('logout')
     // clearTimeout(this.expiredTimer)
     return this.router.navigateByUrl(`/login`)
   }

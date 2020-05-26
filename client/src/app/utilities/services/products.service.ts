@@ -17,7 +17,7 @@ export interface Category {
 export interface ProductCartInfo {
   name: string
   imagePath: string,
-  
+   
 }
 
 @Injectable({

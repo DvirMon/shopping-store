@@ -43,13 +43,15 @@ router.post("/", async (request, response, next) => {
   }
 });
 
+
 router.patch("/:_id", async (request, response, next) => {
   try {
     const cart = {
       _id: request.params._id,
-      isActive: false,
+      isActive: request.body.isActive,
     };
-    const updatedCart = await cartLogic.updatedCartStatusAsync(cart);
+
+    const updatedCart = await cartLogic.disActivatedCartAsync(cart);
     response.json(updatedCart);
   } catch (err) {
     next(err);

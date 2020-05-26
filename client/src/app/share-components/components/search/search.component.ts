@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChildren, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, tap, take, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 import { ProductModel } from 'src/app/utilities/models/product-model';
-import { ProductDialog } from 'src/app/utilities/models/dialog-model';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 
@@ -17,7 +16,7 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
-  
+
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>
   public results: boolean = false
@@ -25,7 +24,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private productService: ProductsService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -44,7 +43,7 @@ export class SearchComponent implements OnInit {
       }
     )
   }
-  
+
   // function that listen to user search query
   public getSearchTerm(): Observable<ProductModel[]> {
     return this.searchControl.valueChanges.pipe(
@@ -56,9 +55,9 @@ export class SearchComponent implements OnInit {
         }
         return this.getResults(searchTerm)
       }))
-    }
-    
-    // function to fetch result from server
+  }
+
+  // function to fetch result from server
   public getResults(searchTerm): Observable<ProductModel[]> {
     return this.searchEntries = this.productService.searchProducts(searchTerm).pipe(
       tap((response: ProductModel[]) => {
@@ -75,6 +74,6 @@ export class SearchComponent implements OnInit {
   public onSelect(product) {
     this.panel.openPanel()
     this.dialogService.handleProductDialog(product)
-  }
 
+  }
 }

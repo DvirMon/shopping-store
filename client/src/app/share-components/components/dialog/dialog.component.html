@@ -2,10 +2,10 @@
   <div *ngSwitchCase="'error'">
       <div>
           <p>
-              Message: {{data.message}}
+              Message: {{data.payload.message}}
           </p>
-          <p *ngIf="data.status">
-              Status: {{data.status}}
+          <p *ngIf="data.payload.status">
+              Status: {{data.payload.status}}
           </p>
       </div>
       <div mat-dialog-actions>

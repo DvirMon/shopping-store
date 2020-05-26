@@ -13,6 +13,7 @@ import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
 import { CartModel } from '../utilities/models/cart-model';
 import { UserModel } from '../utilities/models/user-model';
+import { CartItemModel } from '../utilities/models/cart-item-model';
 
 
 
@@ -33,6 +34,10 @@ import { UserModel } from '../utilities/models/user-model';
     {
       provide: CartModel,
       useValue: new CartModel()
+    },
+    {
+      provide: CartItemModel,
+      useValue: new CartItemModel()
     },
     {
       provide: ProductModel,

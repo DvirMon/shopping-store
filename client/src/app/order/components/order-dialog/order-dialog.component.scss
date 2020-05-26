@@ -1,0 +1,16 @@
+.header-title {
+  display: inline-flex;
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: 24px;;
+  padding-bottom: 20px;
+}
+
+.header-title > span {
+  margin-right: 10px;
+}
+
+.mat-dialog-actions {
+  text-align: right;
+  display: inline-flex;
+}

@@ -17,4 +17,9 @@ export enum ActionType {
   DeleteCartItem,
   ResetCartState,
   
+  // Receipt Actions
+  AddReceiptItem,
+  DeleteReceiptItem,
+  ResetReceiptState,
+  
 } 

@@ -4,6 +4,11 @@
       <mat-step [stepControl]="address">
         <ng-template matStepLabel>Address : Enter your home address</ng-template>
         <app-address [controlGroup]="address" [user]="user"></app-address>
+        <mat-grid-list cols="1" rowHeight="5vh">
+          <mat-grid-tile>
+            <button mat-button type="button" (click)="openDialog()">receipt</button>
+          </mat-grid-tile>
+        </mat-grid-list>
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
@@ -14,7 +19,8 @@
         <app-credit-card [control]="creditCard"></app-credit-card>
         <mat-grid-list cols="1" rowHeight="5vh">
           <mat-grid-tile>
-            <button mat-button disabled="orderForm.invalid" type="button" (click)="onPayment()">Confirm And Pay</button>
+            <button mat-button [disabled]="orderForm.invalid" type="button" (click)="onPayment()">Confirm And
+              Pay</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
