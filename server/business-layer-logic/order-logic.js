@@ -4,6 +4,10 @@ const getAllOrdersAsync = async () => {
   return await Order.find({}).exec();
 };
 
+const getOrderAsync = async ( _id ) => {
+  return await Order.findById({ _id }).exec();
+};
+
 const getTotalDocsAsync = async () => {
   return Order.estimatedDocumentCount();
 };
@@ -31,15 +35,16 @@ const countOrdersByDate = async () => {
     },
   ]);
 
-  const dates = temp.map(obj => {
-    return obj._id
-  })
+  const dates = temp.map((obj) => {
+    return obj._id;
+  });
 
   return dates;
 };
 
 module.exports = {
   getAllOrdersAsync,
+  getOrderAsync,
   getTotalDocsAsync,
   addOrderAsync,
   getLatestOrderAsync,

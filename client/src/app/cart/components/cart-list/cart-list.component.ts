@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/utilities/services/cart.service';
 import { FormControl } from '@angular/forms';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-cart-list',
@@ -28,7 +29,8 @@ export class CartListComponent implements OnInit {
     private receiptService : ReceiptService,
     public product: ProductModel,
     public cartItem: CartItemModel,
-    public cart: CartModel
+    public cart: CartModel,
+    private user : UserModel
 
 
   ) { }
@@ -46,11 +48,13 @@ export class CartListComponent implements OnInit {
         this.cartItems = store.getState().cart.cartItems;
         this.cart = store.getState().cart.cart;
         this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+        this.user = store.getState().auth.user
       }
-    )
-    this.cartItems = store.getState().cart.cartItems;
-    this.cart = store.getState().cart.cart;
-    this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+      )
+      this.cartItems = store.getState().cart.cartItems;
+      this.cart = store.getState().cart.cart;
+      this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+      this.user = store.getState().auth.user
   }
 
   // end of subscribe section
@@ -65,7 +69,7 @@ export class CartListComponent implements OnInit {
     } 
 
     
-    this.router.navigateByUrl(`/order/${this.cart._id}`)
+    this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
   }
    
   public deleteAllCartItems() {

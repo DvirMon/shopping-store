@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: "products/:categoryId", loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
-  { path: "order/:cartId", loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
+  { path: "order/:userId/:cartId", loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
   { path: "", redirectTo: "/login", pathMatch: 'full' },
   { path: "**", component: PageNotFoundComponent },
 ];

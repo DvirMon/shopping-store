@@ -30,7 +30,6 @@ export class OrderService {
   public handleNewOrder(data: OrderModel) {
     this.http.post<OrderModel>(this.baseUrl, data).pipe(
       switchMap((order: OrderModel) => {
-
         this.formService.handleStore(ActionType.GetOrderData, order)
         this.receiptService.handleReceiptData()
         return this.cartService.disActiveCart(order.cartId)

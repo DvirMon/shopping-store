@@ -34,7 +34,7 @@ export class ReceiptService {
     private receiptData: OrderModel
   ) { }
 
-   
+
   public backToSore() {
     this.resetReceiptState()
     this.formService.handleStore(ActionType.ResetCartState)
@@ -53,9 +53,7 @@ export class ReceiptService {
 
 
   public getReceipt() {
-
-    // pdfMake.createPdf(this.setPdf()).open();
-
+    pdfMake.createPdf(this.setPdf()).open();
   }
 
   public handleReceiptData() {
@@ -92,8 +90,14 @@ export class ReceiptService {
 
   public setReceiptAdditionalInfo() {
     this.receiptData = { ...store.getState().receipt.orderDetails }
-    console.log(this.receiptData.orderDate.toLocaleDateString())
-  } 
+
+    const orderDate = new Date(this.receiptData.orderDate)
+    this.receiptData.orderDate = orderDate.toLocaleString()
+
+    const shippingDate = new Date(this.receiptData.shippingDate)
+    this.receiptData.shippingDate = shippingDate.toLocaleString()
+
+  }
 
   public setRecipeItem(product: ProductModel, cartItem: CartItemModel) {
     const recipeItem = new ReceiptItemData(
@@ -165,7 +169,7 @@ export class ReceiptService {
 
   }
 
- 
+
 
 }
 

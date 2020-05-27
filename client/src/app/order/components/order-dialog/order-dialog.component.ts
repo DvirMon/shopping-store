@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 import { OrderService } from 'src/app/utilities/services/order.service';
+import { store } from 'src/app/redux/store';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-order-dialog',
@@ -10,20 +12,28 @@ import { OrderService } from 'src/app/utilities/services/order.service';
 })
 export class OrderDialogComponent implements OnInit {
 
+
   constructor(
     private router : Router,
     private receiptService : ReceiptService,
+    private user : UserModel
   ) { }
  
   ngOnInit(): void {
+    this.handleStoreSubscribe()
   }
 
+  private handleStoreSubscribe(): void {
+    store.subscribe(() => this.user = store.getState().auth.user)
+    this.user = store.getState().auth.user;
+  }
+  
   public backToSore() {
     this.receiptService.backToSore()
-    this.router.navigateByUrl(`/login`)
+    this.router.navigateByUrl(`/home/${this.user._id}`)
   }
 
-  public getReceipt() {
+  public getReceipt() { 
     this.receiptService.getReceipt()
 
   }

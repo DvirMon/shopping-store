@@ -84,6 +84,7 @@ export class DialogService {
       case "order":
         dialogConfig.height = '200px'
         dialogConfig.width = '450px'
+        dialogConfig.hasBackdrop = true;
         dialogConfig.disableClose = false;
         dialogConfig.panelClass = "dialog-order"
         break

@@ -46,6 +46,19 @@ router.get("/latest/:cartId", async (request, response, next) => {
   }
 });
 
+
+router.get("/:_id", async (request, response, next) => {
+  try {
+    const order = await orderLogic.getOrderAsync(request.params._id);
+
+
+    response.json(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 router.post(
   "/",
   validation.dateFormatValidation,
@@ -54,10 +67,13 @@ router.post(
       const order = request.body;
       const addedOrder = await orderLogic.addOrderAsync(new Order(order));
 
+      addedOrder.orderDate.toLocaleString();
+      addedOrder.shippingDate.toLocaleString();
+ 
       response.status(201).json(addedOrder);
     } catch (err) {
       next(err);
-    }
+    } 
   }
 );
 

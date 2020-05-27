@@ -112,13 +112,11 @@ export class AuthService {
       this.logout()
       return
     }
-    // this.router.navigateByUrl(`/home/${user._id}`)
     this.router.navigateByUrl(`/home/${user._id}`)
   }
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
-    alert('logout')
     // clearTimeout(this.expiredTimer)
     return this.router.navigateByUrl(`/login`)
   }
