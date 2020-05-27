@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { InfoComponent } from './components/info/info.component';
 import { AboutComponent } from './components/about/about.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
  
 
 
@@ -37,6 +38,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     CoreModule,
     SharedModule,
     AuthModule,
+    FontAwesomeModule,
 
   ],
   providers: [],

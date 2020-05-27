@@ -7,10 +7,8 @@ import { ProductModel } from '../models/product-model';
 import { FormService } from './form.service';
 import { ActionType } from 'src/app/redux/action-type';
 import { store } from 'src/app/redux/store';
+import { OrderModel } from '../models/order-model';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
-
 
 
 @Injectable({
@@ -19,7 +17,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class ReceiptService {
 
-  public receiptBody: (string[] | {}[])[] =
+
+  private receiptBody: (string[] | {}[])[] =
     [
       [
         { text: 'Product' },
@@ -29,15 +28,17 @@ export class ReceiptService {
       ]
     ]
 
-  public cartTotalPrice: string
-
-  public styles: {
-
-  }
 
   constructor(
-    private formService: FormService
+    private formService: FormService,
+    private receiptData: OrderModel
   ) { }
+
+   
+  public backToSore() {
+    this.resetReceiptState()
+    this.formService.handleStore(ActionType.ResetCartState)
+  }
 
   private setFooter(currentPage, pageCount) {
     return currentPage.toString() + ' of ' + pageCount;
@@ -52,7 +53,8 @@ export class ReceiptService {
 
 
   public getReceipt() {
-    pdfMake.createPdf(this.setPdf()).open();
+
+    // pdfMake.createPdf(this.setPdf()).open();
 
   }
 
@@ -62,7 +64,7 @@ export class ReceiptService {
   }
 
   // create product table
-  public setProductTable() {
+  private setProductTable() {
 
     const receiptItems = [...store.getState().receipt.receipt]
 
@@ -81,7 +83,7 @@ export class ReceiptService {
         else {
           receiptRow.push({ text: item[key], alignment: 'center' })
         }
-      } 
+      }
 
       this.receiptBody.push(receiptRow)
     }
@@ -89,8 +91,9 @@ export class ReceiptService {
   }
 
   public setReceiptAdditionalInfo() {
-    this.cartTotalPrice = store.getState().cart.cartTotalPrice.toString()
-  }
+    this.receiptData = { ...store.getState().receipt.orderDetails }
+    console.log(this.receiptData.orderDate.toLocaleDateString())
+  } 
 
   public setRecipeItem(product: ProductModel, cartItem: CartItemModel) {
     const recipeItem = new ReceiptItemData(
@@ -115,9 +118,10 @@ export class ReceiptService {
       header: (currentPage, pageCount, pageSize) => this.setHeader(currentPage, pageCount, pageSize),
       content: [
         { text: 'Recipe', style: 'header' },
-        { text: `Order Number : `, },
-        { text: `Order Date : `, },
-        { text: `ShippingDate : `, },
+        { text: `Order Number : ${this.receiptData._id}` },
+        { text: `Order Date : ${this.receiptData.orderDate} ` },
+        { text: `Arriving Date : ${this.receiptData.shippingDate}` },
+        { text: `To: ${this.receiptData.city},  ${this.receiptData.street}` },
         { text: 'Products Summery', style: 'subheader' },
         {
           table: {
@@ -129,7 +133,7 @@ export class ReceiptService {
           table: {
             widths: [377, '*'],
             body: [
-              ['', { text: `${this.cartTotalPrice}$`, alignment: 'center', noWrap: true }],
+              ['', { text: `${this.receiptData.totalPrice}$`, alignment: 'center', noWrap: true }],
             ]
           }
         }
@@ -160,6 +164,8 @@ export class ReceiptService {
     return docDefinition
 
   }
+
+ 
 
 }
 

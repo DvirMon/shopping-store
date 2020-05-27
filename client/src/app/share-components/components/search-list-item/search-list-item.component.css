@@ -1,0 +1,10 @@
+app-product-thumbnail {
+  height: 80px;
+}
+
+.text > figure {
+  -webkit-box-pack: start !important;
+      -ms-flex-pack: start !important;
+          justify-content: flex-start !important;
+}
+/*# sourceMappingURL=search-list-item.component.css.map */

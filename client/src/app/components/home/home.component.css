@@ -1,0 +1,15 @@
+.mat-grid-tile {
+  outline: 1px solid black;
+}
+
+app-login, app-info, app-about {
+  height: inherit;
+  width: 100%;
+}
+
+.home {
+  background-image: url("/assets/images/about.jpg");
+  background-repeat: no-repeat;
+  background-size: 100vw;
+}
+/*# sourceMappingURL=home.component.css.map */

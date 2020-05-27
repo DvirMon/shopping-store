@@ -10,13 +10,3 @@ export class ReceiptItemData {
   }
 
 }
-
-export class ReceiptData {
-
-  public constructor(
-    public totalItems: ReceiptItemData[],
-    public totalCartPrice: string,
-  ) {
-  }
-
-}

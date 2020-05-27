@@ -16,6 +16,9 @@ export const receiptReducer = (oldAppState = new ReceiptAppState(), action: Acti
     case ActionType.AddReceiptItem:
       newAppState.receipt.push(action.payload)
       break
+    case ActionType.GetOrderData:
+      newAppState.orderDetails = action.payload
+      break
 
     case ActionType.DeleteReceiptItem:
       const indexToDelete = newAppState.receipt.findIndex(doc => doc.id === action.payload)

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule } from 'ng-recaptcha'
 import { MaterialModule } from './material.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
@@ -16,11 +17,12 @@ import { UserModel } from '../utilities/models/user-model';
 import { CartItemModel } from '../utilities/models/cart-item-model';
 
 
-
+ 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    FontAwesomeModule
   ],
   providers: [
     {
@@ -52,6 +54,7 @@ import { CartItemModel } from '../utilities/models/cart-item-model';
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
+    FontAwesomeModule
 
   ]
 })

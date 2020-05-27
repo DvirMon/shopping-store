@@ -1,0 +1,48 @@
+.mat-toolbar {
+  background: #5bc0de;
+  color: white;
+}
+
+mat-nav-list {
+  height: 77%;
+  overflow: auto;
+}
+
+.spacer {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0.5 auto;
+          flex: 1 0.5 auto;
+}
+
+.payment {
+  background-color: #5bc0de;
+  color: white;
+  font-size: 30px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.my-cart {
+  background-color: lightgray;
+  color: white;
+  font-size: 25px;
+}
+
+.my-cart mat-icon {
+  font-size: 40px;
+}
+
+mat-list-item {
+  height: auto;
+}
+
+app-product-list-item {
+  width: 100%;
+  display: block;
+}
+
+.search-input {
+  width: 200px;
+  font-size: initial;
+}
+/*# sourceMappingURL=cart-list.component.css.map */

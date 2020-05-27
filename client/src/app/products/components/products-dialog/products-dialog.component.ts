@@ -28,19 +28,20 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   @ViewChild(MatTooltip) toolTip: MatTooltip;
   @ViewChild('cartItemQuantity') cartItemQuantity: NgModel;
 
-  public cart: CartModel = new CartModel()
-  public cartItems: CartItemModel[] = []
-  public cartItem: CartItemModel = new CartItemModel()
-  public minQuantity: boolean = false
   public quantityControl: FormControl
 
+  public cartItems: CartItemModel[] = []
+  public minQuantity: boolean = false
+  
   public editMode: boolean = false
-
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formService: FormService,
     private cartService: CartService,
-    public product: ProductModel
+    public product: ProductModel,
+    public cart: CartModel, 
+    public cartItem: CartItemModel
 
   ) { }
 
@@ -48,7 +49,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
     this.product = this.data.payload;
     this.handleStoreSubscribe();
-    this.handleUpdate();
+    this.handleUpdateState();
 
   }
 
@@ -86,6 +87,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   // end of form section
 
   // subscription section
+
   private handleStoreSubscribe(): void {
     store.subscribe(
       () => {
@@ -161,7 +163,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   // logic section
 
-  private handleUpdate(): void {
+  // set update state if item already exist in the cart
+  private handleUpdateState(): void {
 
     const cartItem = this.isCartItemInCart();
     if (cartItem) {
@@ -174,6 +177,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   }
 
+  // find if item is already exist in the cart
   private isCartItemInCart(): CartItemModel {
     return this.cartItems.find(cartItem => {
       if (cartItem.productId === this.product._id) {
@@ -182,7 +186,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     })
   }
 
-  // default values in cart item
+  // default values for cart item
   private cartItemDefaultValues(): void {
     this.cartItem.cartId = this.cart._id
     this.cartItem.productId = this.product._id

@@ -3,6 +3,7 @@ export class OrderModel {
 
   public constructor(
 
+    public _id? : string,
     public userId?: string,
     public cartId?: string,
     public shippingDate?: Date,

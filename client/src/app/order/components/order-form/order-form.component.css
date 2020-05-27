@@ -1,0 +1,12 @@
+mat-grid-list,
+mat-grid-tile,
+mat-vertical-stepper,
+form {
+  height: 100%;
+  width: 100%;
+}
+
+.payment {
+  padding: 3%;
+}
+/*# sourceMappingURL=order-form.component.css.map */

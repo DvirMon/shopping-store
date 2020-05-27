@@ -1,8 +1,10 @@
+@import "~src/scss/variables";
+
 .sidenav-container {
   height: 90vh;
 
   .sidenav .mat-toolbar {
-    background: #5bc0de;
+    background: $info-color;
     color: white;
   }
 }
@@ -17,7 +19,7 @@
 }
 
 .mat-sidenav-content .mat-toolbar {
-  background: #5bc0de;
+  background: $info-color;
   width: 100%;
   background-size: contain;
   background-repeat: no-repeat;

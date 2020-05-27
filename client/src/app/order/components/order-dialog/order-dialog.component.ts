@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { OrderService } from 'src/app/utilities/services/order.service';
 
 @Component({
   selector: 'app-order-dialog',
@@ -11,15 +12,15 @@ export class OrderDialogComponent implements OnInit {
 
   constructor(
     private router : Router,
-    private receiptService : ReceiptService
+    private receiptService : ReceiptService,
   ) { }
-
+ 
   ngOnInit(): void {
   }
 
   public backToSore() {
-    this.receiptService.resetReceiptState()
-    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
+    this.receiptService.backToSore()
+    this.router.navigateByUrl(`/login`)
   }
 
   public getReceipt() {

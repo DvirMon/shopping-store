@@ -1,0 +1,41 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav-container .sidenav .mat-toolbar {
+  background: #f44336;
+  color: white;
+}
+
+.mat-drawer.mat-sidenav.sidenav {
+  height: inherit;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+ul {
+  margin: 0;
+}
+
+.main-links > li {
+  display: inline-block;
+  margin-left: 3%;
+}
+
+.main-links > li button {
+  height: 64px;
+}
+/*# sourceMappingURL=admin-bar.component.css.map */

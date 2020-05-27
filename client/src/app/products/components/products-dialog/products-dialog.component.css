@@ -1,0 +1,79 @@
+mat-dialog-container {
+  padding: 0;
+}
+
+mat-grid-list,
+mat-grid-tile {
+  width: 100%;
+  text-align: left;
+}
+
+.dialog-title {
+  background-color: #048bf3;
+  height: 9vh;
+  color: white;
+  font-size: 30px;
+  padding: 3%;
+}
+
+.dialog-title h2 {
+  width: 90%;
+  float: left;
+}
+
+.dialog-content {
+  background-color: white;
+  margin: auto;
+  width: 85%;
+  position: relative;
+  top: -30px;
+  padding: 5%;
+  border-radius: 5px;
+}
+
+.dialog-image {
+  position: relative;
+  top: -10px;
+  right: 2%;
+  width: 50%;
+  float: left;
+}
+
+.dialog-text {
+  font-size: 45px;
+}
+
+.dialog-input {
+  padding-top: 5%;
+  font-size: 25px;
+}
+
+.dialog-input mat-icon:hover {
+  color: red;
+}
+
+mat-form-field {
+  width: 60px;
+  text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.btn-add {
+  border-top: 1px solid #c7cbd7;
+  padding-top: 20px;
+  width: 50%;
+  float: right;
+}
+
+mat-grid-tile {
+  width: auto;
+  padding-top: 20px;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  text-align: left;
+}
+/*# sourceMappingURL=products-dialog.component.css.map */

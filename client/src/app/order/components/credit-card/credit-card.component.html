@@ -1,13 +1,17 @@
 <mat-grid-list cols="4" rowHeight="100px">
   <mat-grid-tile>
-    <mat-form-field>
-      <mat-label>Cards</mat-label>
-      <select matNativeControl>
-        <option *ngFor="let card of cards" [value]="card">{{card}}</option>
-      </select>
-    </mat-form-field>
+    <fa-icon [icon]="visa" size="4x"></fa-icon>
   </mat-grid-tile>
-  <mat-grid-tile colspan="3">
+  <mat-grid-tile>
+    <fa-icon [icon]="mc" size="4x"></fa-icon>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <fa-icon [icon]="diners" size="4x"></fa-icon>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <fa-icon [icon]="amex" size="4x"></fa-icon>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="4">
     <app-input [control]="control" mdbCreditCard placeHolder="Credit Card number" type="text"
       hint="valid Credit Card number">
     </app-input>

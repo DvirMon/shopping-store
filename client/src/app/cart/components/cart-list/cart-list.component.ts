@@ -64,7 +64,6 @@ export class CartListComponent implements OnInit {
       return
     } 
 
-    this.receiptService.handleReceiptData()
     
     this.router.navigateByUrl(`/order/${this.cart._id}`)
   }

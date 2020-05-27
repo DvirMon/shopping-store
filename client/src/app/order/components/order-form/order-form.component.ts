@@ -12,10 +12,9 @@ import { OrderModel } from 'src/app/utilities/models/order-model';
 
 import { store } from 'src/app/redux/store';
 
-import { tap, map, debounceTime, take } from 'rxjs/operators';
-import { ActivatedRoute, Data } from '@angular/router';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
+
 
 
 @Component({
@@ -29,11 +28,12 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   public orderForm: FormGroup;
   public cartTotalPrice: number;
 
+
   constructor(
     private formService: FormService,
     private orderService: OrderService,
-    private receiptService : ReceiptService,
-    private dialogService : DialogService,
+    private receiptService: ReceiptService,
+    private dialogService: DialogService,
     private order: OrderModel,
     public user: UserModel,
     public cart: CartModel,
@@ -107,12 +107,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
     this.orderService.handleNewOrder(this.order)
   }
- 
-   
-  public openDialog() {
-    this.dialogService.handleOrderDialog(this.order)
 
-  }
 
 
   // end of request section

@@ -1,0 +1,39 @@
+mat-toolbar {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+mat-toolbar .search-form {
+  min-width: 150px;
+  width: 50%;
+  font-size: 20px;
+}
+
+mat-toolbar .search-input {
+  width: 100%;
+}
+
+.single-autocomplete {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+mat-option {
+  background-color: white !important;
+  height: inherit;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+mat-option:hover {
+  border: 1px solid red;
+  opacity: 0.8;
+}
+
+mat-divider {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/*# sourceMappingURL=search.component.css.map */

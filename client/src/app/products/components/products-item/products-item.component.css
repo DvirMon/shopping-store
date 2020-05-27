@@ -1,0 +1,39 @@
+mat-grid-list,
+mat-grid-tile {
+  height: 100%;
+  padding: 0;
+}
+
+mat-grid-list {
+  width: 300px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+mat-grid-tile {
+  -webkit-box-pack: left !important;
+      -ms-flex-pack: left !important;
+          justify-content: left !important;
+}
+
+mat-grid-list:hover {
+  border: red 1px solid;
+}
+
+app-product-thumbnail {
+  padding-top: 10px;
+}
+
+.mat-grid-tile .mat-figure {
+  -webkit-box-pack: left !important;
+      -ms-flex-pack: left !important;
+          justify-content: left !important;
+}
+
+.price {
+  font-size: 20px;
+  text-align: left;
+}
+/*# sourceMappingURL=products-item.component.css.map */

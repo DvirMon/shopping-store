@@ -21,9 +21,9 @@ export class DialogService {
 
 
   constructor(
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    @Inject(MAT_DIALOG_DEFAULT_OPTIONS) public dialogConfig: MatDialogConfig
+    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) private data: DialogData,
+    @Inject(MAT_DIALOG_DEFAULT_OPTIONS) private dialogConfig: MatDialogConfig
   ) { }
 
 
@@ -46,8 +46,8 @@ export class DialogService {
   }
 
   // open product dialog
-  public handleOrderDialog(order: OrderModel) {
-    const data = this.handleDate("order", order)
+  public handleOrderDialog() {
+    const data = this.handleDate("order")
     this.dialog.open(OrderDialogComponent, this.handleConfig(data))
   }
 
@@ -56,22 +56,12 @@ export class DialogService {
 
     const data = { ...this.data }
 
-    switch (type) {
-      case "spinner":
-        data.type = "spinner"
-        break
-      case "product":
-        data.type = "product"
-        data.payload = payload
-        break
-      case "order":
-        data.type = "order"
-        data.payload = payload
-        break
-      case "error":
-        data.type = "error"
-        data.payload = this.handleErrorData(payload)
-        break
+    data.type = type
+
+    if (type === "error") {
+      data.payload = this.handleErrorData(payload)
+    } else {
+      data.payload = payload
     }
 
     return data
@@ -95,7 +85,6 @@ export class DialogService {
         dialogConfig.height = '200px'
         dialogConfig.width = '450px'
         dialogConfig.disableClose = false;
-        dialogConfig.data = data
         dialogConfig.panelClass = "dialog-order"
         break
       case "spinner":
@@ -105,10 +94,10 @@ export class DialogService {
         dialogConfig.panelClass = "dialog-spinner"
         break
       case "product":
-        dialogConfig.hasBackdrop = true;
-        dialogConfig.autoFocus = false;
         dialogConfig.height = '500px'
         dialogConfig.width = '880px'
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.autoFocus = false;
         dialogConfig.disableClose = false;
         dialogConfig.data = data;
         dialogConfig.panelClass = "dialog-product"

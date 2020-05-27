@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { config } from '../../../main-config'
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { ProductModel } from '../models/product-model';
-import { map, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { ProductsDialogComponent } from '../../products/components/products-dialog/products-dialog.component';
-import { FormControl } from '@angular/forms';
+import { config } from '../../../main-config'
 
 
 export interface Category {
@@ -30,8 +28,6 @@ export class ProductsService {
 
   constructor(
     private http: HttpClient,
-    public productDialog: MatDialog
-
 
   ) { }
 
@@ -68,9 +64,5 @@ export class ProductsService {
 
   // end of requests section
 
-  // dialog section
 
-  public handleProductDialog() {
-    this.productDialog.open(ProductsDialogComponent)
-  }
 }
