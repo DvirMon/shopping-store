@@ -14,7 +14,9 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
       newAppState[action.payload.alias] = action.payload.products;
       break
     case ActionType.AddProduct:
-      newAppState[action.payload.alias].push(action.payload);
+      const alias = action.payload.alias
+      const product = action.payload.product
+      newAppState[alias].push(product)
       break
   }
   return newAppState

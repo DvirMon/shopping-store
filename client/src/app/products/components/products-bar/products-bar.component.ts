@@ -1,18 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Category } from 'src/app/utilities/services/products.service';
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { Observable } from 'rxjs';
+import { CategoryModel } from 'src/app/utilities/models/category-model';
 
 @Component({
   selector: 'app-products-bar',
   templateUrl: './products-bar.component.html',
   styleUrls: ['./products-bar.component.scss']
 })
-export class ProductsBarComponent {
+export class ProductsBarComponent  {
 
-  @Input() public categories: Category[] = []
+  @Input() public categories: CategoryModel[] = []
   public open: boolean = true
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -24,6 +23,7 @@ export class ProductsBarComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
   ) { }
+
 
 
 }

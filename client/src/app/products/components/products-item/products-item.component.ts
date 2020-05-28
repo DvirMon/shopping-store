@@ -14,8 +14,8 @@ export class ProductsItemComponent {
 
   constructor(
     private dialogService: DialogService,
-  ) {} 
- 
+  ) { }
+
   public handleProductDialog() {
     this.dialogService.handleProductDialog(this.product)
   }

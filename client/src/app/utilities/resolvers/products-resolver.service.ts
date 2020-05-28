@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ProductsService } from '../services/products.service';
-import { ProductModel } from '../models/product-model';
+import { CategoryModel } from '../models/category-model';
+import { store } from 'src/app/redux/store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsResolver implements Resolve<Observable<ProductModel[]> | Promise<ProductModel[]> | ProductModel[]>{
+export class ProductsResolver implements Resolve<Observable<CategoryModel[]> | Promise<CategoryModel[]> | CategoryModel[]>{
 
   constructor(
     private productService: ProductsService
@@ -16,8 +17,12 @@ export class ProductsResolver implements Resolve<Observable<ProductModel[]> | Pr
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<ProductModel[]> | Promise<ProductModel[]> | ProductModel[] {
-    return this.productService.getProductsByCategory(route.params.categoryId)
+  ): Observable<CategoryModel[]> | Promise<CategoryModel[]> | CategoryModel[] {
+
+    if (store.getState().products.categories.length === 0) {
+      return this.productService.getProductsCategories()
+    } else {
+      return store.getState().products.categories
+    }
   }
 }
- 

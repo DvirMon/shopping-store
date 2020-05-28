@@ -11,8 +11,8 @@ const routes: Routes = [
     path: "",
     component: ProductsComponent,
     canActivate: [ProductsGuard],
-    resolve: { products: ProductsResolver }
-  },
+    resolve: { categories: ProductsResolver }
+  }, 
 ];
 
 @NgModule({

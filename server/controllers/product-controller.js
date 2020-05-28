@@ -40,7 +40,7 @@ router.get("/total", async (request, response, next) => {
 
 router.get(
   "/category/:categoryId",
-  // authorize(false, key),
+  authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.getAllProductsByCategoryAsync(
@@ -74,7 +74,6 @@ router.get(
   }
 );
 
-
 router.get("/:_id", authorize(false, key), async (request, response, next) => {
   try {
     const product = await productLogic.getProductAsync(request.params._id);
@@ -83,7 +82,6 @@ router.get("/:_id", authorize(false, key), async (request, response, next) => {
     next(err);
   }
 });
-
 
 // add product only admin
 router.post("/", authorize(true, key), async (request, response, next) => {
