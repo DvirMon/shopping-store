@@ -21,6 +21,11 @@ export enum ActionType {
   AddReceiptItem,
   DeleteReceiptItem,
   ResetReceiptState,
-  GetOrderData
-  
+  GetOrderData,
+
+  // Products Actions
+    GetCategories,
+    GetProducts,
+    AddProduct,
+    UpdateProduct,
 } 

@@ -6,7 +6,7 @@ const productLogic = require("../business-layer-logic/product-logic");
 const authorize = require("../middleware/handleAuth");
 const key = config.secret.access;
 
-router.get("/", async (request, response, next) => {
+router.get("/", authorize(false, key), async (request, response, next) => {
   try {
     const products = await productLogic.getAllProductsAsync();
     response.json(products);
@@ -38,18 +38,9 @@ router.get("/total", async (request, response, next) => {
   }
 });
 
-router.get("/:_id", authorize(false, key), async (request, response, next) => {
-  try {
-    const product = await productLogic.getProductAsync(request.params._id);
-    response.json(product);
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get(
   "/category/:categoryId",
-  authorize(false, key),
+  // authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.getAllProductsByCategoryAsync(
@@ -57,7 +48,7 @@ router.get(
       );
 
       if (products.length === 0) {
-        next({ status: 404, message: "no content" });
+        return next({ status: 404, message: "no content" });
       }
 
       response.json(products);
@@ -82,6 +73,17 @@ router.get(
     }
   }
 );
+
+
+router.get("/:_id", authorize(false, key), async (request, response, next) => {
+  try {
+    const product = await productLogic.getProductAsync(request.params._id);
+    response.json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 // add product only admin
 router.post("/", authorize(true, key), async (request, response, next) => {

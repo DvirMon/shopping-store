@@ -5,7 +5,6 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss']
 })
 export class AddressComponent implements OnInit {
 
@@ -18,8 +17,8 @@ export class AddressComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { 
+  } 
 
   public addressAutoComplete(controlName: string) {
     if (controlName === "street") {

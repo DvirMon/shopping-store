@@ -11,7 +11,8 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 export class ProductsComponent implements OnInit {
   public categories: Category[] = []
   public products: ProductModel[] = []
-  public collection : [ProductModel[]]
+  public collection: [ProductModel[]]
+  public categoruId : string
 
   constructor(
 
@@ -22,15 +23,25 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
 
     this.productsService.getProductsCategories().subscribe(
-      (response) => this.categories = response
-    )
+      (response) => {
 
-    this.routeSubscription()
+        this.categories = response
+        this.productsService.handleProductsStoreState(this.activeRoute.snapshot.params.categoryId)
+        
+      }
+      )
+
+      this.routeSubscription()
+
   }
 
   private routeSubscription() {
     this.activeRoute.data.subscribe((data: Data) => {
       this.collection = data.products
+      
+      if(this.categories.length > 0) {
+        this.productsService.handleProductsStoreState(this.activeRoute.snapshot.params.categoryId)
+      }
     })
   }
 

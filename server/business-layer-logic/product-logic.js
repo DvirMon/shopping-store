@@ -12,7 +12,7 @@ const getAllProductsAsync = async () => {
         },
       },
     },
-   ]).exec();
+  ]).exec();
 };
 
 const getProductAsync = async (_id) => {
@@ -34,16 +34,17 @@ const getTotalDocsAsync = async () => {
 // get products by category
 const getAllProductsByCategoryAsync = async (categoryId) => {
   return await Product.find({ categoryId }).exec();
+
 };
 
 const addProductAsync = async (product) => {
   return product.save();
-};
+}; 
 
 const updateProductAsync = async (product) => {
   const info = await Product.updateOne({ _id: product._id }, product).exec();
   return info.n ? product : null;
-};
+}; 
 
 const getAllCategories = async () => {
   return await Category.find({}).exec();

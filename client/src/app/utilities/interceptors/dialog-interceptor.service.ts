@@ -37,7 +37,7 @@ export class DialogInterceptorService implements HttpInterceptor {
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            spinnerRef.close()
+            spinnerRef.close() 
           }
         }),
       catchError((error: HttpErrorResponse) => {
