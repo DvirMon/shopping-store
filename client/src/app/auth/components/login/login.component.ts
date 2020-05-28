@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/utilities/services/auth.service';
 import { UserModel } from 'src/app/utilities/models/user-model';
 import { CartService } from 'src/app/utilities/services/cart.service';
 
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 import { Router } from '@angular/router';
 
 @Component({

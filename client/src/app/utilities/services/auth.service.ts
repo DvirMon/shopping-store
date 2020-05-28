@@ -8,12 +8,12 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { FormService } from './form.service';
 import { UserModel } from '../models/user-model';
 
-import { store } from '../../redux/store';
-import { ActionType } from '../../redux/action-type';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { config } from "../../../main-config"
 import { CartService } from './cart.service';
+import { ActionType } from '../redux/action-type';
+import { store } from '../redux/store';
 
 export interface Login {
   email: string,

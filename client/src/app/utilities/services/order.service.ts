@@ -6,9 +6,8 @@ import { switchMap } from 'rxjs/operators';
 import { CartService } from './cart.service';
 import { DialogService } from './dialog.service';
 import { FormService } from './form.service';
-import { ActionType } from 'src/app/redux/action-type';
-import { ReceiptItemData } from '../models/receipt-model';
 import { ReceiptService } from './receipt.service';
+import { ActionType } from '../redux/action-type';
 
 @Injectable({
   providedIn: 'root'

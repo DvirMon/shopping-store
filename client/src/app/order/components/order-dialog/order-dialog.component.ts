@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
-import { OrderService } from 'src/app/utilities/services/order.service';
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({

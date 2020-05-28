@@ -5,9 +5,9 @@ import { CartItemModel } from '../models/cart-item-model';
 import { ReceiptItemData } from '../models/receipt-model';
 import { ProductModel } from '../models/product-model';
 import { FormService } from './form.service';
-import { ActionType } from 'src/app/redux/action-type';
-import { store } from 'src/app/redux/store';
 import { OrderModel } from '../models/order-model';
+import { ActionType } from '../redux/action-type';
+import { store } from '../redux/store';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 

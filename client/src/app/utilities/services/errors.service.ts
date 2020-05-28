@@ -18,8 +18,6 @@ export class ErrorsService {
 
   public handleError(error) {
 
-    console.log(error.message)
-
     if (error instanceof HttpErrorResponse) {
 
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/utilities/services/cart.service';
 import { FormControl } from '@angular/forms';

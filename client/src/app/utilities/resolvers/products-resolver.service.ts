@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { CategoryModel } from '../models/category-model';
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import { switchMap, take, map } from 'rxjs/operators'
 import { FormService } from './form.service';
-import { ActionType } from '../../redux/action-type';
+import { ActionType } from 'src/app/utilities/redux/action-type';
 import { CartItemModel } from '../models/cart-item-model';
 import { CartModel } from '../models/cart-model';
 

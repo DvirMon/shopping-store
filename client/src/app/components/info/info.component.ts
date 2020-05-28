@@ -1,7 +1,7 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { InfoService, Info } from 'src/app/utilities/services/info.service';
 import { ActivatedRoute, ActivationEnd, Data } from '@angular/router';
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-info',
@@ -37,15 +37,15 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.storeSubscribe()
-    this.routeSubscription()
+    this.subscribeToStore()
+    this.subscribeToRoute()
     this.getStoreInfo()
 
   }
 
   // subscription section
 
-  private storeSubscribe() {
+  private subscribeToStore() {
     store.subscribe(() => {
       this.isAdmin = store.getState().auth.isAdmin
       this.isLogin = store.getState().auth.isLogin
@@ -54,7 +54,7 @@ export class InfoComponent implements OnInit {
     this.isAdmin = store.getState().auth.isAdmin
   }
 
-  private routeSubscription() {
+  private subscribeToRoute() {
     this.activeRoute.data.subscribe((data: Data) => {
       if (data.info) {
         this.info = data.info

@@ -11,11 +11,11 @@ import { FormService } from 'src/app/utilities/services/form.service';
 import { CartService, CartActionInfo } from 'src/app/utilities/services/cart.service';
 import { DialogData } from 'src/app/utilities/services/dialog.service';
 
-import { store } from 'src/app/redux/store';
-import { ActionType } from 'src/app/redux/action-type';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormControl, NgModel, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { store } from 'src/app/utilities/redux/store';
+import { ActionType } from 'src/app/utilities/redux/action-type';
 
 @Component({
   selector: 'app-products-dialog',

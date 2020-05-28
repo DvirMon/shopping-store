@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subject, Observable, of } from 'rxjs';
-import { ActionType } from '../../redux/action-type';
-import { store } from '../../redux/store';
 import { CustomValidationService } from './custom-validation.service';
 import { HttpClient } from '@angular/common/http';
 import { distinctUntilChanged, take, switchMap, map } from 'rxjs/operators';
+import { ActionType } from '../redux/action-type';
+import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,6 @@ export class FormService {
     positive: /^[1-9]+[0-9]*$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
     creditCard: /^(?:4\d{3}|5[1-5]\d{2}|6011|3[47]\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}$/
-    // creditCard: /^(?:4\d{3}|5[1-5]\d{2}|6011|3[47]\d{2})([- ]?\d{4}){3}$/
   };
 
   constructor(

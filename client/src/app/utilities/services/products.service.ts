@@ -9,8 +9,8 @@ import { FormService } from './form.service';
 
 
 import { config } from '../../../main-config'
-import { store } from 'src/app/redux/store';
-import { ActionType } from 'src/app/redux/action-type';
+import { store } from 'src/app/utilities/redux/store';
+import { ActionType } from 'src/app/utilities/redux/action-type';
 import { CategoryModel } from '../models/category-model';
 
 

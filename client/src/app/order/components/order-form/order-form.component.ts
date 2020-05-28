@@ -10,10 +10,7 @@ import { OrderService } from 'src/app/utilities/services/order.service';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { OrderModel } from 'src/app/utilities/models/order-model';
 
-import { store } from 'src/app/redux/store';
-
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
-import { DialogService } from 'src/app/utilities/services/dialog.service';
+import { store } from 'src/app/utilities/redux/store';
 import { ActivatedRoute } from '@angular/router';
 
 

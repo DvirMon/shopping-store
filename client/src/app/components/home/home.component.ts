@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
-import { store } from 'src/app/redux/store';
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-home',
