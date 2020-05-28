@@ -4,7 +4,7 @@
   height: 90vh;
 
   .sidenav .mat-toolbar {
-    background: $info-color;
+    background: color(info);
     color: white;
   }
 }
@@ -19,7 +19,7 @@
 }
 
 .mat-sidenav-content .mat-toolbar {
-  background: $info-color;
+  background: color(info);
   width: 100%;
   background-size: contain;
   background-repeat: no-repeat;

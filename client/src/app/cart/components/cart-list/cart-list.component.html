@@ -12,11 +12,8 @@
     store</button>
 </mat-toolbar>
 <mat-nav-list>
-  <app-cart-list-item 
-  *ngFor="let cartItem of cartItems" 
-  [cartItem]="cartItem" 
-  [orderMode]="orderMode"
-  [searchTerm]="searchControl.value">
+  <app-cart-list-item *ngFor="let cartItem of cartItems" [cartItem]="cartItem" [orderMode]="orderMode"
+    [searchTerm]="searchControl.value">
   </app-cart-list-item>
 </mat-nav-list>
 <mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
@@ -24,7 +21,9 @@
     <mat-icon [matBadge]="cartItems.length" matBadgeColor="warn">shopping_cart</mat-icon>
   </mat-grid-tile>
   <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
-  <mat-grid-tile colspan="2" class="payment" (click)="goToOrder()">Payment</mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <button class="payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Payment</button>
+  </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile class="my-cart">Total : {{cartTotalPrice | currency}}</mat-grid-tile>

@@ -6,7 +6,7 @@ const productLogic = require("../business-layer-logic/product-logic");
 const authorize = require("../middleware/handleAuth");
 const key = config.secret.access;
 
-router.get("/", authorize(false, key), async (request, response, next) => {
+router.get("/", async (request, response, next) => {
   try {
     const products = await productLogic.getAllProductsAsync();
     response.json(products);

@@ -1,7 +1,9 @@
+@import "~src/scss/variables";
+
 .mat-toolbar {
-  background: #5bc0de;
-  color: white;
-}
+  background: color(info);
+  color: color(text);
+} 
 
 mat-nav-list {
   height: 77%;
@@ -13,17 +15,18 @@ mat-nav-list {
 }
 
 .payment {
-  background-color: #5bc0de;
-  color: white;
-  font-size: 30px;
+  background-color: color(info);
+  height: 100%;
+  font-size: 28px;
   font-weight: 500;
-  cursor: pointer;
+  border-radius: 0;
+  color: color(text);
 }
 
 .my-cart {
   background-color: lightgray;
-  color: white;
   font-size: 25px;
+  color: color(text);
 
   mat-icon {
     font-size: 40px;

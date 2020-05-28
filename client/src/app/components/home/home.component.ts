@@ -26,9 +26,9 @@ export class HomeComponent implements OnInit {
     )
     const userId = this.activatedRoute.snapshot.params
 
-    if (userId && this.cartItems.length > 0) {
-      this.router.navigateByUrl("/products/5e91e29b9c08fc560ce2cf32")
-    }
+    // if (userId && this.cartItems.length > 0) {
+    //   this.router.navigateByUrl("/products/5e91e29b9c08fc560ce2cf32")
+    // }
   }
 
 }

@@ -1,6 +1,5 @@
 mat-grid-list,
 mat-grid-tile {
-  height: 100%;
   padding: 0;
 }
 
@@ -23,9 +22,6 @@ app-product-thumbnail {
   padding-top: 10px;
 }
 
-.mat-grid-tile .mat-figure {
-  justify-content: left !important;
-}
 
 .price {
   font-size: 20px;

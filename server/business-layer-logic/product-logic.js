@@ -1,9 +1,18 @@
 const Product = require("../models/product-model");
 const Category = require("../models/category-model");
 
-// get all products
+// get all products sort by category
 const getAllProductsAsync = async () => {
-  return await Product.find({}).exec();
+  return await Product.aggregate([
+    {
+      $group: {
+        _id: "$categoryId",
+        doc: {
+          $push: "$$ROOT",
+        },
+      },
+    },
+   ]).exec();
 };
 
 const getProductAsync = async (_id) => {
@@ -12,7 +21,9 @@ const getProductAsync = async (_id) => {
 
 // search function - get products by query
 const searchProductsAsync = async (query) => {
-  return await Product.find({ name: { $regex: query, $options: "i"} }).limit(10).exec();
+  return await Product.find({ name: { $regex: query, $options: "i" } })
+    .limit(10)
+    .exec();
 };
 
 // get total amount of products docs

@@ -10,7 +10,7 @@ export class ProductsGuard implements CanActivate {
 
   constructor(
     private authService : AuthService
-  ) {} 
+  ) {}  
 
   canActivate(
     next: ActivatedRouteSnapshot,

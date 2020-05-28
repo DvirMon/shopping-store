@@ -1,3 +1,12 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-$info-color: #5bc0de;
+$colors: (
+  info: #5bc0de,
+  text : #ffffff
+);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+};
+ 
+// $info-color: #5bc0de;

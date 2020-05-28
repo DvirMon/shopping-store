@@ -3,6 +3,11 @@ const Cart = require("./cart-model");
 const User = require("./user-model");
 const validation = require("../services/validation.service");
 
+// format credit card number
+const obfuscate = (cc) => {
+  return "****-****-****-" + cc.slice(cc.length - 4, cc.length);
+};
+
 const OrderSchema = mongoose.Schema(
   {
     userId: { type: mongoose.Types.ObjectId, ref: User, required: true },
@@ -20,12 +25,20 @@ const OrderSchema = mongoose.Schema(
     shippingDate: { type: Date, required: true },
     orderDate: { type: Date, required: true, default: Date.now },
     creditCard: {
-      type: String, 
-      required: true, 
+      type: String,
+      required: true,
+      get: obfuscate,
       validate: [validation.regex.creditCard, "invalid credit card number"],
     },
   },
-  { versionKey: false }
+  {
+    toJSON: {
+      getters: true,
+    },
+    versionKey: false,
+  }
 );
+
+
 
 module.exports = mongoose.model("Order", OrderSchema, "orders");

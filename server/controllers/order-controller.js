@@ -66,10 +66,6 @@ router.post(
     try {
       const order = request.body;
       const addedOrder = await orderLogic.addOrderAsync(new Order(order));
-
-      addedOrder.orderDate.toLocaleString();
-      addedOrder.shippingDate.toLocaleString();
- 
       response.status(201).json(addedOrder);
     } catch (err) {
       next(err);
