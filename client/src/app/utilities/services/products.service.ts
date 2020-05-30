@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ProductModel } from '../models/product-model';
+import { CategoryModel } from '../models/category-model';
 
 import { FormService } from './form.service';
-
 
 import { config } from '../../../main-config'
 import { store } from 'src/app/utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
-import { CategoryModel } from '../models/category-model';
 
 
 export interface ProductsData {
@@ -39,7 +38,7 @@ export class ProductsService {
 
   ) { }
 
-  public getProductsCategories(): Observable<CategoryModel[]> {
+  public getCategories(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
       tap((response: CategoryModel[]) => {
         this.formService.handleStore(ActionType.GetCategories, response)
@@ -47,12 +46,8 @@ export class ProductsService {
     )
   }
 
-  public getProductNameAndImage(_id) {
-    return this.http.get(this.baseUrl + `/${_id}`).pipe(
-      map((product: ProductModel) => {
-        return product
-      })
-    )
+  public getProductNameAndImage(_id) : Observable<ProductModel>  {
+    return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
   }
 
   public getProductsByCategory(categoryId): Observable<ProductModel[]> {
@@ -61,7 +56,7 @@ export class ProductsService {
         this.handleProductsStoreState(response);
         return response;
       })
-    ) 
+    )
   }
 
   public searchProducts(value: string): Observable<ProductModel[]> {

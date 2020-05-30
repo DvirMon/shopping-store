@@ -51,6 +51,12 @@ export class DialogService {
     this.dialog.open(OrderDialogComponent, this.handleConfig(data))
   }
 
+  // open auth dialog
+  public handleAuthDialog() {
+    const data = this.handleDate("auth")
+    this.dialog.open(DialogComponent, this.handleConfig(data))
+  }
+
   // handle dialog data
   private handleDate(type: string, payload?: any): DialogData {
 
@@ -87,6 +93,13 @@ export class DialogService {
         dialogConfig.hasBackdrop = true;
         dialogConfig.disableClose = false;
         dialogConfig.panelClass = "dialog-order"
+        break
+      case "auth":
+        dialogConfig.height = '300px'
+        dialogConfig.width = '450px'
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.disableClose = false;
+        dialogConfig.panelClass = "dialog-auth"
         break
       case "spinner":
         dialogConfig.autoFocus = true;

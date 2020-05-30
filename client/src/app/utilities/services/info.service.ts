@@ -18,8 +18,8 @@ export interface Info {
 }
 
 interface CurrentCart {
-  price : number,
-  cartItems : CartItemModel[]
+  price: number,
+  cartItems: CartItemModel[]
 }
 
 @Injectable({
@@ -45,40 +45,51 @@ export class InfoService {
     return forkJoin([products, orders]);
   }
 
-  public getNotification(userId) {
+  public getNotification(userId): Observable<Info> {
 
     return this.http.get<CartModel>(`http://localhost:3000/api/carts/latest/${userId}`).pipe(
       take(1),
       switchMap(cart => {
         if (cart === null) {
-          const info = { ...this.info }
-          info.message = "new client"
-          return of(info)
+        return this.handleNewClient()
         }
         this.formService.handleStore(ActionType.IsCartActive, cart.isActive)
-        
+
         if (cart.isActive) {
-
-          this.formService.handleStore(ActionType.AddCart, cart)
-
-          return this.http.get<CurrentCart>(`http://localhost:3000/api/cart-item/${cart._id}`).pipe(
-            map((response : CurrentCart) => {
-              this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
-              this.formService.handleStore(ActionType.SetCartPrice, response.price)
-              return this.handleCartData(cart, response.price)
-            })
-          )
+          return this.handleCurrentCart(cart)
         }
-        return this.http.get<any>(`http://localhost:3000/api/orders/latest/${cart._id}`).pipe(
-          take(1),
-          map(order => {
-            const info = this.handleOrderData(order)
-            return info
-          })
-        )
+        return this.handleLastOrder(cart)
       })
     )
 
+  }
+
+  private handleNewClient(): Observable<Info> {
+    const info = { ...this.info }
+    info.message = "new client"
+    return of(info)
+  }
+
+  private handleCurrentCart(cart: CartModel): Observable<Info> {
+    this.formService.handleStore(ActionType.AddCart, cart)
+
+    return this.http.get<CurrentCart>(`http://localhost:3000/api/cart-item/${cart._id}`).pipe(
+      map((response: CurrentCart) => {
+        this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
+        this.formService.handleStore(ActionType.SetCartPrice, response.price)
+        return this.handleCartData(cart, response.price)
+      })
+    )
+  }
+
+  private handleLastOrder(cart: CartModel): Observable<Info> {
+    return this.http.get<any>(`http://localhost:3000/api/orders/latest/${cart._id}`).pipe(
+      take(1),
+      map(order => {
+        const info = this.handleOrderData(order)
+        return info
+      })
+    )
   }
 
   private handleCartData(cart, price): Info {

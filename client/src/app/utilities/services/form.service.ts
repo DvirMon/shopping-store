@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { Subject, Observable, of } from 'rxjs';
 import { CustomValidationService } from './custom-validation.service';
 import { HttpClient } from '@angular/common/http';
@@ -30,16 +30,16 @@ export class FormService {
   ) { }
 
 
-  public loginForm() {
+  public loginForm(): FormGroup {
     return this.fb.group({
       email: ['',
-        [Validators.required, Validators.pattern(this.regex .email)]
+        [Validators.required, Validators.pattern(this.regex.email)]
       ],
       password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)]],
     })
   }
 
-  public registerForm() {
+  public registerForm(): FormGroup {
     return this.fb.group({
       authDetails: this.fb.group({
         personalId: ['', [
@@ -84,7 +84,7 @@ export class FormService {
     })
   }
 
-  public orderForm() {
+  public orderForm(): FormGroup {
     return this.fb.group({
       address: this.fb.group({
         city: ['', [Validators.required]],
@@ -98,10 +98,20 @@ export class FormService {
         [Validators.required, Validators.pattern(this.regex.creditCard)]
       ],
     })
-  } 
+  }
+
+  public productForm(): FormGroup {
+    return this.fb.group({
+      name: ['', [Validators.required]],
+      price: ['', [Validators.required], Validators.min(0.5)],
+      quantity: ['', [Validators.required, Validators.min(0)]],
+      categoryId: ['', [Validators.required]],
+      imagePath: ['', [Validators.required]],
+    })
+  }
 
 
-  public getErrorMessage(control: FormControl, placeHolder: string) {
+  public getErrorMessage(control: FormControl, placeHolder: string): string {
 
     if (control.hasError('required')) {
       return `${placeHolder} is required`
@@ -110,7 +120,7 @@ export class FormService {
     if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
       return this.passwordCustomErrorMessage(control, placeHolder)
     }
- 
+
     if (control.hasError('min')) {
       return 'Value in not valid ';
     }
@@ -128,7 +138,7 @@ export class FormService {
 
   }
 
-  public passwordCustomErrorMessage(control, placeHolder) {
+  public passwordCustomErrorMessage(control: FormControl, placeHolder: string): string {
     if (control.hasError('maxlength') || control.hasError('minlength')) {
       return `${placeHolder} length must be 8-24 characters long`;
     }

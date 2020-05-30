@@ -9,7 +9,7 @@
       <ul class="main-links">
         <li routerLinkActive="active" *ngFor="let category of categories">
           <span>|</span>
-          <button mat-button routerLink="/products/{{category._id}}">{{category.name}}
+          <button mat-button routerLink="/products/{{category.alias}}/{{category._id}}">{{category.name}}
           </button>
         </li>
       </ul>

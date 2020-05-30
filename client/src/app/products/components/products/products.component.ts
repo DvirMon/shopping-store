@@ -48,7 +48,7 @@ export class ProductsComponent implements OnInit {
     this.activeRoute.params.subscribe(
       (params) => {
         this.categoryId = params.categoryId;
-        this.getCategoryAlias();
+        this.alias = params.alias
         this.handleProductsRequest();
       }
     );
@@ -71,13 +71,8 @@ export class ProductsComponent implements OnInit {
       )
       : this.collection = this.formatCollection();
   }
-
+ 
   //  end of request section
-
-  private getCategoryAlias(): void {
-    const category = this.categories.find(category => category._id === this.categoryId);
-    this.alias = category.alias;
-  }
 
   private formatCollection(): [ProductModel[]] {
     const products = store.getState().products[this.alias];

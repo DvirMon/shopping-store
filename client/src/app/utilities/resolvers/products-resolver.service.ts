@@ -20,7 +20,7 @@ export class ProductsResolver implements Resolve<Observable<CategoryModel[]> | P
   ): Observable<CategoryModel[]> | Promise<CategoryModel[]> | CategoryModel[] {
 
     if (store.getState().products.categories.length === 0) {
-      return this.productService.getProductsCategories()
+      return this.productService.getCategories()
     } else {
       return store.getState().products.categories
     }

@@ -26,7 +26,7 @@ export class OrderService {
   ) { }
 
 
-  public handleNewOrder(data: OrderModel) {
+  public handleNewOrder(data: OrderModel) : void{
     this.http.post<OrderModel>(this.baseUrl, data).pipe(
       switchMap((order: OrderModel) => {
         this.formService.handleStore(ActionType.GetOrderData, order)

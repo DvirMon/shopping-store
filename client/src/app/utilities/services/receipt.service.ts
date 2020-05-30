@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+
+import { FormService } from './form.service';
+
 import { CartItemModel } from '../models/cart-item-model';
 import { ReceiptItemData } from '../models/receipt-model';
 import { ProductModel } from '../models/product-model';
-import { FormService } from './form.service';
 import { OrderModel } from '../models/order-model';
+
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -16,7 +20,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class ReceiptService {
-
 
   private receiptBody: (string[] | {}[])[] =
     [
@@ -28,6 +31,13 @@ export class ReceiptService {
       ]
     ]
 
+  private firstRow = [
+    { text: 'Product' },
+    { text: 'Price(1 unit)', alignment: 'center' },
+    { text: 'Quantity', alignment: 'center' },
+    { text: 'Total Price', alignment: 'center' }
+  ]
+
 
   constructor(
     private formService: FormService,
@@ -35,12 +45,12 @@ export class ReceiptService {
   ) { }
 
 
-  public backToSore() {
+  public backToSore() : void{
     this.resetReceiptState()
     this.formService.handleStore(ActionType.ResetCartState)
   }
 
-  private setFooter(currentPage, pageCount) {
+  private setFooter(currentPage, pageCount) : string {
     return currentPage.toString() + ' of ' + pageCount;
   }
 
@@ -52,17 +62,17 @@ export class ReceiptService {
   }
 
 
-  public getReceipt() {
+  public getReceipt(): void {
     pdfMake.createPdf(this.setPdf()).open();
   }
 
-  public handleReceiptData() {
+  public handleReceiptData(): void {
     this.setProductTable()
     this.setReceiptAdditionalInfo()
   }
 
   // create product table
-  private setProductTable() {
+  private setProductTable(): void {
 
     const receiptItems = [...store.getState().receipt.receipt]
 
@@ -88,18 +98,21 @@ export class ReceiptService {
 
   }
 
-  public setReceiptAdditionalInfo() {
+  private setReceiptAdditionalInfo(): void {
     this.receiptData = { ...store.getState().receipt.orderDetails }
+    this.formatReceiptDate()
+  }
 
+  // format date
+  private formatReceiptDate(): void {
     const orderDate = new Date(this.receiptData.orderDate)
     this.receiptData.orderDate = orderDate.toLocaleString()
 
     const shippingDate = new Date(this.receiptData.shippingDate)
     this.receiptData.shippingDate = shippingDate.toLocaleString()
-
   }
 
-  public setRecipeItem(product: ProductModel, cartItem: CartItemModel) {
+  public setReceiptItem(product: ProductModel, cartItem: CartItemModel): void {
     const recipeItem = new ReceiptItemData(
       cartItem._id,
       product.name,
@@ -110,7 +123,7 @@ export class ReceiptService {
     this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
   }
 
-  public resetReceiptState() {
+  public resetReceiptState(): void {
     this.formService.handleStore(ActionType.ResetReceiptState)
   }
 

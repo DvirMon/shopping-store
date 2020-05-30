@@ -38,7 +38,7 @@ export class CartListItemComponent implements OnInit {
         this.product = response
         if (!this.orderMode) {
 
-          this.receiptService.setRecipeItem(this.product, this.cartItem)
+          this.receiptService.setReceiptItem(this.product, this.cartItem)
         }
       }
     )

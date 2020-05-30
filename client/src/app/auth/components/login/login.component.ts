@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onProducts() {
-    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
+    this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
   }
 
   public onRegister() {

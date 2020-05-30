@@ -1,17 +1,26 @@
 <div [ngSwitch]="data.type">
-  <div *ngSwitchCase="'error'">
-      <div>
-          <p>
-              Message: {{data.payload.message}}
-          </p>
-          <p *ngIf="data.payload.status">
-              Status: {{data.payload.status}}
-          </p>
-      </div>
-      <div mat-dialog-actions>
-          <button mat-button>No Thanks</button>
-          <button mat-dialog-close mat-button cdkFocusInitial>Ok</button>
-      </div>
-  </div>
-  <mat-spinner *ngSwitchCase="'spinner'"></mat-spinner>
+    <div *ngSwitchCase="'error'">
+        <div>
+            <p>
+                Message: {{data.payload.message}}
+            </p>
+            <p *ngIf="data.payload.status">
+                Status: {{data.payload.status}}
+            </p>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button>No Thanks</button>
+            <button mat-dialog-close mat-button cdkFocusInitial>Ok</button>
+        </div>
+    </div>
+    <div *ngSwitchCase="'auth'">
+        <div>
+            <p>Pay Attention!</p>
+            <p>You have been disconnected for some time....</p>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button>Click to connect</button>
+        </div>
+    </div>
+    <mat-spinner *ngSwitchCase="'spinner'"></mat-spinner>
 </div>

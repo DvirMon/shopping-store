@@ -58,6 +58,14 @@ mat-grid-tile {
   background-color: #47aa3e;
   border-radius: 5px;
 }
+.dialog-auth .mat-dialog-container {
+  color:black;
+  border: 2px solid color(info);
+  text-align: center;
+  overflow: hidden;
+  background-color: color(text);
+  border-radius: 5px;
+}
 
 ::-webkit-scrollbar {
   width: 10px;
