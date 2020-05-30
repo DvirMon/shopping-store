@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ProductModel } from '../models/product-model';
@@ -46,17 +46,17 @@ export class ProductsService {
     )
   }
 
-  public getProductNameAndImage(_id) : Observable<ProductModel>  {
-    return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
-  }
-
-  public getProductsByCategory(categoryId): Observable<ProductModel[]> {
+  public getProductsByCategory(categoryId : string, alias : string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`).pipe(
-      map(response => {
-        this.handleProductsStoreState(response);
-        return response;
+      tap(products => {
+        this.handleProductsStoreState(products, alias);
+        return products;
       })
     )
+  }
+
+  public getProductNameAndImage(_id): Observable<ProductModel> {
+    return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
   }
 
   public searchProducts(value: string): Observable<ProductModel[]> {
@@ -76,16 +76,14 @@ export class ProductsService {
       i = i + 4
     }
     return collection
+  } 
+
+  public handleProductsStoreState(products: ProductModel[], alias : string) {
+    this.formService.handleStore(ActionType.GetProducts, { products, alias })
   }
 
-  public handleProductsStoreState(products: ProductModel[]) {
-    const category = store.getState().products.categories.find(category => category._id === products[0].categoryId)
-    this.formService.handleStore(ActionType.GetProducts, { alias: category.alias, products })
-  }
-
-  public addProductToStore(product: ProductModel) {
-    const category = store.getState().products.categories.find(category => category._id === product.categoryId)
-    this.formService.handleStore(ActionType.AddProduct, { alias: category.alias, product })
+  public addProductToStore(product: ProductModel, alias : string) {
+    this.formService.handleStore(ActionType.AddProduct, { product, alias })
   }
 
 

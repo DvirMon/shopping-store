@@ -39,40 +39,29 @@ export class ProductsComponent implements OnInit {
   }
 
   private subscribeToRoute(): void {
-    this.getCategories();
-    this.getCategoryId();
+    this.getData();
+    this.getParams();
 
   }
 
-  private getCategoryId(): void {
+  private getParams(): void {
     this.activeRoute.params.subscribe(
       (params) => {
         this.categoryId = params.categoryId;
         this.alias = params.alias
-        this.handleProductsRequest();
       }
     );
   }
 
-  private getCategories(): void {
+  private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
       this.categories = data.categories;
-
+      this.collection = this.productService.formatProductsArray(data.products)
     });
   }
 
 
   // end of subscription section
-
-  private handleProductsRequest(): void {
-    store.getState().products[this.alias].length === 0
-      ? this.productService.getProductsByCategory(this.categoryId).subscribe(
-        (products) => this.collection = this.productService.formatProductsArray(products)
-      )
-      : this.collection = this.formatCollection();
-  }
- 
-  //  end of request section
 
   private formatCollection(): [ProductModel[]] {
     const products = store.getState().products[this.alias];
