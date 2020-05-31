@@ -8,10 +8,6 @@
   z-index: 10;
 }
 
-button {
-  outline: transparent;
-}
-
 .app-search {
   position: absolute;
   left: 20px;

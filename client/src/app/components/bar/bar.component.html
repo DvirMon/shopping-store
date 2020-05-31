@@ -12,11 +12,14 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button *ngIf="isLogin" (click)="handleLogOut()" routerLinkActive="active" mat-menu-item>
-          <span>Logout</span>
-        </button>
-        <button *ngIf="isLogin" routerLink="/home/{{user._id}}" routerLinkActive="active" mat-menu-item>
+        <button *ngIf="isLogin" (click)="onHome()" mat-menu-item>
           <span>Home</span>
+        </button>
+        <button *ngIf="isLogin && isAdmin" (click)="onProducts()" mat-menu-item>
+          <span>Products Data</span>
+        </button>
+        <button *ngIf="isLogin" (click)="onLogOut()" mat-menu-item>
+          <span>Logout</span>
         </button>
       </mat-menu>
     </mat-toolbar>

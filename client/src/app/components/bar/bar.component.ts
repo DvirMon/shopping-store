@@ -24,7 +24,8 @@ export class BarComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    
 
   ) { }
 
@@ -52,12 +53,16 @@ export class BarComponent implements OnInit {
     this.user = store.getState().auth.user
   }
 
-  public openSideBar() {
-    this.drawer.toggle()
+  public onLogOut() {
+    this.authService.logout()
   }
 
-  public handleLogOut() {
-    this.authService.logout()
+  public onHome() {
+    this.authService.handleRoleRoute(this.user)
+  }
+
+  public onProducts() { 
+    this.router.navigateByUrl("/admin/products-table")
   }
 
 }

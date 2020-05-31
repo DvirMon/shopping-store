@@ -19,7 +19,7 @@ import { CartModule } from '../cart/cart.module';
     ProductsBarComponent,
     ProductsItemComponent,
     ProductsDialogComponent,
-    
+
   ],
   imports: [
     CoreModule,
@@ -29,6 +29,10 @@ import { CartModule } from '../cart/cart.module';
     ProductsRoutingModule
   ],
   exports: [
+    ProductsComponent,
+    ProductsBarComponent,
+    ProductsItemComponent,
+    ProductsDialogComponent,
   ]
 })
 export class ProductsModule { }

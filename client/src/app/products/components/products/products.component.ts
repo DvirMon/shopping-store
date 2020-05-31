@@ -13,6 +13,7 @@ import { store } from 'src/app/utilities/redux/store';
 export class ProductsComponent implements OnInit {
   public categories: CategoryModel[] = []
   public collection: [ProductModel[]]
+  public isAdmin: boolean = false
   public categoryId: string
   public alias: string
 
@@ -29,13 +30,17 @@ export class ProductsComponent implements OnInit {
 
 
   }
-
+ 
 
   // subscription section
 
   private subscribeToStore() {
     store.subscribe(
-      () => this.collection = this.formatCollection());
+      () => {
+        this.collection = this.formatCollection()
+        this.isAdmin = store.getState().auth.isAdmin
+      });
+    this.isAdmin = store.getState().auth.isAdmin
   }
 
   private subscribeToRoute(): void {

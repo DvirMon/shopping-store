@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 // function to handle authorization
 const authorize = (role, key) => (request, response, next) => {
-
   // verify if header exist
   if (!request.headers.authorization) {
     return next({
@@ -10,11 +9,9 @@ const authorize = (role, key) => (request, response, next) => {
       message: "Auth request missing authorization header or token",
     });
   }
- 
+
   // get token from header
   const token = request.headers["authorization"].split(":")[1].trim();
-
-  console.log(token)
 
   // verify if token exist
   if (!token || null) {
@@ -29,9 +26,11 @@ const authorize = (role, key) => (request, response, next) => {
     const payload = jwt.verify(token, key);
     request.user = payload.user;
 
+    console.log(payload.user)
+
     // verify admin
-    if (role && request.user.isAdmin) {
-      next({ status: 403 });
+    if (role && !request.user.isAdmin) {
+      next({ status: 403, message: "not admin" });
       return;
     }
 

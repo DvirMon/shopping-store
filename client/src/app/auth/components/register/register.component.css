@@ -14,10 +14,4 @@ mat-horizontal-stepper {
 form {
   opacity: 1;
 }
-
-mat-grid-list,
-mat-grid-tile {
-  height: 100%;
-  width: 100%;
-}
 /*# sourceMappingURL=register.component.css.map */

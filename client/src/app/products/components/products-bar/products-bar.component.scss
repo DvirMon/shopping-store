@@ -5,6 +5,7 @@
 
   .sidenav .mat-toolbar {
     background: color(info);
+    // background: #f44336;
     color: white;
   }
 }
@@ -12,9 +13,9 @@
 .mat-drawer.mat-sidenav.sidenav {
   height: inherit;
 }
-
+ 
 .sidenav {
-  width: 350px;
+  width: 350px; 
   box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
 }
 

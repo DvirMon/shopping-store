@@ -1,4 +1,4 @@
-import { Injectable, ɵConsole } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -9,11 +9,11 @@ import { FormService } from './form.service';
 import { UserModel } from '../models/user-model';
 
 
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { config } from "../../../main-config"
-import { CartService } from './cart.service';
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { config } from "src/main-config"
 
 export interface Login {
   email: string,
@@ -39,8 +39,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private formService: FormService,
+    private router: Router,
   ) { }
 
   // request section 
@@ -86,11 +86,10 @@ export class AuthService {
   }
 
 
-
   // end of request section 
 
   // login actions section
-  public handleUser(path: string, data): Observable<string> {
+  public handleUser(path: string, data): Observable<UserModel> {
     return this.http.post<AuthData>(this.url + path, data)
       .pipe(
         switchMap((response: AuthData) => {
@@ -99,28 +98,34 @@ export class AuthService {
             .pipe(
               map((response: AuthData) => {
                 this.formService.handleStore(ActionType.AddRefreshToken, response.token)
-                return response.user._id
+                return response.user
               }))
         }))
   }
 
-  public handleAuthGuardSuccess(accessToken): void {
+  private handleAuthGuardSuccess(accessToken): void {
     const payload = this.tokenHelper.decodeToken(accessToken)
     this.formService.handleStore(ActionType.Login, { accessToken, user: payload.user })
   }
 
-  public handleAuthGuardError(): void {
+  private handleAuthGuardError(): void {
     this.formService.handleStore(ActionType.Logout)
   }
 
-  public autoLogin(): void {
-    const token = store.getState().auth.refreshToken
-    const user = store.getState().auth.user
-    if (!token) {
-      this.logout()
-      return
+  public handleRoleRoute(user: UserModel): Promise<boolean> {
+    return user.isAdmin ?
+      this.router.navigateByUrl("admin" + config.baseProductUrl)
+      : this.router.navigateByUrl(`home/${user._id}`)
     }
-    this.router.navigateByUrl(`/home/${user._id}`)
+    
+    public autoLogin(): void {
+      const token = store.getState().auth.refreshToken
+      const user = store.getState().auth.user
+      if (!token) {
+        this.logout()
+        return
+      }
+    this.handleRoleRoute(user)
   }
 
   public logout(): Promise<boolean> {

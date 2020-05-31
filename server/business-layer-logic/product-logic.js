@@ -3,16 +3,17 @@ const Category = require("../models/category-model");
 
 // get all products sort by category
 const getAllProductsAsync = async () => {
-  return await Product.aggregate([
-    {
-      $group: {
-        _id: "$categoryId",
-        doc: {
-          $push: "$$ROOT",
-        },
-      },
-    },
-  ]).exec();
+  // return await Product.aggregate([
+  //   {
+  //     $group: {
+  //       _id: "$categoryId",
+  //       doc: {
+  //         $push: "$$ROOT",
+  //       },
+  //     },
+  //   },
+  // ]).exec();
+  return await Product.find({}).exec();
 };
 
 const getProductAsync = async (_id) => {

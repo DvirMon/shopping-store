@@ -11,6 +11,7 @@ import { FormService } from './form.service';
 import { config } from '../../../main-config'
 import { store } from 'src/app/utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
+import { Router } from '@angular/router';
 
 
 export interface ProductsData {
@@ -34,7 +35,8 @@ export class ProductsService {
 
   constructor(
     private http: HttpClient,
-    private formService: FormService
+    private formService: FormService,
+    private router : Router
 
   ) { }
 
@@ -82,8 +84,8 @@ export class ProductsService {
     this.formService.handleStore(ActionType.GetProducts, { products, alias })
   }
 
-  public addProductToStore(product: ProductModel, alias : string) {
-    this.formService.handleStore(ActionType.AddProduct, { product, alias })
+  public productsLandingPage() {
+    return this.router.navigateByUrl(`${config.baseProductUrl}`)
   }
 
 

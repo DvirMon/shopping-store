@@ -49,15 +49,15 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  // end form section
-
-
+  // end of form section
+  
   // request section 
-
+  
   public onSubmit() {
     const user: UserModel = { ...this.personalDetails.value, ...this.authDetails.value }
     this.authService.register(user).subscribe(
-      (userId : string) => this.router.navigateByUrl(`/home/${userId}`)
-    )
-  }
+      (user: UserModel) => this.router.navigateByUrl(`/home/${user._id}`)
+      )
+    }
+    // end of request section
 }

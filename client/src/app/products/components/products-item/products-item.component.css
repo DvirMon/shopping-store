@@ -1,6 +1,5 @@
 mat-grid-list,
 mat-grid-tile {
-  height: 100%;
   padding: 0;
 }
 
@@ -24,12 +23,6 @@ mat-grid-list:hover {
 
 app-product-thumbnail {
   padding-top: 10px;
-}
-
-.mat-grid-tile .mat-figure {
-  -webkit-box-pack: left !important;
-      -ms-flex-pack: left !important;
-          justify-content: left !important;
 }
 
 .price {

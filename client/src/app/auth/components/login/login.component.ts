@@ -3,11 +3,13 @@ import { FormGroup } from '@angular/forms';
 
 import { FormService } from 'src/app/utilities/services/form.service';
 import { AuthService } from 'src/app/utilities/services/auth.service';
+import { ProductsService } from 'src/app/utilities/services/products.service';
+
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { CartService } from 'src/app/utilities/services/cart.service';
 
 import { store } from 'src/app/utilities/redux/store';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formService: FormService,
     private authService: AuthService,
-    private cartServices: CartService,
+    private productsService: ProductsService,
     private router: Router
   ) { }
 
@@ -63,8 +65,8 @@ export class LoginComponent implements OnInit {
 
   public onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
-      (userId : string) => {
-        this.router.navigateByUrl(`/home/${userId}`)
+      (user : UserModel) => {
+        return this.authService.handleRoleRoute(user)
       },
       err => {
         this.authService.serverError.next(err.error)
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onProducts() {
-    this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
+    this.productsService.productsLandingPage()
   }
 
   public onRegister() {
