@@ -12,7 +12,7 @@ export class AddressComponent implements OnInit {
   @Input() public user: UserModel
 
   public selectedValue: string;
-  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Bear Sheva", "Haifa", "Ashdod", "Natania"];
+  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Beer Sheva", "Haifa", "Ashdod", "Natania"];
 
 
   constructor() { }

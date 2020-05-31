@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DialogService } from './dialog.service';
+import { DialogService } from '../services/dialog.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,6 @@ export class ErrorsService {
 
   constructor(
     private dialogService: DialogService,
-    private ngZone: NgZone,
 
   ) {
 
@@ -20,10 +20,10 @@ export class ErrorsService {
 
     if (error instanceof HttpErrorResponse) {
 
-
-      if (error.status === 409) {
+      if (error.status === 401 || error.status === 409) {
         return
-      } 
+      }
+      
       this.dialogService.handleErrorDialog(error)
     }
     else {

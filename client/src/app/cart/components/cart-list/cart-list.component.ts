@@ -82,7 +82,7 @@ export class CartListComponent implements OnInit {
 
   public backToSore() {
     this.receiptService.resetReceiptState()
-    this.router.navigateByUrl(`/products/5e91e29b9c08fc560ce2cf32`)
+    this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
   }
   
   // end of logic section

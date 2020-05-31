@@ -51,14 +51,14 @@ router.post(
   }
 );
 
-// get refresh token when login
+// get refresh token after login
 router.get(
   "/refresh-token",
   authorize(0, config.secret.access),
   async (request, response, next) => {
     try {
       const user = request.user;
-      
+
       // get refreshToken
       const token = await jwt.setRefreshToken(user);
       response.json({ user, token });
@@ -67,6 +67,28 @@ router.get(
     }
   }
 );
+
+// get refresh token when expired
+router.post("/refresh-token", async (request, response, next) => {
+  try {
+    const user = request.body;
+    console.log(user);
+
+    // verify that user exist in db
+    const isExist = authLogic.isUserExist(user._id);
+    if (!isExist) {
+      return next({ status: 404 });
+    }
+
+    // get refreshToken
+    const token = await jwt.setRefreshToken(user);
+    
+    response.json({ user, token });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // get access token with refresh token
 router.get(
   "/access-token",

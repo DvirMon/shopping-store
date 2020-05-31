@@ -45,12 +45,12 @@ export class ReceiptService {
   ) { }
 
 
-  public backToSore() : void{
+  public backToSore(): void {
     this.resetReceiptState()
     this.formService.handleStore(ActionType.ResetCartState)
   }
 
-  private setFooter(currentPage, pageCount) : string {
+  private setFooter(currentPage, pageCount): string {
     return currentPage.toString() + ' of ' + pageCount;
   }
 
@@ -98,6 +98,7 @@ export class ReceiptService {
 
   }
 
+  // receipt additional data
   private setReceiptAdditionalInfo(): void {
     this.receiptData = { ...store.getState().receipt.orderDetails }
     this.formatReceiptDate()
@@ -108,10 +109,11 @@ export class ReceiptService {
     const orderDate = new Date(this.receiptData.orderDate)
     this.receiptData.orderDate = orderDate.toLocaleString()
 
-    const shippingDate = new Date(this.receiptData.shippingDate)
-    this.receiptData.shippingDate = shippingDate.toLocaleString()
+    const shippingDate = new Date(this.receiptData.shippingDate).toLocaleString().split(',')[0]
+    this.receiptData.shippingDate = shippingDate
   }
 
+  // save cart item as receipt format in store
   public setReceiptItem(product: ProductModel, cartItem: CartItemModel): void {
     const recipeItem = new ReceiptItemData(
       cartItem._id,
@@ -123,10 +125,12 @@ export class ReceiptService {
     this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
   }
 
+  // clean receipt state
   public resetReceiptState(): void {
     this.formService.handleStore(ActionType.ResetReceiptState)
   }
 
+  // set pdf file
   public setPdf() {
 
     const docDefinition = {

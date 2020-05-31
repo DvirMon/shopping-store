@@ -3,10 +3,12 @@ import { CoreModule } from '../share-modules/core.module';
 
 // import for global providers
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+// services
 import { AuthInterceptorService } from '../utilities/interceptors/auth-interceptor.service';
-import { DialogInterceptorService } from '../utilities/interceptors/dialog-interceptor.service';
-import { ErrorsService } from '../utilities/services/errors.service';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SpinnerInterceptorService } from '../utilities/interceptors/spinner-interceptor.service';
+import { ErrorsService } from '../utilities/interceptors/errors.service';
 
 // shared components 
 import { MyInputComponent } from './components/my-input/my-input.component';
@@ -17,9 +19,9 @@ import { SearchListItemComponent } from './components/search-list-item/search-li
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
- 
 
-@NgModule({
+
+@NgModule({ 
   declarations: [
     MyInputComponent,
     UploadInputComponent,
@@ -28,7 +30,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     SearchListItemComponent,
     ProductThumbnailComponent,
     HighLightPipe,
-    
+
   ],
   imports: [
     CoreModule,
@@ -51,11 +53,10 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: DialogInterceptorService,
+      useClass: SpinnerInterceptorService,
       multi: true
     },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
-    // { provide: MatDialogRef, useValue: DialogComponent },
     {
       provide: MAT_DIALOG_DATA,
       useValue: {}

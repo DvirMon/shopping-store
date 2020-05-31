@@ -7,7 +7,7 @@ import { DialogService } from '../services/dialog.service';
 @Injectable({
   providedIn: 'root'
 })
-export class DialogInterceptorService implements HttpInterceptor {
+export class SpinnerInterceptorService implements HttpInterceptor {
 
 
   constructor(
@@ -28,11 +28,11 @@ export class DialogInterceptorService implements HttpInterceptor {
 
     const modified = request.clone({});
 
-    return this.handInterceptor(next, spinnerRef, modified)
+    return this.handleSpinnerInterceptor(next, spinnerRef, modified)
   }
 
 
-  public handInterceptor(next, spinnerRef, clone) {
+  private handleSpinnerInterceptor(next, spinnerRef, clone) {
     return next.handle(clone).pipe(
       tap(
         (event: HttpEvent<any>) => {

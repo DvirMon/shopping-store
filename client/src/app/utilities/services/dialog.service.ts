@@ -6,6 +6,7 @@ import { ProductsDialogComponent } from '../../products/components/products-dial
 import { ProductModel } from '../models/product-model';
 import { OrderModel } from '../models/order-model';
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
+import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
 
 
 export interface DialogData {
@@ -54,7 +55,7 @@ export class DialogService {
   // open auth dialog
   public handleAuthDialog() {
     const data = this.handleDate("auth")
-    this.dialog.open(DialogComponent, this.handleConfig(data))
+    this.dialog.open(AuthDialogComponent, this.handleConfig(data))
   }
 
   // handle dialog data
@@ -63,7 +64,7 @@ export class DialogService {
     const data = { ...this.data }
 
     data.type = type
-
+ 
     if (type === "error") {
       data.payload = this.handleErrorData(payload)
     } else {
@@ -91,14 +92,14 @@ export class DialogService {
         dialogConfig.height = '200px'
         dialogConfig.width = '450px'
         dialogConfig.hasBackdrop = true;
-        dialogConfig.disableClose = false;
+        dialogConfig.disableClose = true;
         dialogConfig.panelClass = "dialog-order"
         break
       case "auth":
-        dialogConfig.height = '300px'
+        dialogConfig.height = 'auto'
         dialogConfig.width = '450px'
         dialogConfig.hasBackdrop = true;
-        dialogConfig.disableClose = false;
+        dialogConfig.disableClose = true;
         dialogConfig.panelClass = "dialog-auth"
         break
       case "spinner":

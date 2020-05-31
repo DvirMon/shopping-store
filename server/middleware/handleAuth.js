@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 // function to handle authorization
 const authorize = (role, key) => (request, response, next) => {
+
   // verify if header exist
   if (!request.headers.authorization) {
     return next({
@@ -12,6 +13,8 @@ const authorize = (role, key) => (request, response, next) => {
  
   // get token from header
   const token = request.headers["authorization"].split(":")[1].trim();
+
+  console.log(token)
 
   // verify if token exist
   if (!token || null) {

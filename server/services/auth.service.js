@@ -7,7 +7,7 @@ const setAccessToken = (user) => {
     jwt.sign(
       { user },
       config.secret.access,
-      { expiresIn: "30m" },
+      { expiresIn: "10s" },
       (err, result) => {
         if (err) {
           reject(err);
@@ -25,7 +25,7 @@ const setRefreshToken = (user) => {
     jwt.sign(
       { user },
       config.secret.refresh,
-      { expiresIn: "3d" },
+      { expiresIn: "15s" },
       (err, result) => {
         if (err) {
           reject(err);

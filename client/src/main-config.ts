@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { ErrorHandler } from '@angular/core';
 
-import { ErrorsService } from './app/utilities/services/errors.service';
+import { ErrorsService } from './app/utilities/interceptors/errors.service';
 import { AuthInterceptorService } from './app/utilities/interceptors/auth-interceptor.service';
 
 export const config = {

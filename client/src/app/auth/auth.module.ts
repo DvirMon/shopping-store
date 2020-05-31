@@ -6,6 +6,7 @@ import { SharedModule } from '../share-components/shared-components.module';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 
 
 
@@ -13,6 +14,7 @@ import { RegisterComponent } from './components/register/register.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
+    AuthDialogComponent,
 
   ],
   imports: [
