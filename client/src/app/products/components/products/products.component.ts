@@ -60,7 +60,7 @@ export class ProductsComponent implements OnInit {
 
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.categories = data.categories;
+      // this.categories = data.categories;
       this.collection = this.productService.formatProductsArray(data.products)
     });
   }

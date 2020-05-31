@@ -6,6 +6,7 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-search',
@@ -18,13 +19,14 @@ export class SearchComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
 
   public searchControl = new FormControl();
-  public searchEntries: Observable<ProductModel[]>
-  public results: boolean = false
+  public searchEntries: Observable<ProductModel[]>;
+  public isAdmin: boolean = store.getState().auth.isAdmin
+  public results: boolean = false;
 
 
   constructor(
-    private productService: ProductsService,
     private dialogService: DialogService,
+    private productService: ProductsService,
   ) { }
 
   ngOnInit() {
@@ -73,7 +75,9 @@ export class SearchComponent implements OnInit {
 
   public onSelect(product) {
     this.panel.openPanel()
-    this.dialogService.handleProductDialog(product)
+    if (!this.isAdmin) {
+      this.dialogService.handleProductDialog(product)
+    }
 
   }
 }

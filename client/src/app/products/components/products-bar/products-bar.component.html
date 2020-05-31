@@ -1,25 +1,17 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="open" position="end">
-    <app-cart-list></app-cart-list>
-  </mat-sidenav> 
+    <div *ngIf="isAdmin; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+      <app-products-form></app-products-form>
+    </ng-template>
+    <ng-template #elseBlock>
+      <app-cart-list></app-cart-list>
+    </ng-template>
+  </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar>
-      <span>Products</span>
-      <ul class="main-links">
-        <li routerLinkActive="active" *ngFor="let category of categories">
-          <span>|</span>
-          <button mat-button routerLink="/products/{{category.alias}}/{{category._id}}">{{category.name}}
-          </button>
-        </li>
-      </ul>
-      <span class="spacer"></span>
-      <button type="button" aria-label="Toggle sidenav" mat-button (click)="drawer.toggle()">
-        My Cart
-      </button>
-      <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
-    </mat-toolbar>
-    <mat-divider ></mat-divider>
+    <app-products-nav [drawer]="drawer"></app-products-nav>
+    <mat-divider></mat-divider>
     <app-search></app-search>
     <ng-content></ng-content>
   </mat-sidenav-content>

@@ -1,0 +1,15 @@
+<mat-toolbar appBarBackgroundColor>
+  <span>Products</span>
+  <ul class="main-links">
+    <li routerLinkActive="active" *ngFor="let category of categories">
+      <span>|</span>
+      <button mat-button routerLink="/products/{{category.alias}}/{{category._id}}">{{category.name}}
+      </button>
+    </li>
+  </ul>
+  <span class="spacer"></span>
+  <button type="button" aria-label="Toggle sidenav" mat-button (click)="drawer.toggle()">
+    {{isAdmin ? 'Open':'My Cart' }} 
+  </button>
+  <mat-icon *ngIf="!isAdmin" aria-label="Side nav toggle icon">shopping_cart</mat-icon>
+</mat-toolbar>

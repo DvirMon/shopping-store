@@ -6,7 +6,7 @@
     public name?: string,
     public price?: number,
     public categoryId?: string,
-    public imagePath?: string,
+    public imagePath?: string | File,
   ) { }
 
 }

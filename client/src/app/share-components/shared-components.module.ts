@@ -19,6 +19,8 @@ import { SearchListItemComponent } from './components/search-list-item/search-li
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
+import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
+
 
 
 @NgModule({ 
@@ -30,6 +32,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     SearchListItemComponent,
     ProductThumbnailComponent,
     HighLightPipe,
+    BarBackgroundColorDirective
 
   ],
   imports: [
@@ -44,6 +47,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
     SearchListItemComponent,
     ProductThumbnailComponent,
     HighLightPipe,
+    BarBackgroundColorDirective
   ],
   providers: [
     {

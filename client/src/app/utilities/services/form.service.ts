@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { distinctUntilChanged, take, switchMap, map } from 'rxjs/operators';
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+import { ProductModel } from '../models/product-model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class FormService {
 
   public serverError = new Subject<string>()
 
-  public regex = {
+  private regex = {
     name: /^[a-zA-Z ]{3,25}$/,
     personalId: /^[0-9]{8,9}$/,
     email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
@@ -103,9 +104,8 @@ export class FormService {
   public productForm(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required]],
-      price: ['', [Validators.required], Validators.min(0.5)],
-      quantity: ['', [Validators.required, Validators.min(0)]],
-      categoryId: ['', [Validators.required]],
+      price: ['', [Validators.required ,Validators.min(0.5)]],
+      category: ['', [Validators.required]],
       imagePath: ['', [Validators.required]],
     })
   }
@@ -148,6 +148,44 @@ export class FormService {
     }
 
   }
+
+   // set FormData object for post and put request
+   public setFormData = (product: ProductModel) => {
+    const formData = new FormData();
+
+    formData.append("name", product.name);
+    formData.append("price", product.price.toString());
+    formData.append("categoryId", product.categoryId);
+
+    if (typeof product.imagePath === "string") {
+      formData.append("imagePath", product.imagePath);
+    } else {
+      formData.append("imagePath", product.imagePath, product.imagePath.name);
+    }
+    return formData
+  }
+
+  // function to handle image file
+  public previewImage = async (file: File) => {
+    if (!file) {
+      alert("Please choose image");
+      return;
+    }
+    const preview = await this.displayImage(file)
+    return preview
+  };
+  // end of function
+
+  // Display image on client:
+  public displayImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        resolve(event.target.result.toString())
+      }
+    })
+  };
 
   public handleStore(type: ActionType, payload?: any) {
     store.dispatch({ type, payload })

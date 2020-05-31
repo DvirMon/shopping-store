@@ -72,7 +72,6 @@ router.get(
 router.post("/refresh-token", async (request, response, next) => {
   try {
     const user = request.body;
-    console.log(user);
 
     // verify that user exist in db
     const isExist = authLogic.isUserExist(user._id);

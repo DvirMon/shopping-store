@@ -20,8 +20,8 @@
         <mat-form-field>
           <input matInput type="number" class="input-size" name="quantity" #cartItemQuantity="ngModel"
             [(ngModel)]="cartItem.quantity">
-          </mat-form-field>
-          units
+        </mat-form-field>
+        units
         <button matTooltip="{{minQuantity ? 'min quantity is 1 unit' : ''}}" (click)="onRemoveQuantity()"
           [disableRipple]="true" mat-icon-button matSuffix matTooltipPosition="right">
           <mat-icon>remove_circle_outline</mat-icon>

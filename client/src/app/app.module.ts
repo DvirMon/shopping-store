@@ -18,7 +18,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
  
 
-
+ 
 
 @NgModule({
   declarations: [ 

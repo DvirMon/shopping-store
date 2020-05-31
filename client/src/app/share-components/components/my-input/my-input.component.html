@@ -9,11 +9,9 @@
   </button>
 
 
-
   <!-- shred input hint -->
   <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Email' && controlName !== 'street'">
     {{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
-
 
   <!-- costume input hint -->
   <mat-hint *ngIf="placeHolder === 'Email' && control.untouched">

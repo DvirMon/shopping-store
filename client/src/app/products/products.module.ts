@@ -10,6 +10,8 @@ import { ProductsBarComponent } from './components/products-bar/products-bar.com
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
 import { CartModule } from '../cart/cart.module';
+import { ProductsNavComponent } from './components/products-nav/products-nav.component';
+import { ProductsFormComponent } from './components/products-form/products-form.component';
 
 
 
@@ -19,6 +21,8 @@ import { CartModule } from '../cart/cart.module';
     ProductsBarComponent,
     ProductsItemComponent,
     ProductsDialogComponent,
+    ProductsNavComponent,
+    ProductsFormComponent,
 
   ],
   imports: [
