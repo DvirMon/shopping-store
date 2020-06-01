@@ -27,7 +27,7 @@ export class ErrorsService {
       this.dialogService.handleErrorDialog(error)
     }
     else {
-      this.dialogService.handleErrorDialog(error)
+      // this.dialogService.handleErrorDialog(error)
       console.error(error);
     }
   }

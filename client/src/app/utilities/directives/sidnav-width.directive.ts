@@ -13,7 +13,7 @@ export class SidenavWidthDirective {
   constructor(
   ) { 
     if (this.isAdmin) {
-    this.width = "500px"
+    this.width = "400px"
     }
   }
 

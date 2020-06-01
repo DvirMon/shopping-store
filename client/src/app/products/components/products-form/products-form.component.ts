@@ -30,6 +30,7 @@ export class ProductsFormComponent implements OnInit {
 
     this.createForm()
     this.subscribeToFormControls()
+    this.subscribeToSubject( )
   }
 
   // form section
@@ -50,12 +51,31 @@ export class ProductsFormComponent implements OnInit {
     return this.productForm.get('imagePath') as FormControl
   }
 
+  // end of form section
+
+  // subscribe section
+
   private subscribeToFormControls() {
     this.productForm.valueChanges.subscribe(
       (product) => {
-       this.product = product
+        this.product = product
       }
     )
+  }
+
+  private subscribeToSubject() {
+    this.productService.productToUpdate.subscribe(
+      (product) => {
+        this.editMode = true
+        this.product = product
+        this.productForm.setValue({
+          name: product.name,
+          price: product.price,
+          category: product.categoryId,
+          imagePath: product.categoryId,
+        })
+        this.selectedValue = this.categories.find(category =>category._id === product.categoryId).name
+      })
   }
 
   // request section 
@@ -72,6 +92,9 @@ export class ProductsFormComponent implements OnInit {
       if (!answer) {
         return
       }
+
+      this.editMode = false
+      this.productForm.reset()
     }
 
   }

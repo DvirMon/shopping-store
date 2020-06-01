@@ -8,14 +8,14 @@
 <ng-template #thenBlock>
   <form [formGroup]="productForm">
 
-    <mat-grid-list cols="2" rowHeight="15vh">
+    <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
         <app-input type="text" [control]="name" placeHolder="Name" hint="product name"></app-input>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-input type="number" [control]="price" placeHolder="Price" hint="product price"></app-input>
       </mat-grid-tile>
-      <mat-grid-tile colspan="2">
+      <mat-grid-tile >
         <mat-form-field field appearance="fill">
           <mat-label>Select Category:</mat-label>
           <mat-select [formControl]="category" [(value)]="selectedValue">
@@ -26,7 +26,7 @@
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
-    <app-upload-input [control]="imagePath" [product]="product" (image)="handleImage($event)"></app-upload-input>
+    <app-upload-input [control]="imagePath" (image)="handleImage($event)"></app-upload-input>
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
         <button (click)="handleRequest()" color="warn" [disabled]="productForm.invalid"

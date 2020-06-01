@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
+import { AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms';
 import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -38,7 +38,7 @@ export class CustomValidationService {
 
     if (!control || String(control.value).length === 0 || control.errors) {
       return of(null)
-    } 
+    }
     return control.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -70,5 +70,24 @@ export class CustomValidationService {
         ? matchingControl.setErrors({ mustMatch: true })
         : matchingControl.setErrors(null);
     }
+  }
+
+  public requiredFileType() {
+    return function (control: FormControl) {
+      const file = control.value;
+      
+      if (!file) {
+        return
+      }
+      
+      const type: string = "png"
+      const extension = file.split('.')[1].toLowerCase();
+
+      if (type.toLowerCase() !== extension.toLowerCase()) {
+        return { requiredFileType: true }
+      }
+
+      return null
+    };
   }
 }

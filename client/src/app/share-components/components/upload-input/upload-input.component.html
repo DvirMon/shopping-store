@@ -1,31 +1,20 @@
-<mat-grid-list cols="3" rowHeight="7vh">
+<mat-grid-list cols="3" rowHeight="5vh">
   <mat-grid-tile colspan="1" rowspan="2">
     <button mat-stroked-button type="button" md-button (click)="imgFileInput.click()">Add a photo</button>
     <input hidden type="file" #imgFileInput [formControl]="control" accept="image/*" required />
   </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="2">
+  <mat-grid-tile colspan="2" rowspan="3">
     <div *ngIf="preview; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <img [src]="preview" height="100px" width="100px">
-    </ng-template>
+    </ng-template> 
     <ng-template #elseBlock>
       <img *ngIf="imagePath"
         src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png" height="100px"
         width="100px">
     </ng-template>
   </mat-grid-tile>
-  <mat-grid-tile colspan="1">file name :</mat-grid-tile>
-  <mat-grid-tile colspan="2">{{ file ? file.name : ''}}</mat-grid-tile>
   <mat-grid-tile colspan="1">
-    file type :
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2">
-    {{ file ? file.type : ''}}
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1">
-    file size :
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2">
-    {{ file ? (file.size/1024/1024 | number:'.2') + ' Mb'  : ''}}
+    <mat-error *ngIf="control.errors?.requiredFileType">only png format</mat-error>
   </mat-grid-tile>
 </mat-grid-list>

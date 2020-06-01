@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { ProductModel } from '../models/product-model';
 import { CategoryModel } from '../models/category-model';
-
 import { FormService } from './form.service';
 
-import { config } from '../../../main-config'
-import { store } from 'src/app/utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
-import { Router } from '@angular/router';
 
+import { config } from '../../../main-config'
 
 export interface ProductsData {
   products: ProductModel[],
@@ -32,11 +31,12 @@ export interface ProductCartInfo {
 export class ProductsService {
 
   public baseUrl: string = `http://localhost:${config.port}/api/products`
+  public productToUpdate = new Subject<ProductModel>()
 
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private router : Router
+    private router: Router
 
   ) { }
 
@@ -48,7 +48,7 @@ export class ProductsService {
     )
   }
 
-  public getProductsByCategory(categoryId : string, alias : string): Observable<ProductModel[]> {
+  public getProductsByCategory(categoryId: string, alias: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`).pipe(
       tap(products => {
         this.handleProductsStoreState(products, alias);
@@ -78,9 +78,9 @@ export class ProductsService {
       i = i + 4
     }
     return collection
-  } 
+  }
 
-  public handleProductsStoreState(products: ProductModel[], alias : string) {
+  public handleProductsStoreState(products: ProductModel[], alias: string) {
     this.formService.handleStore(ActionType.GetProducts, { products, alias })
   }
 

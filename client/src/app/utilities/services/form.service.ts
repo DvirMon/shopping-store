@@ -107,7 +107,7 @@ export class FormService {
       name: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.min(0.5)]],
       category: ['', [Validators.required]],
-      imagePath: ['', [Validators.required]],
+      imagePath: ['', [Validators.required, this.customValidation.requiredFileType()]],
     })
   }
 
