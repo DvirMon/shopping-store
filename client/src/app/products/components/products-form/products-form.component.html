@@ -26,7 +26,7 @@
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-upload-input [control]="imagePath" ></app-upload-input>
+        <app-upload-input [control]="imagePath" (image)="handleImage($event)"></app-upload-input>
       </mat-grid-tile>
       <mat-grid-tile>
         <button (click)="handleRequest()" mat-raised-button>{{editMode ? 'Update Product' :'Add Product'}}</button>

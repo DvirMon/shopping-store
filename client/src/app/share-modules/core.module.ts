@@ -17,7 +17,7 @@ import { UserModel } from '../utilities/models/user-model';
 import { CartItemModel } from '../utilities/models/cart-item-model';
 
 
- 
+
 @NgModule({
   declarations: [],
   imports: [
@@ -44,7 +44,8 @@ import { CartItemModel } from '../utilities/models/cart-item-model';
     {
       provide: ProductModel,
       useValue: new ProductModel()
-    },
+    }
+
 
   ],
   exports: [

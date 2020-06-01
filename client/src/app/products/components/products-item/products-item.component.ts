@@ -19,7 +19,7 @@ export class ProductsItemComponent {
   ) { }
 
   public handleProductDialog() {
-    !this.isAdmin
+    this.isAdmin
       ? console.log("admin")
       : this.dialogService.handleProductDialog(this.product)
   }

@@ -28,7 +28,7 @@ router.post(
       // validate password
       const validPassword = await bcrypt.compare(
         request.body.password,
-        user.password
+        user.password 
       );
 
       if (!validPassword) {
@@ -145,3 +145,4 @@ router.post("/unique-email", async (request, response, next) => {
 });
 
 module.exports = router;
+ 

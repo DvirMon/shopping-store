@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/utilities/services/form.service';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { store } from 'src/app/utilities/redux/store';
+import { ProductModel } from 'src/app/utilities/models/product-model';
 
 @Component({
   selector: 'app-products-form',
@@ -17,15 +18,18 @@ export class ProductsFormComponent implements OnInit {
   public formMode: boolean = true
   public categories: CategoryModel[] = store.getState().products.categories
   public selectedValue: string
+  private file: File | string
 
   constructor(
     private productService: ProductsService,
-    private formService: FormService
+    private formService: FormService,
+    public product: ProductModel
   ) { }
 
   ngOnInit(): void {
 
     this.createForm()
+    this.subscribeToFormControls()
   }
 
   // form section
@@ -46,9 +50,18 @@ export class ProductsFormComponent implements OnInit {
     return this.productForm.get('imagePath') as FormControl
   }
 
+  private subscribeToFormControls() {
+    this.productForm.valueChanges.subscribe(
+      (product) => {
+       this.product = product
+      }
+    )
+  }
+
   // request section
   public handleRequest() {
-
+    this.product.imagePath = this.file
+    console.log(this.product)
   }
 
   // logic section
@@ -61,9 +74,12 @@ export class ProductsFormComponent implements OnInit {
       }
     }
 
-
-
   }
+
+  public handleImage(file) {
+    this.file = file
+  }
+
 
 
 }

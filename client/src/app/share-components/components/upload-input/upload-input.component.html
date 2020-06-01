@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-sm-4">
     <button mat-stroked-button type="button" md-button (click)="imgFileInput.click()">Add a photo</button>
-    <input hidden type="file" #imgFileInput [formControl]="control" accept="image/*" />
+    <input hidden type="file" #imgFileInput  name="file" [(ngModel)]="control" accept="image/*" required/>
   </div>
-  <div class="col-sm-6" class="pull-right">
+  <!-- <div class="col-sm-6" class="pull-right">
     <div *ngIf="preview; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <img [src]="preview" height="100px" width="100px">
@@ -11,5 +11,5 @@
     <ng-template #elseBlock>
       <img *ngIf="imagePath" src="http://localhost:3000/uploads/{{imagePath}}" height="100px" width="100px">
     </ng-template>
-  </div>
+  </div> -->
 </div>

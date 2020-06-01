@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { Subject, Observable, of } from 'rxjs';
 import { CustomValidationService } from './custom-validation.service';
@@ -14,6 +14,7 @@ import { ProductModel } from '../models/product-model';
 export class FormService {
 
   public serverError = new Subject<string>()
+  private cd: ChangeDetectorRef 
 
   private regex = {
     name: /^[a-zA-Z ]{3,25}$/,
@@ -26,8 +27,8 @@ export class FormService {
 
   constructor(
     private fb: FormBuilder,
+    public http: HttpClient,
     private customValidation: CustomValidationService,
-    public http: HttpClient
   ) { }
 
 
@@ -104,7 +105,7 @@ export class FormService {
   public productForm(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required]],
-      price: ['', [Validators.required ,Validators.min(0.5)]],
+      price: ['', [Validators.required, Validators.min(0.5)]],
       category: ['', [Validators.required]],
       imagePath: ['', [Validators.required]],
     })
@@ -149,8 +150,8 @@ export class FormService {
 
   }
 
-   // set FormData object for post and put request
-   public setFormData = (product: ProductModel) => {
+  // set FormData object for post and put request
+  public setFormData = (product: ProductModel) => {
     const formData = new FormData();
 
     formData.append("name", product.name);
@@ -166,23 +167,26 @@ export class FormService {
   }
 
   // function to handle image file
-  public previewImage = async (file: File) => {
+  public previewImage = (control: FormControl, file: File) => {
+
     if (!file) {
       alert("Please choose image");
       return;
     }
-    const preview = await this.displayImage(file)
+    const preview = this.displayImage(control, file)
     return preview
   };
   // end of function
 
-  // Display image on client:
-  public displayImage = (file: File): Promise<string> => {
+  // Display image to client:
+  public displayImage = (control: FormControl, file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
-        resolve(event.target.result.toString())
+        console.log(event)
+        // resolve(event.target.result.toString())
+        this.cd.markForCheck();
       }
     })
   };

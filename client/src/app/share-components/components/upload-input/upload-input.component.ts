@@ -1,6 +1,8 @@
-import { Component, OnInit, forwardRef, Input, Output, HostListener, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, Output, HostListener, ElementRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/utilities/services/form.service';
+import { FileUploader } from 'ng2-file-upload';
+
 
 @Component({
   selector: 'app-upload-input',
@@ -23,13 +25,27 @@ export class UploadInputComponent implements OnInit {
   public file: File | null = null;
   public preview: string
 
+  private cd: ChangeDetectorRef
+
+  private uploader: FileUploader;
+  private hasBaseDropZoneOver: boolean;
+  private hasAnotherDropZoneOver: boolean;
+
   @Output() public image = new EventEmitter<File>()
 
 
   @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
-    this.file = event && event.item(0);
-    this.previewImage()
-    this.handleImage()
+
+    const file = event && event.item(0);
+    this.image.emit(file)
+    // const reader = new FileReader()
+    // reader.readAsDataURL(file);
+
+    // reader.onload = () => {
+    //   // need to run CD since file load runs outside of zone
+    //   this.cd.markForCheck();
+    //   // this.previewImage()
+    // }
   }
 
 
@@ -39,11 +55,11 @@ export class UploadInputComponent implements OnInit {
 
   ) { }
 
-ngOnInit() {
-}
+  ngOnInit() {
+  }
 
   writeValue(value: null) {
-    
+
     // clear file input
     this.host.nativeElement.value = '';
     this.file = null;
@@ -54,10 +70,12 @@ ngOnInit() {
 
   registerOnTouched(fn: any) {
   }
- 
-  public async  previewImage() {
-    this.preview = await this.formService.previewImage(this.file)
 
+  public onFileChange(event) {
+    console.log(event)
+  }
+
+  public previewImage() {
   }
 
   public handleImage() {
