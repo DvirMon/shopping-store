@@ -14,7 +14,7 @@ import { ProductModel } from '../models/product-model';
 export class FormService {
 
   public serverError = new Subject<string>()
-  private cd: ChangeDetectorRef 
+  private cd: ChangeDetectorRef
 
   private regex = {
     name: /^[a-zA-Z ]{3,25}$/,
@@ -151,7 +151,7 @@ export class FormService {
   }
 
   // set FormData object for post and put request
-  public setFormData = (product: ProductModel) => {
+  public setFormData(product: ProductModel) {
     const formData = new FormData();
 
     formData.append("name", product.name);
@@ -167,26 +167,24 @@ export class FormService {
   }
 
   // function to handle image file
-  public previewImage = (control: FormControl, file: File) => {
+  public async previewImage(file: File): Promise<string> {
 
     if (!file) {
       alert("Please choose image");
       return;
     }
-    const preview = this.displayImage(control, file)
+    const preview = await this.displayImage(file)
     return preview
   };
   // end of function
 
   // Display image to client:
-  public displayImage = (control: FormControl, file: File) => {
+  public displayImage(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
-        console.log(event)
-        // resolve(event.target.result.toString())
-        this.cd.markForCheck();
+        resolve(event.target.result.toString())
       }
     })
   };

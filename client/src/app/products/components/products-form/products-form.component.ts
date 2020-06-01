@@ -58,7 +58,7 @@ export class ProductsFormComponent implements OnInit {
     )
   }
 
-  // request section
+  // request section 
   public handleRequest() {
     this.product.imagePath = this.file
     console.log(this.product)

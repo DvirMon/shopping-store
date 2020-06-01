@@ -20,6 +20,7 @@ import { ProductThumbnailComponent } from './components/product-thumbnail/produc
 
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
+import { SidenavWidthDirective } from '../utilities/directives/sidnav-width.directive';
 
 
 
@@ -32,8 +33,9 @@ import { BarBackgroundColorDirective } from '../utilities/directives/bar-backgro
     SearchListItemComponent,
     ProductThumbnailComponent,
     HighLightPipe,
-    BarBackgroundColorDirective
-
+    BarBackgroundColorDirective,
+    SidenavWidthDirective
+    
   ],
   imports: [
     CoreModule,
@@ -47,7 +49,8 @@ import { BarBackgroundColorDirective } from '../utilities/directives/bar-backgro
     SearchListItemComponent,
     ProductThumbnailComponent,
     HighLightPipe,
-    BarBackgroundColorDirective
+    BarBackgroundColorDirective,
+    SidenavWidthDirective
   ],
   providers: [
     {
