@@ -88,14 +88,17 @@ router.get("/:_id", authorize(false, key), async (request, response, next) => {
 // add product only admin
 router.post(
   "/",
-  authorize(true, key),
   file.upload,
+  authorize(true, key),
   async (request, response, next) => {
-    console.log(request.body);
-
     try {
-      co 
-      response.status(201).json(product);
+      const product = request.body
+      product.price =JSON.parse(request.body.price)
+
+      const addedProduct = await productLogic.addProductAsync(
+        new Product(request.body)
+      );
+      response.status(201).json(addedProduct);
     } catch (err) {
       next(err);
     }
@@ -103,19 +106,19 @@ router.post(
 );
 
 // update product only admin
-router.put( 
+router.put(
   "/:_id",
-  authorize(true, key),
   file.upload,
+  authorize(true, key),
   async (request, response, next) => {
     try {
       const product = request.body;
       product._id = request.params._id;
-
-      // const updatedProduct = await productLogic.updateProductAsync(
-      //   new Product(product)
-      // );
-      response.json("updatedProduct");
+      delete product.alias
+      const updatedProduct = await productLogic.updateProductAsync(
+        new Product(product)
+      );
+      response.json(updatedProduct);
     } catch (err) {
       next(err);
     }

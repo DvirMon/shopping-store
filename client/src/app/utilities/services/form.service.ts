@@ -140,19 +140,16 @@ export class FormService {
   }
 
   // set FormData object for post and put request
-  public setFormData(product: ProductModel): FormData {
-    
+  public setFormData(product: ProductModel, file : File, alias : string): FormData {
+
     const formData = new FormData();
 
+    formData.append("alias", alias);
     formData.append("name", product['name']);
     formData.append("price", JSON.stringify(product['price']));
     formData.append("categoryId", product['categoryId']);
+    formData.append("imagePath", file, file.name);
 
-    if (typeof product.imagePath === "string") {
-      formData.append("imagePath", product['imagePath']);
-    } else {
-      formData.append("imagePath", product['imagePath'], product.imagePath.name);
-    }
     return formData
   }
 

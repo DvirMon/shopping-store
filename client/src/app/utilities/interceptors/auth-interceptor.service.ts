@@ -30,7 +30,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     const modified = request.clone({
       headers: new HttpHeaders({
-        // 'Content-Type': 'application/json',
         'Authorization': `${this.bearer} : ${this.token}`
       })
     });

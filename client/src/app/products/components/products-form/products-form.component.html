@@ -9,7 +9,7 @@
 </mat-toolbar>
 <div *ngIf="formMode; then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
-  <form [formGroup]="productForm"  encType="multipart/form-data">
+  <form [formGroup]="productForm" encType="multipart/form-data">
 
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
@@ -35,7 +35,7 @@
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
         <button (click)="handleRequest()" type="button" color="warn"
-          [disabled]="productForm.invalid || !product.imagePath"
+          [disabled]="productForm.invalid"
           mat-raised-button>{{editMode ? 'Update Product' :'Add Product'}}
         </button>
       </mat-grid-tile>

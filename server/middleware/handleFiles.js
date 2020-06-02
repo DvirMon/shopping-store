@@ -5,12 +5,15 @@ const fs = require("fs");
 // how the file should be stored
 const storage = multer.diskStorage({
   destination: function (request, file, cb) {
-    const path = request.body['categoryId']
+    const path = request.body.alias;
+    console.log(path)
     cb(null, `./uploads/products/${path}`);
   },
+  
   filename: function (request, file, cb) {
-    const fileName = uuid() + ".png";
-    request.body.imagePath = fileName;
+    const imagePath = uuid();
+    const fileName = imagePath + ".png";
+    request.body.imagePath = imagePath;
     cb(null, fileName);
   },
 });
@@ -20,8 +23,12 @@ const fileFilter = (request, file, cb) => {
   if (!file) {
     cb(new Error("error"), false);
   }
-  if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
-    // except file
+  if (
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png"
+  ) {
+    // resolve file
     cb(null, true);
   } else {
     // reject file
@@ -31,7 +38,7 @@ const fileFilter = (request, file, cb) => {
 
 // function do delete local file
 const deleteImageLocally = (path) => {
-  console.log(path)
+  console.log(path);
   fs.unlink("./uploads/products/" + path, (err) => {
     if (err) {
       console.error(err);

@@ -97,40 +97,31 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
 
     this.handleProductImage()
 
-
-    console.log(this.product.imagePath)
-    this.handleDataFormat()
-
-
     this.editMode
       ? this.handleUpdateRequest()
       : this.handleAddRequest()
 
-    this.editMode === false
-
-
+    this.onClearForm()
   }
 
   private handleDataFormat() {
     return typeof this.product.imagePath === "string"
       ? this.product
-      : this.formService.setFormData(this.product)
+      : this.formService.setFormData(this.product, this.file, this.alias)
   }
 
   private handleAddRequest() {
-    this.adminService.addProduct(this.handleDataFormat(), this.alias).subscribe(
-      (response) => console.log(response)
+    this.adminService.addProduct(this.handleDataFormat()).subscribe(
+      (product) => this.productService.addProductToStore(product, this.alias)
     )
-  }
+  } 
   private handleUpdateRequest() {
-    this.adminService.updateProduct(this.handleDataFormat(), this.product._id, this.alias).subscribe(
-      (response) => console.log(response)
+    this.adminService.updateProduct(this.handleDataFormat(), this.product._id).subscribe(
+      (product) => this.productService.updateProductToStore(product, this.alias)
     )
   }
 
   // logic section
-
-  // 
   public onAddProduct() {
 
     this.formMode = true
@@ -148,10 +139,13 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
   }
 
   public onClearForm() {
+    this.editMode = false
+    this.productForm.reset()
   }
 
-  public localFile(file) {
+  public localFile(file: File) {
     this.file = file
+    this.product.imagePath = file
   }
 
   private handleProductImage() {

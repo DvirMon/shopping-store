@@ -44,7 +44,6 @@ export class UploadInputComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.product)
     this.subscribeToSubject()
   }
 

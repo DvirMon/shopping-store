@@ -32,11 +32,12 @@ export class AdminService {
     )
   }
 
-  public addProduct(data: FormData | ProductModel, alias: string): Observable<ProductModel> {
+  public addProduct(data: FormData | ProductModel): Observable<ProductModel> {
     return this.http.post<ProductModel>(this.baseUrl, data)
   }
 
-  public updateProduct(data: FormData | ProductModel, _id: string, alias: string): Observable<ProductModel> {
+  public updateProduct(data: FormData | ProductModel, _id: string): Observable<ProductModel> {
+    console.log(_id)
     return this.http.put<ProductModel>(this.baseUrl + `/${_id}`, data)
   }
 
