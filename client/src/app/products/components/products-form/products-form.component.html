@@ -1,4 +1,7 @@
 <mat-toolbar appBarBackgroundColor>
+  <button mat-button type="button" (click)="onClearForm()">Clear
+    <mat-icon>delete</mat-icon>
+  </button>
   <span class="spacer"></span>
   <button mat-button type="button" (click)="onAddProduct()">Add Product
     <mat-icon>add</mat-icon>
@@ -6,19 +9,20 @@
 </mat-toolbar>
 <div *ngIf="formMode; then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
-  <form [formGroup]="productForm">
+  <form [formGroup]="productForm"  encType="multipart/form-data">
 
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
         <app-input type="text" [control]="name" placeHolder="Name" hint="product name"></app-input>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-input type="number" [control]="price" placeHolder="Price" hint="product price"></app-input>
+        <app-input type="number" [control]="price" placeHolder="Price" hint="product price">
+        </app-input>
       </mat-grid-tile>
-      <mat-grid-tile >
+      <mat-grid-tile>
         <mat-form-field field appearance="fill">
           <mat-label>Select Category:</mat-label>
-          <mat-select [formControl]="category" [(value)]="selectedValue">
+          <mat-select [formControl]="categoryId" [(value)]="selectedValue">
             <mat-option *ngFor="let category of categories" [value]="category._id">
               {{category.name}}</mat-option>
           </mat-select>
@@ -26,11 +30,14 @@
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
-    <app-upload-input [control]="imagePath" (image)="handleImage($event)"></app-upload-input>
+    <app-upload-input [control]="imagePath" [product]="product" [editMode]="editMode" (fileEmit)="localFile($event)">
+    </app-upload-input>
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
-        <button (click)="handleRequest()" color="warn" [disabled]="productForm.invalid"
-          mat-raised-button>{{editMode ? 'Update Product' :'Add Product'}}</button>
+        <button (click)="handleRequest()" type="button" color="warn"
+          [disabled]="productForm.invalid || !product.imagePath"
+          mat-raised-button>{{editMode ? 'Update Product' :'Add Product'}}
+        </button>
       </mat-grid-tile>
     </mat-grid-list>
   </form>

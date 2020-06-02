@@ -42,6 +42,7 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
   }
   return newAppState
 }
+
 const updateLogic = (newAppState: CartAppState, payload: CartModel) => {
   newAppState.cartItems.find(itemToUpdate => {
     if (itemToUpdate._id === payload._id) {

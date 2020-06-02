@@ -1,4 +1,5 @@
 <mat-form-field class="full-width" appearance="fill">
+
   <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" [formControl]="control"
     control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required>
 
@@ -8,6 +9,9 @@
     <mat-icon>vpn_key</mat-icon>
   </button>
 
+  <!-- price icons -->
+  <span *ngIf="placeHolder ==='Price'" matPrefix>$&nbsp;</span>
+  <span *ngIf="placeHolder ==='Price'" matSuffix>.00</span>
 
   <!-- shred input hint -->
   <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Email' && controlName !== 'street'">
@@ -17,15 +21,18 @@
   <mat-hint *ngIf="placeHolder === 'Email' && control.untouched">
     Please enter valid email format : dom@gmail.com
   </mat-hint>
-  <mat-hint *ngIf="controlName === 'street'">Double click on the icon for auto complete</mat-hint>
   <mat-hint *ngIf="placeHolder === 'Email' && control.touched">
     Thank you! we will mot share your email addresses with
     sponsors or any third parties</mat-hint>
   <mat-hint *ngIf="placeHolder === 'Password'">Recommended password : {{password}}</mat-hint>
+  <mat-hint *ngIf="controlName === 'street'">Double click on the icon for auto complete</mat-hint>
+
+  <!-- shred input error -->
+  <mat-error>{{error}}</mat-error>
 
   <!-- costume input error -->
-  <mat-error>{{error}}</mat-error>
   <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>
   <mat-error *ngIf=control.errors?.unique>This {{placeHolder.toLocaleLowerCase()}} is already in use</mat-error>
   <mat-error *ngIf=control.errors?.mustMatch>passwords are not match</mat-error>
+  
 </mat-form-field>

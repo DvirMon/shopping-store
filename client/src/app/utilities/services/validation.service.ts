@@ -1,13 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms';
-import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+
+import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomValidationService {
+export class ValidationService {
+
+  public regex = {
+    name: /^[a-zA-Z ]{3,25}$/,
+    personalId: /^[0-9]{8,9}$/,
+    email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+    positive: /^[1-9]+[0-9]*$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
+    creditCard: /^(?:4\d{3}|5[1-5]\d{2}||2[2-7]\d{2}|6011|2131|1800|35\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}$/
+  };
+
 
   constructor(
     public http: HttpClient,
@@ -75,11 +86,11 @@ export class CustomValidationService {
   public requiredFileType() {
     return function (control: FormControl) {
       const file = control.value;
-      
+
       if (!file) {
         return
       }
-      
+
       const type: string = "png"
       const extension = file.split('.')[1].toLowerCase();
 

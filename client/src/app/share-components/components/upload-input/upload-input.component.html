@@ -1,17 +1,18 @@
-<mat-grid-list cols="3" rowHeight="5vh">
+
+<mat-grid-list cols="2" rowHeight="5vh">
   <mat-grid-tile colspan="1" rowspan="2">
-    <button mat-stroked-button type="button" md-button (click)="imgFileInput.click()">Add a photo</button>
-    <input hidden type="file" #imgFileInput [formControl]="control" accept="image/*" required />
+    <button mat-stroked-button type="button" md-button (click)="imgFileInput.click()">{{editMode ? 'Update ' :'Add '}}a
+      photo</button>
+    <input hidden type="file" [formControl]="control" #imgFileInput accept="image/*" />
   </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="3">
+  <mat-grid-tile colspan="1" rowspan="3">
     <div *ngIf="preview; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <img [src]="preview" height="100px" width="100px">
-    </ng-template> 
+    </ng-template>
     <ng-template #elseBlock>
-      <img *ngIf="imagePath"
-        src="http://localhost:3000/uploads/products/{{product.categoryId}}/{{product.imagePath}}.png" height="100px"
-        width="100px">
+      <app-product-thumbnail *ngIf="editMode" [product]="product" [imageHeight]="100" [imageWidth]="100">
+      </app-product-thumbnail>
     </ng-template>
   </mat-grid-tile>
   <mat-grid-tile colspan="1">

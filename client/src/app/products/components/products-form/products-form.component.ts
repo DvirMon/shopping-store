@@ -1,36 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/utilities/services/form.service';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { store } from 'src/app/utilities/redux/store';
 import { ProductModel } from 'src/app/utilities/models/product-model';
+import { ActivatedRoute } from '@angular/router';
+import { AdminService } from 'src/app/utilities/services/admin.service';
 
 @Component({
   selector: 'app-products-form',
   templateUrl: './products-form.component.html',
   styleUrls: ['./products-form.component.scss']
 })
-export class ProductsFormComponent implements OnInit {
+export class ProductsFormComponent implements OnInit, AfterViewInit {
 
+  public categories: CategoryModel[] = store.getState().products.categories
   public productForm: FormGroup
   public editMode: boolean = false
-  public formMode: boolean = true
-  public categories: CategoryModel[] = store.getState().products.categories
+  public formMode: boolean = false
   public selectedValue: string
-  private file: File | string
+  private alias: string
+  private file: File
 
   constructor(
     private productService: ProductsService,
     private formService: FormService,
-    public product: ProductModel
+    private adminService: AdminService,
+    public product: ProductModel,
+    private activeRouter: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
 
     this.createForm()
+    this.subscribeToRoute()
     this.subscribeToFormControls()
-    this.subscribeToSubject( )
+  }
+
+  ngAfterViewInit() {
+    this.subscribeToSubject()
   }
 
   // form section
@@ -44,9 +53,10 @@ export class ProductsFormComponent implements OnInit {
   get price(): FormControl {
     return this.productForm.get('price') as FormControl
   }
-  get category(): FormControl {
-    return this.productForm.get('category') as FormControl
+  get categoryId(): FormControl {
+    return this.productForm.get('categoryId') as FormControl
   }
+
   get imagePath(): FormControl {
     return this.productForm.get('imagePath') as FormControl
   }
@@ -55,37 +65,75 @@ export class ProductsFormComponent implements OnInit {
 
   // subscribe section
 
+  private subscribeToSubject() {
+    this.productService.productToUpdate.subscribe(
+      (product: ProductModel) => {
+        this.handleFormUpdate(product)
+        this.handleProductUpdate(product)
+      })
+  }
+
   private subscribeToFormControls() {
     this.productForm.valueChanges.subscribe(
       (product) => {
-        this.product = product
+        this.product.name = product.name
+        this.product.price = product.price
+        this.product.categoryId = product.categoryId
       }
     )
   }
 
-  private subscribeToSubject() {
-    this.productService.productToUpdate.subscribe(
-      (product) => {
-        this.editMode = true
-        this.product = product
-        this.productForm.setValue({
-          name: product.name,
-          price: product.price,
-          category: product.categoryId,
-          imagePath: product.categoryId,
-        })
-        this.selectedValue = this.categories.find(category =>category._id === product.categoryId).name
-      })
+
+  private subscribeToRoute() {
+    this.activeRouter.params.subscribe(
+      (params) => this.alias = params.alias
+    )
   }
+
+  // end of subscribe section
 
   // request section 
   public handleRequest() {
-    this.product.imagePath = this.file
-    console.log(this.product)
+
+    this.handleProductImage()
+
+
+    console.log(this.product.imagePath)
+    this.handleDataFormat()
+
+
+    this.editMode
+      ? this.handleUpdateRequest()
+      : this.handleAddRequest()
+
+    this.editMode === false
+
+
+  }
+
+  private handleDataFormat() {
+    return typeof this.product.imagePath === "string"
+      ? this.product
+      : this.formService.setFormData(this.product)
+  }
+
+  private handleAddRequest() {
+    this.adminService.addProduct(this.handleDataFormat(), this.alias).subscribe(
+      (response) => console.log(response)
+    )
+  }
+  private handleUpdateRequest() {
+    this.adminService.updateProduct(this.handleDataFormat(), this.product._id, this.alias).subscribe(
+      (response) => console.log(response)
+    )
   }
 
   // logic section
+
+  // 
   public onAddProduct() {
+
+    this.formMode = true
 
     if (this.editMode) {
       const answer = confirm("You are about to start new form, do yow wish to continue ?")
@@ -99,8 +147,33 @@ export class ProductsFormComponent implements OnInit {
 
   }
 
-  public handleImage(file) {
+  public onClearForm() {
+  }
+
+  public localFile(file) {
     this.file = file
+  }
+
+  private handleProductImage() {
+    if (this.file) {
+      this.product.imagePath = this.file
+    }
+  }
+
+  private handleProductUpdate(product: ProductModel) {
+    this.formMode = true
+    this.editMode = true
+    this.selectedValue = product.categoryId
+    this.product = { ...product }
+    this.file = null
+  }
+
+  private handleFormUpdate(product: ProductModel) {
+    this.productForm.patchValue({
+      name: product.name,
+      price: product.price,
+      categoryId: product.categoryId
+    })
   }
 
 

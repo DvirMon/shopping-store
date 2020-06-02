@@ -26,8 +26,6 @@ const authorize = (role, key) => (request, response, next) => {
     const payload = jwt.verify(token, key);
     request.user = payload.user;
 
-    console.log(payload.user)
-
     // verify admin
     if (role && !request.user.isAdmin) {
       next({ status: 403, message: "not admin" });

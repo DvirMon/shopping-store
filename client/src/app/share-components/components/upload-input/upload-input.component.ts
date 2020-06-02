@@ -19,43 +19,39 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 })
 export class UploadInputComponent implements OnInit {
 
-
   @Input() control: FormControl
-  @Input() imagePath: boolean
-  
-  public file: File | null = null;
-  public preview: string
+  @Input() editMode: boolean = false
+  @Input() product: ProductModel
 
-  private cd: ChangeDetectorRef
-  
-  @Output() public image = new EventEmitter<File>()
-  
-  
+  // emit the file
+  @Output() fileEmit = new EventEmitter<File | string>()
+
+  // listen to change event
   @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
-    
     this.file = event && event.item(0);
-    this.image.emit(this.file)
+    this.fileEmit.emit(this.file)
     this.previewImage()
   }
-  
+
+  public file: File | null = null;
+  public preview: string
 
   constructor(
     private host: ElementRef<HTMLInputElement>,
     private formService: FormService,
     private productService: ProductsService,
-    public product: ProductModel
 
   ) { }
-  
+
   ngOnInit() {
+    console.log(this.product)
     this.subscribeToSubject()
   }
 
   private subscribeToSubject() {
     this.productService.productToUpdate.subscribe(
-      (product) => {
-        this.product = product
-        this.imagePath = true
+      () => {
+        this.preview = ""
       })
   }
 
@@ -69,14 +65,17 @@ export class UploadInputComponent implements OnInit {
   public registerOnChange(fn: any): void {
   }
 
-  registerOnTouched(fn: any) {
+  public registerOnTouched(fn: any) {
   }
 
-  public onFileChange(event) {
-    console.log(event)
-  }
 
   public async previewImage() {
+
+    if (!this.file) {
+      alert("Please choose image");
+      return;
+    }
+
     try {
       this.preview = await this.formService.previewImage(this.file)
     }

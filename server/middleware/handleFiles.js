@@ -5,10 +5,11 @@ const fs = require("fs");
 // how the file should be stored
 const storage = multer.diskStorage({
   destination: function (request, file, cb) {
-    cb(null, "./uploads/");
+    const path = request.body['categoryId']
+    cb(null, `./uploads/products/${path}`);
   },
   filename: function (request, file, cb) {
-    const fileName = uuid() + ".jpg";
+    const fileName = uuid() + ".png";
     request.body.imagePath = fileName;
     cb(null, fileName);
   },
@@ -30,7 +31,8 @@ const fileFilter = (request, file, cb) => {
 
 // function do delete local file
 const deleteImageLocally = (path) => {
-  fs.unlink("./uploads/" + path, (err) => {
+  console.log(path)
+  fs.unlink("./uploads/products/" + path, (err) => {
     if (err) {
       console.error(err);
       return;

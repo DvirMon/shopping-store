@@ -83,6 +83,14 @@ export class ProductsService {
   public handleProductsStoreState(products: ProductModel[], alias: string) {
     this.formService.handleStore(ActionType.GetProducts, { products, alias })
   }
+  
+  public addProductToStore(product: ProductModel, alias: string) {
+    this.formService.handleStore(ActionType.AddProduct, { product, alias })
+  }
+
+  public updateProductToStore(product: ProductModel, alias: string) {
+    this.formService.handleStore(ActionType.UpdateProduct, { product, alias })
+  }
 
   public productsLandingPage() {
     return this.router.navigateByUrl(`${config.baseProductUrl}`)

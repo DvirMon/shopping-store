@@ -1,6 +1,7 @@
 import { ProductsAppState } from '../app-state/products-state';
 import { ActionType } from '../action-type';
 import { Action } from '../action';
+import { ProductModel } from '../../models/product-model';
 
 export const productsReducer = (oldAppState = new ProductsAppState(), action: Action): ProductsAppState => {
 
@@ -9,16 +10,29 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
   switch (action.type) {
     case ActionType.GetCategories:
       newAppState.categories = action.payload;
-      break
+      break;
     case ActionType.GetProducts:
       newAppState[action.payload.alias] = action.payload.products;
-      break
+      break;
     case ActionType.AddProduct:
-      const alias = action.payload.alias
-      const product = action.payload.product
-      newAppState[alias].push(product)
+      newAppState[action.payload.alias].push(action.payload.product)
+      break;
+    case ActionType.UpdateProduct:
+      updateLogic(newAppState, action.payload.product, action.payload.alias)
       break
   }
   return newAppState
 
+}
+
+const updateLogic = (newAppState: ProductsAppState, payload: ProductModel, alias: string) => {
+  newAppState[alias].find(itemToUpdate => {
+    if (itemToUpdate._id === payload._id) {
+      for (const prop in payload) {
+        if (prop in itemToUpdate) {
+          itemToUpdate[prop] = payload[prop]
+        }
+      }
+    }
+  })
 }

@@ -18,8 +18,6 @@ export class AdminService {
 
   constructor(
     private http: HttpClient,
-    private formService: FormService,
-    private productsServices: ProductsService
 
   ) { }
 
@@ -29,32 +27,17 @@ export class AdminService {
         for (const key in products) {
           products[key]._id = key
         }
-
         return products
       })
     )
   }
 
-  public addProducts(product: ProductModel, alias: string) {
-
-    this.http.post(this.baseUrl, product).subscribe(
-      (response) => {
-
-        this.formService.handleStore(ActionType.AddProduct, { response, alias })
-      }
-    )
-
+  public addProduct(data: FormData | ProductModel, alias: string): Observable<ProductModel> {
+    return this.http.post<ProductModel>(this.baseUrl, data)
   }
-  public updateProducts(product: ProductModel, alias: string) {
 
-    this.http.put(this.baseUrl + `${product._id}`, product).subscribe(
-      (response) => {
-
-
-        this.formService.handleStore(ActionType.UpdateProduct, { response, alias })
-      }
-    )
-
+  public updateProduct(data: FormData | ProductModel, _id: string, alias: string): Observable<ProductModel> {
+    return this.http.put<ProductModel>(this.baseUrl + `/${_id}`, data)
   }
 
 }

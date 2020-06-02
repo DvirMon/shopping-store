@@ -20,6 +20,8 @@ export class ErrorsService {
 
     if (error instanceof HttpErrorResponse) {
 
+      console.log(error)
+      
       if (error.status === 401 || error.status === 409) {
         return
       }

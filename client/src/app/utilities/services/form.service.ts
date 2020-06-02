@@ -1,12 +1,12 @@
-import { Injectable, ChangeDetectorRef, Inject } from '@angular/core';
-import { FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
-import { Subject, Observable, of } from 'rxjs';
-import { CustomValidationService } from './custom-validation.service';
-import { HttpClient } from '@angular/common/http';
-import { distinctUntilChanged, take, switchMap, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+
+import { ProductModel } from '../models/product-model';
+import { ValidationService } from './validation.service';
+
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
-import { ProductModel } from '../models/product-model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,28 +14,17 @@ import { ProductModel } from '../models/product-model';
 export class FormService {
 
   public serverError = new Subject<string>()
-  private cd: ChangeDetectorRef
-
-  private regex = {
-    name: /^[a-zA-Z ]{3,25}$/,
-    personalId: /^[0-9]{8,9}$/,
-    email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-    positive: /^[1-9]+[0-9]*$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-    creditCard: /^(?:4\d{3}|5[1-5]\d{2}||2[2-7]\d{2}|6011|2131|1800|35\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}$/
-  };
 
   constructor(
     private fb: FormBuilder,
-    public http: HttpClient,
-    private customValidation: CustomValidationService,
+    private validationService: ValidationService,
   ) { }
 
 
   public loginForm(): FormGroup {
     return this.fb.group({
       email: ['',
-        [Validators.required, Validators.pattern(this.regex.email)]
+        [Validators.required, Validators.pattern(this.validationService.regex.email)]
       ],
       password: ['', [Validators.required, Validators.minLength(8), , Validators.maxLength(24)]],
     })
@@ -48,23 +37,23 @@ export class FormService {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(9),
-          Validators.pattern(this.regex.personalId)],
-          [this.customValidation.personalIdUniqueValidation.bind(this)]
+          Validators.pattern(this.validationService.regex.personalId)],
+          [this.validationService.personalIdUniqueValidation.bind(this)]
         ],
         email: ['',
-          [Validators.required, Validators.pattern(this.regex.email)],
-          [this.customValidation.emailUniqueAsyncValidation.bind(this)]
+          [Validators.required, Validators.pattern(this.validationService.regex.email)],
+          [this.validationService.emailUniqueAsyncValidation.bind(this)]
         ],
         password: ['', [
           Validators.required,
-          Validators.pattern(this.regex.password),
+          Validators.pattern(this.validationService.regex.password),
           Validators.minLength(8),
           Validators.maxLength(24)]],
         confirmPassword: ['',
-          [Validators.required, Validators.pattern(this.regex.password)]],
+          [Validators.required, Validators.pattern(this.validationService.regex.password)]],
       },
         {
-          validator: [this.customValidation.MustMatch('password', 'confirmPassword')],
+          validator: [this.validationService.MustMatch('password', 'confirmPassword')],
         }),
       personalDetails: this.fb.group({
         city: ['', [Validators.required]],
@@ -74,12 +63,12 @@ export class FormService {
           Validators.maxLength(30)]],
         firstName: ['', [
           Validators.required,
-          Validators.pattern(this.regex.name),
+          Validators.pattern(this.validationService.regex.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
         lastName: ['', [
           Validators.required,
-          Validators.pattern(this.regex.name),
+          Validators.pattern(this.validationService.regex.name),
           Validators.minLength(3),
           Validators.maxLength(30)]],
       }),
@@ -97,17 +86,17 @@ export class FormService {
       }),
       shippingDate: ['', [Validators.required]],
       creditCard: ['',
-        [Validators.required, Validators.pattern(this.regex.creditCard)]
+        [Validators.required, Validators.pattern(this.validationService.regex.creditCard)]
       ],
     })
   }
 
   public productForm(): FormGroup {
     return this.fb.group({
-      name: ['', [Validators.required]],
-      price: ['', [Validators.required, Validators.min(0.5)]],
-      category: ['', [Validators.required]],
-      imagePath: ['', [Validators.required, this.customValidation.requiredFileType()]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(35)]],
+      price: ['', [Validators.required, Validators.min(0.5), Validators.pattern(this.validationService.regex.positive)]],
+      categoryId: ['', [Validators.required]],
+      imagePath: [''],
     })
   }
 
@@ -151,35 +140,24 @@ export class FormService {
   }
 
   // set FormData object for post and put request
-  public setFormData(product: ProductModel) {
+  public setFormData(product: ProductModel): FormData {
+    
     const formData = new FormData();
 
-    formData.append("name", product.name);
-    formData.append("price", product.price.toString());
-    formData.append("categoryId", product.categoryId);
+    formData.append("name", product['name']);
+    formData.append("price", JSON.stringify(product['price']));
+    formData.append("categoryId", product['categoryId']);
 
     if (typeof product.imagePath === "string") {
-      formData.append("imagePath", product.imagePath);
+      formData.append("imagePath", product['imagePath']);
     } else {
-      formData.append("imagePath", product.imagePath, product.imagePath.name);
+      formData.append("imagePath", product['imagePath'], product.imagePath.name);
     }
     return formData
   }
 
-  // function to handle image file
-  public async previewImage(file: File): Promise<string> {
-
-    if (!file) {
-      alert("Please choose image");
-      return;
-    }
-    const preview = await this.displayImage(file)
-    return preview
-  };
-  // end of function
-
-  // Display image to client:
-  public displayImage(file: File): Promise<string> {
+  // display image to client:
+  public previewImage(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);

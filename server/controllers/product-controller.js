@@ -4,6 +4,8 @@ const router = express.Router();
 const Product = require("../models/product-model");
 const productLogic = require("../business-layer-logic/product-logic");
 const authorize = require("../middleware/handleAuth");
+const file = require("../middleware/handleFiles");
+
 const key = config.secret.access;
 
 router.get("/", authorize(true, key), async (request, response, next) => {
@@ -61,7 +63,7 @@ router.get(
 
 router.get(
   "/search/:query",
-  // authorize(false, key),
+  authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.searchProductsAsync(
@@ -84,30 +86,40 @@ router.get("/:_id", authorize(false, key), async (request, response, next) => {
 });
 
 // add product only admin
-router.post("/", authorize(true, key), async (request, response, next) => {
-  try {
-    const product = await productLogic.addProductAsync(
-      new Product(request.body)
-    );
-    response.status(201).json(product);
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  authorize(true, key),
+  file.upload,
+  async (request, response, next) => {
+    console.log(request.body);
+
+    try {
+      co 
+      response.status(201).json(product);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // update product only admin
-router.put("/:_id", authorize(true, key), async (request, response, next) => {
-  try {
-    const product = request.body;
-    product._id = request.params._id;
+router.put( 
+  "/:_id",
+  authorize(true, key),
+  file.upload,
+  async (request, response, next) => {
+    try {
+      const product = request.body;
+      product._id = request.params._id;
 
-    const updatedProduct = await productLogic.updateProductAsync(
-      new Product(product)
-    );
-    response.json(updatedProduct);
-  } catch (err) {
-    next(err);
+      // const updatedProduct = await productLogic.updateProductAsync(
+      //   new Product(product)
+      // );
+      response.json("updatedProduct");
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 module.exports = router;

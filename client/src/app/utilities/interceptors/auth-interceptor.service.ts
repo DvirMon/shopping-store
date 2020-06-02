@@ -30,7 +30,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     const modified = request.clone({
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': `${this.bearer} : ${this.token}`
       })
     });
@@ -42,8 +42,6 @@ export class AuthInterceptorService implements HttpInterceptor {
   private handAuthInterceptor(clone: HttpRequest<any>, next: HttpHandler) {
     return next.handle(clone).pipe(
       catchError((error: HttpErrorResponse) => {
-
-        console.log(error)
 
         if (error.status === 401) {
 
