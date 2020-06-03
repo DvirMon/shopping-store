@@ -7,6 +7,7 @@ import { ValidationService } from './validation.service';
 
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class FormService {
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,
+    private http: HttpClient
   ) { }
 
 
@@ -96,7 +98,7 @@ export class FormService {
       name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(35)]],
       price: ['', [Validators.required, Validators.min(0.5), Validators.pattern(this.validationService.regex.positive)]],
       categoryId: ['', [Validators.required]],
-      imagePath: [''],
+      imagePath: ['', [this.validationService.requiredFileType()]],
     })
   }
 
@@ -140,7 +142,7 @@ export class FormService {
   }
 
   // set FormData object for post and put request
-  public setFormData(product: ProductModel, file : File, alias : string): FormData {
+  public setFormData(product: ProductModel, file: File, alias: string): FormData {
 
     const formData = new FormData();
 
@@ -164,7 +166,7 @@ export class FormService {
     })
   };
 
-  public handleStore(type: ActionType, payload?: any) {
+  public handleStore(type: ActionType, payload?: any): void {
     store.dispatch({ type, payload })
   }
 }

@@ -20,7 +20,7 @@ export class ValidationService {
   };
 
 
-  constructor(
+  constructor( 
     public http: HttpClient,
   ) { }
 
@@ -33,11 +33,10 @@ export class ValidationService {
     return control.valueChanges.pipe(
       debounceTime(1500),
       distinctUntilChanged(),
-      take(1),
+      take(1), 
       switchMap(payload => {
         return this.http.post("http://localhost:4000/api/auth/unique-personalId", { personalId: payload }).pipe(
           map((error: boolean) => {
-            console.log(error)
             return error ? ({ unique: true }) : (null)
           })
         )
@@ -51,7 +50,7 @@ export class ValidationService {
       return of(null)
     }
     return control.valueChanges.pipe(
-      startWith(''),
+      // startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       take(1),
@@ -91,10 +90,10 @@ export class ValidationService {
         return
       }
 
-      const type: string = "png"
+      // get file extension
       const extension = file.split('.')[1].toLowerCase();
-
-      if (type.toLowerCase() !== extension.toLowerCase()) {
+ 
+      if (extension.toLowerCase() !== "png" && "jpg" && "jpeg") {
         return { requiredFileType: true }
       }
 

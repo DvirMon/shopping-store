@@ -35,6 +35,7 @@ export class UploadInputComponent implements OnInit {
 
   public file: File | null = null;
   public preview: string
+  public alias: string
 
   constructor(
     private host: ElementRef<HTMLInputElement>,
@@ -48,9 +49,12 @@ export class UploadInputComponent implements OnInit {
   }
 
   private subscribeToSubject() {
-    this.productService.productToUpdate.subscribe(
-      () => {
+    this.productService.handleUpdate.subscribe(
+      (data) => {
         this.preview = ""
+        if (data) {
+          this.alias = data.alias
+        }
       })
   }
 

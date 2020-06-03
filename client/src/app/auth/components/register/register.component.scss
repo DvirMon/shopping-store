@@ -5,6 +5,10 @@ div {
   background-repeat: no-repeat;
 }
 
+.mat-form-field  {
+  min-width: 300px;
+}
+
 mat-horizontal-stepper {
   width: 80%;
   margin: auto;

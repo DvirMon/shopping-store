@@ -75,9 +75,11 @@ export class SearchComponent implements OnInit {
 
   public onSelect(product) {
     this.panel.openPanel()
-    if (!this.isAdmin) {
-      this.dialogService.handleProductDialog(product)
-    }
+ 
+    const alias = this.productService.getCategoryAlias(product)
 
+    this.isAdmin
+      ? this.productService.handleUpdate.next({ product, alias })
+      : this.dialogService.handleProductDialog(product)
   }
 }

@@ -37,7 +37,6 @@ export class AdminService {
   }
 
   public updateProduct(data: FormData | ProductModel, _id: string): Observable<ProductModel> {
-    console.log(_id)
     return this.http.put<ProductModel>(this.baseUrl + `/${_id}`, data)
   }
 

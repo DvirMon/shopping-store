@@ -1,4 +1,3 @@
-
 <mat-grid-list cols="2" rowHeight="5vh">
   <mat-grid-tile colspan="1" rowspan="2">
     <button mat-stroked-button type="button" md-button (click)="imgFileInput.click()">{{editMode ? 'Update ' :'Add '}}a
@@ -11,11 +10,15 @@
       <img [src]="preview" height="100px" width="100px">
     </ng-template>
     <ng-template #elseBlock>
-      <app-product-thumbnail *ngIf="editMode" [product]="product" [imageHeight]="100" [imageWidth]="100">
+      <app-product-thumbnail *ngIf="editMode" 
+      [product]="product" 
+      [alias]="alias" 
+      [imageHeight]="100"
+      [imageWidth]="100">
       </app-product-thumbnail>
     </ng-template>
   </mat-grid-tile>
   <mat-grid-tile colspan="1">
-    <mat-error *ngIf="control.errors?.requiredFileType">only png format</mat-error>
+    <mat-error *ngIf="control.errors?.requiredFileType">file format is not valid</mat-error>
   </mat-grid-tile>
 </mat-grid-list>

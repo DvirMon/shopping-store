@@ -12,7 +12,8 @@ export class ProductThumbnailComponent implements OnInit {
   @Input() product: ProductModel = new ProductModel()
   @Input() imageHeight: number
   @Input() imageWidth: number
-  public alias: string
+  @Input() alias: string
+  public routAlias: string
 
   constructor(
     private activeRoute: ActivatedRoute
@@ -21,7 +22,9 @@ export class ProductThumbnailComponent implements OnInit {
 
   ngOnInit() {
     this.activeRoute.params.subscribe(
-      (params) => this.alias = params.alias
+      (params) => {
+        this.routAlias = params.alias
+      }
     )
   }
 

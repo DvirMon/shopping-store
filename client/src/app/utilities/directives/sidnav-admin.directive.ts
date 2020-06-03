@@ -2,9 +2,9 @@ import { Directive, HostBinding } from '@angular/core';
 import { store } from '../redux/store';
 
 @Directive({
-  selector: '[appSidenavWidthDirective]'
+  selector: '[appSidenavAdminDirective]'
 })
-export class SidenavWidthDirective {
+export class SidenavAdminDirective {
 
   @HostBinding("style.width") public width: string;
 

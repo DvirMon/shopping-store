@@ -9,7 +9,6 @@ const authorize = (role, key) => (request, response, next) => {
       message: "Auth request missing authorization header or token",
     });
   }
-
   // get token from header
   const token = request.headers["authorization"].split(":")[1].trim();
 
@@ -17,7 +16,7 @@ const authorize = (role, key) => (request, response, next) => {
   if (!token || null) {
     return next({
       status: 401,
-      message: "Auth request missing authorization header or token",
+      message: "Unauthorised : Request missing authorization header or token",
     });
   }
 
@@ -28,13 +27,13 @@ const authorize = (role, key) => (request, response, next) => {
 
     // verify admin
     if (role && !request.user.isAdmin) {
-      next({ status: 403, message: "not admin" });
+      next({ status: 403, message: "Access Denied : Not Admin" });
       return;
     }
 
     next();
   } catch (err) {
-    return next({ status: 401, message: "token has expired" });
+    return next({ status: 401, message: "Unauthorised : Token Has Expired" });
   }
 };
 // end of function

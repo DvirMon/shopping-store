@@ -9,7 +9,7 @@
   </ul>
   <span class="spacer"></span>
   <button type="button" aria-label="Toggle sidenav" mat-button (click)="drawer.toggle()">
-    {{isAdmin ? 'Open':'My Cart' }}
+    {{isAdmin ? '':'My Cart' }}
   </button>
   <mat-icon *ngIf="!isAdmin" aria-label="Side nav toggle icon">shopping_cart</mat-icon>
 </mat-toolbar>
