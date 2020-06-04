@@ -25,19 +25,11 @@ export class AdminService {
     return this.http.get<ProductModel[]>(this.baseUrl).pipe(
       map(products => {
         for (const key in products) {
-          products[key]._id = key
+          products[key]._id = (parseInt(key) + 1).toString()
         }
         return products
       })
     )
-  }
-
-  public addProduct(data: FormData | ProductModel): Observable<ProductModel> {
-    return this.http.post<ProductModel>(this.baseUrl, data)
-  }
-
-  public updateProduct(data: FormData | ProductModel, _id: string): Observable<ProductModel> {
-    return this.http.put<ProductModel>(this.baseUrl + `/${_id}`, data)
   }
 
 }

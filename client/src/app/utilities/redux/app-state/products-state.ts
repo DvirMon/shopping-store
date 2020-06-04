@@ -3,6 +3,7 @@ import { CategoryModel } from 'src/app/utilities/models/category-model';
 
 export class ProductsAppState {
 
+  public products: ProductModel[] = []
   public categories: CategoryModel[] = []
   public dairy: ProductModel[] = []
   public meat: ProductModel[] = []

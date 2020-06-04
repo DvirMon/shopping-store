@@ -1,7 +1,8 @@
 <mat-toolbar>
   <form class="search-form">
-    <mat-form-field class="search-input" [floatLabel]="'never'">
-      <input type="text" placeholder="Search..." matInput #searchInput [matAutocomplete]="auto"
+    <mat-form-field class="search-input">
+      <mat-label>Please Enter Query</mat-label>
+      <input type="text" placeholder="search..." matInput #searchInput [matAutocomplete]="auto"
         [formControl]="searchControl">
       <mat-icon>search</mat-icon>
     </mat-form-field>

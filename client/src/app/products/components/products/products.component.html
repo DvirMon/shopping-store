@@ -1,10 +1,13 @@
 <app-products-bar>
   <div class="product-container">
-    <mat-grid-list cols="4" rowHeight="35vh" *ngFor="let products of collection">
+    <mat-grid-list cols="4" rowHeight="32vh" *ngFor="let products of collection">
       <mat-divider></mat-divider>
       <mat-grid-tile *ngFor="let product of products">
-      <app-products-item  [product]="product"></app-products-item>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
+        <app-products-item [product]="product"></app-products-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <mat-paginator #paginator [length]="pagination.length" [pageIndex]="pagination.pageIndex"
+    [pageSize]="pagination.pageSize" [pageSizeOptions]="pagination.pageSizeOptions">
+  </mat-paginator>
 </app-products-bar>

@@ -1,19 +1,22 @@
 mat-toolbar {
   justify-content: center;
-
+  height: 75px;
+  
   .search-form {
-    min-width: 150px;
-    width: 50%;
-    font-size: 20px;
-  }
-
-  .search-input {
     width: 100%;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 15px;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 95%;
   }
 }
 
 .single-autocomplete {
-justify-content: center;
+  justify-content: center;
 }
 
 mat-option {

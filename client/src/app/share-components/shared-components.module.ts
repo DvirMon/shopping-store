@@ -21,6 +21,7 @@ import { ProductThumbnailComponent } from './components/product-thumbnail/produc
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
+import { StreetComponent } from './components/street/street.component';
 
 
 
@@ -32,9 +33,10 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
+    StreetComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
-    SidenavAdminDirective
+    SidenavAdminDirective,
     
   ],
   imports: [
@@ -48,6 +50,7 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
+    StreetComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective

@@ -9,6 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule } from 'ng-recaptcha'
 import { MaterialModule } from './material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { AgmCoreModule} from '@agm/core'
+
 
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
@@ -22,7 +25,11 @@ import { CartItemModel } from '../utilities/models/cart-item-model';
   declarations: [],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AgmCoreModule.forRoot({
+      apiKey : "AIzaSyDILBPfSAiKKypPQU-hO92beFbyaQGE0uw"
+    }),
+    GooglePlaceModule
   ],
   providers: [
     {
@@ -55,7 +62,9 @@ import { CartItemModel } from '../utilities/models/cart-item-model';
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AgmCoreModule,
+    GooglePlaceModule
 
   ]
 })

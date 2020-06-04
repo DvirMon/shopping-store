@@ -9,7 +9,7 @@ import { ProductModel } from '../models/product-model';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsResolver implements Resolve<Observable<ProductModel[]> | Promise<ProductModel[]> | ProductModel[]>{
+export class ProductsResolver implements Resolve<Observable<any> | Promise<any> | any>{
 
   constructor(
     private productService: ProductsService
@@ -18,16 +18,18 @@ export class ProductsResolver implements Resolve<Observable<ProductModel[]> | Pr
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<ProductModel[]> | Promise<ProductModel[]> | ProductModel[] {
+  ): Observable<any> | Promise<any> | any {
 
     const categoryId = route.params.categoryId
-    const alias =route.params.alias
+    const alias = route.params.alias
 
-    if (store.getState().products[alias].length === 0) {
-      return this.productService.getProductsByCategory(categoryId, alias)
-    }
-    else {
-      return store.getState().products[alias]
-    }
+    // if (store.getState().products[alias].length === 0) {
+    //   return this.productService.getProductsByCategory(categoryId, alias)
+    // }
+    // else {
+    //   return store.getState().products[alias]
+    // }
+
+    return this.productService.getProductsPagination(categoryId, 1, 8, alias)
   }
 }

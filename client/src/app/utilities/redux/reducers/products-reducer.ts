@@ -8,6 +8,9 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
   const newAppState = { ...oldAppState }
 
   switch (action.type) {
+    case ActionType.GetAllProducts:
+      newAppState.products = action.payload;
+      break;
     case ActionType.GetCategories:
       newAppState.categories = action.payload;
       break;

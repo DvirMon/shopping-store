@@ -1,0 +1,5 @@
+<mat-form-field class="full-width" appearance="fill">
+  <input matInput [options]="options" ngx-google-places-autocomplete #placesRef="ngx-places"
+    (onAddressChange)="handleAddressChange($event)" />
+    <mat-hint>{{formatAddress}}</mat-hint>
+</mat-form-field> 

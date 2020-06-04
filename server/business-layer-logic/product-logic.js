@@ -3,16 +3,6 @@ const Category = require("../models/category-model");
 
 // get all products sort by category
 const getAllProductsAsync = async () => {
-  // return await Product.aggregate([
-  //   {
-  //     $group: {
-  //       _id: "$categoryId",
-  //       doc: {
-  //         $push: "$$ROOT",
-  //       },
-  //     },
-  //   },
-  // ]).exec();
   return await Product.find({}).exec();
 };
 
@@ -33,14 +23,25 @@ const getTotalDocsAsync = async () => {
 };
 
 // get products by category
-const getAllProductsByCategoryAsync = async (categoryId) => {
+const getAllProductsByCategoryAsync = async (categoryId, options) => {
   return await Product.find({ categoryId }).exec();
 };
 
+const getProductsPaginationAsync = async (categoryId, options) => {
+ return await Product.paginate({ categoryId }, options, (err, result) => {
+    if (err) {
+      return next(err);
+    }
+    return result;
+  });
+};
+
+// add product
 const addProductAsync = async (product) => {
   return product.save();
 };
 
+// update product
 const updateProductAsync = async (product) => {
   const info = await Product.updateOne({ _id: product._id }, product).exec();
   return info.n ? product : null;
@@ -60,6 +61,7 @@ module.exports = {
   getTotalDocsAsync,
   searchProductsAsync,
   getAllProductsByCategoryAsync,
+  getProductsPaginationAsync,
   addProductAsync,
   updateProductAsync,
   getAllCategories,

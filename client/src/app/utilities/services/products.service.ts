@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 import { ProductModel } from '../models/product-model';
 import { CategoryModel } from '../models/category-model';
@@ -33,6 +33,7 @@ export class ProductsService {
 
   public baseUrl: string = `http://localhost:${config.port}/api/products`
   public handleUpdate = new BehaviorSubject<UpdateData | null>(null)
+  public slice: number = 4;
 
   constructor(
     private http: HttpClient,
@@ -41,7 +42,20 @@ export class ProductsService {
 
   ) { }
 
-  // Get products categories : http://localhost:3000/api/products/categories
+  // GET products categories : http://localhost:3000/api/products
+  public getPageProducts(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.baseUrl).pipe(
+      map(products => {
+        for (const key in products) {
+          products[key]._id = (parseInt(key) + 1).toString()
+          this.formService.handleStore(ActionType.GetAllProducts, products)
+        }
+        return products
+      })
+    )
+  }
+
+  // GET products categories : http://localhost:3000/api/products/categories
   public getCategories(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
       tap((response: CategoryModel[]) => {
@@ -50,7 +64,7 @@ export class ProductsService {
     )
   }
 
-  // Get products by category : http://localhost:3000/api/products/category:categoryId
+  // GET products by category : http://localhost:3000/api/products/category:categoryId
   public getProductsByCategory(categoryId: string, alias: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`).pipe(
       tap(products => {
@@ -60,12 +74,28 @@ export class ProductsService {
     )
   }
 
+  // GET products with pagination :  http://localhost:3000/api/products/:categoryId/pagination/:page/:limit",
+
+  public getProductsPagination(categoryId: string, page: number, limit: number, alias: string) {
+
+    const pagination: string = `pagination/${page}/${limit}`
+
+    return this.http.get(this.baseUrl + `/category/${categoryId}/${pagination}`).pipe(
+      tap(data => {
+        // this.handleProductsStoreState(products, alias);
+        return data
+      })
+    )
+
+
+  }
+
   // Get product : http://localhost:3000/api/products/:_id
   public getProductNameAndImage(_id): Observable<ProductModel> {
     return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
   }
 
-  // Get products : http://localhost:3000/api/products/search/:query
+  // GET products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/search/${query}`)
   }
@@ -90,26 +120,26 @@ export class ProductsService {
     const collection: any = []
     const temp = [...response]
     for (let i = 0; i < response.length;) {
-      const row: ProductModel[] = temp.splice(0, 4)
+      const row: ProductModel[] = temp.splice(0, this.slice)
       collection.push(row)
-      i = i + 4
+      i = i + this.slice
     }
     return collection
   }
 
-  public handleProductsStoreState(products: ProductModel[], alias: string) {
+  public handleProductsStoreState(products: ProductModel[], alias: string): void {
     this.formService.handleStore(ActionType.GetProducts, { products, alias })
   }
 
-  public addProductToStore(product: ProductModel, alias: string) {
+  public addProductToStore(product: ProductModel, alias: string): void {
     this.formService.handleStore(ActionType.AddProduct, { product, alias })
   }
 
-  public updateProductToStore(product: ProductModel, alias: string) {
+  public updateProductToStore(product: ProductModel, alias: string): void {
     this.formService.handleStore(ActionType.UpdateProduct, { product, alias })
   }
 
-  public productsLandingPage() {
+  public productsLandingPage(): Promise<boolean> {
     return this.router.navigateByUrl(`${config.baseProductUrl}`)
   }
 

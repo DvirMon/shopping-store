@@ -1,5 +1,5 @@
 export enum ActionType {
-    
+
   // Auth ActionType
   Login,
   Logout,
@@ -16,7 +16,7 @@ export enum ActionType {
   UpdatedItemCart,
   DeleteCartItem,
   ResetCartState,
-  
+
   // Receipt Actions
   AddReceiptItem,
   DeleteReceiptItem,
@@ -24,8 +24,9 @@ export enum ActionType {
   GetOrderData,
 
   // Products Actions
-    GetCategories,
-    GetProducts,
-    AddProduct,
-    UpdateProduct,
+  GetAllProducts,
+  GetCategories,
+  GetProducts,
+  AddProduct,
+  UpdateProduct,
 } 

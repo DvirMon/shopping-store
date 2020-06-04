@@ -41,6 +41,30 @@ router.get("/total", async (request, response, next) => {
 });
 
 router.get(
+  "/category/:categoryId/pagination/:page/:limit",
+  async (request, response, next) => {
+    try {
+      const options = {
+        page: request.params.page,
+        limit: request.params.limit,
+        collation: {
+          locale: "en",
+        },
+      };
+
+      const data = await productLogic.getProductsPaginationAsync(
+        request.params.categoryId,
+        options
+      );
+
+      response.json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.get(
   "/category/:categoryId",
   authorize(false, key),
   async (request, response, next) => {
@@ -92,8 +116,8 @@ router.post(
   authorize(true, key),
   async (request, response, next) => {
     try {
-      const product = request.body
-      product.price =JSON.parse(request.body.price)
+      const product = request.body;
+      product.price = JSON.parse(request.body.price);
 
       const addedProduct = await productLogic.addProductAsync(
         new Product(request.body)
@@ -114,7 +138,7 @@ router.put(
     try {
       const product = request.body;
       product._id = request.params._id;
-      delete product.alias
+      delete product.alias;
       const updatedProduct = await productLogic.updateProductAsync(
         new Product(product)
       );
