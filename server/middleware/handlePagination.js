@@ -11,6 +11,7 @@ const pagination = (request, response, next) => {
   const options = {
     page: request.params.page,
     limit: request.params.limit,
+    sort: { name: 1 },
     customLabels: myCustomLabels,
     collation: {
       locale: "en",
@@ -21,7 +22,5 @@ const pagination = (request, response, next) => {
 
   next();
 };
-
-
 
 module.exports = pagination;

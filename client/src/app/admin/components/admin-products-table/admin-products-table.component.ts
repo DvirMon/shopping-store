@@ -44,7 +44,6 @@ export class AdminProductsTableComponent implements OnInit {
   ngAfterViewInit() {
     this.invokeTableProp()
     this.subscribeToPaginator()
-    console.log(this.dataSource.data)
   }
 
 
@@ -59,7 +58,6 @@ export class AdminProductsTableComponent implements OnInit {
   
   private getProductsPagination() {
     this.dataSource.loadProducts((this.paginator.pageIndex + 1), this.paginator.pageSize)
-    console.log(this.dataSource.data)
   }
 
   private invokeTableProp() {

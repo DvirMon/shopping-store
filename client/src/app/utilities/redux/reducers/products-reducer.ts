@@ -14,11 +14,18 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
     case ActionType.GetCategories:
       newAppState.categories = action.payload;
       break;
-    case ActionType.GetProducts:
-      newAppState[action.payload.alias] = action.payload.products;
+    case ActionType.SetProductsPaginationData:
+      newAppState[action.payload.alias].products = action.payload.products
+      newAppState[action.payload.alias].pagination = action.payload.pagination;
+      newAppState[action.payload.alias].pages.push(action.payload.pagination.pageIndex)
+      break;
+      case ActionType.AddProductsPaginationData:
+        newAppState[action.payload.alias].products = newAppState[action.payload.alias].products.concat(action.payload.products)
+        newAppState[action.payload.alias].pagination = action.payload.pagination;
+        newAppState[action.payload.alias].pages.push(action.payload.pagination.pageIndex)
       break;
     case ActionType.AddProduct:
-      newAppState[action.payload.alias].push(action.payload.product)
+      newAppState[action.payload.alias].products.push(action.payload.product)
       break;
     case ActionType.UpdateProduct:
       updateLogic(newAppState, action.payload.product, action.payload.alias)
@@ -29,7 +36,7 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
 }
 
 const updateLogic = (newAppState: ProductsAppState, payload: ProductModel, alias: string) => {
-  newAppState[alias].find(itemToUpdate => {
+  newAppState[alias].products.find(itemToUpdate => {
     if (itemToUpdate._id === payload._id) {
       for (const prop in payload) {
         if (prop in itemToUpdate) {

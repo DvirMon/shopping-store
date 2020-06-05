@@ -2,9 +2,22 @@ import { ProductModel } from './product-model';
 
 export class PaginationDataModel {
   public constructor(
-    public products: ProductModel[],
-    public pagination: PaginationModel
-  ) { }
+    public products?: ProductModel[],
+    public pagination?: PaginationModel,
+    public pages?: number[]
+  ) {
+    this.products = [],
+      this.pagination = new PaginationModel(),
+      this.pages = []
+  }
+}
+
+export class PageData {
+  public constructor(
+    public products?: ProductModel[],
+    public pages?: number[]
+  ) {
+  }
 }
 
 export class PaginationModel {

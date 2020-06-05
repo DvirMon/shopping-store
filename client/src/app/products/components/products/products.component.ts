@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { PaginationModel } from 'src/app/utilities/models/pagination-model';
+import { PaginationModel, PaginationDataModel } from 'src/app/utilities/models/pagination-model';
 import { PaginationService } from 'src/app/utilities/services/pagination.service';
 
 import { store } from 'src/app/utilities/redux/store';
@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public isAdmin: boolean = false
   public categoryId: string
   public alias: string
+  public paginationData: PaginationDataModel;
 
 
 
@@ -50,10 +51,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private subscribeToStore() {
     store.subscribe(
       () => {
-        // this.collection = this.formatCollection()
+        this.collection = store.getState().products[this.alias].products
         this.isAdmin = store.getState().auth.isAdmin
+        this.paginationData = store.getState().products[this.alias]
       });
     this.isAdmin = store.getState().auth.isAdmin
+    this.paginationData = store.getState().products[this.alias]
   }
 
   private subscribeToRoute(): void {
@@ -67,6 +70,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       (params) => {
         this.categoryId = params.categoryId;
         this.alias = params.alias
+        this.paginationData = store.getState().products[this.alias]
       }
     );
   }
@@ -80,8 +84,17 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private subscribeToPaginator() {
     this.paginator.page.pipe(
-      tap(() => this.getProductsPagination())
-    ).subscribe()
+      tap(() => {
+        if (this.isPageExist()) {
+          const products = this.paginationService.getPagedData([...this.paginationData.products], this.paginator)
+          this.collection = this.formatCollection(products)
+          this.pagination = this.paginationData.pagination
+        } else {
+          this.getProductsPagination()
+        }
+
+      }
+      )).subscribe()
   }
 
   // end of subscription section
@@ -99,9 +112,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       })
   }
 
-  private formatCollection(): [ProductModel[]] {
-    const products = store.getState().products[this.alias];
+  private formatCollection(products): [ProductModel[]] {
     return this.productService.formatProductsArray(products);
+  }
+
+  private isPageExist(): boolean {
+    const page = this.paginationData.pages.find(page => page === this.paginator.pageIndex)
+    if (page === 0) {
+      return !page 
+    }
+    return !!page
   }
 
 

@@ -116,16 +116,20 @@ export class ProductsFormComponent implements OnInit {
   // handle add product request
   private handleAddRequest(): void {
     this.productService.addProduct(this.handleRequestData())
-      .subscribe((product: ProductModel) =>
+      .subscribe((product: ProductModel) => {
+
         this.productService.addProductToStore(product, this.alias)
+        
+      }
       )
   }
 
   // handle update product request
   private handleUpdateRequest(): void {
     this.productService.updateProduct(this.handleRequestData(), this.product._id)
-      .subscribe((product: ProductModel) =>
+      .subscribe((product: ProductModel) => {
         this.productService.updateProductToStore(product, this.alias)
+      }
       )
   }
 

@@ -26,7 +26,8 @@ export enum ActionType {
   // Products Actions
   GetAllProducts,
   GetCategories,
-  GetProducts,
+  SetProductsPaginationData,
+  AddProductsPaginationData,
   AddProduct,
   UpdateProduct,
 } 

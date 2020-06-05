@@ -13,7 +13,7 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { config } from '../../../main-config'
 import { store } from '../redux/store';
-import { PaginationDataModel } from '../models/pagination-model';
+import { PaginationDataModel, PaginationModel } from '../models/pagination-model';
 
 export interface UpdateData {
   product: ProductModel,
@@ -52,7 +52,12 @@ export class ProductsService {
 
     return this.http.post<PaginationDataModel>(this.baseUrl + `/${pagination}`, { categoryId }).pipe(
       map(data => {
+
         data.pagination.pageIndex = data.pagination.pageIndex - 1
+
+        if (alias) {
+          this.handleProductsStoreState(data.products, data.pagination, alias)
+        }
 
         if (!categoryId) {
           this.formatProductId(data.products)
@@ -116,8 +121,16 @@ export class ProductsService {
     }
   }
 
-  public handleProductsStoreState(products: ProductModel[], alias: string): void {
-    this.formService.handleStore(ActionType.GetProducts, { products, alias })
+  public handleProductsStoreState(products: ProductModel[], pagination: PaginationModel, alias: string): void {
+
+    const storeProducts = store.getState().products[alias].products
+
+    if (storeProducts.length === 0) {
+      this.formService.handleStore(ActionType.SetProductsPaginationData, { products, pagination, alias })
+
+    } else if (storeProducts.length < pagination.length ) {
+      this.formService.handleStore(ActionType.AddProductsPaginationData, { products, pagination, alias })
+    }
   }
 
   public addProductToStore(product: ProductModel, alias: string): void {
