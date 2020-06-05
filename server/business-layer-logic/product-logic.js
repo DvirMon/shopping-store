@@ -23,12 +23,12 @@ const getTotalDocsAsync = async () => {
 };
 
 // get products by category
-const getAllProductsByCategoryAsync = async (categoryId, options) => {
+const getAllProductsByCategoryAsync = async (categoryId) => {
   return await Product.find({ categoryId }).exec();
 };
 
-const getProductsPaginationAsync = async (categoryId, options) => {
- return await Product.paginate({ categoryId }, options, (err, result) => {
+const getProductsPaginationAsync = async (query, options) => {
+  return await Product.paginate(query, options, (err, result) => {
     if (err) {
       return next(err);
     }

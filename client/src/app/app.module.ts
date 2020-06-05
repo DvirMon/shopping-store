@@ -16,7 +16,10 @@ import { InfoComponent } from './components/info/info.component';
 import { AboutComponent } from './components/about/about.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
- 
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
  
 
@@ -39,6 +42,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SharedModule,
     AuthModule,
     FontAwesomeModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
 
   ],
   providers: [],

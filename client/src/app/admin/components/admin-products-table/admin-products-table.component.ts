@@ -6,6 +6,9 @@ import { MatTable } from '@angular/material/table';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { DataTableService } from 'src/app/utilities/services/data-table.service';
+import { tap } from 'rxjs/operators';
+import { PaginationService } from 'src/app/utilities/services/pagination.service';
+import { PaginationModel } from 'src/app/utilities/models/pagination-model';
 
 @Component({
   selector: 'app-admin-products-table',
@@ -19,30 +22,50 @@ export class AdminProductsTableComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<ProductModel>;
   @ViewChild('filterInput') filterInput: ElementRef<HTMLInputElement>;
 
-
   public dataSource: DataTableService;
 
   public displayedColumns: string[] = ['check', '_id', 'name', 'category', 'price', 'edit'];
 
-  public pagination = {
-    pageIndex: 0,
-    pageSize: 10,
-    pageSizeOptions: [10]
-  }
+  // public pagination: PaginationModel = new PaginationModel(0, 10, 10, 45)
+
 
   constructor
     (
-      public dataTableService: DataTableService
+      public dataTableService: DataTableService,
+      public pagination: PaginationModel
 
     ) { }
 
   ngOnInit() {
     this.dataSource = this.dataTableService
-    this.dataSource.loadProducts()
+    this.dataSource.loadProducts(1, 10)
   }
 
   ngAfterViewInit() {
     this.invokeTableProp()
+    this.subscribeToPaginator()
+    console.log(this.dataSource.data)
+  }
+
+
+  private subscribeToPaginator() {
+    this.paginator.page.pipe(
+      tap(() => this.getProductsPagination())
+    ).subscribe()
+  }
+  
+  // end if subscription
+  
+  
+  private getProductsPagination() {
+    this.dataSource.loadProducts((this.paginator.pageIndex + 1), this.paginator.pageSize)
+    console.log(this.dataSource.data)
+  }
+
+  private invokeTableProp() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
   }
 
   public applyFilter(event: Event) {
@@ -50,11 +73,5 @@ export class AdminProductsTableComponent implements OnInit {
     if (filterValue) {
       this.dataTableService.loadFilterProducts(filterValue.trim().toLowerCase(), this.filterInput.nativeElement)
     }
-  }
-
-  private invokeTableProp() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 }

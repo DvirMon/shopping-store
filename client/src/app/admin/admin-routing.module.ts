@@ -21,7 +21,10 @@ const routes: Routes = [
           products: ProductsResolver,
         },
       },
-      { path: "products-table", component: AdminProductsTableComponent },
+      {
+        path: "products-table",
+        component: AdminProductsTableComponent,
+      },
     ]
   }
 

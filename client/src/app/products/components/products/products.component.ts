@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 import { ActivatedRoute, Data } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
+import { PaginationModel } from 'src/app/utilities/models/pagination-model';
+import { PaginationService } from 'src/app/utilities/services/pagination.service';
+
 import { store } from 'src/app/utilities/redux/store';
-import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -16,26 +20,19 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
   public categories: CategoryModel[] = []
   public collection: [ProductModel[]]
   public isAdmin: boolean = false
   public categoryId: string
   public alias: string
-  punl
 
 
-  public pagination = {
-    pageIndex: 0,
-    pageSize: 8,
-    pageSizeOptions: [8],
-    length: 0
-  }
 
   constructor(
-
     private productService: ProductsService,
-    private activeRoute: ActivatedRoute
+    private paginationService: PaginationService,
+    private activeRoute: ActivatedRoute,
+    public pagination: PaginationModel
   ) { }
 
   ngOnInit(): void {
@@ -44,10 +41,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.paginator.page.pipe(
-      tap(() => this.getProductsPagination())
-    ).subscribe()
-    this.getProductsPagination()
+    this.subscribeToPaginator()
   }
 
 
@@ -56,7 +50,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private subscribeToStore() {
     store.subscribe(
       () => {
-        this.collection = this.formatCollection()
+        // this.collection = this.formatCollection()
         this.isAdmin = store.getState().auth.isAdmin
       });
     this.isAdmin = store.getState().auth.isAdmin
@@ -79,33 +73,36 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.updateLength(data.products.docs)
-      this.collection = this.productService.formatProductsArray(data.products.docs)
-      this.pagination.length = data.products.totalDocs
+      this.collection = this.productService.formatProductsArray(data.products.products)
+      this.pagination = data.products.pagination
     });
   }
 
-  private getProductsPagination() {
-    this.productService.getProductsPagination(
-      this.categoryId,
-      (this.paginator.pageIndex + 1),
-      this.paginator.pageSize,
-      this.alias
-    ).subscribe(
-      (data) => this.collection = this.productService.formatProductsArray(data['docs']))
+  private subscribeToPaginator() {
+    this.paginator.page.pipe(
+      tap(() => this.getProductsPagination())
+    ).subscribe()
   }
-
 
   // end of subscription section
 
+  private getProductsPagination() {
+    this.productService.getProductsPagination(
+      (this.paginator.pageIndex + 1),
+      this.paginator.pageSize,
+      this.categoryId,
+      this.alias
+    ).subscribe(
+      (data) => {
+        this.collection = this.productService.formatProductsArray(data.products)
+        this.pagination = data.pagination
+      })
+  }
+
   private formatCollection(): [ProductModel[]] {
     const products = store.getState().products[this.alias];
-    this.updateLength(products)
     return this.productService.formatProductsArray(products);
   }
 
-  private updateLength(products) {
-    this.pagination.length = products.length
-  }
 
 }

@@ -18,6 +18,7 @@ import { ProductModel } from '../utilities/models/product-model';
 import { CartModel } from '../utilities/models/cart-model';
 import { UserModel } from '../utilities/models/user-model';
 import { CartItemModel } from '../utilities/models/cart-item-model';
+import { PaginationModel } from '../utilities/models/pagination-model';
 
 
 
@@ -51,6 +52,10 @@ import { CartItemModel } from '../utilities/models/cart-item-model';
     {
       provide: ProductModel,
       useValue: new ProductModel()
+    },
+    {
+      provide: PaginationModel,
+      useValue: new PaginationModel()
     }
 
 

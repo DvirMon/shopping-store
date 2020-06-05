@@ -34,7 +34,6 @@ export class AuthInterceptorService implements HttpInterceptor {
       })
     });
 
-
     return this.handAuthInterceptor(modified, next)
   }
 

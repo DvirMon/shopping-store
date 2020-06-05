@@ -9,7 +9,6 @@
 
   <mat-table matSort matSortActive="_id" matSortDirection="asc" matSortDisableClear>
 
-    <!-- check -->
     <ng-container matColumnDef="check">
       <mat-header-cell *matHeaderCellDef>Select All</mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -17,7 +16,6 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Id Column -->
     <ng-container matColumnDef="_id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -25,26 +23,21 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row">{{row.name ? row.name : 'not Data'}}</mat-cell>
     </ng-container>
 
-    <!-- Category Column -->
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row">{{row.category}}</mat-cell>
     </ng-container>
 
-
-    <!-- Price Column -->
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row">{{row.price | currency}}</mat-cell>
     </ng-container>
 
-    <!-- edit -->
     <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef>Edit</mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -58,7 +51,10 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
-  <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="pagination.pageIndex"
-    [pageSize]="pagination.pageSize" [pageSizeOptions]="pagination.pageSizeOptions">
+  <mat-paginator #paginator [length]="pagination.length" [pageIndex]="0"
+    [pageSize]="10" [pageSizeOptions]="[10]">
   </mat-paginator>
+
 </div>
+
+<!-- <app-my-table></app-my-table> -->

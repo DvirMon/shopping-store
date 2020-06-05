@@ -3,23 +3,13 @@ const router = express.Router();
 
 const Product = require("../models/product-model");
 const productLogic = require("../business-layer-logic/product-logic");
-const authorize = require("../middleware/handleAuth");
-const file = require("../middleware/handleFiles");
+const middleware = require("../middleware/middleware");
 
 const key = config.secret.access;
 
-router.get("/", authorize(true, key), async (request, response, next) => {
-  try {
-    const products = await productLogic.getAllProductsAsync();
-    response.json(products);
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get(
   "/categories",
-  authorize(false, key),
+  middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const categories = await productLogic.getAllCategories();
@@ -41,23 +31,45 @@ router.get("/total", async (request, response, next) => {
 });
 
 router.get(
-  "/category/:categoryId/pagination/:page/:limit",
+  "/pagination/:page/:limit",
+  // middleware.authorize(true, key),
+  middleware.pagination,
   async (request, response, next) => {
     try {
-      const options = {
-        page: request.params.page,
-        limit: request.params.limit,
-        collation: {
-          locale: "en",
-        },
-      };
-
+      console.log(1);
       const data = await productLogic.getProductsPaginationAsync(
-        request.params.categoryId,
-        options
+        {},
+        request.options
       );
 
-      response.json(data);
+      const products = data.docs;
+      const pagination = { ...data };
+      delete pagination.docs;
+
+      response.json({ products, pagination });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.post(
+  "/pagination/:page/:limit",
+  middleware.pagination,
+  async (request, response, next) => {
+    try {
+      const categoryId = request.body.categoryId;
+
+      const data = await productLogic.getProductsPaginationAsync(
+        categoryId ? { categoryId } : {},
+        request.options
+      );
+
+      const products = data.docs;
+      const pagination = { ...data };
+      delete pagination.docs;
+
+      response.json({ products, pagination });
     } catch (err) {
       next(err);
     }
@@ -66,7 +78,7 @@ router.get(
 
 router.get(
   "/category/:categoryId",
-  authorize(false, key),
+  middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.getAllProductsByCategoryAsync(
@@ -87,7 +99,7 @@ router.get(
 
 router.get(
   "/search/:query",
-  authorize(false, key),
+  middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.searchProductsAsync(
@@ -100,20 +112,24 @@ router.get(
   }
 );
 
-router.get("/:_id", authorize(false, key), async (request, response, next) => {
-  try {
-    const product = await productLogic.getProductAsync(request.params._id);
-    response.json(product);
-  } catch (err) {
-    next(err);
+router.get(
+  "/:_id",
+  middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const product = await productLogic.getProductAsync(request.params._id);
+      response.json(product);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // add product only admin
 router.post(
   "/",
-  file.upload,
-  authorize(true, key),
+  middleware.authorize(true, key),
+  middleware.file.upload,
   async (request, response, next) => {
     try {
       const product = request.body;
@@ -132,8 +148,8 @@ router.post(
 // update product only admin
 router.put(
   "/:_id",
-  file.upload,
-  authorize(true, key),
+  middleware.authorize(true, key),
+  middleware.file.upload,
   async (request, response, next) => {
     try {
       const product = request.body;

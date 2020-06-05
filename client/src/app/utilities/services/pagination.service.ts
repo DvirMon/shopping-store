@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { DataTableService } from './data-table.service';
 import { ProductModel } from '../models/product-model';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { tap } from 'rxjs/operators';
+import { ProductsService } from './products.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +14,7 @@ export class PaginationService {
 
 
   constructor(
+    private productService: ProductsService
   ) {
   }
 

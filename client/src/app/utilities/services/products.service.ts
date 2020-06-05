@@ -13,6 +13,7 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { config } from '../../../main-config'
 import { store } from '../redux/store';
+import { PaginationDataModel } from '../models/pagination-model';
 
 export interface UpdateData {
   product: ProductModel,
@@ -33,6 +34,7 @@ export class ProductsService {
 
   public baseUrl: string = `http://localhost:${config.port}/api/products`
   public handleUpdate = new BehaviorSubject<UpdateData | null>(null)
+  public productsSubject = new BehaviorSubject<ProductModel[]>([]);
   public slice: number = 4;
 
   constructor(
@@ -42,53 +44,25 @@ export class ProductsService {
 
   ) { }
 
-  // GET products categories : http://localhost:3000/api/products
-  public getPageProducts(): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(this.baseUrl).pipe(
-      map(products => {
-        for (const key in products) {
-          products[key]._id = (parseInt(key) + 1).toString()
-          this.formService.handleStore(ActionType.GetAllProducts, products)
-        }
-        return products
-      })
-    )
-  }
+  // POST products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
 
-  // GET products categories : http://localhost:3000/api/products/categories
-  public getCategories(): Observable<CategoryModel[]> {
-    return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
-      tap((response: CategoryModel[]) => {
-        this.formService.handleStore(ActionType.GetCategories, response)
-      })
-    )
-  }
-
-  // GET products by category : http://localhost:3000/api/products/category:categoryId
-  public getProductsByCategory(categoryId: string, alias: string): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(this.baseUrl + `/category/${categoryId}`).pipe(
-      tap(products => {
-        this.handleProductsStoreState(products, alias);
-        return products;
-      })
-    )
-  }
-
-  // GET products with pagination :  http://localhost:3000/api/products/:categoryId/pagination/:page/:limit",
-
-  public getProductsPagination(categoryId: string, page: number, limit: number, alias: string) {
+  public getProductsPagination(page: number, limit: number, categoryId?: string, alias?: string): Observable<PaginationDataModel> {
 
     const pagination: string = `pagination/${page}/${limit}`
 
-    return this.http.get(this.baseUrl + `/category/${categoryId}/${pagination}`).pipe(
-      tap(data => {
-        // this.handleProductsStoreState(products, alias);
+    return this.http.post<PaginationDataModel>(this.baseUrl + `/${pagination}`, { categoryId }).pipe(
+      map(data => {
+        data.pagination.pageIndex = data.pagination.pageIndex - 1
+
+        if (!categoryId) {
+          this.formatProductId(data.products)
+        }
+
         return data
       })
     )
-
-
   }
+
 
   // Get product : http://localhost:3000/api/products/:_id
   public getProductNameAndImage(_id): Observable<ProductModel> {
@@ -98,6 +72,15 @@ export class ProductsService {
   // GET products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/search/${query}`)
+  }
+
+  // GET products categories : http://localhost:3000/api/products/categories
+  public getCategories(): Observable<CategoryModel[]> {
+    return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
+      tap((response: CategoryModel[]) => {
+        this.formService.handleStore(ActionType.GetCategories, response)
+      })
+    )
   }
 
   // admin actions
@@ -125,6 +108,12 @@ export class ProductsService {
       i = i + this.slice
     }
     return collection
+  }
+
+  private formatProductId(products) {
+    for (const key in products) {
+      products[key]._id = (parseInt(key) + 1).toString()
+    }
   }
 
   public handleProductsStoreState(products: ProductModel[], alias: string): void {

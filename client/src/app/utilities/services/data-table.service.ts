@@ -2,14 +2,15 @@ import { Injectable, Inject } from '@angular/core';
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge, BehaviorSubject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, of as observableOf, merge, BehaviorSubject, of } from 'rxjs';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { AdminService } from 'src/app/utilities/services/admin.service';
 import { ProductsService } from './products.service';
 import { PaginationService } from './pagination.service';
 import { ProductsModule } from 'src/app/products/products.module';
 import { store } from '../redux/store';
+import { PaginationDataModel } from '../models/pagination-model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ import { store } from '../redux/store';
 
 export class DataTableService extends DataSource<ProductModel>{
 
-  private productsSubject = new BehaviorSubject<ProductModel[]>([]);
+  public productsSubject = new BehaviorSubject<ProductModel[]>([]);
 
   public data: ProductModel[] = [];
   public sort: MatSort
@@ -45,18 +46,24 @@ export class DataTableService extends DataSource<ProductModel>{
   }
 
   public disconnect() {
-    this.productsSubject.complete()
-
+    // this.productsSubject.complete()
   }
 
-  public loadProducts() {
+  public loadProducts(page: number, limit: number) {
 
-    this.productsService.getPageProducts().subscribe(
-      (products) => {
-        this.data = products
-        this.productsSubject.next(products)
-      }
-    )
+    this.productsService.getProductsPagination(page, limit)
+      .subscribe(
+        (data) => {
+          this.data = data.products,
+            this.paginator.pageSizeOptions = [10],
+            this.paginator.pageSize = limit,
+            this.paginator.pageIndex = data.pagination.pageIndex,
+            this.paginator.length = data.pagination.length,
+            this.productsSubject.next(data.products)
+        }
+      ),
+      (err) => console.log(err),
+      () => this.productsSubject.next(this.data)
   }
 
   public loadFilterProducts(filterValue: string, input: HTMLInputElement) {

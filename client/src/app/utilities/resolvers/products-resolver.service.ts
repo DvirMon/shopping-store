@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ProductsService } from '../services/products.service';
-import { CategoryModel } from '../models/category-model';
 import { store } from '../redux/store';
 import { ProductModel } from '../models/product-model';
+import { PaginationDataModel } from '../models/pagination-model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsResolver implements Resolve<Observable<any> | Promise<any> | any>{
+export class ProductsResolver implements Resolve<Observable<PaginationDataModel> | Promise<PaginationDataModel> | PaginationDataModel>{
 
   constructor(
     private productService: ProductsService
@@ -18,7 +18,7 @@ export class ProductsResolver implements Resolve<Observable<any> | Promise<any> 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<any> | Promise<any> | any {
+  ): Observable<PaginationDataModel> | Promise<PaginationDataModel> | PaginationDataModel {
 
     const categoryId = route.params.categoryId
     const alias = route.params.alias
@@ -30,6 +30,6 @@ export class ProductsResolver implements Resolve<Observable<any> | Promise<any> 
     //   return store.getState().products[alias]
     // }
 
-    return this.productService.getProductsPagination(categoryId, 1, 8, alias)
+    return this.productService.getProductsPagination(1, 8, categoryId, alias)
   }
 }
