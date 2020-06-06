@@ -32,8 +32,11 @@
       </mat-step>
       <mat-step [stepControl]="personalDetails">
         <ng-template matStepLabel>Personal Details</ng-template>
-        <mat-grid-list [formGroup]="personalDetails" cols="1" rowHeight="100px">
-          <mat-grid-tile>
+        <mat-grid-list [formGroup]="personalDetails" cols="2" rowHeight="100px">
+          <mat-grid-tile colspan="2">
+            <app-street></app-street>
+          </mat-grid-tile>
+          <mat-grid-tile >
             <mat-form-field field appearance="fill">
               <mat-label>Select City:</mat-label>
               <mat-select formControlName="city">
@@ -42,18 +45,17 @@
               <mat-error>Please Choose an option</mat-error>
             </mat-form-field>
           </mat-grid-tile>
-          <mat-grid-tile>
-            <app-street></app-street>
-            <!-- <app-input [control]="personalDetails.controls['street']" placeHolder="Street" type="text"
-              hint="your street" controlName="street" required>
-            </app-input> -->
+          <mat-grid-tile >
+            <app-input [control]="personalDetails.controls['street']" placeHolder="Street" type="text"
+              hint="your street" required>
+            </app-input>
           </mat-grid-tile>
-          <mat-grid-tile>
+          <mat-grid-tile colspan="2">
             <app-input [control]="personalDetails.controls['firstName']" placeHolder="First name" type="text"
               hint="your name" controlName="firstName">
             </app-input>
           </mat-grid-tile>
-          <mat-grid-tile>
+          <mat-grid-tile colspan="2">
             <app-input [control]="personalDetails.controls['lastName']" placeHolder="Last Name" type="text"
               hint="your last name" controlName="lastName">
             </app-input>
@@ -82,13 +84,13 @@
           <mat-grid-tile>{{personal.city.value}}</mat-grid-tile>
           <mat-grid-tile>Street :</mat-grid-tile>
           <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
-          <mat-grid-tile  colspan="2"></mat-grid-tile>
+          <mat-grid-tile colspan="2"></mat-grid-tile>
           <mat-grid-tile colspan="2">
             <button [disabled]=registerForm.invalid (click)="onSubmit()" type="button" mat-raised-button>Create new
               Account
             </button>
           </mat-grid-tile>
-          <mat-grid-tile  colspan="2"></mat-grid-tile>
+          <mat-grid-tile colspan="2"></mat-grid-tile>
         </mat-grid-list>
       </mat-step>
     </mat-horizontal-stepper>

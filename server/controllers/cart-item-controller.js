@@ -4,10 +4,10 @@ const router = express.Router();
 const CartItem = require("../models/cartItem-model");
 const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 
-const authorize = require("../middleware/handleAuth");
+const middleware = require("../middleware/middleware");
 const key = config.secret.access;
 
-router.post("/", authorize(0, key), async (request, response, next) => {
+router.post("/",middleware.authorize(false, key), async (request, response, next) => {
   try {
     // validate if cart exist? for postmen?
 
@@ -39,7 +39,7 @@ router.get("/:cartId", async (request, response, next) => {
 });
 
 // update cart item
-router.put("/:_id", authorize(0, key), async (request, response, next) => {
+router.put("/:_id",middleware.authorize(false, key), async (request, response, next) => {
   try {
     const cartItem = request.body;
     cartItem._id = request.params._id;
@@ -56,7 +56,7 @@ router.put("/:_id", authorize(0, key), async (request, response, next) => {
 
 
 // delete cart item
-router.delete("/:_id", authorize(0, key), async (request, response) => {
+router.delete("/:_id",middleware.authorize(false, key), async (request, response) => {
   await cartItemLogic.deleteCartItemAsync(request.params._id)
   response.sendStatus(204);
 });
