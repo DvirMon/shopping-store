@@ -1,6 +1,6 @@
 <mat-grid-list cols="4" *ngIf="product" rowHeight="5vh">
   <mat-grid-tile rowspan="2">
-    <app-product-thumbnail [product]="product" [imageHeight]="50" [imageWidth]="50"></app-product-thumbnail>
+    <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="50" [imageWidth]="50"></app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile rowspan="2">  
     <span [innerHTML]="product.name | highLight: searchTerm"></span>

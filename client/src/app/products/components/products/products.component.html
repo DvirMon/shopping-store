@@ -2,6 +2,7 @@
   <div class="product-container">
     <mat-grid-list cols="4" rowHeight="32vh" *ngFor="let products of collection">
       <mat-divider></mat-divider>
+
       <mat-grid-tile *ngFor="let product of products">
         <app-products-item [product]="product"></app-products-item>
       </mat-grid-tile>

@@ -17,6 +17,7 @@ export class CartListItemComponent implements OnInit {
   @Input() public cartItem: CartItemModel = new CartItemModel()
   @Input() public orderMode: boolean = false
   @Input() public searchTerm: string
+  public alias: string
 
   public rowSpan: number;
 
@@ -34,8 +35,11 @@ export class CartListItemComponent implements OnInit {
     this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
 
     this.productService.getProductNameAndImage(this.cartItem.productId).subscribe(
-      (response) => {
-        this.product = response
+      (product) => {
+        
+        this.product = product
+        this.alias = this.productService.getCategoryAlias(this.product)
+        
         if (!this.orderMode) {
 
           this.receiptService.setReceiptItem(this.product, this.cartItem)
@@ -57,5 +61,6 @@ export class CartListItemComponent implements OnInit {
 
     this.cartService.deleteCartItem(this.cartItem._id)
   }
+
 
 }

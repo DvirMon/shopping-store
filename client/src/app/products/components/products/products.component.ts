@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private subscribeToStore() {
     store.subscribe(
       () => {
-        this.collection = store.getState().products[this.alias].products
+        this.collection = this.getPageProducts()
         this.isAdmin = store.getState().auth.isAdmin
         this.paginationData = store.getState().products[this.alias]
       });
@@ -86,8 +86,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.paginator.page.pipe(
       tap(() => {
         if (this.isPageExist()) {
-          const products = this.paginationService.getPagedData([...this.paginationData.products], this.paginator)
-          this.collection = this.formatCollection(products)
+          this.collection = this.getPageProducts()
           this.pagination = this.paginationData.pagination
         } else {
           this.getProductsPagination()
@@ -99,6 +98,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   // end of subscription section
 
+  // request section
   private getProductsPagination() {
     this.productService.getProductsPagination(
       (this.paginator.pageIndex + 1),
@@ -111,6 +111,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.pagination = data.pagination
       })
   }
+  // end of request section
+
 
   private formatCollection(products): [ProductModel[]] {
     return this.productService.formatProductsArray(products);
@@ -119,9 +121,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private isPageExist(): boolean {
     const page = this.paginationData.pages.find(page => page === this.paginator.pageIndex)
     if (page === 0) {
-      return !page 
+      return !page
     }
     return !!page
+  }
+
+  private getPageProducts(): [ProductModel[]] {
+    return this.paginationService.getPagedData([...this.paginationData.products], this.paginator)
   }
 
 

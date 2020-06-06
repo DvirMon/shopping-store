@@ -15,9 +15,6 @@
         <button *ngIf="isLogin" (click)="onHome()" mat-menu-item>
           <span>Home</span>
         </button>
-        <button *ngIf="isLogin && isAdmin" (click)="onProducts()" mat-menu-item>
-          <span>Products Data</span>
-        </button>
         <button *ngIf="isLogin" (click)="onLogOut()" mat-menu-item>
           <span>Logout</span>
         </button>

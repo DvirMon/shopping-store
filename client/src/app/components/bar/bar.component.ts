@@ -61,8 +61,4 @@ export class BarComponent implements OnInit {
     this.authService.handleRoleRoute(this.user)
   }
 
-  public onProducts() { 
-    this.router.navigateByUrl("/admin/products-table")
-  }
-
 }
