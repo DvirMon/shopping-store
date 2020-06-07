@@ -27,9 +27,9 @@ export class ProductsResolver implements Resolve<Observable<PaginationDataModel>
     const pagination: PaginationDataModel = { ...store.getState().products[alias] }
 
     if (pagination.products.length === 0) {
-      return this.productService.getProductsPagination(1, 8, categoryId, alias)
+      return this.productService.getProductsPagination(1, 6, categoryId, alias)
     } else {
-      pagination.products = pagination.products.slice(0, 8)
+      pagination.products = pagination.products.slice(0, 6)
       return pagination
     }
   }

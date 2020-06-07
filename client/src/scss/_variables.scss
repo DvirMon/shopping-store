@@ -4,6 +4,8 @@ $colors: (
   info: #5bc0de,
   text: #ffffff,
   error: #721c24,
+  warning: #f8d7da,
+  forbidden : #f3727d
 );
 
 @mixin formAuth {

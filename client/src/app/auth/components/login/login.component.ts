@@ -22,13 +22,14 @@ export class LoginComponent implements OnInit {
 
   public isLogin: boolean
   public isCartActive: boolean
+  public captcha: boolean = false;
   public serverError: string
-  public user: UserModel = new UserModel()
 
   constructor(
     private formService: FormService,
     private authService: AuthService,
     private productsService: ProductsService,
+    public user: UserModel,
     private router: Router
   ) { }
 
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
 
   public onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
-      (user : UserModel) => {
+      (user: UserModel) => {
         return this.authService.handleRoleRoute(user)
       },
       err => {
@@ -81,5 +82,9 @@ export class LoginComponent implements OnInit {
   public onRegister() {
     this.router.navigateByUrl(`/register`)
 
+  }
+
+  public handleCaptcha(captcha) {
+    this.captcha = captcha
   }
 }

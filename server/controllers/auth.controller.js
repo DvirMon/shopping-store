@@ -8,6 +8,7 @@ const User = require("../models/user-model");
 const authLogic = require("../business-layer-logic/auth-logic");
 const validation = require("../services/validation.service");
 const jwt = require("../services/auth.service");
+const axios = require("axios");
 const authorize = require("../middleware/handleAuth");
 
 router.post(
@@ -28,7 +29,7 @@ router.post(
       // validate password
       const validPassword = await bcrypt.compare(
         request.body.password,
-        user.password 
+        user.password
       );
 
       if (!validPassword) {
@@ -81,7 +82,7 @@ router.post("/refresh-token", async (request, response, next) => {
 
     // get refreshToken
     const token = await jwt.setRefreshToken(user);
-    
+
     response.json({ user, token });
   } catch (err) {
     next(err);
@@ -144,5 +145,24 @@ router.post("/unique-email", async (request, response, next) => {
   }
 });
 
+// captcha
+router.post("/captcha", async (request, response, next) => {
+  if (!request.body.captcha) {
+    next({ status: 400 });
+    return;
+  }
+
+  const secret = "6LeK_u4UAAAAAMlhglbKOtdpmGPrXoQ7Y9LyIYV_";
+  const verifyCaptcha = `secret=${secret}&response=${request.body.captcha}`;
+
+  try {
+    const data = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify?${verifyCaptcha}`
+    );
+    response.json(data.data.success);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
-  

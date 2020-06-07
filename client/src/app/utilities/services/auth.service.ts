@@ -85,6 +85,11 @@ export class AuthService {
       }))
   }
 
+  // captcha validation - http://localhost:4000/api/auth/captcha
+  public authReCaptcha(captcha: string) : Observable<boolean> {
+    return this.http.post<boolean>(this.url + "/captcha", { captcha })
+  }
+
 
   // end of request section 
 
@@ -116,15 +121,15 @@ export class AuthService {
     return user.isAdmin ?
       this.router.navigateByUrl("admin" + config.baseProductUrl)
       : this.router.navigateByUrl(`home/${user._id}`)
+  }
+
+  public autoLogin(): void {
+    const token = store.getState().auth.refreshToken
+    const user = store.getState().auth.user
+    if (!token) {
+      this.logout()
+      return
     }
-    
-    public autoLogin(): void {
-      const token = store.getState().auth.refreshToken
-      const user = store.getState().auth.user
-      if (!token) {
-        this.logout()
-        return
-      }
     this.handleRoleRoute(user)
   }
 
@@ -132,6 +137,8 @@ export class AuthService {
     this.formService.handleStore(ActionType.Logout)
     return this.router.navigateByUrl(`/login`)
   }
+
+
 
 
   // token logic
