@@ -22,7 +22,7 @@ export class FormService {
     private http: HttpClient
   ) { }
 
-
+  //  register for login form
   public loginForm(): FormGroup {
     return this.fb.group({
       email: ['',
@@ -32,6 +32,7 @@ export class FormService {
     })
   }
 
+  // register for register form
   public registerForm(): FormGroup {
     return this.fb.group({
       authDetails: this.fb.group({
@@ -77,6 +78,7 @@ export class FormService {
     })
   }
 
+  // register for order form
   public orderForm(): FormGroup {
     return this.fb.group({
       address: this.fb.group({
@@ -88,11 +90,12 @@ export class FormService {
       }),
       shippingDate: ['', [Validators.required]],
       creditCard: ['',
-        [Validators.required, Validators.pattern(this.validationService.regex.creditCard)]
+      [Validators.required, Validators.pattern(this.validationService.regex.creditCard)]
       ],
     })
   }
-
+  
+  // register for product form
   public productForm(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(35)]],
@@ -101,8 +104,9 @@ export class FormService {
       imagePath: ['', [this.validationService.requiredFileType()]],
     })
   }
-
-
+  
+  
+  // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
 
     if (control.hasError('required')) {

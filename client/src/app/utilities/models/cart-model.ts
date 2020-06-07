@@ -1,3 +1,5 @@
+import { CartItemModel } from './cart-item-model'
+
 export class CartModel {
 
   public constructor(
@@ -6,4 +8,9 @@ export class CartModel {
     public isActive?: boolean,
     public createDate?: Date
   ) { }
+}
+
+export class CurrentCartModel {
+  public price?: number
+  public cartItems?: CartItemModel[]
 }

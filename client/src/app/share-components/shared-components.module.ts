@@ -22,7 +22,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
 import { StreetComponent } from './components/street/street.component';
-import { MyTableComponent } from './components/my-table/my-table.component';
+import { AddressComponent } from './components/address/address.component';
 
 
 
@@ -35,10 +35,10 @@ import { MyTableComponent } from './components/my-table/my-table.component';
     SearchListItemComponent,
     ProductThumbnailComponent,
     StreetComponent,
-    MyTableComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective,
+    AddressComponent,
     
   ],
   imports: [
@@ -53,7 +53,6 @@ import { MyTableComponent } from './components/my-table/my-table.component';
     SearchListItemComponent,
     ProductThumbnailComponent,
     StreetComponent,
-    MyTableComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective

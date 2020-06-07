@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from './form.service';
-import { CartModel } from '../models/cart-model';
+import { CartModel, CurrentCartModel } from '../models/cart-model';
 import { CartItemModel } from '../models/cart-item-model';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { ActionType } from '../redux/action-type';
+import { Observable } from 'rxjs';
 
 
 export interface CartActionInfo {
@@ -20,7 +21,7 @@ export class CartService {
 
 
   public cartUrl: string = "http://localhost:3000/api/carts";
-  public itemCartUrl: string = "http://localhost:3000/api/cart-item"
+  public cartItemUrl: string = "http://localhost:3000/api/cart-item"
 
   constructor(
     private http: HttpClient,
@@ -28,6 +29,13 @@ export class CartService {
   ) { }
 
   // request section
+
+  // GET - get latest cart
+  public getLatestCart(userId): Observable<CartModel> {
+    return this.http.get<CartModel>(this.cartUrl + `/latest/${userId}`)
+  }
+
+  // POST - create new cart : http://localhost:3000/api/carts"
   public getNewCart(cartItem: CartItemModel) {
     const userId = store.getState().auth.user._id
     return this.http.post<CartModel>(this.cartUrl, { userId }).pipe(
@@ -38,20 +46,32 @@ export class CartService {
       }))
   }
 
-  public addCartItem(cartItem: CartItemModel) {
-    return this.http.post(this.itemCartUrl, cartItem)
-  }
 
+  // PATCH - change cart status : http://localhost:3000/api/carts/:cartId"
   public disActiveCart(cartId: string) {
     return this.http.patch(this.cartUrl + `/${cartId}`, { isActive: false })
   }
 
-  public updateCartItem(cartItem: CartItemModel) {
-    return this.http.put(this.itemCartUrl + `/${cartItem._id}`, cartItem)
+  // GET - get latest cart items
+  public getLatestCartItems(cart): Observable<CurrentCartModel> {
+    return this.http.get<CurrentCartModel>(this.cartItemUrl + `/${cart._id}`)
   }
 
+  // ------------------------------------------------//
+
+  // POST - add cart item : http://localhost:3000/api/cart-item"
+  public addCartItem(cartItem: CartItemModel) {
+    return this.http.post(this.cartItemUrl, cartItem)
+  }
+
+  // PUT - update cart item : http://localhost:3000/api/cart-item/:_id"
+  public updateCartItem(cartItem: CartItemModel) {
+    return this.http.put(this.cartItemUrl + `/${cartItem._id}`, cartItem)
+  }
+
+  // DELETE - delete cart item : http://localhost:3000/api/cart-item/:_id"
   public deleteCartItem(_id) {
-    this.http.delete(this.itemCartUrl + `/${_id}`).subscribe(
+    this.http.delete(this.cartItemUrl + `/${_id}`).subscribe(
       () => {
         this.formService.handleStore(ActionType.DeleteCartItem, _id)
         this.formService.handleStore(ActionType.DeleteReceiptItem, _id)
@@ -60,6 +80,7 @@ export class CartService {
 
   }
 
+  // DELETE -delete cart and cart item : http://localhost:3000/api/carts/:_id"
   public deleteCartAndCartItems(_id) {
     this.http.delete(this.cartUrl + `/${_id}`).subscribe(
       () => {

@@ -44,6 +44,12 @@ export class ProductsService {
 
   ) { }
 
+  // GET total products in store
+
+  public getTotalNumberOfProducts(): Observable<number> {
+    return this.http.get<number>(this.baseUrl + "/total")
+  }
+
   // POST products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
 
   public getProductsPagination(page: number, limit: number, categoryId?: string, alias?: string): Observable<PaginationDataModel> {
@@ -128,7 +134,7 @@ export class ProductsService {
     if (storeProducts.length === 0) {
       this.formService.handleStore(ActionType.SetProductsPaginationData, { products, pagination, alias })
 
-    } else if (storeProducts.length < pagination.length ) {
+    } else if (storeProducts.length < pagination.length) {
       this.formService.handleStore(ActionType.AddProductsPaginationData, { products, pagination, alias })
     }
   }
