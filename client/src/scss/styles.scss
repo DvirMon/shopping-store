@@ -47,25 +47,31 @@ mat-grid-tile {
 .dialog-product .mat-dialog-container {
   color: black;
   padding: 0;
-  overflow: hidden;
   box-shadow: initial;
+  overflow: hidden;
 }
 
 .dialog-order .mat-dialog-container {
   color: white;
   text-align: center;
-  overflow: hidden;
   background-color: #47aa3e;
   border-radius: 5px;
+  overflow: hidden;
 }
 .dialog-auth .mat-dialog-container {
   color:black;
   border: 2px solid color(info);
   text-align: center;
-  overflow: hidden;
   background-color: color(text);
   border-radius: 5px;
+  overflow: hidden;
 }
+
+.mat-dialog-actions {
+  text-align: right;
+  display: inherit;
+}
+
 
 ::-webkit-scrollbar {
   width: 10px;

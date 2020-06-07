@@ -1,3 +1,5 @@
+@import "~src/scss/variables";
+
 div {
   height: 91vh;
   background-image: url("/assets/images/shopPicture.jpg");
@@ -5,14 +7,8 @@ div {
   background-repeat: no-repeat;
 }
 
-.mat-form-field  {
-  min-width: 300px;
-}
-
 mat-horizontal-stepper {
-  width: 80%;
-  margin: auto;
-  background-color: rgba(255, 255, 255, 0.9);
+  @include formAuth();
 }
 
 form {
@@ -23,4 +19,3 @@ mat-grid-list.details {
   width: 50%;
   margin: auto;
 }
-

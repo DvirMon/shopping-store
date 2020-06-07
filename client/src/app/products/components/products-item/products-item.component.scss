@@ -8,12 +8,11 @@ mat-grid-list {
   box-sizing: border-box;
   cursor: pointer;
   margin-top: 2px;
-}
 
-mat-grid-list:hover {
-  border: red 1px solid;
+  &:hover {
+    border: red 1px solid;
+  }
 }
-
 
 .price {
   font-size: 20px;

@@ -59,7 +59,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.paginationData = store.getState().products[this.alias]
       });
     this.isAdmin = store.getState().auth.isAdmin
-    this.paginationData = store.getState().products[this.alias]
+    // this.paginationData = store.getState().products[this.alias]
   }
 
   private subscribeToRoute(): void {
@@ -80,8 +80,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.collection = this.productService.formatProductsArray(data.products.products, this.cols)
-      this.pagination = data.products.pagination
+      this.collection = this.productService.formatProductsArray(data.pagination?.products, this.cols)
+      this.pagination = data.pagination.pagination
     });
   }
 
@@ -123,6 +123,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
   // end of request section
 
+  // logic section
 
   private isPageExist(): boolean {
     const page = this.paginationData.pages.find(page => page === this.paginator.pageIndex)

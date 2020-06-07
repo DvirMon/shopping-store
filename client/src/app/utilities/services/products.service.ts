@@ -112,7 +112,6 @@ export class ProductsService {
   // logic section 
 
   public formatProductsArray(response: ProductModel[], cols: number): [ProductModel[]] {
-    console.log(cols)
     const collection: any = []
     const temp = [...response]
     for (let i = 0; i < response.length;) {

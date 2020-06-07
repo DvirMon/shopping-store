@@ -26,7 +26,7 @@
     </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-grid-list *ngIf="user" [cols]="cols" rowHeight="10vh">
+<mat-grid-list *ngIf="user" cols="1" rowHeight="10vh">
   <mat-grid-tile>
     <button [disabled]=controlGroup.invalid mat-button matStepperNext type="button">Next</button>
   </mat-grid-tile>

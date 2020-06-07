@@ -1,14 +1,14 @@
 mat-toolbar {
   justify-content: center;
   height: 75px;
-  
+
   .search-form {
     width: 100%;
     font-size: 16px;
     text-align: center;
     padding-top: 15px;
   }
-  
+
   .mat-form-field {
     font-size: 14px;
     width: 95%;
@@ -23,12 +23,13 @@ mat-option {
   background-color: white !important;
   height: inherit;
   box-sizing: border-box;
+  
+  &:hover {
+    border: 1px solid red;
+    opacity: 0.8;
+  }
 }
 
-mat-option:hover {
-  border: 1px solid red;
-  opacity: 0.8;
-}
 mat-divider {
   margin-left: 10px;
   margin-right: 10px;

@@ -4,13 +4,11 @@ import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 import { CartService } from 'src/app/utilities/services/cart.service';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
-import { ReceiptItemData } from 'src/app/utilities/models/receipt-model';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 
 @Component({
   selector: 'app-cart-list-item',
   templateUrl: './cart-list-item.component.html',
-  styleUrls: ['./cart-list-item.component.scss']
 })
 export class CartListItemComponent implements OnInit {
 

@@ -14,7 +14,7 @@ const routes: Routes = [
     canActivate: [ProductsGuard],
     resolve: {
       categories: CategoriesResolver,
-      products: ProductsResolver,
+      pagination: ProductsResolver,
     }
   },
 ];

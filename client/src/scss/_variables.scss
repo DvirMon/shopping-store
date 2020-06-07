@@ -2,11 +2,18 @@
 
 $colors: (
   info: #5bc0de,
-  text : #ffffff
+  text: #ffffff,
+  error: #721c24,
 );
+
+@mixin formAuth {
+  width: 80%;
+  margin: auto;
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
+}
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
-};
- 
+}
+
 // $info-color: #5bc0de;
