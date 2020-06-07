@@ -33,10 +33,10 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
+    AddressComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective,
-    AddressComponent,
     
   ],
   imports: [
@@ -53,7 +53,7 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     AddressComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
-    SidenavAdminDirective
+    SidenavAdminDirective,
   ],
   providers: [
     {

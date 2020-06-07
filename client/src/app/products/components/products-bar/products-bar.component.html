@@ -1,6 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav appSidenavAdminDirective #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="open" position="end">
+  <mat-sidenav appSidenavAdminDirective #drawer class="sidenav"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="true" position="end">
     <div *ngIf="isAdmin; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <app-products-form></app-products-form>
@@ -10,9 +11,9 @@
     </ng-template>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-products-nav [drawer]="drawer"></app-products-nav>
+    <app-products-nav [drawer]="drawer" [isAdmin]="isAdmin"></app-products-nav>
     <mat-divider></mat-divider>
     <app-search></app-search>
     <ng-content></ng-content>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> 

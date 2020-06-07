@@ -24,9 +24,7 @@ export class HighLightPipe implements PipeTransform {
     if (!match) {
       return value;
     }
-    const highLightText = `<${tag}>` + match[0] + `</${tag}>
-    `
-    const replacedValue = value.replace(regex, highLightText)
+    const replacedValue = value.replace(regex, `<${tag}>` + match[0] + `</${tag}>`)
     return this.sanitizer.bypassSecurityTrustHtml(replacedValue)
   }
 }

@@ -1,6 +1,6 @@
 <app-products-bar>
   <div class="product-container">
-    <mat-grid-list cols="4" rowHeight="32vh" *ngFor="let products of collection">
+    <mat-grid-list [cols]="cols" rowHeight="32vh" *ngFor="let products of collection">
       <mat-divider></mat-divider>
 
       <mat-grid-tile *ngFor="let product of products">

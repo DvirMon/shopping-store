@@ -35,6 +35,7 @@ export class ProductsService {
   public baseUrl: string = `http://localhost:${config.port}/api/products`
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
+  public productsCols = new Subject<boolean>();
   public slice: number = 4;
 
   constructor(
@@ -110,13 +111,14 @@ export class ProductsService {
 
   // logic section 
 
-  public formatProductsArray(response: ProductModel[]): [ProductModel[]] {
+  public formatProductsArray(response: ProductModel[], cols: number): [ProductModel[]] {
+    console.log(cols)
     const collection: any = []
     const temp = [...response]
     for (let i = 0; i < response.length;) {
-      const row: ProductModel[] = temp.splice(0, this.slice)
+      const row: ProductModel[] = temp.splice(0, cols)
       collection.push(row)
-      i = i + this.slice
+      i = i + cols
     }
     return collection
   }

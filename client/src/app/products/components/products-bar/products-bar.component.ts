@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
@@ -12,8 +11,7 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class ProductsBarComponent  {
 
-  public isAdmin : boolean = store.getState().auth.isAdmin
-  public open: boolean = true 
+  public isAdmin: boolean = store.getState().auth.isAdmin
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -24,5 +22,6 @@ export class ProductsBarComponent  {
   constructor(
     private breakpointObserver: BreakpointObserver,
   ) { }
+
 
 }

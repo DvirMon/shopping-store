@@ -15,10 +15,11 @@ export class PaginationService {
   ) {
   }
 
-  public getPagedData(data: ProductModel[], paginator: MatPaginator) {
+  public getPagedData(data: ProductModel[], paginator: MatPaginator, cols: number) {
     const startIndex = paginator.pageIndex * paginator.pageSize;
-    return this.productService.formatProductsArray(data.splice(startIndex, paginator.pageSize))
-  } 
+    const products = data.splice(startIndex, paginator.pageSize)
+    return this.productService.formatProductsArray(products, cols)
+  }
 
 
   // public getSortedData(data: ProductModel[], sort: MatSort): ProductModel[] {

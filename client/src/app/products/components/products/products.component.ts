@@ -22,6 +22,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   public categories: CategoryModel[] = []
   public collection: [ProductModel[]]
+
+  public cols: number = 3;
   public isAdmin: boolean = false
   public categoryId: string
   public alias: string
@@ -39,6 +41,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.subscribeToRoute()
     this.subscribeToStore()
+    this.subscribeToSubject()
   }
 
   ngAfterViewInit() {
@@ -77,7 +80,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.collection = this.productService.formatProductsArray(data.products.products)
+      this.collection = this.productService.formatProductsArray(data.products.products, this.cols)
       this.pagination = data.products.pagination
     });
   }
@@ -96,6 +99,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       )).subscribe()
   }
 
+  private subscribeToSubject() {
+    this.productService.productsCols.subscribe(
+      (value) => this.setGrid(value)
+
+    )
+  }
+
   // end of subscription section
 
   // request section
@@ -107,16 +117,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.alias
     ).subscribe(
       (data) => {
-        this.collection = this.productService.formatProductsArray(data.products)
+        this.collection = this.productService.formatProductsArray(data.products, this.cols)
         this.pagination = data.pagination
       })
   }
   // end of request section
 
-
-  private formatCollection(products): [ProductModel[]] {
-    return this.productService.formatProductsArray(products);
-  }
 
   private isPageExist(): boolean {
     const page = this.paginationData.pages.find(page => page === this.paginator.pageIndex)
@@ -127,8 +133,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   private getPageProducts(): [ProductModel[]] {
-    return this.paginationService.getPagedData([...this.paginationData.products], this.paginator)
+    return this.paginationService.getPagedData([...this.paginationData.products], this.paginator, this.cols)
   }
 
+  private setGrid(condition: boolean) {
+    if (condition) {
+      this.cols = 3
+      this.collection = this.getPageProducts()
+    }
+    else {
+      this.cols = 4
+      this.collection = this.getPageProducts()
+    }
+  }
 
 }
