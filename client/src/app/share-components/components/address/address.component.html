@@ -15,7 +15,7 @@
   <mat-grid-tile>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Select Street:</mat-label>
-      <input matInput ngx-google-places-autocomplete #placesRef="ngx-places" [options]="optionsStreet"
+      <input matInput  [options]="optionsStreet" ngx-google-places-autocomplete #placesRef="ngx-places"
         (onAddressChange)="handleStreetChange($event)" [formControl]="controlGroup.controls['street']" />
       <mat-hint *ngIf="!user">Enter street</mat-hint>
       <mat-hint *ngIf="user">Double click on the icon for auto complete</mat-hint>

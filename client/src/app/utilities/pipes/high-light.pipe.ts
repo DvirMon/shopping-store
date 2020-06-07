@@ -11,21 +11,22 @@ export class HighLightPipe implements PipeTransform {
     private sanitizer: DomSanitizer
   ) { }
 
-  transform(value: string, searchTerm : string, tag = 'mark'): any {
+  transform(value: string, searchTerm: string, tag = 'mark'): any {
 
     if (!searchTerm) {
       return value;
     }
     // Match in a case insensitive manner
-    const re = new RegExp(searchTerm, 'gi');
-    const match = value.match(re);
+    const regex = new RegExp(searchTerm, 'gi');
+    const match = value.match(regex);
 
     // If there's no match, just return the original value.
     if (!match) {
       return value;
     }
-
-    const replacedValue = value.replace(re, `<${tag}>` + match[0] + `</${tag}>`)
+    const highLightText = `<${tag}>` + match[0] + `</${tag}>
+    `
+    const replacedValue = value.replace(regex, highLightText)
     return this.sanitizer.bypassSecurityTrustHtml(replacedValue)
   }
 }

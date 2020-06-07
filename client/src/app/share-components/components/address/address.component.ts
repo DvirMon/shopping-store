@@ -1,16 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserModel } from 'src/app/utilities/models/user-model';
 import { FormGroup } from '@angular/forms';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit {
-
-  @ViewChild("placesRef") placesRef: GooglePlaceDirective;
+export class AddressComponent  {
 
   @Input() public controlGroup: FormGroup
   @Input() public streetControlName: string
@@ -19,7 +16,7 @@ export class AddressComponent implements OnInit {
 
   public optionsCity = {
     offset: 3,
-    types: ['cities'],
+    types: ['(cities)'],
     componentRestrictions: { country: 'IL' }
   }
 
@@ -32,11 +29,6 @@ export class AddressComponent implements OnInit {
 
   public selectedValue: boolean = true;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.subscribeToFormControl()
-  }
 
   public subscribeToFormControl() {
 
@@ -48,8 +40,6 @@ export class AddressComponent implements OnInit {
   }
 
   public addressAutoComplete(controlName: string) {
-
-    console.log(this.controlGroup.value)
 
     if (controlName === "street") {
       this.controlGroup.patchValue({ "street": this.user.street })
