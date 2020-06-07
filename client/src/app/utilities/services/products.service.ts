@@ -15,7 +15,7 @@ import { config } from '../../../main-config'
 import { store } from '../redux/store';
 import { PaginationDataModel, PaginationModel } from '../models/pagination-model';
 
-export interface UpdateData {
+export interface ProductData {
   product: ProductModel,
   alias: string
 }
@@ -33,7 +33,7 @@ export interface ProductCartInfo {
 export class ProductsService {
 
   public baseUrl: string = `http://localhost:${config.port}/api/products`
-  public handleUpdate = new BehaviorSubject<UpdateData | null>(null)
+  public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
   public slice: number = 4;
 

@@ -7,6 +7,7 @@ import { ProductModel } from '../models/product-model';
 import { OrderModel } from '../models/order-model';
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
 import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
+import { ProductData } from './products.service';
 
 
 export interface DialogData {
@@ -41,8 +42,8 @@ export class DialogService {
   }
 
   // open product dialog
-  public handleProductDialog(product: ProductModel) {
-    const data = this.handleDate("product", product)
+  public handleProductDialog(payload: ProductData) {
+    const data = this.handleDate("product", payload)
     this.dialog.open(ProductsDialogComponent, this.handleConfig(data))
   }
 

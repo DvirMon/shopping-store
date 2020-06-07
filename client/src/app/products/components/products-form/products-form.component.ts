@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
-import { ProductsService, UpdateData } from 'src/app/utilities/services/products.service';
+import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
 import { FormService } from 'src/app/utilities/services/form.service';
 
 import { store } from 'src/app/utilities/redux/store';
@@ -65,7 +65,7 @@ export class ProductsFormComponent implements OnInit {
   // listen to subject updates
   private subscribeToSubject(): void {
     this.productService.handleUpdate.subscribe(
-      (data: UpdateData) => {
+      (data: ProductData) => {
         if (data) {
           this.handleStatusUpdate(data.product)
           this.handleFormUpdate(data.product)

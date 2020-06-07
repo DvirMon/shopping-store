@@ -36,10 +36,10 @@ export class CartListItemComponent implements OnInit {
 
     this.productService.getProductNameAndImage(this.cartItem.productId).subscribe(
       (product) => {
-        
+
         this.product = product
         this.alias = this.productService.getCategoryAlias(this.product)
-        
+
         if (!this.orderMode) {
 
           this.receiptService.setReceiptItem(this.product, this.cartItem)
@@ -49,7 +49,7 @@ export class CartListItemComponent implements OnInit {
   }
 
   public updateItem() {
-    this.dialogService.handleProductDialog(this.product)
+    this.dialogService.handleProductDialog({ product: this.product, alias: this.alias })
   }
 
   public deleteCartItem() {

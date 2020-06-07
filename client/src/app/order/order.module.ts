@@ -10,7 +10,6 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { OrderDialogComponent } from './components/order-dialog/order-dialog.component';
 
 import { DateInputComponent } from './components/date-input/date-input.component';
-import { AddressComponent } from './components/address/address.component';
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
 
 
@@ -21,7 +20,6 @@ import { CreditCardComponent } from './components/credit-card/credit-card.compon
     OrderFormComponent,
     OrderDialogComponent,
     DateInputComponent,
-    AddressComponent,
     CreditCardComponent,
   ],
   imports: [

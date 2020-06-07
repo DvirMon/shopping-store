@@ -16,6 +16,7 @@ import { FormControl, NgModel, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { store } from 'src/app/utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-products-dialog',
@@ -32,8 +33,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   public cartItems: CartItemModel[] = []
   public minQuantity: boolean = false
-  
   public editMode: boolean = false
+  public alias : string
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -47,7 +48,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.product = this.data.payload;
+    this.product = this.data.payload.product;
+    this.alias = this.data.payload.alias;
     this.handleStoreSubscribe();
     this.handleUpdateState();
 

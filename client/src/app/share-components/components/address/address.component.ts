@@ -13,41 +13,66 @@ export class AddressComponent implements OnInit {
   @ViewChild("placesRef") placesRef: GooglePlaceDirective;
 
   @Input() public controlGroup: FormGroup
+  @Input() public streetControlName: string
   @Input() public user: UserModel
+  @Input() public cols: string
 
-  public formatAddress: string
-  public options = {
-    offset : 3,
+  public optionsCity = {
+    offset: 3,
+    types: ['cities'],
+    componentRestrictions: { country: 'IL' }
+  }
+
+  public optionsStreet = {
+    offset: 3,
     types: ['geocode'],
     componentRestrictions: { country: 'IL' }
   }
 
-  public selectedValue: string;
-  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Beer Sheva", "Haifa", "Ashdod", "Natania"];
 
+  public selectedValue: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.subscribeToFormControl()
+  }
+
+  public subscribeToFormControl() {
+
+    this.controlGroup.valueChanges.subscribe(
+      (values) => {
+        console.log(values)
+      }
+    )
   }
 
   public addressAutoComplete(controlName: string) {
+
+    console.log(this.controlGroup.value)
+
     if (controlName === "street") {
       this.controlGroup.patchValue({ "street": this.user.street })
       return
     }
     this.controlGroup.patchValue({ "city": this.user.city })
-    this.selectedValue = this.user.city
 
   }
 
-  public handleAddressChange(payload: any) {
+  public handleStreetChange(payload: any) {
     if (payload) {
-      const address = payload.formatted_address.split(',')
-      console.log(address[0].trim())
-      console.log(address[1].trim())
-      this.formatAddress = payload.formatted_address
+      this.controlGroup.patchValue({ "street": payload.name })
+      this.selectedValue = !payload.name
     }
   }
+
+  public handleCitySelect(payload: any) {
+    if (payload) {
+      this.controlGroup.patchValue({ "city": payload.name })
+      this.controlGroup.patchValue({ "street": payload.name })
+    }
+
+  }
+
 
 }

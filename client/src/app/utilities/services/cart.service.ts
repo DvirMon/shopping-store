@@ -52,9 +52,9 @@ export class CartService {
     return this.http.patch(this.cartUrl + `/${cartId}`, { isActive: false })
   }
 
-  // GET - get latest cart items
-  public getLatestCartItems(cart): Observable<CurrentCartModel> {
-    return this.http.get<CurrentCartModel>(this.cartItemUrl + `/${cart._id}`)
+  // GET - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
+  public getLatestCartItems(cartId): Observable<CurrentCartModel> {
+    return this.http.get<CurrentCartModel>(this.cartItemUrl + `/${cartId}`)
   }
 
   // ------------------------------------------------//

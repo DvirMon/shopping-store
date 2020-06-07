@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 import { store } from 'src/app/utilities/redux/store';
-import { ProductsService } from 'src/app/utilities/services/products.service';
+import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,15 +24,17 @@ export class ProductsItemComponent {
 
   public handleProductDialog() {
 
-    this.handleAlias() 
-
     this.isAdmin
-      ? this.productService.handleUpdate.next({ product: this.product, alias: this.alias })
-      : this.dialogService.handleProductDialog(this.product)
+      ? this.productService.handleUpdate.next(this.handleProductData())
+      : this.dialogService.handleProductDialog(this.handleProductData())
   }
 
-  private handleAlias() {
-    this.alias = this.activeRoute.snapshot.params.alias
+  private handleAlias() :string {
+    return this.activeRoute.snapshot.params.alias
+  }
+
+  private handleProductData(): ProductData {
+    return { product: this.product, alias: this.handleAlias() }
   }
 }
 

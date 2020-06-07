@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
-import { ProductsService } from 'src/app/utilities/services/products.service';
+import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
@@ -74,12 +74,21 @@ export class SearchComponent implements OnInit {
   }
 
   public onSelect(product) {
+
     this.panel.openPanel()
- 
-    const alias = this.productService.getCategoryAlias(product)
+
+    const productData = this.handleProductDialogData(product)
 
     this.isAdmin
-      ? this.productService.handleUpdate.next({ product, alias })
-      : this.dialogService.handleProductDialog(product)
+      ? this.productService.handleUpdate.next(productData)
+      : this.dialogService.handleProductDialog(productData)
+  }
+
+  private handleProductDialogData(product: ProductModel): ProductData {
+    return { product, alias: this.handleAlias(product) }
+  }
+
+  private handleAlias(product): string {
+    return this.productService.getCategoryAlias(product)
   }
 }

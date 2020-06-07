@@ -1,35 +1,32 @@
-<mat-grid-list [formGroup]="controlGroup" cols="2" rowHeight="100px">
-  <mat-grid-tile colspan="2">
-    <mat-form-field class="full-width" appearance="fill">
-      <input matInput [options]="options" ngx-google-places-autocomplete #placesRef="ngx-places"
-        (onAddressChange)="handleAddressChange($event)" />
-      <mat-hint>{{formatAddress}}</mat-hint>
-    </mat-form-field>
-  </mat-grid-tile>
+<mat-grid-list class="address-container" [formGroup]="controlGroup" [cols]="cols" rowHeight="100px">
   <mat-grid-tile>
     <mat-form-field field appearance="fill">
       <mat-label>Select City:</mat-label>
-      <mat-select [formControl]="controlGroup.controls['city']" [(value)]="selectedValue">
-        <mat-option *ngFor="let city of cityList" [value]="city">
-          {{city}}</mat-option>
-      </mat-select>
-      <mat-hint>Double click on the icon for auto complete</mat-hint>
-      <mat-error>Please Choose an option</mat-error>
+      <input matInput [options]="optionsCity" ngx-google-places-autocomplete #placesRef="ngx-places"
+        (onAddressChange)="handleCitySelect($event)" [formControl]="controlGroup.controls['city']" />
+      <mat-hint *ngIf="!user">Enter city</mat-hint>
+      <mat-hint *ngIf="user">Double click on the icon for auto complete</mat-hint>
+      <mat-error>This field is required</mat-error>
+      <button *ngIf="user" mat-icon-button matSuffix (dblclick)="addressAutoComplete('city')">
+        <mat-icon>home</mat-icon>
+      </button>
     </mat-form-field>
-    <button mat-icon-button matSuffix (dblclick)="addressAutoComplete('city')">
-      <mat-icon>home</mat-icon>
-    </button>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-input [control]="controlGroup.controls['street']" placeHolder="Street" type="text" controlName="street"
-      required>
-    </app-input>
-    <button mat-icon-button matSuffix (dblclick)="addressAutoComplete('street')">
-      <mat-icon>home</mat-icon>
-    </button>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Select Street:</mat-label>
+      <input matInput ngx-google-places-autocomplete #placesRef="ngx-places" [options]="optionsStreet"
+        (onAddressChange)="handleStreetChange($event)" [formControl]="controlGroup.controls['street']" />
+      <mat-hint *ngIf="!user">Enter street</mat-hint>
+      <mat-hint *ngIf="user">Double click on the icon for auto complete</mat-hint>
+      <mat-error>This field is required</mat-error>
+      <button *ngIf="user" mat-icon-button matSuffix (dblclick)="addressAutoComplete('street')">
+        <mat-icon>home</mat-icon>
+      </button>
+    </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-grid-list cols="1" rowHeight="10vh">
+<mat-grid-list *ngIf="user" [cols]="cols" rowHeight="10vh">
   <mat-grid-tile>
     <button [disabled]=controlGroup.invalid mat-button matStepperNext type="button">Next</button>
   </mat-grid-tile>

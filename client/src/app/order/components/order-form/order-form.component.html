@@ -3,9 +3,9 @@
     <mat-vertical-stepper #stepper>
       <mat-step [stepControl]="address">
         <ng-template matStepLabel>Address : Enter your home address</ng-template>
-        <app-address [controlGroup]="address" [user]="user"></app-address>
-        <mat-grid-list cols="1" rowHeight="5vh">
-        </mat-grid-list>
+        <app-address [controlGroup]="address" [user]="user" [cols]=2></app-address>
+        <!-- <mat-grid-list cols="1" rowHeight="5vh">
+        </mat-grid-list>  -->
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>

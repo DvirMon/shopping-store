@@ -43,7 +43,7 @@ import { AddressComponent } from './components/address/address.component';
   ],
   imports: [
     CoreModule,
-
+    
   ],
   exports: [
     MyInputComponent,
@@ -53,6 +53,7 @@ import { AddressComponent } from './components/address/address.component';
     SearchListItemComponent,
     ProductThumbnailComponent,
     StreetComponent,
+    AddressComponent,
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective
