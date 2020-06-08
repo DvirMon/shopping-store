@@ -19,6 +19,9 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.SetCartItems:
       newAppState.cartItems = action.payload
       break
+    case ActionType.SetCartProducts:
+      newAppState.cartProducts = action.payload
+      break
     case ActionType.SetCartPrice:
       newAppState.cartTotalPrice = action.payload
       break

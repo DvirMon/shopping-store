@@ -142,7 +142,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private getPageProducts(): [ProductModel[]] {
     const products = store.getState().products[this.alias].products
-    return this.paginationService.getPagedData([...products], this.paginator, this.cols)
+    console.log(products)
+    return this.paginationService.getPagedData([...products], this.pagination, this.cols)
   }
 
   private setGrid(condition: boolean) : void{

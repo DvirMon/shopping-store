@@ -17,7 +17,7 @@ export class HighLightPipe implements PipeTransform {
       return value;
     }
     // Match in a case insensitive manner
-    const regex = new RegExp(searchTerm, 'gi');
+    const regex = new RegExp(searchTerm, 'i');
     const match = value.match(regex);
 
     // If there's no match, just return the original value.

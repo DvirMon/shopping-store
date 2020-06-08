@@ -6,7 +6,7 @@
     <span [innerHTML]="product.name | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{cartItem.totalPrice | currency}}
+    {{cartItem.quantity * product.price| currency}}
   </mat-grid-tile> 
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
     <button mat-icon-button (click)="deleteCartItem()">

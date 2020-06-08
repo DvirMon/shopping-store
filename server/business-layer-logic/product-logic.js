@@ -1,13 +1,9 @@
 const Product = require("../models/product-model");
 const Category = require("../models/category-model");
 
-// get all products sort by category
-const getAllProductsAsync = async () => {
-  return await Product.find({}).exec();
-};
-
-const getProductAsync = async (_id) => {
-  return await Product.findOne({ _id }).exec();
+// get products with ids array
+const getProductWithIdsAsync = async (ids) => {
+  return await Product.find().where("_id").in(ids).exec();
 };
 
 // search function - get products by query
@@ -22,11 +18,7 @@ const getTotalDocsAsync = async () => {
   return Product.estimatedDocumentCount();
 };
 
-// get products by category
-const getAllProductsByCategoryAsync = async (categoryId) => {
-  return await Product.find({ categoryId }).exec();
-};
-
+// get products with pagination
 const getProductsPaginationAsync = async (query, options) => {
   return await Product.paginate(query, options, (err, result) => {
     if (err) {
@@ -56,11 +48,9 @@ const getCategoryAsync = async (_id) => {
 };
 
 module.exports = {
-  getAllProductsAsync,
-  getProductAsync,
+  getProductWithIdsAsync,
   getTotalDocsAsync,
   searchProductsAsync,
-  getAllProductsByCategoryAsync,
   getProductsPaginationAsync,
   addProductAsync,
   updateProductAsync,

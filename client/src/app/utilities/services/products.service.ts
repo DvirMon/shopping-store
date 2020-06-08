@@ -59,7 +59,6 @@ export class ProductsService {
 
     return this.http.post<PaginationDataModel>(this.baseUrl + `/${pagination}`, { categoryId }).pipe(
       map(data => {
-
         data.pagination.pageIndex = data.pagination.pageIndex - 1
 
         if (alias) {
@@ -79,6 +78,13 @@ export class ProductsService {
   // Get product : http://localhost:3000/api/products/:_id
   public getProductNameAndImage(_id): Observable<ProductModel> {
     return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
+  }
+
+  // Get product : http://localhost:3000/api/products/ids
+  public getProductOfCurrentCart(ids: string[]): void {
+    this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
+      (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)
+    )
   }
 
   // GET products : http://localhost:3000/api/products/search/:query
@@ -111,10 +117,10 @@ export class ProductsService {
 
   // logic section 
 
-  public formatProductsArray(response: ProductModel[], cols: number): [ProductModel[]] {
+  public formatProductsArray(products: ProductModel[], cols: number): [ProductModel[]] {
     const collection: any = []
-    const temp = [...response]
-    for (let i = 0; i < response.length;) {
+    const temp = [...products]
+    for (let i = 0; i < products.length;) {
       const row: ProductModel[] = temp.splice(0, cols)
       collection.push(row)
       i = i + cols
@@ -152,10 +158,11 @@ export class ProductsService {
     return this.router.navigateByUrl(`${config.baseProductUrl}`)
   }
 
-  public getCategoryAlias(product): string {
+  public getCategoryAlias(product: ProductModel): string {
     const categories = store.getState().products.categories
-    const alias = categories.find(category => category._id === product.categoryId).alias
-    return alias
+    if (product) {
+      return categories.find(category => category._id === product.categoryId).alias
+    }
   }
 
 

@@ -12,8 +12,6 @@ export class SpinnerInterceptorService implements HttpInterceptor {
 
   constructor(
     private dialogService: DialogService,
-
-    
     private ngZone: NgZone,
   ) { }
 

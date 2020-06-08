@@ -3,6 +3,7 @@ import { ProductModel } from '../models/product-model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductsService } from './products.service';
+import { PaginationModel } from '../models/pagination-model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class PaginationService {
   ) {
   }
 
-  public getPagedData(data: ProductModel[], paginator: MatPaginator, cols: number) {
+  public getPagedData(data: ProductModel[], paginator: PaginationModel, cols: number) {
     const startIndex = paginator.pageIndex * paginator.pageSize;
     const products = data.splice(startIndex, paginator.pageSize)
     return this.productService.formatProductsArray(products, cols)

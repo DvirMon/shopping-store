@@ -8,6 +8,7 @@ import { CartService } from 'src/app/utilities/services/cart.service';
 import { FormControl } from '@angular/forms';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 import { UserModel } from 'src/app/utilities/models/user-model';
+import { ProductsService } from 'src/app/utilities/services/products.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -16,28 +17,27 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 })
 export class CartListComponent implements OnInit {
 
-  @Input() public orderMode: boolean = false
+  @Input() public orderMode: boolean = false;
 
-  public cartItems: CartItemModel[] = []
-  public cartTotalPrice: number
-  
   public searchControl = new FormControl();
-  
-  constructor( 
+  public cartItems: CartItemModel[] = [];
+  public cartTotalPrice: number;
+
+  constructor(
     private router: Router,
-    private cartService: CartService, 
-    private receiptService : ReceiptService,
+    private cartService: CartService,
+    private receiptService: ReceiptService,
     public product: ProductModel,
     public cartItem: CartItemModel,
     public cart: CartModel,
-    private user : UserModel
+    private user: UserModel
 
 
   ) { }
 
   ngOnInit(): void {
 
-    this.handleStoreSubscribe()
+    this.handleStoreSubscribe();
   }
 
   // subscribe section
@@ -48,42 +48,42 @@ export class CartListComponent implements OnInit {
         this.cartItems = store.getState().cart.cartItems;
         this.cart = store.getState().cart.cart;
         this.cartTotalPrice = store.getState().cart.cartTotalPrice;
-        this.user = store.getState().auth.user
+        this.user = store.getState().auth.user;
       }
-      )
-      this.cartItems = store.getState().cart.cartItems;
-      this.cart = store.getState().cart.cart;
-      this.cartTotalPrice = store.getState().cart.cartTotalPrice;
-      this.user = store.getState().auth.user
+    )
+    this.cartItems = store.getState().cart.cartItems;
+    this.cart = store.getState().cart.cart;
+    this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+    this.user = store.getState().auth.user;
   }
 
   // end of subscribe section
-  
+
+
   // logic section
 
-  public goToOrder() {
+  public goToOrder(): Promise<boolean> {
 
     if (this.cartItems.length === 0) {
       alert("your cart is empty")
       return
-    } 
+    }
 
-    
-    this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
+    return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
   }
-   
-  public deleteAllCartItems() {
+
+  public deleteAllCartItems(): void {
     const answer = confirm("Delete Cart?")
     if (!answer) {
-      return 
+      return
     }
     this.cartService.deleteCartAndCartItems(this.cart._id)
   }
 
-  public backToSore() {
+  public backToSore(): void {
     this.receiptService.resetReceiptState()
     this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
   }
-  
+
   // end of logic section
 }

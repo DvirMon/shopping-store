@@ -31,13 +31,6 @@ export class ReceiptService {
       ]
     ]
 
-  private firstRow = [
-    { text: 'Product' },
-    { text: 'Price(1 unit)', alignment: 'center' },
-    { text: 'Quantity', alignment: 'center' },
-    { text: 'Total Price', alignment: 'center' }
-  ]
-
 
   constructor(
     private formService: FormService,
@@ -115,14 +108,17 @@ export class ReceiptService {
 
   // save cart item as receipt format in store
   public setReceiptItem(product: ProductModel, cartItem: CartItemModel): void {
-    const recipeItem = new ReceiptItemData(
-      cartItem._id,
-      product.name,
-      product.price.toString(),
-      cartItem.quantity.toString(),
-      cartItem.totalPrice.toString(),
-    )
-    this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
+    if (product) {
+
+      const recipeItem = new ReceiptItemData(
+        cartItem._id,
+        product.name,
+        product.price.toString(),
+        cartItem.quantity.toString(),
+        cartItem.totalPrice.toString(),
+      )
+      this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
+    }
   }
 
   // clean receipt state

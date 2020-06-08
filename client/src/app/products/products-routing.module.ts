@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './components/products/products.component';
 import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
 import { ProductsGuard } from '../utilities/guards/products.guard';
-import { ProductsResolver } from '../utilities/resolvers/products-resolver.service';
+import {  PaginationResolver } from '../utilities/resolvers/pagination-resolver.service';
 
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
     canActivate: [ProductsGuard],
     resolve: {
       categories: CategoriesResolver,
-      pagination: ProductsResolver,
+      pagination:  PaginationResolver,
     }
   },
 ];

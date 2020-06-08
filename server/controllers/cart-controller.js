@@ -9,15 +9,6 @@ const authLogic = require("../business-layer-logic/auth-logic");
 const middleware = require("../middleware/middleware");
 const key = config.secret.access;
 
-// router.get("/", async (request, response, next) => {
-//   try {
-//     const carts = await cartLogic.getAllCartsAsync();
-//     response.json(carts);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 // get latest cart of user
 router.get(
   "/latest/:userId",

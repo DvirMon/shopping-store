@@ -5,7 +5,7 @@ const CategorySchema = mongoose.Schema(
     name: { type: String },
     alias: { type: String },
   },
-  { versionSey: false }
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Category", CategorySchema, "categories");

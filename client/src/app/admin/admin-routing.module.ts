@@ -4,7 +4,7 @@ import { RoleGuard } from '../utilities/guards/role.guard';
 
 import { ProductsComponent } from '../products/components/products/products.component';
 import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
-import { ProductsResolver } from '../utilities/resolvers/products-resolver.service';
+import { PaginationResolver } from '../utilities/resolvers/pagination-resolver.service';
 
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
         component: ProductsComponent,
         resolve: {
           categories: CategoriesResolver,
-          products: ProductsResolver,
+          pagination: PaginationResolver,
         },
       }
     ]

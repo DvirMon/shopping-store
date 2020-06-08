@@ -10,26 +10,32 @@ export class ErrorsService {
 
   constructor(
     private dialogService: DialogService,
-
+    private ngZone: NgZone,
   ) {
 
   }
 
   public handleError(error) {
 
+    
+    let spinnerRef;
+
+    this.ngZone.run(() => {
+      spinnerRef = this.dialogService.openSpinner()
+    });
+
+
     if (error instanceof HttpErrorResponse) {
 
-      console.log(error)
-      
       if (error.status === 401 || error.status === 409) {
         return
       }
-      
+      spinnerRef.close()
       this.dialogService.handleErrorDialog(error)
     }
     else {
-      // this.dialogService.handleErrorDialog(error)
-      console.error(error.message);
+      console.error(error);
+      // console.error(error.message);
     }
   }
 

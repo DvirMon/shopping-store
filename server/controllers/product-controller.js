@@ -7,6 +7,24 @@ const middleware = require("../middleware/middleware");
 
 const key = config.secret.access;
 
+router.post(
+  "/ids",
+  middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const products = await productLogic.getProductWithIdsAsync(
+        request.body.ids
+      );
+      if (products.length === 0) {
+        return next({ status: 404 });
+      }
+      response.json(products);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 router.get(
   "/categories",
   middleware.authorize(false, key),
@@ -30,32 +48,10 @@ router.get("/total", async (request, response, next) => {
   }
 });
 
-router.get(
-  "/pagination/:page/:limit",
-  // middleware.authorize(true, key),
-  middleware.pagination,
-  async (request, response, next) => {
-    try {
-      console.log(1);
-      const data = await productLogic.getProductsPaginationAsync(
-        {},
-        request.options
-      );
-
-      const products = data.docs;
-      const pagination = { ...data };
-      delete pagination.docs;
-
-      response.json({ products, pagination });
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-
 router.post(
   "/pagination/:page/:limit",
-  middleware.pagination,
+  middleware.authorize(false, key),
+  middleware.pagination, 
   async (request, response, next) => {
     try {
       const categoryId = request.body.categoryId;
@@ -64,34 +60,13 @@ router.post(
         categoryId ? { categoryId } : {},
         request.options
       );
-
+ 
       const products = data.docs;
       const pagination = { ...data };
       delete pagination.docs;
 
       response.json({ products, pagination });
     } catch (err) {
-      next(err);
-    }
-  }
-);
-
-router.get(
-  "/category/:categoryId",
-  middleware.authorize(false, key),
-  async (request, response, next) => {
-    try {
-      const products = await productLogic.getAllProductsByCategoryAsync(
-        request.params.categoryId
-      );
-
-      if (products.length === 0) {
-        return next({ status: 404, message: "no content" });
-      }
-
-      response.json(products);
-    } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -112,18 +87,6 @@ router.get(
   }
 );
 
-router.get(
-  "/:_id",
-  middleware.authorize(false, key),
-  async (request, response, next) => {
-    try {
-      const product = await productLogic.getProductAsync(request.params._id);
-      response.json(product);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
 
 // add product only admin
 router.post(

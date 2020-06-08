@@ -32,7 +32,7 @@ export class InfoService {
     private formService: FormService,
     private orderService: OrderService,
     private cartService: CartService,
-    private productsService : ProductsService
+    private productsService: ProductsService
   ) { }
 
   // request section
@@ -69,17 +69,24 @@ export class InfoService {
     info.message = "new client"
     return of(info)
   }
-  
+
   // handle current cart data
   private handleCurrentCart(cart: CartModel): Observable<Info> {
     this.formService.handleStore(ActionType.AddCart, cart)
-    
+
+
     return this.cartService.getLatestCartItems(cart._id).pipe(
+      switchMap(response => {
+        let productsIds = []
+        response.cartItems.map(cartItem => productsIds.push(cartItem.productId))
+        this.productsService.getProductOfCurrentCart(productsIds) 
+        return of(response)
+      }),
       map((response: CurrentCartModel) => {
         this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
         this.formService.handleStore(ActionType.SetCartPrice, response.price)
         return this.handleCartDataFormat(cart, response.price)
-      })
+      }),
     )
   }
 
