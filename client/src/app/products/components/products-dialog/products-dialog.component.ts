@@ -34,14 +34,14 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   public cartItems: CartItemModel[] = []
   public minQuantity: boolean = false
   public editMode: boolean = false
-  public alias : string
-  
+  public alias: string
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formService: FormService,
     private cartService: CartService,
     public product: ProductModel,
-    public cart: CartModel, 
+    public cart: CartModel,
     public cartItem: CartItemModel
 
   ) { }
@@ -104,7 +104,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   private controlValueSubscription() {
     this.quantityControl.valueChanges.pipe(
-    map(quantity => {
+      map(quantity => {
         if (this.quantityControl.errors) {
           this.quantityControl.setValue(1)
           quantity = 1
@@ -123,6 +123,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       this.cartService.getNewCart(this.cartItem).subscribe(
         (response: CartActionInfo) => {
           this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
+          this.formService.handleStore(ActionType.AddCartProduct, this.product)
           this.handleRequestSuccess(response)
           this.editMode = true
         }
@@ -139,6 +140,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     this.cartService.addCartItem(this.cartItem).subscribe(
       (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
+        this.formService.handleStore(ActionType.AddCartProduct, this.product)
         this.formService.handleStore(ActionType.IsCartActive, true)
         this.handleRequestSuccess(response)
         this.editMode = true

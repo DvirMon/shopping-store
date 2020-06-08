@@ -1,40 +1,70 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatSort, Sort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
+
 import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
 import { ProductModel } from 'src/app/utilities/models/product-model';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
+
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { store } from 'src/app/utilities/redux/store';
+import { PaginationService } from 'src/app/utilities/services/pagination.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
 
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>;
   public isAdmin: boolean = store.getState().auth.isAdmin
   public results: boolean = false;
+  private alias: string
 
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
+    private paginationService: PaginationService,
+    private activeRoute: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.subscribeToRoute()
     this.search()
   }
 
+  ngAfterViewInit(): void {
+    this.subscribeToSort()
+  }
+
+  private subscribeToRoute() {
+    this.activeRoute.params.subscribe(
+      (params) => {
+        this.alias = params.alias
+      }
+    );
+  }
+
+
+  private subscribeToSort() {
+    this.sort.sortChange.subscribe(
+      (sort: Sort) => this.paginationService.getSortedData(this.alias, this.sort)
+    )
+  }
+
+
   // main search function
-  public search() {
+  public search(): void {
     this.getSearchTerm().subscribe(
       () => {
         this.searchInput.nativeElement.focus()
@@ -73,8 +103,10 @@ export class SearchComponent implements OnInit {
     )
   }
 
+  // action to fire when search tab is selected
   public onSelect(product) {
 
+    // keep panel open
     this.panel.openPanel()
 
     const productData = this.handleProductDialogData(product)
@@ -84,10 +116,12 @@ export class SearchComponent implements OnInit {
       : this.dialogService.handleProductDialog(productData)
   }
 
+  // open product dialog
   private handleProductDialogData(product: ProductModel): ProductData {
     return { product, alias: this.handleAlias(product) }
   }
 
+  // get category dialog
   private handleAlias(product): string {
     return this.productService.getCategoryAlias(product)
   }

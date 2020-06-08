@@ -4,6 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductsService } from './products.service';
 import { PaginationModel } from '../models/pagination-model';
+import { store } from '../redux/store';
+import { FormService } from './form.service';
+import { ActionType } from '../redux/action-type';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,8 @@ export class PaginationService {
 
 
   constructor(
-    private productService: ProductsService
+    private productService: ProductsService,
+    private formService: FormService
   ) {
   }
 
@@ -23,25 +27,29 @@ export class PaginationService {
   }
 
 
-  // public getSortedData(data: ProductModel[], sort: MatSort): ProductModel[] {
+  public getSortedData(alias: string, sort: MatSort) {
 
-  //   if (!sort.active || sort.direction === '') {
-  //     return data;
-  //   }
+    const data: ProductModel[] = store.getState().products[alias].products
 
-  //   return data.sort((a, b) => {
-  //     const isAsc = sort.direction === 'asc';
-  //     switch (sort.active) {
-  //       case 'name': return this.compare(a.name, b.name, isAsc);
-  //       case '_id': return this.compare(+a._id, +b._id, isAsc);
-  //       case 'price': return this.compare(+a.price, +b.price, isAsc);
-  //       default: return 0;
-  //     }
-  //   });
-  // }
+    if (!sort.active || sort.direction === '') {
+      return data;
+    }
 
-  // private compare(a: string | number, b: string | number, isAsc: boolean) {
-  //   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  // }
+
+    const sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'price': return this.compare(+a.price, +b.price, isAsc);
+        default: return 0;
+      }
+    });
+
+    this.formService.handleStore(ActionType.SetProducts, { alias, products: sortedData })
+
+  }
+
+  private compare(a: string | number, b: string | number, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
 }
 

@@ -12,23 +12,25 @@ export enum ActionType {
   IsCartActive,
   SetCartItems,
   SetCartProducts,
+  AddCartProduct,
   SetCartPrice,
   AddCartItem,
   UpdatedItemCart,
   DeleteCartItem,
+  DeleteCartProduct,
   ResetCartState,
-
+  
   // Receipt Actions
   AddReceiptItem,
   DeleteReceiptItem,
   ResetReceiptState,
   GetOrderData,
-
+  
   // Products Actions
-  GetAllProducts,
+  AddProduct,
+  SetProducts, 
   GetCategories,
   SetProductsPaginationData,
   AddProductsPaginationData,
-  AddProduct,
   UpdateProduct,
 } 

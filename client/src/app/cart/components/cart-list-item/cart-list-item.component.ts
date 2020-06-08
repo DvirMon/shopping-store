@@ -58,7 +58,6 @@ export class CartListItemComponent implements OnInit, AfterViewInit {
   // logic section
 
   public getProductFromStore() {
-    console.log(this.cartProducts)
     this.product = this.cartProducts.find(product => product._id === this.cartItem.productId)
   }
 

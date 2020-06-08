@@ -34,8 +34,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   constructor(
     private productService: ProductsService,
     private paginationService: PaginationService,
+    public pagination: PaginationModel,
     private activeRoute: ActivatedRoute,
-    public pagination: PaginationModel
   ) { }
 
   ngOnInit(): void {
@@ -142,7 +142,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   private getPageProducts(): [ProductModel[]] {
     const products = store.getState().products[this.alias].products
-    console.log(products)
     return this.paginationService.getPagedData([...products], this.pagination, this.cols)
   }
 
