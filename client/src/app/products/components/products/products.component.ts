@@ -46,6 +46,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.subscribeToPaginator()
+    // this.paginator.pageIndex = this.pagination.pageIndex
+    // console.log(this.paginator)
+    // console.log(this.pagination)
+
   }
 
 
@@ -70,7 +74,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private getParams(): void {
     this.activeRoute.params.subscribe(
       (params) => {
-        this.categoryId = params.categoryId;
+        this.categoryId = params.categoryId; 
         this.alias = params.alias
         this.paginationData = store.getState().products[this.alias]
       }
@@ -82,7 +86,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.collection = this.productService.formatProductsArray(data.pagination?.products, this.cols)
       this.pagination = data.pagination.pagination
       if (this.paginator) {
-        this.paginator.pageIndex = this.pagination.pageIndex
+        // this.paginator.pageIndex = this.pagination.pageIndex
+        this.paginator.firstPage();
+
       }
     });
   }
@@ -113,19 +119,29 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     ).subscribe(
       (data) => {
         this.collection = this.productService.formatProductsArray(data.products, this.cols)
-        this.pagination = data.pagination
+        // this.pagination = data.pagination
       })
   }
 
   // get products form store or server
   private handleProductsSource(): void {
+
+    console.log(1)
     if (this.isPageExist()) {
+
       this.collection = this.getPageProducts()
-      this.pagination = this.paginationData.pagination
+      // this.pagination = this.paginationData.pagination
+      // this.handlePagination()
 
     } else {
       this.getProductsPagination()
     }
+  }
+
+  private handlePagination() {
+    this.pagination.length = this.paginator.length
+    this.pagination.pageIndex = this.paginator.pageIndex
+    this.pagination.pageSize = this.paginator.pageSize
   }
 
   // end of request section
@@ -140,12 +156,14 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     return !!page
   }
 
+
   private getPageProducts(): [ProductModel[]] {
+    const pagination = this.paginator ? this.paginator : this.pagination
     const products = store.getState().products[this.alias].products
-    return this.paginationService.getPagedData([...products], this.pagination, this.cols)
+    return this.paginationService.getPagedData([...products], pagination, this.cols)
   }
 
-  private setGrid(condition: boolean) : void{
+  private setGrid(condition: boolean): void {
     if (condition) {
       this.cols = 3
       this.paginator.pageSize = 6

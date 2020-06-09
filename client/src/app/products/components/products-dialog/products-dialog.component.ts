@@ -1,7 +1,9 @@
 
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 
+import { FormControl, NgModel, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTooltip } from '@angular/material/tooltip';
 
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
@@ -11,12 +13,10 @@ import { FormService } from 'src/app/utilities/services/form.service';
 import { CartService, CartActionInfo } from 'src/app/utilities/services/cart.service';
 import { DialogData } from 'src/app/utilities/services/dialog.service';
 
-import { MatTooltip } from '@angular/material/tooltip';
-import { FormControl, NgModel, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { store } from 'src/app/utilities/redux/store';
+
 import { ActionType } from 'src/app/utilities/redux/action-type';
-import { ActivatedRoute } from '@angular/router';
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-products-dialog',
@@ -31,9 +31,11 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   public quantityControl: FormControl
 
+  public cartItem: CartItemModel = new CartItemModel()
   public cartItems: CartItemModel[] = []
   public minQuantity: boolean = false
   public editMode: boolean = false
+  public distinctChange: boolean = false
   public alias: string
 
   constructor(
@@ -42,7 +44,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     public product: ProductModel,
     public cart: CartModel,
-    public cartItem: CartItemModel
 
   ) { }
 
@@ -75,6 +76,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   public onAddQuantity(): void {
     this.cartItem.quantity++
     this.minQuantity = false
+    if (this.editMode) {
+      this.distinctChange = true
+    }
   }
 
   public onRemoveQuantity(): void {
@@ -84,6 +88,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       return
     }
     this.cartItem.quantity--
+    if (this.editMode) {
+      this.distinctChange = true
+    }
   }
 
   // end of form section
@@ -93,7 +100,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   private handleStoreSubscribe(): void {
     store.subscribe(
       () => {
-        this.cartItems = store.getState().cart.cartItems;
+        this.cartItems = [...store.getState().cart.cartItems];
         this.cart = store.getState().cart.cart;
       }
     )
@@ -110,6 +117,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
           quantity = 1
         }
         this.cartItem.totalPrice = quantity * this.product.price
+
+
       })
     ).subscribe()
   }
@@ -130,9 +139,13 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       )
       return
     }
-    this.editMode
-      ? this.updateCartItem()
-      : this.AddCartItem()
+
+    if (!this.editMode) {
+      this.AddCartItem()
+    }
+    else if (this.distinctChange) {
+      this.updateCartItem()
+    }
 
   }
 
@@ -152,7 +165,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     this.cartService.updateCartItem(this.cartItem).subscribe(
       (response: CartActionInfo) => {
         this.formService.handleStore(ActionType.UpdatedItemCart, response.cartItem)
+        this.cartService.cartItemQuantity.next(response.cartItem)
         this.handleRequestSuccess(response)
+        this.distinctChange = false
       }
     )
   }

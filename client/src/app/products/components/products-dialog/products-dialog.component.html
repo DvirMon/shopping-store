@@ -7,11 +7,7 @@
   </div>
   <div class="dialog-content">
     <div class="dialog-image">
-      <app-product-thumbnail 
-      [product]="product" 
-      [alias]="alias" 
-      [imageHeight]="350" 
-      [imageWidth]="350">
+      <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="350" [imageWidth]="350">
       </app-product-thumbnail>
     </div>
     <div class="dialog-details">
@@ -32,12 +28,12 @@
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
       </div>
-      <mat-grid-list class="btn-add" cols="2" rowHeight="5vh">
+      <mat-grid-list class="btn-add" cols="2" rowHeight="10vh">
         <mat-grid-tile>
           Total Price : {{cartItem.totalPrice | currency}}
         </mat-grid-tile>
         <mat-grid-tile>
-          <button mat-flat-button color="warn" [disabled]="cartItemQuantity.invalid"
+          <button type="button" mat-flat-button color="warn" [disabled]="cartItemQuantity.invalid"
             (click)="handleRequest()">{{editMode ? 'Update Item' :'Add To Cart'}}</button>
         </mat-grid-tile>
       </mat-grid-list>

@@ -5,15 +5,15 @@ mat-toolbar {
   .search-form {
     width: 100%;
     font-size: 16px;
-    // text-align: center;
     padding-top: 15px;
   }
   
   .mat-form-field {
+    padding-left: 5vh;
     font-size: 14px;
     width: 65%;
   }
-}
+} 
 
 .main-links > li {
   font-size: 14px;

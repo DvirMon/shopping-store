@@ -20,7 +20,7 @@ export class PaginationService {
   ) {
   }
 
-  public getPagedData(data: ProductModel[], paginator: PaginationModel, cols: number) {
+  public getPagedData(data: ProductModel[], paginator: PaginationModel | MatPaginator, cols: number) {
     const startIndex = paginator.pageIndex * paginator.pageSize;
     const products = data.splice(startIndex, paginator.pageSize)
     return this.productService.formatProductsArray(products, cols)

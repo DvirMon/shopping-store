@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { FormService } from './form.service';
 import { CartModel, CurrentCartModel } from '../models/cart-model';
 import { CartItemModel } from '../models/cart-item-model';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { ActionType } from '../redux/action-type';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 
 export interface CartActionInfo {
@@ -19,6 +19,7 @@ export interface CartActionInfo {
 })
 export class CartService {
 
+  public cartItemQuantity = new Subject<CartItemModel>();
 
   public cartUrl: string = "http://localhost:3000/api/carts";
   public cartItemUrl: string = "http://localhost:3000/api/cart-item"
@@ -55,7 +56,7 @@ export class CartService {
   // GET - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
   public getLatestCartItems(cartId): Observable<CurrentCartModel> {
     return this.http.get<CurrentCartModel>(this.cartItemUrl + `/${cartId}`)
-    
+
   }
 
   // ------------------------------------------------//

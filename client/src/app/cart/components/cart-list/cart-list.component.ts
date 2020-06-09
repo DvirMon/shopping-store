@@ -19,6 +19,7 @@ export class CartListComponent implements OnInit {
 
   @Input() public orderMode: boolean = false;
 
+  public cartItem: CartItemModel = new CartItemModel()
   public searchControl = new FormControl();
   public cartItems: CartItemModel[] = [];
   public cartTotalPrice: number;
@@ -28,7 +29,6 @@ export class CartListComponent implements OnInit {
     private cartService: CartService,
     private receiptService: ReceiptService,
     public product: ProductModel,
-    public cartItem: CartItemModel,
     public cart: CartModel,
     private user: UserModel
 
@@ -45,7 +45,7 @@ export class CartListComponent implements OnInit {
   private handleStoreSubscribe(): void {
     store.subscribe(
       () => {
-        this.cartItems = store.getState().cart.cartItems;
+        this.cartItems = [...store.getState().cart.cartItems];
         this.cart = store.getState().cart.cart;
         this.cartTotalPrice = store.getState().cart.cartTotalPrice;
         this.user = store.getState().auth.user;

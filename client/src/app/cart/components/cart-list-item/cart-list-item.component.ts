@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
@@ -13,7 +13,7 @@ import { store } from 'src/app/utilities/redux/store';
   selector: 'app-cart-list-item',
   templateUrl: './cart-list-item.component.html',
 })
-export class CartListItemComponent implements OnInit, AfterViewInit {
+export class CartListItemComponent implements OnInit {
 
   @Input() public cartItem: CartItemModel = new CartItemModel()
   @Input() public orderMode: boolean = false
@@ -22,7 +22,8 @@ export class CartListItemComponent implements OnInit, AfterViewInit {
   public cartProducts: ProductModel[] = []
   public alias: string
   public rowSpan: number;
-
+  public quantity: number
+  
   constructor(
     private productService: ProductsService,
     private cartService: CartService,
@@ -36,14 +37,12 @@ export class CartListItemComponent implements OnInit, AfterViewInit {
 
     this.handleRowSpan()
     this.subscribeToStore()
+    this.handleQuantity()
     this.getProductFromStore()
     this.getProductAlias()
     this.setReceiptItem()
   }
 
-  ngAfterViewInit() {
-
-  }
 
   // subscription section
   private subscribeToStore() {
@@ -51,9 +50,34 @@ export class CartListItemComponent implements OnInit, AfterViewInit {
       () => {
         this.cartProducts = store.getState().cart.cartProducts;
       }
-    )
-    this.cartProducts = store.getState().cart.cartProducts;
+      )
+      this.cartProducts = store.getState().cart.cartProducts;
   }
+
+  private subscribeToSubject() {
+    this.cartService.cartItemQuantity.subscribe(
+      (cartItem : CartItemModel) => { 
+        if(cartItem._id === this.cartItem._id) {
+          this.quantity = cartItem.quantity
+        }
+      }
+    )
+  }
+
+
+
+  // request section
+  public deleteCartItem() {
+    const answer = confirm("Delete Item ?")
+
+    if (!answer) {
+      return
+    }
+
+    this.cartService.deleteCartItem(this.cartItem._id)
+  }
+
+  // wnd of request section
 
   // logic section
 
@@ -72,24 +96,23 @@ export class CartListItemComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public updateItem() {
+  public onUpdateClick() {
     this.dialogService.handleProductDialog({ product: this.product, alias: this.alias })
   }
 
-  public deleteCartItem() {
-    const answer = confirm("Delete Item ?")
-
-    if (!answer) {
-      return
-    }
-
-    this.cartService.deleteCartItem(this.cartItem._id)
-  }
+  
 
   // style for cart item
   private handleRowSpan() {
     this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
   }
+
+  private handleQuantity() {
+    this.quantity = this.cartItem.quantity
+    this.subscribeToSubject()
+  }
+
+
 
 
 }

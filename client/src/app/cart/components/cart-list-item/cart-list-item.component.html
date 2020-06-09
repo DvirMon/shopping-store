@@ -1,23 +1,24 @@
 <mat-grid-list cols="4" *ngIf="product" rowHeight="5vh">
   <mat-grid-tile rowspan="2">
-    <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="50" [imageWidth]="50"></app-product-thumbnail>
+    <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="50" [imageWidth]="50">
+    </app-product-thumbnail>
   </mat-grid-tile>
-  <mat-grid-tile rowspan="2">  
+  <mat-grid-tile rowspan="2">
     <span [innerHTML]="product.name | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{cartItem.quantity * product.price| currency}}
-  </mat-grid-tile> 
+    {{quantity * product.price| currency}}
+  </mat-grid-tile>
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
-    <button mat-icon-button (click)="deleteCartItem()">
+    <button type="button" mat-icon-button (click)="deleteCartItem()">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{cartItem.quantity}} units
+    {{quantity}} units
   </mat-grid-tile>
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
-    <button mat-button color="warn" (click)="updateItem()">Update</button>
+    <button mat-button color="warn" type="button" (click)="onUpdateClick()">Update</button>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-divider></mat-divider>

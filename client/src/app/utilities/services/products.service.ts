@@ -117,6 +117,7 @@ export class ProductsService {
 
   // logic section 
 
+  // function to format the products to collection 
   public formatProductsArray(products: ProductModel[], cols: number): [ProductModel[]] {
     const collection: any = []
     const temp = [...products]
