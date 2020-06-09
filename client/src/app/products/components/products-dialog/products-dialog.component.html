@@ -1,6 +1,6 @@
 <div (beforeClose)="true">
   <div class="dialog-title">
-    <h2 mat-dialog-title> {{product.name}} </h2>
+    <h2 mat-dialog-title> {{product.name | titlecase}} </h2>
     <button mat-dialog-close mat-icon-button>
       <mat-icon>clear</mat-icon>
     </button>

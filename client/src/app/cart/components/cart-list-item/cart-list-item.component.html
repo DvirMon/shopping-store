@@ -4,7 +4,7 @@
     </app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile rowspan="2">
-    <span [innerHTML]="product.name | highLight: searchTerm"></span>
+    <span [innerHTML]="product.name  | titlecase | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
     {{quantity * product.price| currency}}

@@ -98,7 +98,7 @@ export class FormService {
   // register for product form
   public productForm(): FormGroup {
     return this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(35)]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       price: ['', [Validators.required, Validators.min(0.5), Validators.pattern(this.validationService.regex.positive)]],
       categoryId: ['', [Validators.required]],
       imagePath: ['', [this.validationService.requiredFileType()]],

@@ -26,6 +26,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   public searchControl = new FormControl();
   public searchEntries: Observable<ProductModel[]>;
+  public totalProducts: Observable<number>;
   public isAdmin: boolean = store.getState().auth.isAdmin
   public results: boolean = false;
   private alias: string
@@ -39,6 +40,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.getStoreProducts()
     this.subscribeToRoute()
     this.search()
   }
@@ -46,6 +48,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.subscribeToSort()
   }
+
+  // subscription section
 
   private subscribeToRoute() {
     this.activeRoute.params.subscribe(
@@ -62,6 +66,27 @@ export class SearchComponent implements OnInit, AfterViewInit {
     )
   }
 
+  // function that listen to user search query
+  public getSearchTerm(): Observable<ProductModel[]> {
+    return this.searchControl.valueChanges.pipe(
+      debounceTime(600),
+      distinctUntilChanged(),
+      switchMap((searchTerm: string) => {
+        if (!searchTerm.trim()) {
+          return []
+        }
+        return this.getResults(searchTerm.trim())
+      }))
+  }
+
+
+  // end of subscription section
+
+  // requests section
+
+  private getStoreProducts() {
+    this.totalProducts = this.productService.getTotalNumberOfProducts()
+  }
 
   // main search function
   public search(): void {
@@ -76,18 +101,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     )
   }
 
-  // function that listen to user search query
-  public getSearchTerm(): Observable<ProductModel[]> {
-    return this.searchControl.valueChanges.pipe(
-      debounceTime(600),
-      distinctUntilChanged(),
-      switchMap((searchTerm: string) => {
-        if (!searchTerm) {
-          return []
-        }
-        return this.getResults(searchTerm)
-      }))
-  }
 
   // function to fetch result from server
   public getResults(searchTerm): Observable<ProductModel[]> {
@@ -102,6 +115,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
       })
     )
   }
+
+  // end of requests section
+
+  // logic section
 
   // action to fire when search tab is selected
   public onSelect(product) {

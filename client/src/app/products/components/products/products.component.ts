@@ -29,8 +29,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public alias: string
   public paginationData: PaginationDataModel;
 
-
-
   constructor(
     private productService: ProductsService,
     private paginationService: PaginationService,
@@ -46,10 +44,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.subscribeToPaginator()
-    // this.paginator.pageIndex = this.pagination.pageIndex
-    // console.log(this.paginator)
-    // console.log(this.pagination)
-
   }
 
 
@@ -86,7 +80,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.collection = this.productService.formatProductsArray(data.pagination?.products, this.cols)
       this.pagination = data.pagination.pagination
       if (this.paginator) {
-        // this.paginator.pageIndex = this.pagination.pageIndex
         this.paginator.firstPage();
 
       }
@@ -119,29 +112,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     ).subscribe(
       (data) => {
         this.collection = this.productService.formatProductsArray(data.products, this.cols)
-        // this.pagination = data.pagination
       })
   }
 
   // get products form store or server
   private handleProductsSource(): void {
 
-    console.log(1)
     if (this.isPageExist()) {
 
       this.collection = this.getPageProducts()
-      // this.pagination = this.paginationData.pagination
-      // this.handlePagination()
-
     } else {
       this.getProductsPagination()
     }
-  }
-
-  private handlePagination() {
-    this.pagination.length = this.paginator.length
-    this.pagination.pageIndex = this.paginator.pageIndex
-    this.pagination.pageSize = this.paginator.pageSize
   }
 
   // end of request section
@@ -161,6 +143,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     const pagination = this.paginator ? this.paginator : this.pagination
     const products = store.getState().products[this.alias].products
     return this.paginationService.getPagedData([...products], pagination, this.cols)
+  }
+
+  private paginationLength() {
+    const productsLength = store.getState().products[this.alias].products.length
+    const paginationLength = store.getState().products[this.alias].pagination.length
   }
 
   private setGrid(condition: boolean): void {

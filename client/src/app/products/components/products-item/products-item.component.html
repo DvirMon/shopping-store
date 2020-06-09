@@ -5,5 +5,5 @@
   </mat-grid-tile>
   <mat-grid-tile rowspan="1"></mat-grid-tile>
   <mat-grid-tile rowspan="2" class="price">{{product.price | currency}}</mat-grid-tile>
-  <mat-grid-tile rowspan="2" class="name">{{product.name}}</mat-grid-tile>
+  <mat-grid-tile rowspan="2" class="name">{{product.name | titlecase}}</mat-grid-tile>
 </mat-grid-list>

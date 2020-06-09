@@ -4,7 +4,7 @@ const Category = require("./category-model");
 
 const ProductSchema = mongoose.Schema(
   {
-    name: { type: String, required: true, minlemgth: [4], maxlength: [35] },
+    name: { type: String, required: true, minlemgth: [4], maxlength: [50] },
     categoryId: {
       type: mongoose.Types.ObjectId,
       ref: Category,

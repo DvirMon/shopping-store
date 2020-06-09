@@ -7,8 +7,9 @@
         <app-products-item [product]="product"></app-products-item>
       </mat-grid-tile>
     </mat-grid-list>
-    <mat-paginator  #paginator [length]="pagination.length" [pageSize]="6"
-      [pageSizeOptions]="[6, 8]">
+    <mat-paginator #paginator
+      [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
+      [pageSize]="6" [pageSizeOptions]="[6, 8]">
     </mat-paginator>
   </div>
 </app-products-bar>
