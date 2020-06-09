@@ -1,25 +1,24 @@
-<mat-grid-list cols="1" rowHeight="150px">
+<mat-grid-list cols="1" rowHeight="20vh">
   <mat-grid-tile>
     <button *ngIf="isLogin" color="primary" mat-raised-button type="button"
-      (click)="onProducts()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
+    (click)="onProducts()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
   </mat-grid-tile>
 </mat-grid-list>
 <form *ngIf="!isLogin" [formGroup]="loginForm" class="mat-elevation-z1">
-  <mat-grid-list cols="1" rowHeight="100px">
-    <mat-grid-tile>
+  <mat-grid-list cols="1" rowHeight="8.5vh">
+    <mat-grid-tile rowspan="2">
       <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="text">
       </app-input>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile rowspan="2">
       <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Login password"
         type="password" hint="your password">
       </app-input>
     </mat-grid-tile>
   </mat-grid-list>
-  <app-re-captcha (captcha)="handleCaptcha($event)"></app-re-captcha>
-  <mat-grid-list cols="1" rowHeight="80px">
+  <mat-grid-list cols="1" rowHeight="8.5vh">
     <mat-grid-tile>
-      <button class="button-login" [disabled]="loginForm.invalid || !captcha" mat-button type="button"
+      <button class="button-login" [disabled]="loginForm.invalid" mat-button type="button"
         (click)="onLogin()">Login</button>
     </mat-grid-tile>
     <mat-grid-tile>

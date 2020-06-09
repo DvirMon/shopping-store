@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './products-form.component.html',
   styleUrls: ['./products-form.component.scss']
 })
-export class ProductsFormComponent implements OnInit {
+export class ProductsFormComponent implements OnInit, AfterViewInit {
 
   public categories: CategoryModel[] = store.getState().products.categories
   public productForm: FormGroup
@@ -37,6 +37,12 @@ export class ProductsFormComponent implements OnInit {
     this.subscribeToRoute()
     this.subscribeToFormControls()
     this.subscribeToSubject()
+
+
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   // form section
@@ -80,6 +86,11 @@ export class ProductsFormComponent implements OnInit {
         this.product.name = product.name
         this.product.price = product.price
         this.product.categoryId = product.categoryId
+
+        if (product.categoryId) {
+          this.alias = this.productService.getCategoryAlias(this.product)
+        }
+
       }
     )
   }
@@ -87,7 +98,9 @@ export class ProductsFormComponent implements OnInit {
   // listen to route params
   private subscribeToRoute(): void {
     this.activeRouter.params.subscribe(
-      (params) => this.alias = params.alias
+      (params) => {
+        this.alias = params.alias
+      }
     )
   }
 
@@ -119,7 +132,7 @@ export class ProductsFormComponent implements OnInit {
       .subscribe((product: ProductModel) => {
 
         this.productService.addProductToStore(product, this.alias)
-        
+
       }
       )
   }

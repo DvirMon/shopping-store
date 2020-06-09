@@ -101,7 +101,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   // order request section 
 
   public onPayment() {
-
+    console.log(this.order)
     this.orderService.handleNewOrder(this.order)
   }
 

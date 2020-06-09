@@ -5,14 +5,10 @@ div {
   background-image: url("/assets/images/shopPicture.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}
 
-mat-horizontal-stepper {
-  @include formAuth();
-}
-
-form {
-  opacity: 1;
+  form {
+    @include formAuth("91vh");
+  }
 }
 
 mat-grid-list.details {

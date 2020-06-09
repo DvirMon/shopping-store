@@ -8,7 +8,8 @@ $colors: (
   forbidden : #f3727d
 );
 
-@mixin formAuth {
+@mixin formAuth ($height) {
+  height: $height;
   width: 80%;
   margin: auto;
   background-color: rgba($color: #ffffff, $alpha: 0.9);

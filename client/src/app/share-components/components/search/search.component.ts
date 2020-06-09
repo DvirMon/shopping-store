@@ -47,6 +47,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.subscribeToSort()
+    this.subscribeToRoute()
   }
 
   // subscription section
@@ -55,6 +56,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.activeRoute.params.subscribe(
       (params) => {
         this.alias = params.alias
+        if (this.sort) {
+          this.paginationService.getSortedData(this.alias, this.sort)
+        }
       }
     );
   }

@@ -1,4 +1,4 @@
-<div>
+<div class="register-container">
   <form [formGroup]="registerForm">
     <mat-horizontal-stepper #stepper>
       <mat-step [stepControl]="authDetails">
@@ -56,10 +56,7 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Confirm</ng-template>
-        <mat-grid-list cols="2" rowHeight="8.5vh" class="details">
-          Confirm Humanity
-          Before we subscribe you, we need to confirm you are a human.
-          <mat-grid-tile colspan="2"></mat-grid-tile>
+        <mat-grid-list cols="2" rowHeight="50px" class="details">
           <mat-grid-tile>Email : </mat-grid-tile>
           <mat-grid-tile>{{auth.email.value}}</mat-grid-tile>
           <mat-grid-tile>Name : </mat-grid-tile>
@@ -70,13 +67,16 @@
           <mat-grid-tile>{{personal.city.value}}</mat-grid-tile>
           <mat-grid-tile>Street :</mat-grid-tile>
           <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
-          <mat-grid-tile colspan="2"></mat-grid-tile>
+        </mat-grid-list>
+        <!-- <app-re-captcha (captcha)="handleCaptcha($event)">
+        </app-re-captcha> -->
+        <mat-grid-list cols="1" rowHeight="50px">
           <mat-grid-tile colspan="2">
-            <button [disabled]=registerForm.invalid (click)="onSubmit()" type="button" mat-raised-button>Create new
-              Account
-            </button>
+            <button [disabled]="registerForm.invalid || !captcha" (click)="onSubmit()" type="button"
+              mat-raised-button>Create new Account </button>
           </mat-grid-tile>
-          <mat-grid-tile colspan="2"></mat-grid-tile>
+          <mat-grid-tile colspan="3">
+          </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
     </mat-horizontal-stepper>

@@ -6,7 +6,6 @@ const fs = require("fs");
 const storage = multer.diskStorage({
   destination: function (request, file, cb) {
     const path = request.body.alias;
-    console.log(path)
     cb(null, `./uploads/products/${path}`);
   },
   
@@ -38,7 +37,6 @@ const fileFilter = (request, file, cb) => {
 
 // function do delete local file
 const deleteImageLocally = (path) => {
-  console.log(path);
   fs.unlink("./uploads/products/" + path, (err) => {
     if (err) {
       console.error(err);
@@ -54,3 +52,4 @@ module.exports = {
   upload,
   deleteImageLocally,
 };
+ 

@@ -13,7 +13,7 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup
-  public cityList: string[] = ["Tel Aviv", "Petah Rikva", "Rishon Zion", "Jerusalem", "Beer Sheva", "Haifa", "Ashdod", "Natania"];
+  public captcha: boolean = false;
 
   constructor(
     private formService: FormService,
@@ -60,4 +60,10 @@ export class RegisterComponent implements OnInit {
       )
     }
     // end of request section
+
+    public handleCaptcha(captcha) {
+      this.captcha = captcha
+    }
 }
+
+

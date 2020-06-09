@@ -1,7 +1,7 @@
 @import "~src/scss/variables";
 
 form {
-  @include formAuth();
+  @include formAuth("initial");
 }
 
 .mat-icon {

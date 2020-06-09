@@ -19,7 +19,7 @@ const ProductSchema = mongoose.Schema(
   },
   { versionKey: false, autoIndex: false }
 );
-
+ 
 ProductSchema.plugin(mongoosePaginate);
 
 const Products = mongoose.model("Product", ProductSchema, "products");

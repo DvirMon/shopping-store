@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   public isLogin: boolean
   public isCartActive: boolean
-  public captcha: boolean = false;
   public serverError: string
 
   constructor(
@@ -84,7 +83,5 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public handleCaptcha(captcha) {
-    this.captcha = captcha
-  }
+
 }
