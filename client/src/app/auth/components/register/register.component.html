@@ -1,6 +1,6 @@
 <div>
   <form [formGroup]="registerForm">
-    <mat-horizontal-stepper #stepper>
+    <mat-horizontal-stepper #stepper linear>
       <mat-step [stepControl]="authDetails" state="security">
         <ng-template matStepLabel>
           Authentication Details
@@ -74,11 +74,11 @@
           <mat-grid-tile>Street :</mat-grid-tile>
           <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
         </mat-grid-list>
-        <!-- <app-re-captcha (captcha)="handleCaptcha($event)">
-        </app-re-captcha> -->
+        <app-re-captcha (captcha)="handleCaptcha($event)">
+        </app-re-captcha>
         <mat-grid-list cols="1" rowHeight="100px">
           <mat-grid-tile>
-            <button [disabled]="registerForm.invalid" (click)="onSubmit()" type="button"
+            <button [disabled]="registerForm.invalid || !captcha" (click)="onSubmit()" type="button"
               mat-raised-button>Create new Account </button>
           </mat-grid-tile>
         </mat-grid-list>

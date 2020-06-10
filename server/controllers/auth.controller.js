@@ -152,7 +152,8 @@ router.post("/captcha", async (request, response, next) => {
     return;
   }
 
-  const secret = "6LeK_u4UAAAAAMlhglbKOtdpmGPrXoQ7Y9LyIYV_";
+  // const secret = "6LeK_u4UAAAAAMlhglbKOtdpmGPrXoQ7Y9LyIYV_";
+  const secret = "6Ld15KIZAAAAAFiyUCJmazxsbTFvvCiqt8HzbNET";
   const verifyCaptcha = `secret=${secret}&response=${request.body.captcha}`;
 
   try {
