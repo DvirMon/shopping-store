@@ -56,7 +56,7 @@ export class ReceiptService {
 
 
   public getReceipt(): void {
-    pdfMake.createPdf(this.setPdf()).open();
+    pdfMake.createPdf(this.setPdf()).download();
   }
 
   public handleReceiptData(): void {

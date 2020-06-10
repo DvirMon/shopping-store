@@ -20,7 +20,7 @@ export class ReCaptchaComponent implements OnInit {
   ngOnInit(): void {
   }
   // handle captcha
-  public resolved(captchaResponse: any) : void {
+  public resolved(captchaResponse: any): void {
     this.authService.authReCaptcha(captchaResponse).subscribe(
       (response) => this.captcha.emit(response)
     )

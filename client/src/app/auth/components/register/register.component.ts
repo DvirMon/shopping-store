@@ -13,8 +13,6 @@ import { CdkStep } from '@angular/cdk/stepper';
 })
 export class RegisterComponent implements OnInit {
  
-  @ViewChild('authStep') authStep: CdkStep;
-  @ViewChild('personalStep') personalStep: CdkStep;
  
   public registerForm: FormGroup
   public captcha: boolean = false;
@@ -69,14 +67,6 @@ export class RegisterComponent implements OnInit {
     this.captcha = captcha
   }
 
-  public onHeaderClick() {
-    console.log(this.authStep.hasError)
-    console.log(this.personalStep.hasError)
-  }
-
-  private subscribeToForm() {
-
-  }
 }
 
 

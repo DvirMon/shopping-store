@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="registerForm">
-    <mat-horizontal-stepper #stepper linear>
-      <mat-step [stepControl]="authDetails" state="security" #authStep [hasError]="authStep.interacted">
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="authDetails" state="security">
         <ng-template matStepLabel>
           Authentication Details
         </ng-template>
@@ -32,11 +32,9 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
-      <mat-step [stepControl]="personalDetails" state="person" #personalStep [hasError]="personalStep.interacted">
+      <mat-step [stepControl]="personalDetails" state="person">
         <ng-template matStepLabel>
-          <span (click)="onHeaderClick()">
-            Personal Details
-          </span>
+          Personal Details
         </ng-template>
         <app-address [controlGroup]="personalDetails" [cols]=1></app-address>
         <mat-grid-list [formGroup]="personalDetails" cols="2" rowHeight="100px">
@@ -62,7 +60,7 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>
-          <span (click)="onHeaderClick()">Confirm </span>
+          Confirm
         </ng-template>
         <mat-grid-list cols="2" rowHeight="50px" class="details">
           <mat-grid-tile>Email : </mat-grid-tile>
@@ -76,11 +74,11 @@
           <mat-grid-tile>Street :</mat-grid-tile>
           <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
         </mat-grid-list>
-        <app-re-captcha (captcha)="handleCaptcha($event)">
-        </app-re-captcha>
+        <!-- <app-re-captcha (captcha)="handleCaptcha($event)">
+        </app-re-captcha> -->
         <mat-grid-list cols="1" rowHeight="100px">
           <mat-grid-tile>
-            <button [disabled]="registerForm.invalid || !captcha" (click)="onSubmit()" type="button"
+            <button [disabled]="registerForm.invalid" (click)="onSubmit()" type="button"
               mat-raised-button>Create new Account </button>
           </mat-grid-tile>
         </mat-grid-list>

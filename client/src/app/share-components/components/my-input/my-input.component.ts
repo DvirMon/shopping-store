@@ -47,15 +47,8 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
 
-    this.authService.serverError.subscribe(
-      (error) => {
-        this.serverError = error
-        if (this.serverError) {
-          this.control.setErrors({ serverError: true });
-          this.input.focus()
-        }
-      }
-    )
+    this.subscribeToSubject()
+    this.subscribeToControl()
   }
 
   // handle default value
@@ -79,6 +72,36 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
     this.value = value
   }
 
+  // subscription section
+
+  private subscribeToSubject() {
+    this.authService.serverError.subscribe(
+      (error) => {
+        this.serverError = error
+        if (this.serverError) {
+          this.control.setErrors({ serverError: true });
+          this.input.focus()
+        }
+      }
+    )
+  }
+
+  private subscribeToControl() {
+    this.control.statusChanges.subscribe(
+      (status) => {
+        if (status === "VALID") {
+          this.input.focus()
+        }
+      }
+    )
+  }
+
+  // end of subscription section
+
+  
+  // logic section
+
+  // function to generate password
   public generatePassword() {
     if (this.password) {
       return
@@ -89,10 +112,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
     })
   }
 
+  // function to update password to the control
   public pushPassword() {
     this.control.setValue(this.password)
   }
 
+  // function to handle validation messages
   public validate() {
 
     this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
@@ -102,6 +127,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
       }
     )
 
-
   }
+
+  // end of logic section
 }

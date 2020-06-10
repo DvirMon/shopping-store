@@ -3,8 +3,10 @@ global.config = require("./config.json");
 const express = require("express");
 const server = express();
 
+
 // import middleware
 const cors = require("cors");
+const compression = require('compression')
 const rateLimit = require("express-rate-limit");
 const handleErrors = require("./middleware/handleErrors");
 const sanitize = require("./middleware/handleTags");
@@ -28,6 +30,8 @@ server.use(
 server.use(express.json({ limit: '50mb' }));
 server.use(sanitize);
 server.use("/uploads", express.static("uploads"));
+server.use(compression())
+
 
 // controllers
 server.use("/api/carts", cartController);
