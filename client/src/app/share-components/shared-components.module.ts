@@ -22,10 +22,11 @@ import { AddressComponent } from './components/address/address.component';
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 
-@NgModule({ 
+@NgModule({
   declarations: [
     MyInputComponent,
     UploadInputComponent,
@@ -37,11 +38,11 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective,
-    
+
   ],
   imports: [
     CoreModule,
-    
+
   ],
   exports: [
     MyInputComponent,
@@ -70,6 +71,10 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
     {
       provide: MAT_DIALOG_DATA,
       useValue: {}
+    },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false, showError: true }
     },
     {
       provide: ErrorHandler,

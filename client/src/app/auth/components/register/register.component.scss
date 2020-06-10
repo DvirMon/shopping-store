@@ -11,6 +11,10 @@ div {
   }
 }
 
+::ng-deep div.mat-horizontal-content-container {
+  height: 77.9vh;
+}
+
 mat-grid-list.details {
   width: 50%;
   margin: auto;

@@ -1,10 +1,11 @@
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/utilities/services/form.service';
 import { AuthService } from 'src/app/utilities/services/auth.service';
 // const generator = require('generate-password')
 
 import { generate } from 'generate-password'
+import { MatInput } from '@angular/material/input';
 
 
 @Component({
@@ -20,6 +21,8 @@ import { generate } from 'generate-password'
   ]
 })
 export class MyInputComponent implements OnInit, ControlValueAccessor {
+
+  @ViewChild(MatInput) input: HTMLInputElement;
 
   @Input() public control: FormControl
   @Input() public type: string
@@ -49,6 +52,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
         this.serverError = error
         if (this.serverError) {
           this.control.setErrors({ serverError: true });
+          this.input.focus()
         }
       }
     )

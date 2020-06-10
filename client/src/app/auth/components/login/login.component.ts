@@ -59,10 +59,11 @@ export class LoginComponent implements OnInit {
   public createForm() {
     this.loginForm = this.formService.loginForm()
   }
-
+  
   // end form section
-
-
+  
+  
+  // logic section
   public onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
       (user: UserModel) => {
@@ -71,17 +72,19 @@ export class LoginComponent implements OnInit {
       err => {
         this.authService.serverError.next(err.error)
       }
-    )
+      )
   }
-
+  
   public onProducts() {
     this.productsService.productsLandingPage()
   }
-
+  
   public onRegister() {
+    this.authService.isRegister.next(true)
     this.router.navigateByUrl(`/register`)
 
   }
 
+  // end logic section
 
 }

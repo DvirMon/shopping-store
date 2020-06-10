@@ -5,8 +5,9 @@
         <li>
           <span>Grocery-Online</span>
         </li>
-      </ul>
+      </ul> 
       <span class="spacer"></span>
+      <button mat-button *ngIf="!isLogin && isRegister" (click)="onLogin()">Back To Login</button>
       <span *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
@@ -17,7 +18,7 @@
         </button>
         <button *ngIf="isLogin" (click)="onLogOut()" mat-menu-item>
           <span>Logout</span>
-        </button>
+        </button> 
       </mat-menu>
     </mat-toolbar>
     <ng-content></ng-content>

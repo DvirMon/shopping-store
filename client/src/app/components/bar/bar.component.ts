@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/utilities/services/auth.service';
 import { Router } from '@angular/router';
@@ -14,24 +14,26 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 })
 export class BarComponent implements OnInit {
 
-  public user: UserModel = new UserModel()
-  public opened: boolean;
-  public isLogin: boolean
-  public isAdmin: boolean
-  public login: Subscription
   @ViewChild('drawer') drawer;
+
+  public user: UserModel = new UserModel()
+  public opened: boolean = true;
+  public isLogin: boolean = false;
+  public isRegister: boolean = false;
+  public isAdmin: boolean = false;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
-    private router: Router,
-    
+    private router: Router
+
 
   ) { }
 
   ngOnInit(): void {
 
     this.storeSubscribe()
+    this.subscribeToSubject()
 
   }
 
@@ -47,15 +49,27 @@ export class BarComponent implements OnInit {
       this.isLogin = store.getState().auth.isLogin
       this.isAdmin = store.getState().auth.isAdmin
       this.user = store.getState().auth.user
-    }) 
+    })
     this.isLogin = store.getState().auth.isLogin
     this.isAdmin = store.getState().auth.isAdmin
     this.user = store.getState().auth.user
   }
 
+  private subscribeToSubject() {
+    this.authService.isRegister.subscribe(
+      (isRegister) => this.isRegister = isRegister
+    )
+  }
+
+  public onLogin() {
+    this.router.navigateByUrl('/login')
+    this.isRegister = false
+  }
+
   public onLogOut() {
     this.authService.logout()
   }
+
 
   public onHome() {
     this.authService.handleRoleRoute(this.user)

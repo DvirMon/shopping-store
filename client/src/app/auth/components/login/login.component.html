@@ -16,12 +16,12 @@
       </app-input>
     </mat-grid-tile>
   </mat-grid-list>
-  <mat-grid-list cols="1" rowHeight="8.5vh">
+  <mat-grid-list cols="1" rowHeight="5vh">
     <mat-grid-tile>
       <button class="button-login" [disabled]="loginForm.invalid" mat-button type="button"
         (click)="onLogin()">Login</button>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile rowspan="2">
       <button mat-button type="button" (click)="onRegister()">New Client ? Sign-In!</button>
     </mat-grid-tile>
   </mat-grid-list>

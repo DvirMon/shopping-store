@@ -32,6 +32,7 @@ export class AuthService {
 
   public serverError = new Subject<string>()
   public loginDate = new BehaviorSubject<any>(null)
+  public isRegister = new BehaviorSubject<boolean>(false)
 
   private tokenHelper: JwtHelperService = new JwtHelperService()
   private url: string = `http://localhost:${config.portAuth}/api/auth`

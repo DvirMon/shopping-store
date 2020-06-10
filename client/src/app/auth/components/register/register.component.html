@@ -1,8 +1,10 @@
-<div class="register-container">
+<div>
   <form [formGroup]="registerForm">
-    <mat-horizontal-stepper #stepper>
-      <mat-step [stepControl]="authDetails">
-        <ng-template matStepLabel>Authentication Details</ng-template>
+    <mat-horizontal-stepper #stepper linear>
+      <mat-step [stepControl]="authDetails" state="security" #authStep [hasError]="authStep.interacted">
+        <ng-template matStepLabel>
+          Authentication Details
+        </ng-template>
         <mat-grid-list [formGroup]="authDetails" cols="1" rowHeight="100px">
           <mat-grid-tile>
             <app-input [control]="authDetails.controls['personalId']" placeHolder="Personal identification number"
@@ -30,8 +32,12 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
-      <mat-step [stepControl]="personalDetails">
-        <ng-template matStepLabel>Personal Details</ng-template>
+      <mat-step [stepControl]="personalDetails" state="person" #personalStep [hasError]="personalStep.interacted">
+        <ng-template matStepLabel>
+          <span (click)="onHeaderClick()">
+            Personal Details
+          </span>
+        </ng-template>
         <app-address [controlGroup]="personalDetails" [cols]=1></app-address>
         <mat-grid-list [formGroup]="personalDetails" cols="2" rowHeight="100px">
           <mat-grid-tile colspan="2">
@@ -55,7 +61,9 @@
         </mat-grid-list>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Confirm</ng-template>
+        <ng-template matStepLabel>
+          <span (click)="onHeaderClick()">Confirm </span>
+        </ng-template>
         <mat-grid-list cols="2" rowHeight="50px" class="details">
           <mat-grid-tile>Email : </mat-grid-tile>
           <mat-grid-tile>{{auth.email.value}}</mat-grid-tile>
@@ -68,17 +76,26 @@
           <mat-grid-tile>Street :</mat-grid-tile>
           <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
         </mat-grid-list>
-        <!-- <app-re-captcha (captcha)="handleCaptcha($event)">
-        </app-re-captcha> -->
-        <mat-grid-list cols="1" rowHeight="50px">
-          <mat-grid-tile colspan="2">
+        <app-re-captcha (captcha)="handleCaptcha($event)">
+        </app-re-captcha>
+        <mat-grid-list cols="1" rowHeight="100px">
+          <mat-grid-tile>
             <button [disabled]="registerForm.invalid || !captcha" (click)="onSubmit()" type="button"
               mat-raised-button>Create new Account </button>
           </mat-grid-tile>
-          <mat-grid-tile colspan="3">
-          </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
+
+      <!-- Icon overrides. -->
+      <ng-template matStepperIcon="security">
+        <mat-icon>security</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="person">
+        <mat-icon>person</mat-icon>
+      </ng-template>
+
     </mat-horizontal-stepper>
   </form>
+
+
 </div>

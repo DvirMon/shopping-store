@@ -1,11 +1,12 @@
 <mat-form-field class="full-width" appearance="fill">
 
   <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" [formControl]="control"
-    control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required>
+    control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required
+    (mouseenter)="generatePassword()" #input>
 
   <!-- password icon -->
   <button *ngIf="placeHolder ==='Password'" mat-icon-button matSuffix matTooltip="Generate strong password"
-    matTooltipPosition="right" (click)="pushPassword()" (mouseenter)="generatePassword()">
+    matTooltipPosition="right" (click)="pushPassword()">
     <mat-icon>vpn_key</mat-icon>
   </button>
 
@@ -24,7 +25,9 @@
   <mat-hint *ngIf="placeHolder === 'Email' && control.touched">
     Thank you! we will mot share your email addresses with
     sponsors or any third parties</mat-hint>
-  <mat-hint *ngIf="placeHolder === 'Password'">Recommended password : {{password}}</mat-hint>
+  <mat-hint *ngIf="placeHolder === 'Password' && password">Recommended password : {{password}}</mat-hint>
+  <mat-hint *ngIf="placeHolder === 'Password' && !password">Enter a password ot click on the icon to generate one
+  </mat-hint>
   <mat-hint *ngIf="controlName === 'street'">Double click on the icon for auto complete</mat-hint>
 
   <!-- shred input error -->
@@ -34,5 +37,5 @@
   <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>
   <mat-error *ngIf=control.errors?.unique>This {{placeHolder.toLocaleLowerCase()}} is already in use</mat-error>
   <mat-error *ngIf=control.errors?.mustMatch>passwords are not match</mat-error>
-  
+
 </mat-form-field>
