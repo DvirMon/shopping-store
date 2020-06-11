@@ -3,6 +3,8 @@ global.config = require("./config.json");
 const express = require("express");
 const server = express();
 
+const PORT = process.env.PORT | config.port
+
 
 // import middleware
 const cors = require("cors");
@@ -41,6 +43,6 @@ server.use("/api/products", productController);
 
 server.use(handleErrors);
 
-server.listen(config.port, () =>
-  console.log(`Listening to http://localhost:${config.port}`)
+server.listen(PORT, () =>
+  console.log(`Listening to http://localhost:${PORT}`)
 );
