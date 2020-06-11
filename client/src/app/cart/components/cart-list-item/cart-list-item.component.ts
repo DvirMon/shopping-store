@@ -45,6 +45,7 @@ export class CartListItemComponent implements OnInit {
 
 
   // subscription section
+  
   private subscribeToStore() {
     store.subscribe(
       () => {
@@ -65,9 +66,9 @@ export class CartListItemComponent implements OnInit {
   }
 
 
-
   // request section
   public deleteCartItem() {
+    
     const answer = confirm("Delete Item ?")
 
     if (!answer) {
@@ -77,7 +78,8 @@ export class CartListItemComponent implements OnInit {
     this.cartService.deleteCartItem(this.cartItem._id)
   }
 
-  // wnd of request section
+  // end of request section
+
 
   // logic section
 
@@ -96,17 +98,18 @@ export class CartListItemComponent implements OnInit {
     }
   }
 
+// open product dialog 
   public onUpdateClick() {
     this.dialogService.handleProductDialog({ product: this.product, alias: this.alias })
   }
 
-  
 
   // style for cart item
   private handleRowSpan() {
     this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
   }
 
+// update cart item quantity on dom
   private handleQuantity() {
     this.quantity = this.cartItem.quantity
     this.subscribeToSubject()

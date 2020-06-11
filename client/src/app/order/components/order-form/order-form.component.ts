@@ -98,16 +98,13 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   // end of form section
 
-  // order request section 
+  //  request section 
 
   public onPayment() {
-    console.log(this.order)
     this.orderService.handleNewOrder(this.order)
   }
-
-
-
   // end of request section
+
 
   // order logic section
 

@@ -1,0 +1,20 @@
+<mat-grid-list [formGroup]="controlGroup" cols="2" rowHeight="100px">
+  <mat-grid-tile colspan="2">
+    <app-input [control]="controlGroup.controls['firstName']" placeHolder="First name" type="text"
+      hint="your name" controlName="firstName">
+    </app-input>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <app-input [control]="controlGroup.controls['lastName']" placeHolder="Last Name" type="text"
+      hint="your last name" controlName="lastName">
+    </app-input>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-grid-list cols="2" rowHeight="22vh">
+  <mat-grid-tile>
+    <button mat-button matStepperPrevious type="button">Back</button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button [disabled]=controlGroup.invalid mat-button matStepperNext type="button">Next</button>
+  </mat-grid-tile>
+</mat-grid-list>

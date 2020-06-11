@@ -109,10 +109,6 @@ export class FormService {
   // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
 
-    if (control.hasError('required')) {
-      return `${placeHolder} is required`
-    }
-
     if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
       return this.passwordCustomErrorMessage(control, placeHolder)
     }

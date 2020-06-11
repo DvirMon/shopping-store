@@ -12,8 +12,9 @@ import { CdkStep } from '@angular/cdk/stepper';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
- 
- 
+
+
+
   public registerForm: FormGroup
   public captcha: boolean = false;
 
@@ -66,7 +67,6 @@ export class RegisterComponent implements OnInit {
   public handleCaptcha(captcha) {
     this.captcha = captcha
   }
-
 }
 
 

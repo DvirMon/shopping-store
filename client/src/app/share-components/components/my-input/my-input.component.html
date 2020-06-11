@@ -31,7 +31,8 @@
   <mat-hint *ngIf="controlName === 'street'">Double click on the icon for auto complete</mat-hint>
 
   <!-- shred input error -->
-  <mat-error>{{error}}</mat-error>
+  <mat-error *ngIf=!control.errors?.required>{{error}}</mat-error>
+  <mat-error *ngIf=control.errors?.required>{{placeHolder | lowercase}} is required</mat-error>
 
   <!-- costume input error -->
   <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>

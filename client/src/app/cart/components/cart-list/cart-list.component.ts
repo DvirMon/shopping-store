@@ -36,7 +36,6 @@ export class CartListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.handleStoreSubscribe();
   }
 
@@ -59,9 +58,21 @@ export class CartListComponent implements OnInit {
 
   // end of subscribe section
 
+  // request section
+  
+  public deleteAllCartItems(): void {
+    const answer = confirm("Delete Cart?")
+    if (!answer) {
+      return
+    }
+    this.cartService.deleteCartAndCartItems(this.cart._id)
+  }
+  // end of request section
+
 
   // logic section
 
+  // navigate to order
   public goToOrder(): Promise<boolean> {
 
     if (this.cartItems.length === 0) {
@@ -72,14 +83,8 @@ export class CartListComponent implements OnInit {
     return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
   }
 
-  public deleteAllCartItems(): void {
-    const answer = confirm("Delete Cart?")
-    if (!answer) {
-      return
-    }
-    this.cartService.deleteCartAndCartItems(this.cart._id)
-  }
-
+  
+  // navigate back to store
   public backToSore(): void {
     this.receiptService.resetReceiptState()
     this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)

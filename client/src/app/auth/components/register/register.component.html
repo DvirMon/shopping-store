@@ -5,58 +5,14 @@
         <ng-template matStepLabel>
           Authentication Details
         </ng-template>
-        <mat-grid-list [formGroup]="authDetails" cols="1" rowHeight="100px">
-          <mat-grid-tile>
-            <app-input [control]="authDetails.controls['personalId']" placeHolder="Personal identification number"
-              type="text" hint="your personal identification number" controlName="personalId">
-            </app-input>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <app-input [control]="authDetails.controls['email']" placeHolder="Email" type="text" controlName="email">
-            </app-input>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <app-input [control]="authDetails.controls['password']" placeHolder="Password" type="password"
-              hint="your password, or click on the icon to generate one" controlName="password">
-            </app-input>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <app-input [control]="authDetails.controls['confirmPassword']" placeHolder="Confirmation Password"
-              type="password" hint="confirmation password" controlName="confirmPassword">
-            </app-input>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="1" rowHeight="22vh">
-          <mat-grid-tile>
-            <button [disabled]=authDetails.invalid mat-button matStepperNext type="button">Next</button>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-register-auth [controlGroup]="authDetails"></app-register-auth>
       </mat-step>
       <mat-step [stepControl]="personalDetails" state="person">
         <ng-template matStepLabel>
           Personal Details
         </ng-template>
         <app-address [controlGroup]="personalDetails" [cols]=1></app-address>
-        <mat-grid-list [formGroup]="personalDetails" cols="2" rowHeight="100px">
-          <mat-grid-tile colspan="2">
-            <app-input [control]="personalDetails.controls['firstName']" placeHolder="First name" type="text"
-              hint="your name" controlName="firstName">
-            </app-input>
-          </mat-grid-tile>
-          <mat-grid-tile colspan="2">
-            <app-input [control]="personalDetails.controls['lastName']" placeHolder="Last Name" type="text"
-              hint="your last name" controlName="lastName">
-            </app-input>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="2" rowHeight="22vh">
-          <mat-grid-tile>
-            <button mat-button matStepperPrevious type="button">Back</button>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <button [disabled]=registerForm.invalid mat-button matStepperNext type="button">Next</button>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-register-personal [controlGroup]="personalDetails"></app-register-personal>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>
