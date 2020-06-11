@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-global.config = require('../config.json')
-
+global.config = require("../config.json");
 
 const connectAsync = () => {
   return new Promise((resolve, reject) => {
     mongoose.connect(
-      config.mongodb.url,
+      process.env.MONGODB_URI || config.mongodb.url,
       config.mongodb.options,
       (err, mongo) => {
         if (err) {

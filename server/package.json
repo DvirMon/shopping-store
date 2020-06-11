@@ -9,6 +9,9 @@
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engine": {
+    "node": "13.1.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
