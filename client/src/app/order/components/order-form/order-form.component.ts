@@ -22,15 +22,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrderFormComponent implements OnInit, AfterViewInit {
 
-
   public orderForm: FormGroup;
   public cartTotalPrice: number;
-
 
   constructor(
     private activeRoute :ActivatedRoute,
     private formService: FormService,
-    
     private orderService: OrderService,
     private order: OrderModel,
     public user: UserModel,
@@ -40,18 +37,19 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.createForm()
-    this.handleStoreSubscribe()
+    this.subscribeToStore()
     this.orderDefaultValues()
   }
 
   ngAfterViewInit() {
-    this.formValueSubscription()
+    this.subscribeToForm()
   }
 
 
   // subscribe section
 
-  private handleStoreSubscribe(): void {
+
+  private subscribeToStore(): void {
     store.subscribe(
       () => {
         this.user = store.getState().auth.user;
@@ -64,7 +62,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     this.cartTotalPrice = store.getState().cart.cartTotalPrice;
   }
 
-  private formValueSubscription(): void {
+  private subscribeToForm(): void {
     this.orderForm.valueChanges.subscribe(
       (controls) => {
         if (!this.orderForm.errors) {

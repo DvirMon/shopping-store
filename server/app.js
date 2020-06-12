@@ -3,12 +3,10 @@ global.config = require("./config.json");
 const express = require("express");
 const server = express();
 
-const PORT = process.env.PORT | config.port
-
-
 // import middleware
 const cors = require("cors");
-const compression = require('compression')
+const path = require("path");
+const compression = require("compression");
 const rateLimit = require("express-rate-limit");
 const handleErrors = require("./middleware/handleErrors");
 const sanitize = require("./middleware/handleTags");
@@ -25,17 +23,15 @@ server.use(
   "/api/",
   rateLimit({
     windowMs: 5000,
-    max: 15, 
+    max: 15,
     message: "Are You a Hacker?",
   })
 );
-server.use(express.json({ limit: '50mb' }));
+server.use(express.json({ limit: "50mb" }));
 server.use(sanitize);
 server.use("/uploads", express.static("uploads"));
-server.use(compression())
+server.use(compression());
 
-
-// controllers
 server.use("/api/carts", cartController);
 server.use("/api/cart-item", cartItemController);
 server.use("/api/orders", orderController);
@@ -43,6 +39,4 @@ server.use("/api/products", productController);
 
 server.use(handleErrors);
 
-server.listen(PORT, () =>
-  console.log(`Listening to http://localhost:${PORT}`)
-);
+server.listen(process.env.PORT || 3000, () => console.log(`server started`));

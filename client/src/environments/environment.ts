@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  port: 3000,
-  portAuth : 4000,
+  server: "http://localhost:3000/api",
+  authServer : "http://localhost:4000/api",
   googlePlaceKey : "AIzaSyBrf8AcnsXLIzDA1EOT7pe5lnuuL6BWb60&libraries",
   googleReCaptchaKey : "6LeK_u4UAAAAAGHI-faKt1g5n42kTQ2cIeMONQar",
 };

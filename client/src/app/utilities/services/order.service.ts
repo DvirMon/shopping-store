@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { OrderModel } from '../models/order-model';
-import { Observable, of, Subject } from 'rxjs';
-import { switchMap, take, map } from 'rxjs/operators';
+
 import { CartService } from './cart.service';
 import { DialogService } from './dialog.service';
 import { FormService } from './form.service';
 import { ReceiptService } from './receipt.service';
+
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ActionType } from '../redux/action-type';
+
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +21,7 @@ import { ActionType } from '../redux/action-type';
 export class OrderService {
 
 
-  public baseUrl: string = "http://localhost:3000/api/orders"
+  public baseUrl: string = `${environment.server}/orders`
 
   constructor(
     private http: HttpClient,

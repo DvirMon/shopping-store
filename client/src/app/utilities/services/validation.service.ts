@@ -24,6 +24,7 @@ export class ValidationService {
     public http: HttpClient,
   ) { }
 
+  // validate unique id number
   public personalIdUniqueValidation(control: AbstractControl): Observable<ValidationErrors | null> {
 
     if (!control || String(control.value).length === 0 || control.errors) {
@@ -44,6 +45,7 @@ export class ValidationService {
     )
   }
 
+  // validate unique email address
   public emailUniqueAsyncValidation(control: AbstractControl): Observable<ValidationErrors | null> {
 
     if (!control || String(control.value).length === 0 || control.errors) {
@@ -65,6 +67,7 @@ export class ValidationService {
   }
 
 
+  // validate password and confirm password match
   public MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
@@ -82,6 +85,7 @@ export class ValidationService {
     }
   }
 
+  // validate file upload format
   public requiredFileType() {
     return function (control: FormControl) {
       const file = control.value;

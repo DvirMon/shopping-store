@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { PaginationDataModel, PaginationModel } from '../models/pagination-model';
 
 import { ProductModel } from '../models/product-model';
 import { CategoryModel } from '../models/category-model';
@@ -11,9 +10,13 @@ import { FormService } from './form.service';
 
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
-import { config } from '../../../main-config'
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { store } from '../redux/store';
-import { PaginationDataModel, PaginationModel } from '../models/pagination-model';
+
+import { config } from '../../../main-config'
+import { environment } from 'src/environments/environment';
+
 
 export interface ProductData {
   product: ProductModel,
@@ -32,7 +35,7 @@ export interface ProductCartInfo {
 
 export class ProductsService {
 
-  public baseUrl: string = `http://localhost:${config.port}/api/products`
+  public baseUrl: string = `${environment.server}/products`
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
   public productsCols = new Subject<boolean>();

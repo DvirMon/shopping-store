@@ -14,6 +14,7 @@ import { store } from '../redux/store';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { config } from "src/main-config"
+import { environment } from 'src/environments/environment';
 
 export interface Login {
   email: string,
@@ -35,7 +36,7 @@ export class AuthService {
   public isRegister = new BehaviorSubject<boolean>(false)
 
   private tokenHelper: JwtHelperService = new JwtHelperService()
-  private url: string = `http://localhost:${config.portAuth}/api/auth`
+  private url: string = `${environment.authServer}/auth`
 
 
   constructor(

@@ -4,8 +4,6 @@ require('./data-access-layer/dal')
 const express = require("express");
 const server = express()
 
-const PORT = process.env.PORT | config.portAuth
-
 
 // import controllers
 const authController = require('./controllers/auth.controller')
@@ -32,4 +30,4 @@ server.use('/api/auth', authController)
 
 server.use(handleErrors)
 
-server.listen(PORT, () => console.log(`Listening to http://localhost:${PORT}`))
+server.listen(process.env.PORT || 4000, () => console.log(`server started`))

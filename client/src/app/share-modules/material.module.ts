@@ -59,7 +59,6 @@ import { MatSortModule, MatSort } from '@angular/material/sort';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule,
     MatPaginatorModule,
     MatSortModule,
   ]

@@ -37,11 +37,11 @@ export class ReceiptService {
     private receiptData: OrderModel
   ) { }
 
-
-  public backToSore(): void {
-    this.resetReceiptState()
-    this.formService.handleStore(ActionType.ResetCartState)
+  // function to download receipt file
+  public getReceipt(): void {
+    pdfMake.createPdf(this.setPdf()).download();
   }
+
 
   private setFooter(currentPage, pageCount): string {
     return currentPage.toString() + ' of ' + pageCount;
@@ -54,10 +54,6 @@ export class ReceiptService {
     ]
   }
 
-
-  public getReceipt(): void {
-    pdfMake.createPdf(this.setPdf()).download();
-  }
 
   public handleReceiptData(): void {
     this.setProductTable()
@@ -91,13 +87,13 @@ export class ReceiptService {
 
   }
 
-  // receipt additional data
+  // handle receipt additional data
   private setReceiptAdditionalInfo(): void {
     this.receiptData = { ...store.getState().receipt.orderDetails }
     this.formatReceiptDate()
   }
 
-  // format date
+  // handle date format
   private formatReceiptDate(): void {
     const orderDate = new Date(this.receiptData.orderDate)
     this.receiptData.orderDate = orderDate.toLocaleString()
@@ -124,6 +120,13 @@ export class ReceiptService {
   // clean receipt state
   public resetReceiptState(): void {
     this.formService.handleStore(ActionType.ResetReceiptState)
+  }
+
+
+
+  public backToSore(): void {
+    this.resetReceiptState()
+    this.formService.handleStore(ActionType.ResetCartState)
   }
 
   // set pdf file
@@ -177,11 +180,8 @@ export class ReceiptService {
       },
 
     }
-
     return docDefinition
-
   }
-
 
 
 }

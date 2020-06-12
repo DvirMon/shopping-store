@@ -1,4 +1,4 @@
-const Joi = require("Joi");
+const Joi = require("joi");
 
 const regex = {
   name: /^([a-zA-Z ]{3,25})(\s[a-zA-Z ]{3,25})?$/,

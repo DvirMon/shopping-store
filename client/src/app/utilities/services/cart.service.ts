@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { store } from '../redux/store';
 import { ActionType } from '../redux/action-type';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 export interface CartActionInfo {
@@ -21,8 +22,8 @@ export class CartService {
 
   public cartItemQuantity = new Subject<CartItemModel>();
 
-  public cartUrl: string = "http://localhost:3000/api/carts";
-  public cartItemUrl: string = "http://localhost:3000/api/cart-item"
+  public cartUrl: string = `${environment.server}/carts`;
+  public cartItemUrl: string = `${environment.server}/cart-item`
 
   constructor(
     private http: HttpClient,
