@@ -21,7 +21,7 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   @Input() public control: FormControl
   @Input() public hint: string
   @Input() public controlName: string
-  public OccupiedDates: number[] = []
+  public occupiedDates: number[] = []
 
   public value: any
   public error: string
@@ -35,7 +35,33 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   ) { }
 
   ngOnInit(): void {
-    this.routeSubscription()
+    this.subscribeToRoute()
+    this.subscribeToControl()
+
+  }
+
+  public writeValue(value: any): void {
+    this.value = value ? value : ""
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn
+
+  }
+
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn
+  }
+
+  private subscribeToRoute() {
+    this.activeRoute.data.subscribe((data: Data) => {
+      if (data.dates) {
+        this.occupiedDates = data.dates
+      }
+    })
+  }
+
+  private subscribeToControl() {
 
     this.control.statusChanges.subscribe(
       (status) => {
@@ -46,35 +72,15 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
     )
   }
 
-  public writeValue(value: any): void {
-    this.value = value ? value : ""
-  }
-
-  public registerOnChange(fn: any): void {
-    this.onChange = fn
-    console.log(this.control.errors)
-
-  }
-
-  public registerOnTouched(fn: any): void {
-    this.onTouched = fn
-  }
-
-  private routeSubscription() {
-    this.activeRoute.data.subscribe((data: Data) => {
-      if (data.dates) {
-        this.OccupiedDates = data.dates
-      }
-    })
-  }
-
   public dateFilter(date: Date | null): boolean {
 
     // get date as day number in the year
     const day = this.dayOfYear(date)
 
+
     // disabled dates
-    return !this.OccupiedDates.find(date => date === day)
+    return !this.occupiedDates.find(date => date === day)
+
   }
 
   private dayOfYear(date) {
@@ -83,11 +89,10 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
     return (x - y) / 24 / 60 / 60 / 1000;
   }
 
+
   public dateClass = (date: Date): MatCalendarCellCssClasses => {
     const day = this.dayOfYear(date)
-    // const date = d.getDate();
-    // Highlight the 1st and 20th day of each month.
-    return this.OccupiedDates.find(date => date === day) ? 'custom-date-error' : '';
+    return this.occupiedDates.find(date => date === day) ? 'custom-date-error' : '';
   }
 
   private handleDateErrorMessage() {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-thumbnail',
@@ -13,7 +14,9 @@ export class ProductThumbnailComponent implements OnInit {
   @Input() imageHeight: number
   @Input() imageWidth: number
   @Input() alias: string
+
   public routAlias: string
+  public environment = environment
 
   constructor(
     private activeRoute: ActivatedRoute

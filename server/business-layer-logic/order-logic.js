@@ -4,7 +4,7 @@ const getAllOrdersAsync = async () => {
   return await Order.find({}).exec();
 };
 
-const getOrderAsync = async ( _id ) => {
+const getOrderAsync = async (_id) => {
   return await Order.findById({ _id }).exec();
 };
 
@@ -30,6 +30,7 @@ const countOrdersByDate = async () => {
     },
     {
       $match: {
+        _id: { $gte: dayOfYear() },
         orders: { $gte: 3 },
       },
     },
@@ -41,6 +42,22 @@ const countOrdersByDate = async () => {
 
   return dates;
 };
+
+// function to get day of year as a number
+const dayOfYear = () => {
+  const date = new Date();
+  const x = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const y = Date.UTC(date.getFullYear(), 0, 0);
+
+  const day = (x - y) / 24 / 60 / 60 / 1000;
+  return isLeapYear(date) ? day + 1 : day;
+};
+
+// function to valid leap year
+const isLeapYear = (date) => {
+  const year = date.getFullYear();
+  return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+}; 
 
 module.exports = {
   getAllOrdersAsync,

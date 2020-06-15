@@ -48,7 +48,7 @@ export class ProductsService {
 
   ) { }
 
-  // GET total products in store
+  // GET total products in store : http://localhost:3000/api/products/total
 
   public getTotalNumberOfProducts(): Observable<number> {
     return this.http.get<number>(this.baseUrl + "/total")
@@ -78,12 +78,12 @@ export class ProductsService {
   }
 
 
-  // Get product : http://localhost:3000/api/products/:_id
+  // GET product : http://localhost:3000/api/products/:_id
   public getProductNameAndImage(_id): Observable<ProductModel> {
     return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
   }
 
-  // Get product : http://localhost:3000/api/products/ids
+  // POST product : http://localhost:3000/api/products/ids
   public getProductOfCurrentCart(ids: string[]): void {
     this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
       (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)

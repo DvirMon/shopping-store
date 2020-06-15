@@ -1,2 +1,2 @@
-<img mat-card-image src="http://localhost:3000/uploads/products/{{alias ? alias : routAlias}}/{{product.imagePath}}.png"
+<img mat-card-image src="{{environment.imagePath}}/uploads/products/{{alias ? alias : routAlias}}/{{product.imagePath}}.png"
   alt="Photo of a {{product.name}}" [height]="imageHeight" [width]="imageWidth">

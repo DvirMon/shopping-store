@@ -35,13 +35,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     this.createForm()
-    this.storeSubscribe()
-    this.isLogin = store.getState().auth.isLogin
+    this.subscribeToStore()
 
   }
 
   // subscription section
-  public storeSubscribe() {
+  public subscribeToStore() {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.user = store.getState().auth.user
@@ -59,10 +58,10 @@ export class LoginComponent implements OnInit {
   public createForm() {
     this.loginForm = this.formService.loginForm()
   }
-  
+
   // end form section
-  
-  
+
+
   // logic section
   public onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
@@ -72,13 +71,15 @@ export class LoginComponent implements OnInit {
       err => {
         this.authService.serverError.next(err.error)
       }
-      )
+    )
   }
-  
-  public onProducts() {
+
+  // navigate to products page
+  public toProducts() {
     this.productsService.productsLandingPage()
   }
   
+  // navigate to register page
   public onRegister() {
     this.authService.isRegister.next(true)
     this.router.navigateByUrl(`/register`)

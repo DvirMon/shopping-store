@@ -30,12 +30,12 @@ export class ErrorsService {
       if (error.status === 401 || error.status === 409) {
         return
       }
+      
       spinnerRef.close()
       this.dialogService.handleErrorDialog(error)
     }
     else {
       console.error(error);
-      // console.error(error.message);
     }
   }
 

@@ -36,7 +36,7 @@ export class AuthService {
   public isRegister = new BehaviorSubject<boolean>(false)
 
   private tokenHelper: JwtHelperService = new JwtHelperService()
-  private url: string = `${environment.authServer}/auth`
+  private url: string = `${environment.server}/auth`
 
 
   constructor(
@@ -47,22 +47,22 @@ export class AuthService {
 
   // request section 
 
-  // login request - http://localhost:4000/api/auth/login
+  // login request - http://localhost:3000/api/auth/login
   public login(loginInfo: any) {
     return this.handleUser("/login", loginInfo)
   }
 
-  // register request - http://localhost:4000/api/auth/register
+  // register request - http://localhost:3000/api/auth/register
   public register(registerInfo: UserModel) {
     return this.handleUser("/register", registerInfo)
   }
 
-  // refresh token request - http://localhost:4000/api/auth/refresh-token
+  // GET request - http://localhost:3000/api/auth/refresh-token
   public getRefreshToken(): Observable<AuthData> {
     return this.http.get<AuthData>(this.url + "/refresh-token")
   }
 
-  // access token request - http://localhost:4000/api/auth/access-token
+  // GET request - http://localhost:3000/api/auth/access-token
   public getAccessToken(): Observable<boolean> {
     return this.http.get<String>(this.url + "/access-token").pipe(
       map(data => {
@@ -78,7 +78,7 @@ export class AuthService {
     )
   }
 
-  // refresh token request - http://localhost:4000/api/auth/refresh-token
+  // POST request - http://localhost:3000/api/auth/refresh-token
   public getRefreshTokenWhenExpired() {
     const user = store.getState().auth.user
     return this.http.post<AuthData>(this.url + "/refresh-token", user).pipe(
@@ -87,8 +87,8 @@ export class AuthService {
       }))
   }
 
-  // captcha validation - http://localhost:4000/api/auth/captcha
-  public authReCaptcha(captcha: string) : Observable<boolean> {
+  // POST request - captcha validation - http://localhost:3000/api/auth/captcha
+  public authReCaptcha(captcha: string): Observable<boolean> {
     return this.http.post<boolean>(this.url + "/captcha", { captcha })
   }
 
@@ -96,6 +96,8 @@ export class AuthService {
   // end of request section 
 
   // login actions section
+
+  // generic function to user login/register
   public handleUser(path: string, data): Observable<UserModel> {
     return this.http.post<AuthData>(this.url + path, data)
       .pipe(
@@ -119,12 +121,6 @@ export class AuthService {
     this.formService.handleStore(ActionType.Logout)
   }
 
-  public handleRoleRoute(user: UserModel): Promise<boolean> {
-    return user.isAdmin ?
-      this.router.navigateByUrl("admin" + config.baseProductUrl)
-      : this.router.navigateByUrl(`home/${user._id}`)
-  }
-
   public autoLogin(): void {
     const token = store.getState().auth.refreshToken
     const user = store.getState().auth.user
@@ -135,12 +131,16 @@ export class AuthService {
     this.handleRoleRoute(user)
   }
 
+  public handleRoleRoute(user: UserModel): Promise<boolean> {
+    return user.isAdmin ?
+      this.router.navigateByUrl("admin" + config.baseProductUrl)
+      : this.router.navigateByUrl(`home/${user._id}`)
+  }
+
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
     return this.router.navigateByUrl(`/login`)
   }
-
-
 
 
   // token logic

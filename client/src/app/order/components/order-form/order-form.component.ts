@@ -26,7 +26,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   public cartTotalPrice: number;
 
   constructor(
-    private activeRoute :ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private formService: FormService,
     private orderService: OrderService,
     private order: OrderModel,
@@ -100,9 +100,9 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   public onPayment() {
     this.orderService.handleNewOrder(this.order)
+
   }
   // end of request section
-
 
   // order logic section
 

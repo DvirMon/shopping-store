@@ -1,9 +1,8 @@
 {
   "port": 3000,
-  "portAuth": 4000,
   "production": false,
   "mongodb": {
-    "url": "mongodb://localhost:27017/Shopping-Store",
+    "URI": "mongodb+srv://dom:mongo3000@shopping-store-yfdwj.mongodb.net/Grocery",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,

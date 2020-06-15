@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  googlePlaceKey : "AIzaSyBrf8AcnsXLIzDA1EOT7pe5lnuuL6BWb60&libraries",
-  googleReCaptchaKey : "6LeK_u4UAAAAAGHI-faKt1g5n42kTQ2cIeMONQar",
+  server: "https://ng-groccery-store.herokuapp.com",
+  imagePath: "https://ng-groccery-store.herokuapp.com",
+  googlePlaceKey : "AIzaSyDNwLciwS7wLtcjwVZ61nIOZuArCHALCJw",
+  googleReCaptchaKey : "6Ld15KIZAAAAAK5Nc3mOrAYiw2KRM5gVfuhaAB-x",
 };

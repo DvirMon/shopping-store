@@ -32,7 +32,7 @@ export class CartService {
 
   // request section
 
-  // GET - get latest cart
+  // GET - get latest cart : http://localhost:3000/api/carts/latest/:cartId"
   public getLatestCart(userId): Observable<CartModel> {
     return this.http.get<CartModel>(this.cartUrl + `/latest/${userId}`)
   }

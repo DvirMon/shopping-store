@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class ValidationService {
       distinctUntilChanged(),
       take(1),
       switchMap(payload => {
-        return this.http.post("http://localhost:4000/api/auth/unique-personalId", { personalId: payload }).pipe(
+        return this.http.post(`${environment.server}/auth/unique-personalId`, { personalId: payload }).pipe(
           map((error: boolean) => {
             return error ? ({ unique: true }) : (null)
           })
@@ -52,12 +53,11 @@ export class ValidationService {
       return of(null)
     }
     return control.valueChanges.pipe(
-      // startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       take(1),
       switchMap((payload: string) => {
-        return this.http.post("http://localhost:4000/api/auth/unique-email", { email: payload }).pipe(
+        return this.http.post(`${environment.server}/auth/unique-email`, { email: payload }).pipe(
           map((error: boolean) => {
             return error ? ({ unique: true }) : (null)
           })

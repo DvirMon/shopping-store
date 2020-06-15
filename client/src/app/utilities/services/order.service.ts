@@ -9,7 +9,7 @@ import { FormService } from './form.service';
 import { ReceiptService } from './receipt.service';
 
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { ActionType } from '../redux/action-type';
 
 import { environment } from 'src/environments/environment';
@@ -31,7 +31,7 @@ export class OrderService {
     private formService: FormService,
   ) { }
 
-  // GET total products in store
+  // GET total products in store : http://localhost:3000/api/orders/total
   public getTotalNumberOfOrders(): Observable<number> {
     return this.http.get<number>(this.baseUrl + "/total")
   }
@@ -59,7 +59,25 @@ export class OrderService {
 
   // GET order occupied dates : http://localhost:3000/api/orders/dates
   public getOccupiedDates(): Observable<number[]> {
-    return this.http.get<number[]>(this.baseUrl + "/dates")
+    return this.http.get<number[]>(this.baseUrl + "/dates").pipe(
+      map(dates => {
+
+        if (this.isLeapYear()) {
+          dates = dates.map(date => date + 1)
+        }
+
+        return dates
+
+      })
+    )
+  }
+
+  // logic section
+
+  private isLeapYear(): boolean {
+    const date = new Date()
+    const year = date.getFullYear()
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
 
 

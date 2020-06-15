@@ -3,6 +3,8 @@ global.config = require("./config.json");
 const express = require("express");
 const server = express();
 
+const PORT = process.env.PORT || config.port;
+
 // import middleware
 const cors = require("cors");
 const path = require("path");
@@ -12,6 +14,7 @@ const handleErrors = require("./middleware/handleErrors");
 const sanitize = require("./middleware/handleTags");
 
 // import controllers
+const authController = require("./controllers/auth.controller");
 const cartController = require("./controllers/cart-controller");
 const cartItemController = require("./controllers/cart-item-controller");
 const orderController = require("./controllers/order-controller");
@@ -32,11 +35,20 @@ server.use(sanitize);
 server.use("/uploads", express.static("uploads"));
 server.use(compression());
 
+server.use("/api/auth", authController);
 server.use("/api/carts", cartController);
 server.use("/api/cart-item", cartItemController);
 server.use("/api/orders", orderController);
 server.use("/api/products", productController);
 
+if (process.env.NODE_ENV === "production") {
+  server.use(express.static("public/client"));
+
+  server.get("*", (request, response) => {
+    response.sendFile(path.join(__dirname, "public/client", "index.html"));
+  });
+}
+
 server.use(handleErrors);
 
-server.listen(process.env.PORT || 3000, () => console.log(`server started`));
+server.listen(PORT, () => console.log("Express is working on port " + PORT));

@@ -16,7 +16,6 @@ export class AuthInterceptorService implements HttpInterceptor {
   private token: string
   public bearer: string
 
-
   constructor(
     private authService: AuthService,
     private dialogService: DialogService
@@ -33,14 +32,15 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Authorization': `${this.bearer} : ${this.token}`
       })
     });
-
     return this.handAuthInterceptor(modified, next)
   }
 
   private handAuthInterceptor(clone: HttpRequest<any>, next: HttpHandler) {
     return next.handle(clone).pipe(
+
       catchError((error: HttpErrorResponse) => {
 
+        // in case if auth error
         if (error.status === 401) {
 
           // if user is not login
@@ -49,13 +49,13 @@ export class AuthInterceptorService implements HttpInterceptor {
             return
           }
 
-          // if refresh token expired and user is login - login again and repeat request
+          // if refresh token expired and user is login - open dialog for user
           if (clone.url.includes("access-token")) {
             this.dialogService.handleAuthDialog()
             return
           }
 
-          // if access token failed - get new access token and repeat request
+          // if access token expired - get new access token and repeat request
           return this.authService.getAccessToken().pipe(
             switchMap(response => {
               return this.intercept(clone, next)

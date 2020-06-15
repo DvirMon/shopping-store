@@ -34,19 +34,6 @@ const matchPasswordValidation = (request, response, next) => {
 // --------------------------------------------------------------------------------------------------
 // end of auth validation
 
-// order date validation scheme
-const dateFormatValidation = (request, response, next) => {
-  const schema = Joi.object()
-    .keys({
-      shippingDate: Joi.date().iso().required(),
-      orderDate: Joi.date().iso(),
-    })
-    .unknown();
-
-  const error = schema.validate(request.body, { abortEarly: false }).error;
-  return returnMessage(error, next);
-};
-
 const returnMessage = (errors, next) => {
   if (errors) {
     const error = errors.details.map((error) => errorFormat(error));
@@ -81,6 +68,5 @@ const formatMessage = (error) => {
 module.exports = {
   loginValidation,
   matchPasswordValidation,
-  dateFormatValidation,
   regex,
 };

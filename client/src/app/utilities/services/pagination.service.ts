@@ -13,7 +13,6 @@ import { ActionType } from '../redux/action-type';
 })
 export class PaginationService {
 
-
   constructor(
     private productService: ProductsService,
     private formService: FormService
@@ -34,7 +33,6 @@ export class PaginationService {
     if (!sort.active || sort.direction === '') {
       return data;
     }
-
 
     const sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';

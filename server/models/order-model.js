@@ -18,7 +18,7 @@ const OrderSchema = mongoose.Schema(
       validate: [
         validation.regex.positive,
         "price can`t be negative or equal to 0",
-      ],
+      ], 
     },
     city: { type: String, required: true, minlength: [3], maxlength: [30] },
     street: { type: String, required: true, minlength: [5], maxlength: [30] },
@@ -30,7 +30,7 @@ const OrderSchema = mongoose.Schema(
       get: obfuscate,
       validate: [validation.regex.creditCard, "invalid credit card number"],
     },
-  },
+  }, 
   {
     toJSON: {
       getters: true,
