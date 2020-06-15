@@ -17,8 +17,14 @@ export class ValidationService {
     email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
     positive: /^[1-9]+[0-9]*$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-    creditCard: /^(?:4\d{3}|5[1-5]\d{2}||2[2-7]\d{2}|6011|2131|1800|35\d{2})([- ]?)\d{4}\1\d{4}\1\d{4}\1$/
+    cc: {
+      amex: /^3[47][0-9]{13}$/,
+      jbc: /^(?:2131|1800|35\d{3})\d{11}$/,
+      masterCard: /^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/,
+      visa: /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/,
+    }
   };
+
 
 
   constructor(
@@ -68,7 +74,7 @@ export class ValidationService {
 
 
   // validate password and confirm password match
-  public MustMatch(controlName: string, matchingControlName: string) {
+  public mustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
@@ -102,6 +108,26 @@ export class ValidationService {
       }
 
       return null
+    };
+  }
+
+  public creditCard() {
+
+    const regex = this.regex.cc
+
+    return function (control: FormControl) {
+
+      const cc = control.value;
+
+      if (!cc) {
+        return
+      }
+
+      if (regex.amex.test(cc) || regex.jbc.test(cc) || regex.masterCard.test(cc) || regex.visa.test(cc)) {
+        return null
+      }
+
+      return { creditCard: true }
     };
   }
 }

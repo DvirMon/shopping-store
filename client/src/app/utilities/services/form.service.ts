@@ -56,7 +56,7 @@ export class FormService {
           [Validators.required, Validators.pattern(this.validationService.regex.password)]],
       },
         {
-          validator: [this.validationService.MustMatch('password', 'confirmPassword')],
+          validator: [this.validationService.mustMatch('password', 'confirmPassword')],
         }),
       personalDetails: this.fb.group({
         city: ['', [Validators.required]],
@@ -90,7 +90,7 @@ export class FormService {
       }),
       shippingDate: ['', [Validators.required]],
       creditCard: ['',
-      [Validators.required, Validators.pattern(this.validationService.regex.creditCard)]
+      [Validators.required, this.validationService.creditCard()]
       ],
     })
   }

@@ -70,7 +70,7 @@ export class OrderService {
 
       })
     )
-  }
+  } 
 
   // logic section
 

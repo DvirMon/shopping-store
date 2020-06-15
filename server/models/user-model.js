@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const uniqueValidator = require("mongoose-unique-validator");
-const validation = require('../services/validation.service')
+const validation = require("../services/validation.service");
 
 const UserSchema = mongoose.Schema(
   {
@@ -12,6 +12,7 @@ const UserSchema = mongoose.Schema(
       unique: true,
       minlength: [8],
       maxlength: [9],
+      validate: [validation.regex.personalId, "id is not valid"],
     },
     email: {
       type: String,
@@ -21,26 +22,35 @@ const UserSchema = mongoose.Schema(
       maxlength: [30],
       validate: [validation.regex.email, "email format is not valid"],
     },
-    password: { 
+    password: {
       type: String,
       required: true,
       minlength: [8, "password must be 8-24 characters long"],
       maxlength: [24, "password must be 8-24 characters long"],
-      validate: [validation.regex.password, "first name must contain only letters"],
+      validate: [
+        validation.regex.password,
+        "first name must contain only letters",
+      ],
     },
     firstName: {
       type: String,
       required: true,
       minlength: [3],
       maxlength: [30],
-      validate: [validation.regex.name, "first name should only include a-z/A-Z characters"],
+      validate: [
+        validation.regex.name,
+        "first name should only include a-z/A-Z characters",
+      ],
     },
     lastName: {
       type: String,
       required: true,
       minlength: [3],
       maxlength: [30],
-      validate: [validation.regex.name, "last name should only include a-z/A-Z characters"],
+      validate: [
+        validation.regex.name,
+        "last name should only include a-z/A-Z characters",
+      ],
     },
     city: { type: String, required: true, minlength: [3], maxlength: [30] },
     street: { type: String, required: true, minlength: [5], maxlength: [30] },
