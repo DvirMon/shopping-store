@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema(
       maxlength: [9],
       validate: [validation.regex.personalId, "id is not valid"],
     },
-    email: {
+    email: {  
       type: String,
       required: true,
       unique: true,
