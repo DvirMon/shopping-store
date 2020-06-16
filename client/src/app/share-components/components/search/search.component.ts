@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       debounceTime(600),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => {
-        if (!searchTerm.trim()) {
+        if (!searchTerm || !searchTerm.trim()) {
           return []
         }
         return this.getResults(searchTerm.trim())
@@ -84,7 +84,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
 
-  // end of subscription section
+  // end of subscription section 
 
   // requests section
 

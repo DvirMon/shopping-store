@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
 export class OrderService {
 
 
-  public baseUrl: string = `${environment.server}/orders`
+  public baseUrl: string = `${environment.server}/api/orders`
 
   constructor(
     private http: HttpClient,

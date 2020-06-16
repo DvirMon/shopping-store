@@ -35,7 +35,7 @@ export interface ProductCartInfo {
 
 export class ProductsService {
 
-  public baseUrl: string = `${environment.server}/products`
+  public baseUrl: string = `${environment.server}/api/products`
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
   public productsCols = new Subject<boolean>();

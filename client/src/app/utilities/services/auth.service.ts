@@ -36,7 +36,7 @@ export class AuthService {
   public isRegister = new BehaviorSubject<boolean>(false)
 
   private tokenHelper: JwtHelperService = new JwtHelperService()
-  private url: string = `${environment.server}/auth`
+  private url: string = `${environment.server}/api/auth`
 
 
   constructor(

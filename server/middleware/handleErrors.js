@@ -1,10 +1,19 @@
 const handleError = (err, request, response, next) => {
+
   if (err.status) {
     return response.status(err.status).json(err.message);
   }
 
+  const error = formatErrorMessage(err)
+
+  // handle unique error
+  if (error.type === "mongoose-unique-validator") {
+    return response.status(409).json(error);
+  }
+  console.log(err)
+  // handle schema error
   if (err.name === "ValidationError") {
-    return response.status(409).json(formatErrorMessage(err));
+    return response.status(404).json(formatErrorMessage(err));
   }
 
   if (config.production) {

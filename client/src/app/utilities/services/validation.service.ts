@@ -43,7 +43,7 @@ export class ValidationService {
       distinctUntilChanged(),
       take(1),
       switchMap(payload => {
-        return this.http.post(`${environment.server}/auth/unique-personalId`, { personalId: payload }).pipe(
+        return this.http.post(`${environment.server}/api/auth/unique-personalId`, { personalId: payload }).pipe(
           map((error: boolean) => {
             return error ? ({ unique: true }) : (null)
           })
@@ -63,7 +63,7 @@ export class ValidationService {
       distinctUntilChanged(),
       take(1),
       switchMap((payload: string) => {
-        return this.http.post(`${environment.server}/auth/unique-email`, { email: payload }).pipe(
+        return this.http.post(`${environment.server}/api/auth/unique-email`, { email: payload }).pipe(
           map((error: boolean) => {
             return error ? ({ unique: true }) : (null)
           })

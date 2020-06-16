@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment'
 })
 export class AdminService {
 
-  public baseUrl: string = `${environment.server}/products`
+  public baseUrl: string = `${environment.server}/api/products`
 
   constructor(
     private http: HttpClient,

@@ -3,12 +3,12 @@ global.config = require("../config.json");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
+const axios = require("axios");
 
 const User = require("../models/user-model");
 const authLogic = require("../business-layer-logic/auth-logic");
-const validation = require("../services/validation.service");
 const jwt = require("../services/auth.service");
-const axios = require("axios");
+const validation = require("../services/validation.service");
 const authorize = require("../middleware/handleAuth");
 
 router.post(
@@ -109,6 +109,7 @@ router.post(
   "/register",
   validation.matchPasswordValidation,
   async (request, response, next) => {
+
     try {
       const user = await authLogic.addUserAsync(new User(request.body));
 
@@ -151,8 +152,6 @@ router.post("/captcha", async (request, response, next) => {
     next({ status: 400 });
     return;
   }
-
-  // const secret = "6LeK_u4UAAAAAMlhglbKOtdpmGPrXoQ7Y9LyIYV_";
   const secret = "6Ld15KIZAAAAAFiyUCJmazxsbTFvvCiqt8HzbNET";
   const verifyCaptcha = `secret=${secret}&response=${request.body.captcha}`;
 

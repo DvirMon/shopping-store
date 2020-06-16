@@ -28,7 +28,10 @@ const OrderSchema = mongoose.Schema(
       type: String,
       required: true,
       get: obfuscate,
-      validate: [validation.regex.creditCard, "invalid credit card number"],
+      validate: {
+        validator: validation.validCreditCard,
+        message: (props) => `${props.value} is not a valid credit card number!`,
+      },
     },
   },
   {
@@ -39,6 +42,6 @@ const OrderSchema = mongoose.Schema(
   }
 );
 
-
-
 module.exports = mongoose.model("Order", OrderSchema, "orders");
+
+

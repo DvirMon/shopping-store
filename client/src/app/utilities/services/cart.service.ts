@@ -22,8 +22,8 @@ export class CartService {
 
   public cartItemQuantity = new Subject<CartItemModel>();
 
-  public cartUrl: string = `${environment.server}/carts`;
-  public cartItemUrl: string = `${environment.server}/cart-item`
+  public cartUrl: string = `${environment.server}/api/carts`;
+  public cartItemUrl: string = `${environment.server}/api/cart-item`
 
   constructor(
     private http: HttpClient,
