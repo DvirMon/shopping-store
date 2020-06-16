@@ -10,7 +10,7 @@ const handleError = (err, request, response, next) => {
   if (error.type === "mongoose-unique-validator") {
     return response.status(409).json(error);
   }
-  console.log(err)
+  
   // handle schema error
   if (err.name === "ValidationError") {
     return response.status(404).json(formatErrorMessage(err));
