@@ -49,7 +49,7 @@ router.get(
 // add new order
 router.post(
   "/",
-  // middleware.authorize(false, key),
+  middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const order = request.body;
