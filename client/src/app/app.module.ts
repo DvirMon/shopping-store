@@ -31,7 +31,6 @@ import { MatSortModule } from '@angular/material/sort';
     HomeComponent,
     InfoComponent,
     AboutComponent,
-
   ],
   imports: [
     BrowserModule,

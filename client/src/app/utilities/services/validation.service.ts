@@ -18,11 +18,11 @@ export class ValidationService {
     positive: /^[1-9]+[0-9]*$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
     cc: {
-      amex: /^3[47][0-9]{13}$/,
-      jbc: /^(?:2131|1800|35\d{3})\d{11}$/,
-      masterCard: /^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/,
-      visa: /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/,
-    }
+      amex: /^3[47]\d{2}(\s?\d{6})(\s?\d{5})$/,
+      jcb: /^(?:2131|1800|35\d{2})(\s?)\d{4}\1\d{4}\1\d{4}$/,
+      masterCard: /^5[1-5]|2[2-7]\d{2}(\s?)\d{4}\1\d{4}\1\d{4}$/,
+      visa: /^4\d{3}(\s?)\d{4}\1\d{4}\1\d{4}$/,
+    } 
   };
 
 
@@ -123,7 +123,9 @@ export class ValidationService {
         return
       }
 
-      if (regex.amex.test(cc) || regex.jbc.test(cc) || regex.masterCard.test(cc) || regex.visa.test(cc)) {
+      console.log(cc)
+
+      if (regex.amex.test(cc) || regex.jcb.test(cc) || regex.masterCard.test(cc) || regex.visa.test(cc)) {
         return null
       }
 

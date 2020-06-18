@@ -1,0 +1,10 @@
+@import "~src/scss/variables";
+
+mat-form-field {
+  width: 300px;
+  display: inline-block;
+}
+
+.cc-highlight {
+  color: color(info);
+}

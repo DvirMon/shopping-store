@@ -97,7 +97,6 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   }
 
   // end of subscription section
-
   
   // logic section
 

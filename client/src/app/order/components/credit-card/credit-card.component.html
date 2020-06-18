@@ -1,19 +1,19 @@
 <mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile>
-    <fa-icon [icon]="visa" size="4x"></fa-icon>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <fa-icon [icon]="mc" size="4x"></fa-icon>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <fa-icon [icon]="diners" size="4x"></fa-icon>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <fa-icon [icon]="amex" size="4x"></fa-icon>
+  <mat-grid-tile *ngFor="let card of ccCards">
+    <fa-icon [icon]="card?.icon" size="4x" [ngClass]="{'cc-highlight': card?.color}"></fa-icon>
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
-    <app-input [control]="control" mdbCreditCard placeHolder="Credit Card number" type="text"
-      hint="valid Credit Card number">
-    </app-input>
+    <mat-form-field class="full-width" appearance="fill">
+      <input 
+      matInput #input 
+      type="text" 
+      placeHolder="Credit Card number" 
+      [formControl]="control" 
+      autocomplete="off"
+      required>
+      <mat-hint> Please enter valid Credit Card number </mat-hint>
+      <mat-error *ngIf=control.errors?.required>credit card is required</mat-error>
+      <mat-error *ngIf=control.errors?.creditCard>This is not a valid credit card number, We only accept AMEX, JCB, Mastercard and VISA</mat-error>
+    </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>

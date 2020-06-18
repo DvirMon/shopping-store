@@ -67,9 +67,10 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
       (controls) => {
         if (!this.orderForm.errors) {
           this.order.shippingDate = controls.shippingDate
-          this.order.creditCard = controls.creditCard
+          this.order.creditCard = controls.creditCard.trim()
           this.order.city = controls.address.city
           this.order.street = controls.address.street
+
         }
       }
     )

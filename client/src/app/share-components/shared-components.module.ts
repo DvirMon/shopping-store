@@ -38,7 +38,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective,
-
+    
   ],
   imports: [
     CoreModule,
