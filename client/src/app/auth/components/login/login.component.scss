@@ -2,6 +2,8 @@
 
 form {
   @include formAuth("initial");
+  border-radius: 10px;
+
 }
 
 .mat-icon {

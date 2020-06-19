@@ -7,7 +7,8 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list *ngIf="isLogin && !isAdmin && !info?.message" class="login-info" cols="1" rowHeight="10vh">
+<mat-grid-list *ngIf="isLogin && !isAdmin && !info?.message" class="login-info" cols="1"
+  rowHeight="10vh">
   <mat-grid-tile>
     {{info.messageDate}} : {{info.date | date:"dd/MM"}}
   </mat-grid-tile>
@@ -16,11 +17,11 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list  cols="1" rowHeight="10vh">
+<mat-grid-list cols="1" rowHeight="10vh">
   <mat-grid-tile>
     Available products in our store : {{totalProducts}}
   </mat-grid-tile>
   <mat-grid-tile>
-    Number of orders submitted in our store : {{totalOrders}}
+    Total orders submitted in our store : {{totalOrders}}
   </mat-grid-tile>
 </mat-grid-list>

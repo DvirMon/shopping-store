@@ -22,7 +22,7 @@
   </mat-grid-tile>
   <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
   <mat-grid-tile colspan="2">
-    <button class="payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Payment</button>
+    <button class="payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">

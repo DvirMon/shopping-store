@@ -1,6 +1,23 @@
-@import "~src/scss/variables";
+@import "~src/scss/styles";
 
-mat-grid-list {
-  @include infoBox();
+div.container {
+  @include position();
+  display: flex;
+  justify-content: space-between;
+
+  div.float-icon {
+    @include box();
+    @include float-shadow();
+    @include icon-box();
+    margin-bottom : 5%;
+  }
+
+  mat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+    text-align: center;
+    margin: auto;
+  }
 
 }

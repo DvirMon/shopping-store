@@ -2,6 +2,7 @@
 
 mat-grid-list {
   @include infoBox();
+  border-radius: 15px;
 }
 
 .login-info {

@@ -39,13 +39,14 @@ const matchPasswordValidation = (request, response, next) => {
 };
 
 const validCreditCard = (cc) => {
+
   if (!cc) {
     return;
   }
 
   if (
     regex.cc.amex.test(cc) ||
-    regex.cc.jbc.test(cc) ||
+    regex.cc.jcb.test(cc) ||
     regex.cc.masterCard.test(cc) ||
     regex.cc.visa.test(cc)
   ) {
