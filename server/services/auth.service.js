@@ -1,5 +1,13 @@
-const jwt = require("jsonwebtoken");
 global.config = require("../config.json");
+const jwt = require("jsonwebtoken");
+const generator = require("generate-password");
+
+const generatePassword = () => {
+  return generator.generate({
+    length: 24,
+    numbers: true,
+  });
+};
 
 // function to create an access token
 const setAccessToken = (user) => {
@@ -40,6 +48,7 @@ const setRefreshToken = (user) => {
 // verify user
 
 module.exports = {
+  generatePassword,
   setAccessToken,
   setRefreshToken,
 };

@@ -1,5 +1,9 @@
-::ng-deep .mat-form-field {
-  display: inline-block;
+mat-form-field {
   width: 300px;
+  display: inline-block;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 /*# sourceMappingURL=my-input.component.css.map */

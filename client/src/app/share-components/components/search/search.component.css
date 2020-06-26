@@ -2,16 +2,24 @@ mat-toolbar {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  height: 75px;
 }
 
 mat-toolbar .search-form {
-  min-width: 150px;
-  width: 50%;
-  font-size: 20px;
+  width: 100%;
+  font-size: 16px;
+  padding-top: 15px;
 }
 
-mat-toolbar .search-input {
-  width: 100%;
+mat-toolbar .mat-form-field {
+  padding-left: 5vh;
+  font-size: 14px;
+  width: 65%;
+}
+
+.main-links > li {
+  font-size: 14px;
+  display: inline-block;
 }
 
 .single-autocomplete {

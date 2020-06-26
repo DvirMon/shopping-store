@@ -11,18 +11,8 @@ mat-grid-list {
   margin-top: 2px;
 }
 
-mat-grid-tile {
-  -webkit-box-pack: left !important;
-      -ms-flex-pack: left !important;
-          justify-content: left !important;
-}
-
 mat-grid-list:hover {
   border: red 1px solid;
-}
-
-app-product-thumbnail {
-  padding-top: 10px;
 }
 
 .price {

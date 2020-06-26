@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
     if (window.innerWidth > 820) {
       this.cols = 3
-      this.rowHeight = "91vh"
+      this.rowHeight = "92vh"
     }
   }
 

@@ -6,16 +6,16 @@ import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { faCcAmex } from '@fortawesome/free-brands-svg-icons';
 import { faCcJcb } from '@fortawesome/free-brands-svg-icons';
 import { ccCard } from 'src/app/utilities/models/credit-card-model';
-
-import Cleave from 'cleave.js-master'
-
+  
+import Cleave from 'src/cleave.js-master'
+ 
 @Component({
   selector: 'app-credit-card',
   templateUrl: './credit-card.component.html',
   styleUrls: ['./credit-card.component.scss']
 })
 export class CreditCardComponent implements OnInit, AfterViewInit {
-
+ 
 
   @ViewChild('input') input: ElementRef
   @Input() public control: FormControl

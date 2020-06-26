@@ -13,16 +13,15 @@ const rateLimit = require("express-rate-limit");
 const handleErrors = require("./middleware/handleErrors");
 const sanitize = require("./middleware/handleTags");
 
-// import controllers
+// import controllers     
 const authController = require("./controllers/auth.controller");
 const cartController = require("./controllers/cart-controller");
 const cartItemController = require("./controllers/cart-item-controller");
 const orderController = require("./controllers/order-controller");
 const productController = require("./controllers/product-controller");
-const { dirname } = require("path");
 
-// middleware
-server.use(cors());
+// middleware    
+server.use(cors());   
 server.use(
   "/api/",
   rateLimit({

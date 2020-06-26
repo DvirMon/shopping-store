@@ -2,9 +2,8 @@ import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/utilities/services/form.service';
 import { AuthService } from 'src/app/utilities/services/auth.service';
-// const generator = require('generate-password')
 
-import { generate } from 'generate-password'
+// import { generate } from 'generate-password'
 import { MatInput } from '@angular/material/input';
 
 
@@ -42,7 +41,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     private formService: FormService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -97,7 +96,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   }
 
   // end of subscription section
-  
+
   // logic section
 
   // function to generate password
@@ -105,10 +104,10 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
     if (this.password) {
       return
     }
-    this.password = generate({
-      length: 24,
-      numbers: true
-    })
+
+    this.authService.password().subscribe(
+      (password) => this.password = password
+    )
   }
 
   // function to update password to the control

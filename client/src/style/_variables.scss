@@ -1,8 +1,9 @@
+@import '~bootstrap/scss/bootstrap';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~hover-master/scss/hover.scss";
 
 $colors: (
-  info: #5bc0de,
+  info: #5bc0de, 
   text: #ffffff,
   error: #721c24,
   warning: #f8d7da,

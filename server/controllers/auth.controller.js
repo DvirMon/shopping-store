@@ -7,9 +7,19 @@ const axios = require("axios");
 
 const User = require("../models/user-model");
 const authLogic = require("../business-layer-logic/auth-logic");
-const jwt = require("../services/auth.service");
+const auth = require("../services/auth.service");
 const validation = require("../services/validation.service");
-const authorize = require("../middleware/handleAuth");
+const middleware = require("../middleware/middleware");
+
+
+router.get("/password", async (request, response, next) => {
+  try {
+    const password = await auth.generatePassword();
+    response.json(password);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.post(
   "/login",
@@ -43,7 +53,7 @@ router.post(
       user.personalId = undefined;
 
       // get accessToken
-      const token = await jwt.setAccessToken(user);
+      const token = await auth.setAccessToken(user);
 
       response.json({ user, token });
     } catch (err) {
@@ -55,13 +65,13 @@ router.post(
 // get refresh token after login
 router.get(
   "/refresh-token",
-  authorize(0, config.secret.access),
+  middleware.authorize(0, config.secret.access),
   async (request, response, next) => {
     try {
       const user = request.user;
 
       // get refreshToken
-      const token = await jwt.setRefreshToken(user);
+      const token = await auth.setRefreshToken(user);
       response.json({ user, token });
     } catch (err) {
       next(err);
@@ -81,7 +91,7 @@ router.post("/refresh-token", async (request, response, next) => {
     }
 
     // get refreshToken
-    const token = await jwt.setRefreshToken(user);
+    const token = await auth.setRefreshToken(user);
 
     response.json({ user, token });
   } catch (err) {
@@ -92,11 +102,11 @@ router.post("/refresh-token", async (request, response, next) => {
 // get access token with refresh token
 router.get(
   "/access-token",
-  authorize(0, config.secret.refresh),
+  middleware.authorize(0, config.secret.refresh),
   async (request, response, next) => {
     try {
       const payload = request.user;
-      const accessToken = await jwt.setAccessToken(payload);
+      const accessToken = await auth.setAccessToken(payload);
 
       response.json(accessToken);
     } catch (err) {
@@ -109,7 +119,6 @@ router.post(
   "/register",
   validation.matchPasswordValidation,
   async (request, response, next) => {
-
     try {
       const user = await authLogic.addUserAsync(new User(request.body));
 

@@ -47,6 +47,12 @@ export class AuthService {
 
   // request section 
 
+  // login request - http://localhost:3000/api/auth/password
+  public password(): Observable<string> {
+    return this.http.get<string>(this.url + "/password")
+
+  }
+
   // login request - http://localhost:3000/api/auth/login
   public login(loginInfo: any) {
     return this.handleUser("/login", loginInfo)
