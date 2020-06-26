@@ -5,7 +5,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-auth-dialog',
   templateUrl: './auth-dialog.component.html',
-  styleUrls: ['./auth-dialog.component.scss']
 })
 export class AuthDialogComponent implements OnInit {
 

@@ -1,3 +1,5 @@
+@import "src/style/variables";
+
 .sidenav-container {
   height: 100%;
 }
@@ -5,13 +7,7 @@
 .mat-toolbar {
   position: relative;
   top: 0;
-  z-index: 10;
-}
-
-.app-search {
-position: absolute;
-left: 20px;
-}
+} 
 
 .spacer {
   flex: 1 0.5 auto;
@@ -19,12 +15,18 @@ left: 20px;
 
 ul {
   margin: 0;
+  display: flex;
+  align-items: center;
+  
+  li {
+    display: inline-block;
+    padding: 2%;
+  }
 }
 
-.main-links > li {
-  display: inline-block;
-}
-
-.welcome {
-  font-size: 20px;
+.logo {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  width: 50px;
 }

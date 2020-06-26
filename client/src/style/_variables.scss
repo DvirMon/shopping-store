@@ -1,5 +1,4 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-// @import "../../node_modules/hover-master/css/hover-min.css";
 @import "~hover-master/scss/hover.scss";
 
 $colors: (
@@ -13,7 +12,6 @@ $colors: (
 @function color($color-name) {
   @return map-get($colors, $color-name);
 }
-
 
 @mixin formAuth($height) {
   height: $height;
@@ -47,4 +45,9 @@ $colors: (
 @mixin infoBox {
   @include box();
   @include position();
+}
+
+@mixin vertical-center {
+  display: flex;
+  align-items: center;
 }

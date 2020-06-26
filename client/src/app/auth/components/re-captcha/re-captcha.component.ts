@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/utilities/services/auth.service';
 @Component({
   selector: 'app-re-captcha',
   templateUrl: './re-captcha.component.html',
-  styleUrls: ['./re-captcha.component.scss']
 })
 export class ReCaptchaComponent implements OnInit {
 

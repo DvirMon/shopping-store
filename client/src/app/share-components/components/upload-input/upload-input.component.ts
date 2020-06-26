@@ -8,8 +8,7 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 @Component({
   selector: 'app-upload-input',
   templateUrl: './upload-input.component.html',
-  styleUrls: ['./upload-input.component.scss'],
-  providers: [
+   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => UploadInputComponent),

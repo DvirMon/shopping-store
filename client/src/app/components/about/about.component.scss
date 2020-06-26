@@ -1,4 +1,4 @@
-@import "~src/scss/styles";
+@import "~src/style/styles";
 
 div.container {
   @include position();
@@ -16,6 +16,12 @@ div.container {
     width: 50px;
     height: 50px;
     font-size: 50px;
+    text-align: center;
+    margin: auto;
+  }
+fa-icon {
+    width: 50px;
+    height: 50px;
     text-align: center;
     margin: auto;
   }
