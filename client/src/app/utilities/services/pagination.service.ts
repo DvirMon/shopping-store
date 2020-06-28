@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from '../models/product-model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { ProductsService } from './products.service';
+
 import { PaginationModel } from '../models/pagination-model';
-import { store } from '../redux/store';
+import { ProductModel } from '../models/product-model';
+
 import { FormService } from './form.service';
+
 import { ActionType } from '../redux/action-type';
+import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +16,13 @@ import { ActionType } from '../redux/action-type';
 export class PaginationService {
 
   constructor(
-    private productService: ProductsService,
     private formService: FormService
   ) {
   }
 
-  public getPagedData(data: ProductModel[], paginator: PaginationModel | MatPaginator, cols: number) {
+  public getPagedData(data: ProductModel[], paginator: PaginationModel | MatPaginator): ProductModel[] {
     const startIndex = paginator.pageIndex * paginator.pageSize;
-    const products = data.splice(startIndex, paginator.pageSize)
-    return this.productService.formatProductsArray(products, cols)
+    return data.splice(startIndex, paginator.pageSize)
   }
 
 

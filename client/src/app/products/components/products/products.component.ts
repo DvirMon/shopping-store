@@ -21,9 +21,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public categories: CategoryModel[] = []
-  public collection: [ProductModel[]]
+  public products: ProductModel[] = []
 
-  public cols: number = 3;
+  public cartOpen: boolean = false;
   public isAdmin: boolean = false
   public categoryId: string
   public alias: string
@@ -52,7 +52,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private subscribeToStore() {
     store.subscribe(
       () => {
-        this.collection = this.getPageProducts()
+        this.products = this.getPageProducts()
         this.isAdmin = store.getState().auth.isAdmin
         this.paginationData = store.getState().products[this.alias]
       });
@@ -65,6 +65,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   }
 
+  // get params info
   private getParams(): void {
     this.activeRoute.params.subscribe(
       (params) => {
@@ -74,10 +75,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
+  
+  // get products info
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.collection = this.productService.formatProductsArray(data.pagination?.products, this.cols)
+      this.products = data.pagination.products
       this.pagination = data.pagination.pagination
       if (this.paginator) {
         this.paginator.firstPage();
@@ -111,7 +113,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.alias
     ).subscribe(
       (data) => {
-        this.collection = this.productService.formatProductsArray(data.products, this.cols)
+        this.products = data.products
       })
   }
 
@@ -119,8 +121,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private handleProductsSource(): void {
 
     if (this.isPageExist()) {
+      this.products = this.getPageProducts()
 
-      this.collection = this.getPageProducts()
     } else {
       this.getProductsPagination()
     }
@@ -139,27 +141,25 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
 
-  private getPageProducts(): [ProductModel[]] {
+  private getPageProducts(): ProductModel[] {
     const pagination = this.paginator ? this.paginator : this.pagination
     const products = store.getState().products[this.alias].products
-    return this.paginationService.getPagedData([...products], pagination, this.cols)
+    return this.paginationService.getPagedData([...products], pagination)
   }
 
-  private paginationLength() {
-    const productsLength = store.getState().products[this.alias].products.length
-    const paginationLength = store.getState().products[this.alias].pagination.length
-  }
 
-  private setGrid(condition: boolean): void {
-    if (condition) {
-      this.cols = 3
+  private setGrid(value: boolean): void {
+
+    console.log(value)
+    if (value) {
+      this.cartOpen = value
       this.paginator.pageSize = 6
-      this.collection = this.getPageProducts()
+      this.products = this.getPageProducts()
     }
     else {
-      this.cols = 4
+      this.cartOpen = value
       this.paginator.pageSize = 8
-      this.collection = this.getPageProducts()
+      this.products = this.getPageProducts()
     }
   }
 

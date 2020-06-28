@@ -2,23 +2,12 @@
   background-color: lightgrey;
 }
 
-mat-grid-list {
-  margin: auto;
+.product-row {
   width: 97%;
-  background-color: white;
-}
-
-mat-grid-tile {
-  position: absolute;
-  left: 50px;
-  top: 100px;
+  margin: auto;
   display: flex;
-  flex-direction: row;
-}
-
-mat-divider {
-  margin-left: 10px;
-  margin-right: 10px;
+  align-items: left;
+  background-color: white;
 }
 
 app-products-item {
@@ -26,5 +15,3 @@ app-products-item {
   width: inherit;
   justify-content: center;
 }
-
-

@@ -1,11 +1,34 @@
 @import "~src/style/styles";
 
-mat-grid-list {
-  @include infoBox();
-  border-radius: 15px;
+mat-divider {
+  background-color: white;
+  width: 90%;
+  margin: auto;
 }
 
-.login-info {
-  position: relative;
-  top: 10vh;
+.row {
+  @include infoBox();
+  border-radius: 15px;
+
+  .text-info {
+    @include vertical-center();
+    height: 80px;
+    padding: 3%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: size(lg)) {
+  .row {
+    @include pos-top(20vh);
+  }
+  .row.login-info {
+    @include pos-top(30vh);
+  }
+}
+
+@media (max-width: size(md)) {
+  .row.login-info {
+    @include pos-top(10vh);
+  }
 }

@@ -1,0 +1,8 @@
+<mat-list>
+  <mat-list-item routerLinkActive="active" *ngFor="let category of categories;  let i = index">
+    <fa-icon [icon]="icons[i]" size="1x"></fa-icon>
+    <button mat-button (click)="onNavigate(category)">{{category.name}}
+    </button>
+    <mat-divider class="d-md-none"></mat-divider>
+  </mat-list-item>
+</mat-list>

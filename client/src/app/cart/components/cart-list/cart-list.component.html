@@ -1,5 +1,6 @@
 <mat-toolbar>
-  <span>My Cart</span>
+  <!-- <span>My Cart</span> -->
+  <button mat-button type="button" (click)="closeCartDrawer()">Close View</button>
   <span class="spacer"></span>
   <mat-form-field class="search-input" *ngIf="orderMode" [floatLabel]="'never'">
     <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">

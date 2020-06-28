@@ -1,19 +1,26 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav appSidenavAdminDirective #drawer class="sidenav"
+  <mat-sidenav appSidenavAdminDirective #drawerCart class="sidenav"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="true" position="end">
+    [opened]="false" position="end">
     <div *ngIf="isAdmin; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <app-products-form></app-products-form>
     </ng-template>
     <ng-template #elseBlock>
-      <app-cart-list></app-cart-list>
+      <app-cart-list
+      (emitClose)="drawerCart.toggle()"
+      ></app-cart-list>
     </ng-template>
   </mat-sidenav>
+  <mat-sidenav appSidenavAdminDirective #drawerProduct class="sidenav-products"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="false" position="start">
+    <app-products-nav-list></app-products-nav-list>
+  </mat-sidenav>
   <mat-sidenav-content>
-    <app-products-nav [drawer]="drawer" [isAdmin]="isAdmin"></app-products-nav>
+    <app-products-nav [drawerCart]="drawerCart" [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"></app-products-nav>
     <mat-divider></mat-divider>
     <app-search></app-search>
     <ng-content></ng-content>
   </mat-sidenav-content>
-</mat-sidenav-container> 
+</mat-sidenav-container>

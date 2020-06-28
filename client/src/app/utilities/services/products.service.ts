@@ -88,7 +88,7 @@ export class ProductsService {
     this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
       (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)
     )
-  }
+  } 
 
   // GET products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
@@ -119,18 +119,6 @@ export class ProductsService {
   // end of requests section
 
   // logic section 
-
-  // function to format the products to collection 
-  public formatProductsArray(products: ProductModel[], cols: number): [ProductModel[]] {
-    const collection: any = []
-    const temp = [...products]
-    for (let i = 0; i < products.length;) {
-      const row: ProductModel[] = temp.splice(0, cols)
-      collection.push(row)
-      i = i + cols
-    }
-    return collection
-  }
 
   private formatProductId(products) {
     for (const key in products) {

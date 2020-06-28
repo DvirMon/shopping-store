@@ -1,14 +1,27 @@
-@import '~bootstrap/scss/bootstrap';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~hover-master/scss/hover.scss";
+// @import '~bootstrap/scss/bootstrap-reboot';
+@import "~bootstrap/scss/bootstrap-grid";
 
 $colors: (
-  info: #5bc0de, 
+  info: #5bc0de,
   text: #ffffff,
   error: #721c24,
   warning: #f8d7da,
   forbidden: #f3727d,
 );
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 840px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@function size($breakpoints) {
+  @return map-get($grid-breakpoints, $breakpoints);
+}
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
@@ -16,19 +29,19 @@ $colors: (
 
 @mixin formAuth($height) {
   height: $height;
-  width: 80%;
+  width: 100%;
   margin: auto;
   background-color: rgba($color: #ffffff, $alpha: 1);
 }
 
 @mixin box {
   color: white;
+  text-align: center;
   background-color: rgba($color: #000000, $alpha: 0.5);
 }
 
 @mixin icon-box {
-  display: flex;
-  align-items: center;
+  @include vertical-center();
   width: 100px;
   height: 100px;
   border-radius: 5px;
@@ -37,8 +50,6 @@ $colors: (
 
 @mixin position {
   margin: auto;
-  position: relative;
-  top: 20vh;
   width: 80%;
   font-size: 20px;
 }
@@ -52,3 +63,9 @@ $colors: (
   display: flex;
   align-items: center;
 }
+
+@mixin pos-top($height) {
+  position: relative;
+  top: $height;
+}
+

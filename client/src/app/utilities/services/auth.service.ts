@@ -135,19 +135,20 @@ export class AuthService {
       return
     }
     this.handleRoleRoute(user)
-  }
+  } 
 
   public handleRoleRoute(user: UserModel): Promise<boolean> {
     return user.isAdmin ?
       this.router.navigateByUrl("admin" + config.baseProductUrl)
-      : this.router.navigateByUrl(`home/${user._id}`)
+      // : this.router.navigateByUrl(`home/${user._id}`)
+      : this.router.navigateByUrl(`products/beverages/5e91e29b9c08fc560ce2cf32`)
   }
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
     return this.router.navigateByUrl(`/login`)
   }
-
+ 
 
   // token logic
 

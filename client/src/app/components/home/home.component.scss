@@ -1,15 +1,24 @@
-.mat-grid-tile {
-  outline: 1px solid black;
-}
+@import "src/style/variables";
 
-app-login, app-info, app-about {
-  height: inherit;
+@mixin background-default($height) {
+  height: $height;
   width: 100%;
+  margin: 0;
 }
 
-.home {
-  background-image: url("/assets/images/about.jpg");
-  background-repeat: no-repeat;
-  background-size: 100vw;
+
+@media (min-width: size(lg)) {
+  .row {
+    @include background-default(92vh);
+    background-image: url("/assets/images/about.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
 
+@media (max-width: size(md)) {
+  .row {
+    @include background-default(93%);
+    background-color: #007f88;
+  }
+}

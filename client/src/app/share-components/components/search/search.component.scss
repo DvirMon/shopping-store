@@ -1,3 +1,11 @@
+@import "~src/style/styles";
+
+@mixin search-input($width) {
+  padding-left: 5vh;
+  font-size: 14px;
+  width: $width;
+}
+
 mat-toolbar {
   justify-content: center;
   height: 75px;
@@ -7,35 +15,49 @@ mat-toolbar {
     font-size: 16px;
     padding-top: 15px;
   }
-  
-  .mat-form-field {
-    padding-left: 5vh;
+
+  ul > li {
     font-size: 14px;
-    width: 65%;
+    display: inline-block;
   }
-} 
 
-.main-links > li {
-  font-size: 14px;
-  display: inline-block;
-}
+  .single-autocomplete {
+    justify-content: center;
 
-.single-autocomplete {
-  justify-content: center;
-}
+    mat-option {
+      background-color: white !important;
+      height: inherit;
+      box-sizing: border-box;
 
-mat-option {
-  background-color: white !important;
-  height: inherit;
-  box-sizing: border-box;
-  
-  &:hover {
-    border: 1px solid red;
-    opacity: 0.8;
+      &:hover {
+        border: 1px solid red;
+        opacity: 0.8;
+      }
+    }
   }
 }
+// from 840px down
+@media (max-width: size(md)) {
+  mat-toolbar {
+    .mat-form-field {
+      @include search-input(95%);
+    }
+  }
+}
+// from 560px down
+@media (max-width: size(sm)) {
+  mat-toolbar {
+    .mat-form-field {
+      @include search-input(100%);
+    }
+  }
+}
 
-mat-divider {
-  margin-left: 10px;
-  margin-right: 10px;
+// from 84px up
+@media (min-width: size(md)) {
+  mat-toolbar {
+    .mat-form-field {
+      @include search-input(65%);
+    }
+  }
 }

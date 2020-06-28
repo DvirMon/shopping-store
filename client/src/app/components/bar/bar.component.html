@@ -11,7 +11,7 @@
       </ul>
       <span class="spacer"></span>
       <button mat-button *ngIf="!isLogin && isRegister" (click)="onLogin()">Back To Login</button>
-      <span *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
+      <span class="d-none d-lg-block" *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>

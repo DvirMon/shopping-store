@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/utilities/services/auth.service';
+
 import { Router } from '@angular/router';
-import { store } from 'src/app/utilities/redux/store';
+
 import { UserModel } from 'src/app/utilities/models/user-model';
+import { AuthService } from 'src/app/utilities/services/auth.service';
+
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-bar',
@@ -22,8 +22,8 @@ export class BarComponent implements OnInit {
   public isRegister: boolean = false;
   public isAdmin: boolean = false;
 
+
   constructor(
-    private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private router: Router
 
@@ -32,19 +32,13 @@ export class BarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.storeSubscribe()
+    this.subscribeToStore()
     this.subscribeToSubject()
 
   }
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
 
-
-  public storeSubscribe() {
+  public subscribeToStore() {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.isAdmin = store.getState().auth.isAdmin

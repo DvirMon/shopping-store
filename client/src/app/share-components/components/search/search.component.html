@@ -1,13 +1,13 @@
 <mat-toolbar>
   <form class="search-form">
-    <mat-form-field class="search-input">
+    <mat-form-field>
       <mat-label>Please Enter Query</mat-label>
       <input type="text" placeholder="Search {{totalProducts | async}} Products..." matInput #searchInput
         [matAutocomplete]="auto" [formControl]="searchControl">
       <mat-icon>search</mat-icon>
     </mat-form-field>
   </form>
-  <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear class="main-links">
+  <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
     <li arrowPosition="after" mat-sort-header="price">
       Price
     </li>

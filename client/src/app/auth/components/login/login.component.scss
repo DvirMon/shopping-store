@@ -1,11 +1,32 @@
 @import "~src/style/variables";
 
+@media (min-width: size(lg)) {
+  form {
+    @include pos-top(20vh);
+
+  }
+}
+@media (max-width: size(md)) {
+  form {
+    @include pos-top(5vh);
+  }
+}
+
 form {
   @include formAuth("initial");
   border-radius: 10px;
-
 }
 
 .mat-icon {
   font-size: 20px;
+}
+.header {
+  padding: 2%;
+  h1 {
+    margin: 0;
+  }
+}
+
+.btn-shopping {
+  @include pos-top(10vh);
 }

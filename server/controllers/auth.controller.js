@@ -22,15 +22,15 @@ router.get("/password", async (request, response, next) => {
 });
 
 router.post(
-  "/login",
-  validation.loginValidation,
+  "/login", 
+  validation.loginValidation, 
   async (request, response, next) => {
     try {
       // get user from db
       const user = await authLogic.getUserAsync(request.body.email);
 
       if (!user) {
-        return next({
+        return next({ 
           status: 409,
           message: "username or password are incorrect",
         });

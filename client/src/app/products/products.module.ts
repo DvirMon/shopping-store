@@ -12,7 +12,8 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
 import { CartModule } from '../cart/cart.module';
 import { ProductsNavComponent } from './components/products-nav/products-nav.component';
 import { ProductsFormComponent } from './components/products-form/products-form.component';
-
+import { ProductsNavListComponent } from './components/products-nav-list/products-nav-list.component'
+ 
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ProductsFormComponent } from './components/products-form/products-form.
     ProductsDialogComponent,
     ProductsNavComponent,
     ProductsFormComponent,
+    ProductsNavListComponent
 
   ],
   imports: [

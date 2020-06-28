@@ -109,8 +109,6 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
 
   public handleRequest(): void {
 
-    // this.handleProductImage()
-
     this.editMode
       ? this.handleUpdateRequest()
       : this.handleAddRequest()
@@ -120,6 +118,7 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
 
   // handle request data
   private handleRequestData(): ProductModel | FormData {
+
     return typeof this.product.imagePath === "string"
       ? this.product
       : this.formService.setFormData(this.product, this.file, this.alias)

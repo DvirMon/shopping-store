@@ -5,8 +5,7 @@
 }
 
 .mat-toolbar {
-  position: relative;
-  top: 0;
+ @include pos-top(0)
 }
 
 .spacer {
@@ -15,8 +14,7 @@
 
 ul {
   margin: 0;
-  display: flex; 
-  align-items: center;
+  @include vertical-center();
 
   li {
     display: inline-block;
@@ -25,8 +23,7 @@ ul {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+  @include vertical-center();
   border-radius: 50px;
   width: 50px;
 }
@@ -35,4 +32,5 @@ ul {
   ul {
     padding: 0;
   }
+
 }

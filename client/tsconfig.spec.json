@@ -10,7 +10,6 @@
   "files": [
     "src/test.ts",
     "src/polyfills.ts",
-    "src/node_modules/@types/node/index.d.ts"
   ],
   "include": [
     "src/**/*.spec.ts",

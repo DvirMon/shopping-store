@@ -2,6 +2,7 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { InfoService, Info } from 'src/app/utilities/services/info.service';
 import { ActivatedRoute, ActivationEnd, Data } from '@angular/router';
 import { store } from 'src/app/utilities/redux/store';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-info',
@@ -31,7 +32,8 @@ export class InfoComponent implements OnInit {
 
   constructor(
     private infoService: InfoService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    public user : UserModel
 
   ) { }
 
@@ -49,9 +51,11 @@ export class InfoComponent implements OnInit {
     store.subscribe(() => {
       this.isAdmin = store.getState().auth.isAdmin
       this.isLogin = store.getState().auth.isLogin
+      this.user = store.getState().auth.user
     })
     this.isLogin = store.getState().auth.isLogin
     this.isAdmin = store.getState().auth.isAdmin
+    this.user = store.getState().auth.user
   }
 
   private subscribeToRoute() {

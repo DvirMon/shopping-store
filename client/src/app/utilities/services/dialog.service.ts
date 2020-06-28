@@ -105,7 +105,7 @@ export class DialogService {
         break
       case "spinner":
         dialogConfig.autoFocus = true;
-        dialogConfig.hasBackdrop = false;
+        dialogConfig.hasBackdrop = true;
         dialogConfig.data = data;
         dialogConfig.panelClass = "dialog-spinner"
         break

@@ -4,7 +4,7 @@ global.config = require("../config.json");
 const connectAsync = () => {
   return new Promise((resolve, reject) => {
     mongoose.connect(
-      process.env.ATLAS_URI || config.mongodb.URI,
+      config.mongodb.URI,
       config.mongodb.options,
       (err, mongo) => {
         if (err) {
