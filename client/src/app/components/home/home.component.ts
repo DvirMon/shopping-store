@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
   public rowHeight: string = "31vh"
 
   constructor(
-    private router : Router
   )
   {}
 
@@ -22,10 +21,6 @@ export class HomeComponent implements OnInit {
     if (window.innerWidth > 820) {
       this.cols = 3
       this.rowHeight = "92vh"
-    }
-
-    if(store.getState().cart.isCartActive) {
-      this.router.navigateByUrl(`products/beverages/5e91e29b9c08fc560ce2cf32`)
     }
   }
 
