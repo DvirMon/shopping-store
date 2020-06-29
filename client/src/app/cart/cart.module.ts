@@ -10,7 +10,7 @@ import { CartListItemComponent } from './components/cart-list-item/cart-list-ite
 @NgModule({
   declarations: [
     CartListComponent,
-    CartListItemComponent
+    CartListItemComponent,
   ],
   imports: [
     CoreModule,

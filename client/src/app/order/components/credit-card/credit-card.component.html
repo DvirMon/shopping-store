@@ -1,8 +1,8 @@
-<mat-grid-list cols="4" rowHeight="100px">
+<mat-grid-list cols="4" rowHeight="150px">
   <mat-grid-tile *ngFor="let card of ccCards">
     <fa-icon [icon]="card?.icon" size="4x" [ngClass]="{'cc-highlight': card?.color}"></fa-icon>
   </mat-grid-tile>
-  <mat-grid-tile colspan="4">
+  <mat-grid-tile colspan="4" rowspan="2">
     <mat-form-field class="full-width" appearance="fill">
       <input 
       matInput #input 

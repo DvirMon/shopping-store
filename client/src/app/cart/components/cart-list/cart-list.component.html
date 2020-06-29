@@ -1,31 +1,48 @@
-<mat-toolbar>
-  <!-- <span>My Cart</span> -->
+<!-- tool bar header - products-->
+
+<mat-toolbar *ngIf="!orderMode">
   <button mat-button type="button" (click)="closeCartDrawer()">Close View</button>
   <span class="spacer"></span>
-  <mat-form-field class="search-input" *ngIf="orderMode" [floatLabel]="'never'">
+  <button mat-button type="button" (click)="deleteAllCartItems()">Delete Cart</button>
+  <mat-icon>delete</mat-icon>
+  <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to
+    store</button>
+  </mat-toolbar>
+  
+  
+  <!-- tool bar header - order-->
+<mat-toolbar *ngIf="orderMode">
+
+  <mat-form-field class="search-input">
     <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
     <mat-icon>search</mat-icon>
   </mat-form-field>
+
   <span class="spacer"></span>
-  <button *ngIf="!orderMode" mat-button type="button" (click)="deleteAllCartItems()">Delete Cart</button>
-  <mat-icon *ngIf="!orderMode">delete</mat-icon>
-  <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to
-    store</button>
+  
+  <button mat-button type="button" (click)="closeCartDrawer()">Close View</button>
 </mat-toolbar>
+
+
+<!--products list  -->
 <mat-nav-list>
   <app-cart-list-item *ngFor="let cartItem of cartItems" [cartItem]="cartItem" [orderMode]="orderMode"
     [searchTerm]="searchControl.value">
   </app-cart-list-item>
 </mat-nav-list>
+
+<!-- toll bar end  - products-->
 <mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile mat-icon class="my-cart">
     <mat-icon [matBadge]="cartItems.length" matBadgeColor="warn">shopping_cart</mat-icon>
   </mat-grid-tile>
   <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
-  <mat-grid-tile colspan="2">
-    <button class="payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
+  <mat-grid-tile class="payment" colspan="2">
+    <button class="btn-payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
   </mat-grid-tile>
 </mat-grid-list>
+
+<!-- toll bar end  - order-->
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile class="my-cart">Total : {{cartTotalPrice | currency}}</mat-grid-tile>
 </mat-grid-list>

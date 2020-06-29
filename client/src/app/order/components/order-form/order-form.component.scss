@@ -1,12 +1,26 @@
+@import "src/style/variables";
+
 mat-grid-list,
 mat-grid-tile,
-mat-vertical-stepper,
-form {
+mat-horizontal-stepper,
+form,
+.mat-horizontal-content-container {
   height: 100%;
   width: 100%;
 }
 
-.payment {
-  padding : 3%;
+.mat-horizontal-stepper-content {
+  height: 100%;
+  padding: 3%;
+  display: flex;
 }
 
+div.payment {
+  height: inherit;
+}
+
+@media (max-width: size(md)) {
+  div.payment {
+    padding: 0;
+  }
+}

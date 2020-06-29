@@ -30,8 +30,8 @@ export class CartListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private cartService: CartService,
     private receiptService: ReceiptService,
+    private cartService: CartService,
     public product: ProductModel,
     public cart: CartModel,
     private user: UserModel

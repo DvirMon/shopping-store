@@ -12,7 +12,7 @@ export class AddressComponent  {
   @Input() public controlGroup: FormGroup
   @Input() public streetControlName: string
   @Input() public user: UserModel
-  @Input() public cols: string
+  @Input() public rowHeight: string
 
   public optionsCity = {
     offset: 3,
@@ -28,16 +28,6 @@ export class AddressComponent  {
 
 
   public selectedValue: boolean = true;
-
-
-  public subscribeToFormControl() {
-
-    this.controlGroup.valueChanges.subscribe(
-      (values) => {
-        console.log(values)
-      }
-    )
-  }
 
   public addressAutoComplete(controlName: string) {
 

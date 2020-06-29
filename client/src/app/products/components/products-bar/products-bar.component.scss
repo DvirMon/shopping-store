@@ -1,7 +1,7 @@
 @import "~src/style/styles";
 
 .sidenav-container {
-  height: 90vh;
+  height: 92vh;
 
   .sidenav .mat-toolbar { 
     background: color(info);
@@ -14,7 +14,7 @@
 }
  
 .sidenav {
-  width: 350px; 
+  width: 450px; 
   box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
 }
 
@@ -22,7 +22,6 @@
   background: color(info);
   width: 100%;
   background-size: contain;
-  background-repeat: no-repeat;
 
   ul {
     z-index: 2;

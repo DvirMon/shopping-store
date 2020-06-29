@@ -1,13 +1,13 @@
 <div class="payment">
   <form [formGroup]="orderForm">
-    <mat-vertical-stepper #stepper>
+    <mat-horizontal-stepper #stepper>
       <mat-step [stepControl]="address">
-        <ng-template matStepLabel>Address : Enter your home address</ng-template>
-        <app-address [controlGroup]="address" [user]="user" [cols]=2></app-address>
+        <ng-template matStepLabel>Address : Enter Address</ng-template>
+        <app-address [controlGroup]="address" [user]="user" [rowHeight]=200></app-address>
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
-        <app-date-input [control]="shippingDate"></app-date-input>
+        <app-date-input [control]="shippingDate" [mobile]="(isHandset$ | async)"></app-date-input>
       </mat-step>
       <mat-step [stepControl]="creditCard">
         <ng-template matStepLabel>Payment</ng-template>
@@ -19,6 +19,6 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-step>
-    </mat-vertical-stepper>
+    </mat-horizontal-stepper>
   </form>
 </div>

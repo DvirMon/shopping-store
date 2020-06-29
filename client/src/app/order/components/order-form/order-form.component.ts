@@ -12,7 +12,9 @@ import { OrderModel } from 'src/app/utilities/models/order-model';
 
 import { store } from 'src/app/utilities/redux/store';
 import { ActivatedRoute } from '@angular/router';
-
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 
 @Component({
@@ -24,9 +26,16 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   public orderForm: FormGroup;
   public cartTotalPrice: number;
+  public mobile: boolean;
+
+  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
 
   constructor(
-    private activeRoute: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver,
     private formService: FormService,
     private orderService: OrderService,
     private order: OrderModel,
@@ -39,6 +48,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     this.createForm()
     this.subscribeToStore()
     this.orderDefaultValues()
+    this.subscribeToBreakPoints()
   }
 
   ngAfterViewInit() {
@@ -74,6 +84,10 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
         }
       }
     )
+  }
+
+  private subscribeToBreakPoints(): void {
+    this.mobile = this.breakpointObserver.isMatched('(max-width: 660px)')
   }
   // end of subscribe section
 

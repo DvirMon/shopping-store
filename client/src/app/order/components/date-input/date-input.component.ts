@@ -21,6 +21,7 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   @Input() public control: FormControl
   @Input() public hint: string
   @Input() public controlName: string
+  @Input() public mobile: boolean
   public occupiedDates: number[] = []
 
   public value: any

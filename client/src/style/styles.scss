@@ -28,7 +28,7 @@ mat-grid-tile {
 
 .dialog-spinner .mat-dialog-container {
   margin: auto;
-  color : transparent;
+  color: transparent;
   background-color: transparent;
   padding: initial;
   box-shadow: none;
@@ -52,13 +52,6 @@ mat-grid-tile {
   overflow: hidden;
 }
 
-@media (max-width: size(md)) {
-  .dialog-product .mat-dialog-container {
-    width: 90%;
-    margin: auto;
-  }
-}
-
 .dialog-order .mat-dialog-container {
   color: white;
   text-align: center;
@@ -66,6 +59,14 @@ mat-grid-tile {
   border-radius: 5px;
   overflow: hidden;
 }
+
+@media (max-width: size(md)) {
+  .dialog-product .mat-dialog-container, .dialog-order .mat-dialog-container {
+    width: 90%;
+    margin: auto;
+  }
+}
+
 .dialog-auth .mat-dialog-container {
   color: black;
   border: 2px solid color(info);
@@ -79,5 +80,3 @@ mat-grid-tile {
   text-align: right;
   display: inherit;
 }
-
-

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductsService } from 'src/app/utilities/services/products.service';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
@@ -40,6 +40,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.subscribeToRoute()
     this.subscribeToStore()
     this.subscribeToSubject()
+    
   }
 
   ngAfterViewInit() {
@@ -149,8 +150,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
 
   private setGrid(value: boolean): void {
-
-    console.log(value)
     if (value) {
       this.cartOpen = value
       this.paginator.pageSize = 6

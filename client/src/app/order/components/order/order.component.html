@@ -1,10 +1,7 @@
-<mat-grid-list cols="3" rowHeight="91vh">
-  <mat-grid-tile>
-    <app-cart-list
-    [orderMode]="true"
-    ></app-cart-list>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2">
-    <app-order-form></app-order-form>
-  </mat-grid-tile>
-</mat-grid-list>
+<app-order-nav>
+  <div class="row">
+    <div class="col-info col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <app-order-form></app-order-form>
+    </div>
+  </div>
+</app-order-nav>

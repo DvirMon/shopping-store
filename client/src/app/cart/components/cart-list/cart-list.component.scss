@@ -1,12 +1,13 @@
 @import "~src/style/variables";
 
 .mat-toolbar {
-  background: color(info);
+  background-color: color(info);
   color: color(text);
-} 
+  height: 80px;
+}
 
 mat-nav-list {
-  height: 80%;
+  height: 77%;
   overflow: auto;
 }
 
@@ -17,10 +18,12 @@ mat-nav-list {
 .payment {
   background-color: color(info);
   height: 100%;
-  font-size: 28px;
   font-weight: 500;
   border-radius: 0;
   color: color(text);
+}
+.btn-payment {
+  font-size: 28px;
 }
 
 .my-cart {
@@ -43,7 +46,12 @@ app-product-list-item {
 }
 
 .search-input {
-  width: 200px;
+  width: 280px;
   font-size: initial;
 }
- 
+
+@media (max-width: size(md)) {
+  .search-input {
+    width: 250px;
+  }
+}

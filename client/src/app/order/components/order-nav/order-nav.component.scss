@@ -1,0 +1,29 @@
+@import "~src/style/variables";
+
+.sidenav-container {
+  height: 92vh;
+}
+
+.sidenav {
+  width: 500px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.sidenav .mat-toolbar {
+  background-color: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+@media (max-width: size(md)) {
+  .sidenav {
+    width: 100%;
+  }
+}
