@@ -17,12 +17,15 @@ import { map } from 'rxjs/operators';
 
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-products-dialog',
   templateUrl: './products-dialog.component.html',
   styleUrls: ['./products-dialog.component.scss']
 })
+
+
 
 export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
@@ -38,8 +41,16 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   public distinctChange: boolean = false
   public alias: string
 
+
+  public params = {
+    cols: 2,
+    height: 350,
+    width: 350
+  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private breakpointObserver: BreakpointObserver,
     private formService: FormService,
     private cartService: CartService,
     public product: ProductModel,
@@ -51,7 +62,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
     this.product = this.data.payload.product;
     this.alias = this.data.payload.alias;
-    this.handleStoreSubscribe();
+    this.subscribeToStore();
+    this.subscribeToBreakPoints()
     this.handleUpdateState();
 
   }
@@ -59,7 +71,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.InvokeQuantityFormControl()
     this.setControlValidators()
-    this.controlValueSubscription()
+    this.subscribeToControls()
   }
 
 
@@ -97,7 +109,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   // subscription section
 
-  private handleStoreSubscribe(): void {
+  private subscribeToStore(): void {
     store.subscribe(
       () => {
         this.cartItems = [...store.getState().cart.cartItems];
@@ -109,7 +121,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     this.cart = store.getState().cart.cart;
   }
 
-  private controlValueSubscription() {
+  private subscribeToControls() {
     this.quantityControl.valueChanges.pipe(
       map(quantity => {
         if (this.quantityControl.errors) {
@@ -117,10 +129,17 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
           quantity = 1
         }
         this.cartItem.totalPrice = quantity * this.product.price
-
-
       })
     ).subscribe()
+  }
+
+  private subscribeToBreakPoints() {
+    const small: boolean = this.breakpointObserver.isMatched('(max-width: 660px)')
+    if (small) {
+      this.params.cols = 1
+      this.params.height = 250
+      this.params.width = 250 
+    }
   }
 
   // end of subscribe section

@@ -101,7 +101,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   // function to generate password
   public generatePassword() {
-    if (this.password) {
+    if (this.password || this.placeHolder !== "Password") {
       return
     }
 

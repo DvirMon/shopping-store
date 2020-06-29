@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { Router } from '@angular/router';
 
@@ -8,9 +8,6 @@ import { faCheese } from "@fortawesome/free-solid-svg-icons/faCheese"
 import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons/faDrumstickBite"
 import { faCandyCane } from "@fortawesome/free-solid-svg-icons/faCandyCane"
 import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
-
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-
 
 import { store } from 'src/app/utilities/redux/store';
 
@@ -22,6 +19,7 @@ import { store } from 'src/app/utilities/redux/store';
 export class ProductsNavListComponent {
 
   public categories: CategoryModel[] = store.getState().products.categories
+  public closeDrawer: EventEmitter<boolean> = new EventEmitter()
 
   public isAdmin: boolean = store.getState().auth.isAdmin
 
@@ -41,9 +39,14 @@ export class ProductsNavListComponent {
   ) { }
 
   public onNavigate(category) {
+
     this.isAdmin
       ? this.router.navigateByUrl(`/admin/products/${category.alias}/${category._id}`)
       : this.router.navigateByUrl(`/products/${category.alias}/${category._id}`)
+
+      console.log
+    this.closeDrawer.emit(false)
+
   }
 
 

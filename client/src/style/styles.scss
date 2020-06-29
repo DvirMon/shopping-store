@@ -8,7 +8,6 @@ body,
   padding: 0;
 }
 
-
 mat-grid-list,
 mat-grid-tile {
   height: 100%;
@@ -28,10 +27,11 @@ mat-grid-tile {
 }
 
 .dialog-spinner .mat-dialog-container {
-  box-shadow: none;
   margin: auto;
+  color : transparent;
   background-color: transparent;
   padding: initial;
+  box-shadow: none;
   z-index: 5;
   overflow: hidden;
 }
@@ -50,6 +50,13 @@ mat-grid-tile {
   padding: 0;
   box-shadow: initial;
   overflow: hidden;
+}
+
+@media (max-width: size(md)) {
+  .dialog-product .mat-dialog-container {
+    width: 90%;
+    margin: auto;
+  }
 }
 
 .dialog-order .mat-dialog-container {
@@ -73,30 +80,4 @@ mat-grid-tile {
   display: inherit;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  width: 5px;
-  height: 20px;
-  background-color: white;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  height: 15px;
-  width: 15px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-  background-color: grey;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  cursor: pointer;
-  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-}
 

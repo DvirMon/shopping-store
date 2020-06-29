@@ -69,3 +69,9 @@ $grid-breakpoints: (
   top: $height;
 }
 
+@mixin dialog {
+  color: color(text);
+  background-color: color(info);
+  outline: transparent;
+}
+
