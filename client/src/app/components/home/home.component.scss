@@ -9,17 +9,8 @@
 div.d-none.d-md-block {
   margin: auto;
 }
-
-@media (min-width: size(lg)) {
-  .row {
-    @include background-default(92vh);
-    @include bg-image("/assets/images/about.jpg");
-  }
+.row {
+  @include background-default(92vh);
+  @include bg-image("/assets/images/about.jpg");
 }
 
-@media (max-width: size(sm)) {
-  .row {
-    @include background-default(93%);
-    background-color: #007f88;
-  }
-}
