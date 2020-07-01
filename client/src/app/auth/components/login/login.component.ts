@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { FormService } from 'src/app/utilities/services/form.service';
@@ -8,7 +9,6 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 import { UserModel } from 'src/app/utilities/models/user-model';
 
 import { store } from 'src/app/utilities/redux/store';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
   public serverError: string
 
   constructor(
+    private router: Router,
     private formService: FormService,
     private authService: AuthService,
     private productsService: ProductsService,
     public user: UserModel,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
 
 
   // form section
+  
   public createForm() {
     this.loginForm = this.formService.loginForm()
   }

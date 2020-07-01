@@ -1,14 +1,14 @@
 @import "~src/style/variables";
 
 div {
-  height: 91vh;
-  background-image: url("/assets/images/shopPicture.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  @include bg-image("/assets/images/shopPicture.jpg");
+  height: 92vh;
+}
 
-  form {
-    @include formAuth("91vh");
-  }
+form {
+  @include formAuth(85vh);
+  @include pos-top(3%);
+  width: 90%;
 }
 
 ::ng-deep div.mat-horizontal-content-container {

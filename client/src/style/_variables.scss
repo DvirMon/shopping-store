@@ -1,6 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~hover-master/scss/hover.scss";
-// @import '~bootstrap/scss/bootstrap-reboot';
 @import "~bootstrap/scss/bootstrap-grid";
 
 $colors: (
@@ -25,6 +24,15 @@ $grid-breakpoints: (
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
+}
+
+@mixin bg-image ($url){
+  background-image: url($url);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
 }
 
 @mixin formAuth($height) {

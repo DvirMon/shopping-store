@@ -27,6 +27,7 @@ const loginValidation = (request, response, next) => {
 
 // validation for password confirmation
 const matchPasswordValidation = (request, response, next) => {
+
   const schema = Joi.object()
     .keys({
       password: Joi.required(),

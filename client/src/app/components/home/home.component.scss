@@ -13,13 +13,11 @@ div.d-none.d-md-block {
 @media (min-width: size(lg)) {
   .row {
     @include background-default(92vh);
-    background-image: url("/assets/images/about.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    @include bg-image("/assets/images/about.jpg");
   }
 }
 
-@media (max-width: size(md)) {
+@media (max-width: size(sm)) {
   .row {
     @include background-default(93%);
     background-color: #007f88;

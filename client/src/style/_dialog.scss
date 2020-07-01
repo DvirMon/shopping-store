@@ -54,7 +54,7 @@
 
 
 @media (max-width: size(md)) {
-  .dialog-product .mat-dialog-container, .dialog-order .mat-dialog-container {
+  .dialog-product .mat-dialog-container, .dialog-order .mat-dialog-container, .dialog-auth .mat-dialog-container {
     width: 90%;
     margin: auto;
   }

@@ -14,7 +14,7 @@ const handleError = (err, request, response, next) => {
   // handle schema error
   if (err.name === "ValidationError") {
     return response.status(404).json(formatErrorMessage(err));
-  }
+  }  
 
   if (config.production) {
     return response
@@ -27,12 +27,15 @@ const handleError = (err, request, response, next) => {
 
 const formatErrorMessage = (err) => {
   const arr = err.message.split(":");
-  const error = err.errors[arr[1].trim()];
-  if (error["properties"]) {
-    return error.properties;
-  } else if (error.name === "CastError") {
-    return error.message;
+    if(err.errors) {
+    const error = err.errors[arr[1].trim()];
+    if (error["properties"]) {
+      return error.properties;
+    } else if (error.name === "CastError") {
+      return error.message;
+    }
   }
+  return err
 };
 
 module.exports = handleError;

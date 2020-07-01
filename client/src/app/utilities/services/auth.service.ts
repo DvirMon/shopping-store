@@ -13,7 +13,7 @@ import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { config } from "src/main-config"
+
 import { environment } from 'src/environments/environment';
 
 export interface Login {
@@ -139,7 +139,7 @@ export class AuthService {
 
   public handleRoleRoute(user: UserModel): Promise<boolean> {
     return user.isAdmin ?
-      this.router.navigateByUrl("admin" + config.baseProductUrl)
+      this.router.navigateByUrl("admin" + environment.productLandingPage)
       : this.router.navigateByUrl(`home/${user._id}`)
   }
 

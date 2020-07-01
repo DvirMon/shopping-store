@@ -119,11 +119,12 @@ router.post(
   "/register",
   validation.matchPasswordValidation,
   async (request, response, next) => {
-    try {
+    try { 
       const user = await authLogic.addUserAsync(new User(request.body));
 
       // get accessToken
-      const token = await jwt.setAccessToken(user);
+      const token = await auth.setAccessToken(user);
+ 
       response.json({ user, token });
     } catch (err) {
       next(err);

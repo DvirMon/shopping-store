@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/utilities/services/auth.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-auth-dialog',
   templateUrl: './auth-dialog.component.html',
 })
-export class AuthDialogComponent implements OnInit {
+export class AuthDialogComponent  {
 
   constructor(
-    private dialog: MatDialog,
     private dialogRef: MatDialogRef<AuthDialogComponent>,
     private authService: AuthService,
 
   ) { }
-
-  ngOnInit(): void {
-  }
 
   public refreshExpireToken() {
     this.authService.getRefreshTokenWhenExpired().subscribe(

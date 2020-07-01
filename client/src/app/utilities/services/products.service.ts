@@ -8,13 +8,12 @@ import { ProductModel } from '../models/product-model';
 import { CategoryModel } from '../models/category-model';
 import { FormService } from './form.service';
 
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+
+import { store } from '../redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap, map, switchMap, take } from 'rxjs/operators';
-import { store } from '../redux/store';
-
-import { config } from '../../../main-config'
 import { environment } from 'src/environments/environment';
 
 
@@ -35,12 +34,14 @@ export interface ProductCartInfo {
 
 export class ProductsService {
 
-  public baseUrl: string = `${environment.server}/api/products`
+  private baseUrl: string = `${environment.server}/api/products`
+
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
   public productsSearchResults = new Subject<ProductModel[]>();
   public productsCols = new Subject<boolean>();
-  public slice: number = 4;
+
+  public productLandingPage: string = environment.productLandingPage
 
   constructor(
     private http: HttpClient,
@@ -77,7 +78,6 @@ export class ProductsService {
       })
     )
   }
-
 
   // GET product : http://localhost:3000/api/products/:_id
   public getProductNameAndImage(_id): Observable<ProductModel> {
@@ -148,7 +148,7 @@ export class ProductsService {
   }
 
   public productsLandingPage(): Promise<boolean> {
-    return this.router.navigateByUrl(`${config.baseProductUrl}`)
+    return this.router.navigateByUrl(environment.productLandingPage)
   }
 
   public getCategoryAlias(product: ProductModel): string {

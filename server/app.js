@@ -3,7 +3,7 @@ global.config = require("./config.json");
 const express = require("express");
 const server = express();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || config.port;
 
 // import middleware
 const cors = require("cors");
