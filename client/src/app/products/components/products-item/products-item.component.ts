@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 import { store } from 'src/app/utilities/redux/store';
@@ -10,17 +10,22 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './products-item.component.html',
   styleUrls: ['./products-item.component.scss']
 })
-export class ProductsItemComponent {
+export class ProductsItemComponent implements OnInit {
 
-  @Input() public product: ProductModel
-  public isAdmin: boolean = store.getState().auth.isAdmin
-  private alias: string
+  @Input() public product: ProductModel;
+  public isAdmin: boolean = store.getState().auth.isAdmin;
+  public alias: string;
+
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
-    private activeRoute: ActivatedRoute
   ) { }
+
+  ngOnInit(): void {
+    this.alias = this.productService.getCategoryAlias(this.product)
+
+  }
 
   public handleProductDialog() {
 
@@ -29,8 +34,8 @@ export class ProductsItemComponent {
       : this.dialogService.handleProductDialog(this.handleProductData())
   }
 
-  private handleAlias() :string {
-    return this.activeRoute.snapshot.params.alias
+  private handleAlias(): string {
+    return this.productService.getCategoryAlias(this.product)
   }
 
   private handleProductData(): ProductData {

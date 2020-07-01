@@ -1,0 +1,62 @@
+@mixin dialog {
+  color: color(text);
+  background-color: color(info);
+  outline: transparent;
+}
+
+.dialog-spinner .mat-dialog-container {
+  margin: auto;
+  color: transparent;
+  background-color: transparent;
+  padding: initial;
+  box-shadow: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.dialog-error .mat-dialog-container {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  box-shadow: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dialog-product .mat-dialog-container {
+  color: black;
+  padding: 0;
+  box-shadow: initial;
+  overflow: hidden;
+}
+
+.dialog-order .mat-dialog-container {
+  color: white;
+  text-align: center;
+  background-color: #47aa3e;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dialog-auth .mat-dialog-container {
+  color: black;
+  border: 2px solid color(info);
+  text-align: center;
+  background-color: color(text);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.mat-dialog-actions {
+  text-align: right;
+  display: inherit;
+}
+
+
+@media (max-width: size(md)) {
+  .dialog-product .mat-dialog-container, .dialog-order .mat-dialog-container {
+    width: 90%;
+    margin: auto;
+  }
+}
+

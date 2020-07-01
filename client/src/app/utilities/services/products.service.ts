@@ -11,7 +11,7 @@ import { FormService } from './form.service';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, switchMap, take } from 'rxjs/operators';
 import { store } from '../redux/store';
 
 import { config } from '../../../main-config'
@@ -38,6 +38,7 @@ export class ProductsService {
   public baseUrl: string = `${environment.server}/api/products`
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
   public productsSubject = new BehaviorSubject<ProductModel[]>([]);
+  public productsSearchResults = new Subject<ProductModel[]>();
   public productsCols = new Subject<boolean>();
   public slice: number = 4;
 
@@ -88,7 +89,7 @@ export class ProductsService {
     this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
       (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)
     )
-  } 
+  }
 
   // GET products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
@@ -155,7 +156,7 @@ export class ProductsService {
     if (product) {
       return categories.find(category => category._id === product.categoryId).alias
     }
-  }
 
+  }
 
 }

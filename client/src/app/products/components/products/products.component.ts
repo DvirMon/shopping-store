@@ -9,7 +9,8 @@ import { PaginationModel, PaginationDataModel } from 'src/app/utilities/models/p
 import { PaginationService } from 'src/app/utilities/services/pagination.service';
 
 import { store } from 'src/app/utilities/redux/store';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -22,6 +23,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   public categories: CategoryModel[] = []
   public products: ProductModel[] = []
+  public searchEntries: ProductModel[] = [];
 
   public cartOpen: boolean = false;
   public isAdmin: boolean = false
@@ -37,27 +39,28 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToRoute()
-    this.subscribeToStore()
-    this.subscribeToSubject()
-    
+    this.subscribeToRoute();
+    this.subscribeToStore();
+    this.subscribeToSubject();
+    this.subscribeToSearchResults();
+
   }
 
   ngAfterViewInit() {
-    this.subscribeToPaginator()
+    this.subscribeToPaginator();
   }
 
 
   // subscription section
 
-  private subscribeToStore() {
+  private subscribeToStore(): void {
     store.subscribe(
       () => {
-        this.products = this.getPageProducts()
-        this.isAdmin = store.getState().auth.isAdmin
-        this.paginationData = store.getState().products[this.alias]
+        this.products = this.getPageProducts();
+        this.isAdmin = store.getState().auth.isAdmin;
+        this.paginationData = store.getState().products[this.alias];
       });
-    this.isAdmin = store.getState().auth.isAdmin
+    this.isAdmin = store.getState().auth.isAdmin;
   }
 
   private subscribeToRoute(): void {
@@ -70,18 +73,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private getParams(): void {
     this.activeRoute.params.subscribe(
       (params) => {
-        this.categoryId = params.categoryId; 
-        this.alias = params.alias
-        this.paginationData = store.getState().products[this.alias]
+        this.categoryId = params.categoryId;
+        this.alias = params.alias;
+        this.paginationData = store.getState().products[this.alias];
       }
     );
   }
-  
+
   // get products info
   private getData(): void {
     this.activeRoute.data.subscribe((data: Data) => {
-      this.products = data.pagination.products
-      this.pagination = data.pagination.pagination
+      this.products = data.pagination.products;
+      this.pagination = data.pagination.pagination;
       if (this.paginator) {
         this.paginator.firstPage();
 
@@ -101,6 +104,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       (value) => this.setGrid(value)
 
     )
+
+  }
+
+
+  private subscribeToSearchResults() {
+    this.productService.productsSearchResults.subscribe(
+      (searchEntries : ProductModel[]) => {
+        this.searchEntries = searchEntries
+      }
+    )
   }
 
   // end of subscription section
@@ -109,7 +122,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private getProductsPagination(): void {
     this.productService.getProductsPagination(
       (this.paginator.pageIndex + 1),
-      this.paginator.pageSize,
+      this.paginator.pageSize, 
       this.categoryId,
       this.alias
     ).subscribe(

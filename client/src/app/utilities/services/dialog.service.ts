@@ -15,6 +15,11 @@ export interface DialogData {
   payload: any
 }
 
+export interface Error {
+  message: string,
+  status: any
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -35,8 +40,8 @@ export class DialogService {
     return this.dialog.open(DialogComponent, this.handleConfig(data));
   }
 
-  // open error dialog
-  public handleErrorDialog(error: HttpErrorResponse) {
+  // open error dialog 
+  public handleErrorDialog(error: HttpErrorResponse | Error) {
     const data = this.handleDate("error", error)
     this.dialog.open(DialogComponent, this.handleConfig(data))
   }
@@ -65,7 +70,7 @@ export class DialogService {
     const data = { ...this.data }
 
     data.type = type
- 
+
     if (type === "error") {
       data.payload = this.handleErrorData(payload)
     } else {
@@ -126,7 +131,7 @@ export class DialogService {
 
   private handleErrorData(error: HttpErrorResponse) {
     this.handleErrorMessage(error)
-    const message = error?.message ? error.message : 'Error'
+    const message = error?.message ? error.message : 'An error has occurred'
     const status = error.status ? error.status : null
     return { message, status }
   }

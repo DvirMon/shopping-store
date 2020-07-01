@@ -6,36 +6,6 @@
   width: $width;
 }
 
-mat-toolbar {
-  justify-content: center;
-  height: 75px;
-
-  .search-form {
-    width: 100%;
-    font-size: 16px;
-    padding-top: 15px;
-  }
-
-  ul > li {
-    font-size: 14px;
-    display: inline-block;
-  }
-
-  .single-autocomplete {
-    justify-content: center;
-
-    mat-option {
-      background-color: white !important;
-      height: inherit;
-      box-sizing: border-box;
-
-      &:hover {
-        border: 1px solid red;
-        opacity: 0.8;
-      }
-    }
-  }
-}
 // from 840px down
 @media (max-width: size(md)) {
   mat-toolbar {
@@ -57,7 +27,24 @@ mat-toolbar {
 @media (min-width: size(md)) {
   mat-toolbar {
     .mat-form-field {
-      @include search-input(65%);
+      @include search-input(75%);
     }
+  }
+}
+
+
+mat-toolbar {
+  justify-content: center;
+  height: 75px;
+
+  .search-form {
+    width: 100%;
+    font-size: 16px;
+    padding-top: 15px;
+  }
+
+  ul > li {
+    font-size: 14px;
+    display: inline-block;
   }
 }

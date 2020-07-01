@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 import { ProductModel } from '../models/product-model';
 import { ValidationService } from './validation.service';
@@ -8,6 +8,8 @@ import { ValidationService } from './validation.service';
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
 import { HttpClient } from '@angular/common/http';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class FormService {
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private breakpointObserver: BreakpointObserver,
   ) { }
 
   //  register for login form
@@ -90,11 +93,11 @@ export class FormService {
       }),
       shippingDate: ['', [Validators.required]],
       creditCard: ['',
-      [Validators.required, this.validationService.creditCard()]
+        [Validators.required, this.validationService.creditCard()]
       ],
     })
   }
-  
+
   // register for product form
   public productForm(): FormGroup {
     return this.fb.group({
@@ -104,8 +107,8 @@ export class FormService {
       imagePath: ['', [this.validationService.requiredFileType()]],
     })
   }
-  
-  
+
+
   // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
 
@@ -168,6 +171,15 @@ export class FormService {
 
   public handleStore(type: ActionType, payload?: any): void {
     store.dispatch({ type, payload })
+  }
+
+  public handleScreenSize(): Observable<boolean> {
+    return this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+        map(result => result.matches),
+        shareReplay()
+      );
+
   }
 }
 

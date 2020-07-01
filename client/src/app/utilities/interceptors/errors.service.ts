@@ -17,7 +17,7 @@ export class ErrorsService {
 
   public handleError(error) {
 
-    
+
     let spinnerRef;
 
     this.ngZone.run(() => {
@@ -28,18 +28,19 @@ export class ErrorsService {
     if (error instanceof HttpErrorResponse) {
 
       spinnerRef.close()
-      
+
       if (error.status === 401 || error.status === 409) {
         return
       }
-      
       this.dialogService.handleErrorDialog(error)
     }
     else {
 
       spinnerRef.close()
+
+      this.dialogService.handleErrorDialog({ message: "An error has occurred", status : null })
       console.error(error);
-      
+
     }
   }
 

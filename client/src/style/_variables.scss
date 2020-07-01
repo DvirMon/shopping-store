@@ -70,9 +70,16 @@ $grid-breakpoints: (
   top: $height;
 }
 
-@mixin dialog {
+@mixin bg-info {
   color: color(text);
   background-color: color(info);
   outline: transparent;
 }
+
+@mixin bg-success {
+  color: color(text);
+  background-color: #5cb85c;
+  outline: transparent;
+}
+
 
