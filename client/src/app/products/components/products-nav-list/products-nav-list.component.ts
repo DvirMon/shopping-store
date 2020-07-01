@@ -44,7 +44,6 @@ export class ProductsNavListComponent {
       ? this.router.navigateByUrl(`/admin/products/${category.alias}/${category._id}`)
       : this.router.navigateByUrl(`/products/${category.alias}/${category._id}`)
 
-      console.log
     this.closeDrawer.emit(false)
 
   }

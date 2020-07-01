@@ -12,7 +12,6 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 import { PaginationService } from 'src/app/utilities/services/pagination.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormService } from 'src/app/utilities/services/form.service';
 
 import { store } from 'src/app/utilities/redux/store';
 
@@ -41,7 +40,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     private productService: ProductsService,
     private paginationService: PaginationService,
     private activeRoute: ActivatedRoute,
-    private formService: FormService,
 
   ) { }
 
@@ -166,10 +164,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // handle search entries for mobile
   private handleMobileSearch(response: ProductModel[]) {
-    this.formService.handleScreenSize().subscribe(
+    this.productService.isMobile().subscribe(
       (mobile) => {
         if (mobile) {
-          this.productService.productsSearchResults.next(response)
+          this.productService.handleSearchEntries.next(response)
         }
       }
     )
@@ -186,7 +184,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   // handle search error
   private handleSearchError(): Observable<[]> {
     this.results = true
-    this.productService.productsSearchResults.next([]);
+    this.productService.handleSearchEntries.next([]);
     this.searchEntries = of([]);
     return of([]);
   }

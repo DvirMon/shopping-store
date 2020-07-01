@@ -1,20 +1,19 @@
 <app-products-bar>
   <div class="product-container">
 
-    <div class="row product-row">
-
+    <div class="row">
 
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card"
         [ngClass]="{'col-xl-3' : !cartOpen, 'col-xl-4' : cartOpen}"
         *ngFor="let product of (searchEntries.length > 0 ? searchEntries :products)">
         <app-products-item [product]="product"></app-products-item>
       </div>
-
     </div>
 
     <mat-paginator #paginator
       [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
       [pageSize]="6" [pageSizeOptions]="[6, 8]">
     </mat-paginator>
+
   </div>
 </app-products-bar>

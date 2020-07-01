@@ -37,9 +37,9 @@ export class ProductsService {
   private baseUrl: string = `${environment.server}/api/products`
 
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
-  public productsSubject = new BehaviorSubject<ProductModel[]>([]);
-  public productsSearchResults = new Subject<ProductModel[]>();
-  public productsCols = new Subject<boolean>();
+  // public handleProduct = new BehaviorSubject<ProductModel[]>([]);
+  public handleSearchEntries = new Subject<ProductModel[]>();
+  public handleDrawerToggle = new Subject<boolean>();
 
   public productLandingPage: string = environment.productLandingPage
 
@@ -156,7 +156,10 @@ export class ProductsService {
     if (product) {
       return categories.find(category => category._id === product.categoryId).alias
     }
+  }
 
+  public isMobile() {
+   return this.formService.isMobile()
   }
 
 }

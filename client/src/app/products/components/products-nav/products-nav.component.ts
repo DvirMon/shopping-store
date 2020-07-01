@@ -30,7 +30,7 @@ export class ProductsNavComponent {
 
   public onDrawerCart() {
     this.drawerCart.toggle()
-    this.productsService.productsCols.next(this.drawerCart.opened)
+    this.productsService.handleDrawerToggle.next(this.drawerCart.opened)
   }
   
   public onDrawerProducts() {

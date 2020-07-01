@@ -5,16 +5,18 @@
     [opened]="!(isHandset$ | async)" position="end">
 
     <div *ngIf="isAdmin; then thenBlock else elseBlock"></div>
+  
     <ng-template #thenBlock>
       <app-products-form></app-products-form>
     </ng-template>
+  
     <ng-template #elseBlock>
       <app-cart-list
       (emitClose)="drawerCart.toggle()"
       ></app-cart-list>
     </ng-template>
-    
   </mat-sidenav>
+
   <mat-sidenav appSidenavAdminDirective #drawerProduct class="sidenav-products"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="false" position="start">

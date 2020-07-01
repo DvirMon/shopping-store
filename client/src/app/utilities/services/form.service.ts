@@ -175,7 +175,7 @@ export class FormService {
     store.dispatch({ type, payload })
   }
 
-  public handleScreenSize(): Observable<boolean> {
+  public isMobile(): Observable<boolean> {
     return this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map(result => result.matches),
