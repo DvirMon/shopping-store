@@ -11,31 +11,36 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 })
 export class OrderDialogComponent implements OnInit {
 
-
   constructor(
-    private router : Router,
-    private receiptService : ReceiptService,
-    private user : UserModel
+    private router: Router,
+    private receiptService: ReceiptService,
+    private user: UserModel
   ) { }
- 
+
   ngOnInit(): void {
-    this.handleStoreSubscribe()
+    this.subscribeToStore();
   }
 
-  private handleStoreSubscribe(): void {
-    store.subscribe(() => this.user = store.getState().auth.user)
+  // subscription section
+  private subscribeToStore(): void {
+    store.subscribe(() => this.user = store.getState().auth.user);
     this.user = store.getState().auth.user;
   }
-  
-  public backToSore() {
-    this.receiptService.backToSore()
-    this.router.navigateByUrl(`/home/${this.user._id}`)
+
+  // end subscription section
+
+  // logic section
+
+  public backToSore(): void {
+    this.receiptService.backToSore();
+    this.router.navigateByUrl(`/home/${this.user._id}`);
   }
 
-  public getReceipt() { 
-    this.receiptService.getReceipt()
+  public getReceipt(): void {
+    this.receiptService.getReceipt();
 
   }
-  
+
+  // end of logic section
 
 }

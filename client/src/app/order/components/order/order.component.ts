@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { OrderModel } from 'src/app/utilities/models/order-model';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-order',
@@ -7,14 +6,4 @@ import { OrderModel } from 'src/app/utilities/models/order-model';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent {
-
-  public hide: boolean;
-
-  constructor(
-    @Inject(OrderModel) public order: OrderModel,
-
-  ) { }
-
-
-
 }

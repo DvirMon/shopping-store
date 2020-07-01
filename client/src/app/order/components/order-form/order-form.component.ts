@@ -26,13 +26,12 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   public orderForm: FormGroup;
   public cartTotalPrice: number;
-  public mobile: boolean;
 
   public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -45,19 +44,17 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.createForm()
-    this.subscribeToStore()
-    this.orderDefaultValues()
-    this.subscribeToBreakPoints()
+    this.createForm();
+    this.subscribeToStore();
+    this.orderDefaultValues();
   }
 
-  ngAfterViewInit() {
-    this.subscribeToForm()
+  ngAfterViewInit(): void {
+    this.subscribeToForm();
   }
 
 
   // subscribe section
-
 
   private subscribeToStore(): void {
     store.subscribe(
@@ -86,10 +83,10 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     )
   }
 
-  private subscribeToBreakPoints(): void {
-    this.mobile = this.breakpointObserver.isMatched('(max-width: 660px)')
-  }
+
   // end of subscribe section
+
+  //------------------------------------------------------// 
 
   // form section
 
@@ -111,22 +108,29 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   // end of form section
 
+  //------------------------------------------------------// 
+
+
   //  request section 
 
-  public onPayment() {
+  public onPayment(): void {
     this.orderService.handleNewOrder(this.order)
 
   }
   // end of request section
 
+  //------------------------------------------------------// 
+
+
   // order logic section
 
-  private orderDefaultValues() {
+  private orderDefaultValues(): void {
     this.order.cartId = this.cart._id
     this.order.userId = this.user._id
     this.order.totalPrice = this.cartTotalPrice
   }
 
+  // end of logic section
 
 
 }

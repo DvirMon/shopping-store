@@ -1,11 +1,13 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+
 import { FormControl } from '@angular/forms';
 
 import { faCcMastercard } from '@fortawesome/free-brands-svg-icons';
 import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { faCcAmex } from '@fortawesome/free-brands-svg-icons';
 import { faCcJcb } from '@fortawesome/free-brands-svg-icons';
-import { ccCard } from 'src/app/utilities/models/credit-card-model';
+
+import { CreditCardModel } from 'src/app/utilities/models/credit-card-model';
   
 import Cleave from 'src/cleave.js-master'
  
@@ -16,19 +18,19 @@ import Cleave from 'src/cleave.js-master'
 })
 export class CreditCardComponent implements OnInit, AfterViewInit {
  
-
   @ViewChild('input') input: ElementRef
+
   @Input() public control: FormControl
 
   public cleave: Cleave
-  public ccCards : ccCard[] = []
+  public creditCards : CreditCardModel[] = []
   
   ngOnInit(): void {
-    const visa: ccCard = new ccCard(faCcVisa, false, "visa");
-    const amex : ccCard = new ccCard(faCcAmex, false, "amex");
-    const mc : ccCard = new ccCard(faCcMastercard, false, "mastercard");
-    const jcb : ccCard = new ccCard( faCcJcb, false, "jcb");
-    this.ccCards = [visa, mc, amex, jcb]
+    const visa: CreditCardModel = new CreditCardModel(faCcVisa, false, "visa");
+    const amex : CreditCardModel = new CreditCardModel(faCcAmex, false, "amex");
+    const mc : CreditCardModel = new CreditCardModel(faCcMastercard, false, "mastercard");
+    const jcb : CreditCardModel = new CreditCardModel( faCcJcb, false, "jcb");
+    this.creditCards = [visa, mc, amex, jcb]
     
   }
 
@@ -46,7 +48,7 @@ export class CreditCardComponent implements OnInit, AfterViewInit {
 
   private handleIconColor(value) {
 
-    for(const card of this.ccCards) {
+    for(const card of this.creditCards) {
       card.name === value ? card.color = true : card.color = false
     }
 

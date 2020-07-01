@@ -22,8 +22,8 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   @Input() public hint: string
   @Input() public controlName: string
   @Input() public mobile: boolean
-  public occupiedDates: number[] = []
 
+  public occupiedDates: number[] = []
   public value: any
   public error: string
   public minDate: Date = new Date()
@@ -41,6 +41,7 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
 
   }
 
+  // ControlValueAccessor implement section 
   public writeValue(value: any): void {
     this.value = value ? value : ""
   }
@@ -53,6 +54,9 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   public registerOnTouched(fn: any): void {
     this.onTouched = fn
   }
+
+
+  // subscription section
 
   private subscribeToRoute() {
     this.activeRoute.data.subscribe((data: Data) => {
@@ -73,29 +77,36 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
     )
   }
 
+  //end of subscription section
+
+
+  // logic section
+
+  // function to disabled dates
   public dateFilter(date: Date | null): boolean {
 
-    // get date as day number in the year
+    // get date as the day number in a year
     const day = this.dayOfYear(date)
-
 
     // disabled dates
     return !this.occupiedDates.find(date => date === day)
 
   }
 
+  // function to calculate given day as a number in full year
   private dayOfYear(date) {
     const x = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     const y = Date.UTC(date.getFullYear(), 0, 0)
     return (x - y) / 24 / 60 / 60 / 1000;
   }
 
-
+// function that handle disabled dates style
   public dateClass = (date: Date): MatCalendarCellCssClasses => {
     const day = this.dayOfYear(date)
     return this.occupiedDates.find(date => date === day) ? 'custom-date-error' : '';
   }
 
+  // function that handle date input error messages
   private handleDateErrorMessage() {
     if (this.control.hasError('required')) {
       this.error = "Date is required"
@@ -108,6 +119,8 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
       this.error = "This date is full, please pick another date"
     }
   }
+
+  // end of logic section
 
 
 

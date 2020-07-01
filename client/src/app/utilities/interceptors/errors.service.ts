@@ -2,6 +2,8 @@ import { Injectable, NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from '../services/dialog.service';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,13 +34,16 @@ export class ErrorsService {
       if (error.status === 401 || error.status === 409) {
         return
       }
-      this.dialogService.handleErrorDialog(error)
+
+      environment.production
+        ? this.dialogService.handleErrorDialog({ message: "An error has occurred", status: null })
+        : this.dialogService.handleErrorDialog(error)
     }
     else {
 
       spinnerRef.close()
 
-      this.dialogService.handleErrorDialog({ message: "An error has occurred", status : null })
+      this.dialogService.handleErrorDialog({ message: "An error has occurred", status: null })
       console.error(error);
 
     }

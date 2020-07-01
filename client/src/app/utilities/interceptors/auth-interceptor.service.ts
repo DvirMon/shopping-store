@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { store } from '../redux/store';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
+
 import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/dialog.service';
+
+import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'

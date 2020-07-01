@@ -12,6 +12,8 @@ import { CartService } from 'src/app/utilities/services/cart.service';
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
 
 import { store } from 'src/app/utilities/redux/store';
+import { environment } from 'src/environments/environment'
+
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
@@ -87,14 +89,13 @@ export class CartListComponent implements OnInit {
     return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
   }
 
-
   // navigate back to store
   public backToSore(): void {
     this.receiptService.resetReceiptState()
-    this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
+    this.router.navigateByUrl(environment.productLandingPage)
   }
 
-  public closeCartDrawer() {
+  public closeCartDrawer(): void {
     this.emitClose.emit(false)
   }
 

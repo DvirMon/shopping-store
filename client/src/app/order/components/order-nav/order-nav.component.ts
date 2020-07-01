@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Router } from '@angular/router';
+
 import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-order-nav',
@@ -27,7 +32,7 @@ export class OrderNavComponent {
   // navigate back to store
   public backToSore(): void {
     this.receiptService.resetReceiptState()
-    this.router.navigateByUrl(`/products/beverages/5e91e29b9c08fc560ce2cf32`)
+    this.router.navigateByUrl(environment.productLandingPage)
   }
 
 

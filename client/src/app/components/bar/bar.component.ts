@@ -37,6 +37,7 @@ export class BarComponent implements OnInit {
 
   }
 
+// subscription section
 
   public subscribeToStore() {
     store.subscribe(() => {
@@ -55,18 +56,24 @@ export class BarComponent implements OnInit {
     )
   }
 
-  public onLogin() {
+  // end of subscription section
+
+
+  // logic section
+
+  public onLogin() : void {
     this.router.navigateByUrl('/login')
     this.isRegister = false
   }
 
-  public onLogOut() {
+  public onLogOut() : void {
     this.authService.logout()
   }
 
-
-  public onHome() {
+  public onHome() : void {
     this.authService.handleRoleRoute(this.user)
   }
+
+  // end of logic section
 
 }

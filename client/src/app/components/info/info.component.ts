@@ -1,8 +1,11 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
-import { InfoService, Info } from 'src/app/utilities/services/info.service';
-import { ActivatedRoute, ActivationEnd, Data } from '@angular/router';
-import { store } from 'src/app/utilities/redux/store';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data } from '@angular/router';
+
 import { UserModel } from 'src/app/utilities/models/user-model';
+
+import { InfoService, Info } from 'src/app/utilities/services/info.service';
+
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-info',
