@@ -6,6 +6,9 @@
   margin: 0;
 }
 
+div.d-none.d-md-block {
+  margin: auto;
+}
 
 @media (min-width: size(lg)) {
   .row {

@@ -13,7 +13,7 @@ import { ProductsService } from './products.service';
 
 
 export interface Info {
-  message: string,
+  new: boolean,
   messageDate: string,
   messagePrice: string,
   date: Date,
@@ -26,7 +26,7 @@ export interface Info {
 
 export class InfoService {
 
-  public info: Info;
+  public loginInfo: Info;
 
   constructor(
     private formService: FormService,
@@ -65,9 +65,9 @@ export class InfoService {
 
   // handle new client data
   private handleNewClient(): Observable<Info> {
-    const info = { ...this.info }
-    info.message = "new client"
-    return of(info)
+    const loginInfo = { ...this.loginInfo }
+    loginInfo.new = true
+    return of(loginInfo)
   }
 
   // handle current cart data
@@ -95,32 +95,32 @@ export class InfoService {
     return this.orderService.getLatestOrder(cart._id).pipe(
       take(1),
       map(order => {
-        const info = this.handleOrderDataFormat(order)
-        return info
+        const loginInfo = this.handleOrderDataFormat(order)
+        return loginInfo
       })
     )
   }
 
   private handleCartDataFormat(cart, price): Info {
-    const info: Info = {
-      message: "",
+    const loginInfo: Info = {
+      new: false,
       messageDate: "You have Open Cart from",
       date: cart.createDate,
       messagePrice: "Your current cart price is",
       price: price,
     }
-    return info
+    return loginInfo
   }
 
   private handleOrderDataFormat(order): Info {
-    const info: Info = {
-      message: "",
+    const loginInfo: Info = {
+      new: false,
       messageDate: "You Last Purchase was in",
       date: order.orderDate,
       messagePrice: "For",
       price: order.totalPrice,
     }
-    return info
+    return loginInfo
   }
 
 

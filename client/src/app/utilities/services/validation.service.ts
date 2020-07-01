@@ -123,8 +123,6 @@ export class ValidationService {
         return
       }
 
-      console.log(cc)
-
       if (regex.amex.test(cc) || regex.jcb.test(cc) || regex.masterCard.test(cc) || regex.visa.test(cc)) {
         return null
       }

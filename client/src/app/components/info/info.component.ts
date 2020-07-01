@@ -22,7 +22,7 @@ export class InfoComponent implements OnInit {
 
   // info on login
   public info: Info = {
-    message: "",
+    new: false,
     messageDate: "",
     messagePrice: "",
     date: new Date(),

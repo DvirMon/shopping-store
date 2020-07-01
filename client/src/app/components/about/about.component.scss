@@ -1,30 +1,39 @@
 @import "~src/style/styles";
 
-div.container {
-  @include position();
-  @include pos-top(20vh);
-  display: flex;
-  justify-content: space-between;
+mat-list {
 
-  div.float-icon {
-    @include box();
+  margin: auto;
+  width: 80%;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
+
+  div.list-header {
+    display: flex;
+    justify-content: center;
+    padding-top : 5%;
+  }
+
+  mat-list-item {
     @include float-shadow();
+    margin: 5%;
+    cursor: pointer;
+  }
+
+  .float-icon {
+    @include box();
     @include icon-box();
-    margin-bottom : 5%;
   }
 
   mat-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 50px;
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
     text-align: center;
     margin: auto;
   }
-fa-icon {
-    width: 50px;
-    height: 50px;
+  fa-icon {
+    width: 25px;
+    height: 25px;
     text-align: center;
     margin: auto;
   }
-
 }
