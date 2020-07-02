@@ -14,6 +14,7 @@ export class AuthDialogComponent  {
 
   ) { }
 
+  // get new refresh token when refresh token expired
   public refreshExpireToken() {
     this.authService.getRefreshTokenWhenExpired().subscribe(
       () => this.dialogRef.close()

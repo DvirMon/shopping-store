@@ -37,7 +37,6 @@ export class ProductsService {
   private baseUrl: string = `${environment.server}/api/products`
 
   public handleUpdate = new BehaviorSubject<ProductData | null>(null)
-  // public handleProduct = new BehaviorSubject<ProductModel[]>([]);
   public handleSearchEntries = new Subject<ProductModel[]>();
   public handleDrawerToggle = new Subject<boolean>();
 
@@ -50,13 +49,13 @@ export class ProductsService {
 
   ) { }
 
-  // GET total products in store : http://localhost:3000/api/products/total
+  // GET request - total products in store : http://localhost:3000/api/products/total
 
   public getTotalNumberOfProducts(): Observable<number> {
     return this.http.get<number>(this.baseUrl + "/total")
   }
 
-  // POST products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
+  // POST request - get products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
 
   public getProductsPagination(page: number, limit: number, categoryId?: string, alias?: string): Observable<PaginationDataModel> {
 
@@ -70,33 +69,25 @@ export class ProductsService {
           this.handleProductsStoreState(data.products, data.pagination, alias)
         }
 
-        if (!categoryId) {
-          this.formatProductId(data.products)
-        }
-
         return data
       })
     )
   }
 
-  // GET product : http://localhost:3000/api/products/:_id
-  public getProductNameAndImage(_id): Observable<ProductModel> {
-    return this.http.get<ProductModel>(this.baseUrl + `/${_id}`)
-  }
 
-  // POST product : http://localhost:3000/api/products/ids
+  // POST request - get product : http://localhost:3000/api/products/ids
   public getProductOfCurrentCart(ids: string[]): void {
     this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
       (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)
     )
   }
 
-  // GET products : http://localhost:3000/api/products/search/:query
+  // GET request - get search products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/search/${query}`)
   }
 
-  // GET products categories : http://localhost:3000/api/products/categories
+  // GET request - products categories : http://localhost:3000/api/products/categories
   public getCategories(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
       tap((response: CategoryModel[]) => {
@@ -107,12 +98,12 @@ export class ProductsService {
 
   // admin actions
 
-  // POST product : http://localhost:3000/api/products
+  // POST request - add product : http://localhost:3000/api/products
   public addProduct(data: FormData | ProductModel): Observable<ProductModel> {
     return this.http.post<ProductModel>(this.baseUrl, data)
   }
 
-  // PUT product : http://localhost:3000/api/products/:_id
+  // PUT request - update product : http://localhost:3000/api/products/:_id
   public updateProduct(data: FormData | ProductModel, _id: string): Observable<ProductModel> {
     return this.http.put<ProductModel>(this.baseUrl + `/${_id}`, data)
   }
@@ -121,13 +112,8 @@ export class ProductsService {
 
   // logic section 
 
-  private formatProductId(products) {
-    for (const key in products) {
-      products[key]._id = (parseInt(key) + 1).toString()
-    }
-  }
 
-  public handleProductsStoreState(products: ProductModel[], pagination: PaginationModel, alias: string): void {
+  private handleProductsStoreState(products: ProductModel[], pagination: PaginationModel, alias: string): void {
 
     const storeProducts = store.getState().products[alias].products
 
@@ -147,10 +133,12 @@ export class ProductsService {
     this.formService.handleStore(ActionType.UpdateProduct, { product, alias })
   }
 
+  // navigate to products landing page
   public productsLandingPage(): Promise<boolean> {
     return this.router.navigateByUrl(environment.productLandingPage)
   }
 
+  // get product category alias
   public getCategoryAlias(product: ProductModel): string {
     const categories = store.getState().products.categories
     if (product) {
@@ -158,8 +146,9 @@ export class ProductsService {
     }
   }
 
+  // get screen size
   public isMobile() {
-   return this.formService.isMobile()
+    return this.formService.isMobile()
   }
 
 }

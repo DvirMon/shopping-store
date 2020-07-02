@@ -138,7 +138,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     if (small) {
       this.params.cols = 1
       this.params.height = 250
-      this.params.width = 250 
+      this.params.width = 250
     }
   }
 
@@ -191,7 +191,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     )
   }
 
-  public handleRequestSuccess(response: CartActionInfo) {
+  private handleRequestSuccess(response: CartActionInfo): void {
     this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
     this.cartItem = response.cartItem
 

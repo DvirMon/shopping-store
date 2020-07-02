@@ -8,7 +8,6 @@ import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { FormService } from './form.service';
 import { UserModel } from '../models/user-model';
 
-
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
 
@@ -29,13 +28,16 @@ export interface AuthData {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
+  // subjects
   public serverError = new Subject<string>()
   public loginDate = new BehaviorSubject<any>(null)
   public isRegister = new BehaviorSubject<boolean>(false)
 
   private tokenHelper: JwtHelperService = new JwtHelperService()
+
   private url: string = `${environment.server}/api/auth`
 
 
@@ -47,19 +49,18 @@ export class AuthService {
 
   // request section 
 
-  // login request - http://localhost:3000/api/auth/password
+  // GET request - http://localhost:3000/api/auth/password
   public password(): Observable<string> {
     return this.http.get<string>(this.url + "/password")
-
   }
 
-  // login request - http://localhost:3000/api/auth/login
-  public login(loginInfo: any) {
+  // POST request - http://localhost:3000/api/auth/login
+  public login(loginInfo: { email: string, password: string }): Observable<UserModel> {
     return this.handleUser("/login", loginInfo)
   }
 
-  // register request - http://localhost:3000/api/auth/register
-  public register(registerInfo: UserModel) {
+  // POST request - http://localhost:3000/api/auth/register
+  public register(registerInfo: UserModel): Observable<UserModel> {
     return this.handleUser("/register", registerInfo)
   }
 
@@ -98,13 +99,13 @@ export class AuthService {
     return this.http.post<boolean>(this.url + "/captcha", { captcha })
   }
 
-
   // end of request section 
 
-  // login actions section
+
+  // login/register logic section
 
   // generic function to user login/register
-  public handleUser(path: string, data): Observable<UserModel> {
+  private handleUser(path: string, data): Observable<UserModel> {
     return this.http.post<AuthData>(this.url + path, data)
       .pipe(
         switchMap((response: AuthData) => {
@@ -128,15 +129,16 @@ export class AuthService {
   }
 
   public autoLogin(): void {
-    const token = store.getState().auth.refreshToken
-    const user = store.getState().auth.user
+    const token: string = store.getState().auth.refreshToken
+    const user: UserModel = store.getState().auth.user
     if (!token) {
       this.logout()
       return
     }
     this.handleRoleRoute(user)
-  } 
+  }
 
+  // route according to user role
   public handleRoleRoute(user: UserModel): Promise<boolean> {
     return user.isAdmin ?
       this.router.navigateByUrl("admin" + environment.productLandingPage)
@@ -147,9 +149,11 @@ export class AuthService {
     this.formService.handleStore(ActionType.Logout)
     return this.router.navigateByUrl(`/login`)
   }
- 
 
-  // token logic
+  // end of login/register logic
+
+
+  // token logic section
 
   public isTokenExpired(jwt: string): boolean | Observable<boolean> {
     const token = store.getState().auth[jwt]

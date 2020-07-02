@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { map, debounceTime, distinctUntilChanged, switchMap, take, startWith } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,10 +23,8 @@ export class ValidationService {
       jcb: /^(?:2131|1800|35\d{2})(\s?)\d{4}\1\d{4}\1\d{4}$/,
       masterCard: /^5[1-5]|2[2-7]\d{2}(\s?)\d{4}\1\d{4}\1\d{4}$/,
       visa: /^4\d{3}(\s?)\d{4}\1\d{4}\1\d{4}$/,
-    } 
+    }
   };
-
-
 
   constructor(
     public http: HttpClient,
@@ -93,7 +92,7 @@ export class ValidationService {
 
   // validate file upload format
   public requiredFileType() {
-    return function (control: FormControl) {
+    return (control: FormControl) => {
       const file = control.value;
 
       if (!file) {
@@ -113,10 +112,9 @@ export class ValidationService {
 
   public creditCard() {
 
-    const regex = this.regex.cc
-
-    return function (control: FormControl) {
-
+    return (control: FormControl) => {
+      
+      const regex = this.regex.cc
       const cc = control.value;
 
       if (!cc) {

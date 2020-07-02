@@ -1,13 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DialogComponent } from '../../share-components/components/dialog/dialog.component';
-import { ProductsDialogComponent } from '../../products/components/products-dialog/products-dialog.component';
-import { ProductModel } from '../models/product-model';
-import { OrderModel } from '../models/order-model';
+
+import { ProductData } from './products.service';
+
+import { DialogComponent } from 'src/app/share-components/components/dialog/dialog.component';
+import { ProductsDialogComponent } from 'src/app/products/components/products-dialog/products-dialog.component';
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
 import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
-import { ProductData } from './products.service';
 
 
 export interface DialogData {
@@ -15,7 +15,7 @@ export interface DialogData {
   payload: any
 }
 
-export interface Error {
+export interface ErrorData {
   message: string,
   status: any
 }
@@ -24,8 +24,13 @@ export interface Error {
   providedIn: 'root',
 })
 
+
 export class DialogService {
 
+  public errorData : ErrorData =  {
+    message : "An error has occurred please try again later",
+    status : null
+  }
 
   constructor(
     private dialog: MatDialog,
@@ -41,25 +46,26 @@ export class DialogService {
   }
 
   // open error dialog 
-  public handleErrorDialog(error: HttpErrorResponse | Error) {
-    const data = this.handleDate("error", error)
+  public handleErrorDialog(error: HttpErrorResponse | ErrorData) {
+    const payload = this.handleErrorData(error)
+    const data = this.handleDate("error", payload)
     this.dialog.open(DialogComponent, this.handleConfig(data))
   }
 
   // open product dialog
-  public handleProductDialog(payload: ProductData) {
+  public handleProductDialog(payload: ProductData): void {
     const data = this.handleDate("product", payload)
     this.dialog.open(ProductsDialogComponent, this.handleConfig(data))
   }
 
   // open product dialog
-  public handleOrderDialog() {
+  public handleOrderDialog(): void {
     const data = this.handleDate("order")
     this.dialog.open(OrderDialogComponent, this.handleConfig(data))
   }
 
   // open auth dialog
-  public handleAuthDialog() {
+  public handleAuthDialog(): void {
     const data = this.handleDate("auth")
     this.dialog.open(AuthDialogComponent, this.handleConfig(data))
   }
@@ -129,23 +135,21 @@ export class DialogService {
   }
 
 
-  private handleErrorData(error: HttpErrorResponse) {
-    this.handleErrorMessage(error)
-    const message = error?.message ? error.message : 'An error has occurred'
+  private handleErrorData(error: HttpErrorResponse | ErrorData): ErrorData {
+
+    let message = error?.message ? error.message : this.errorData.message
     const status = error.status ? error.status : null
-    return { message, status }
-  }
 
-
-  private handleErrorMessage(error: any) {
-    switch (error.status) {
+    switch (status) {
       case 0:
-        error.message = "You are not connected to database"
+        message = "You are not connected to database"
+        break
+      case 500:
+        message = this.errorData.message
         break
       default:
-        error.message = error.error
     }
-    return error
+    return { message, status }
   }
 
 }

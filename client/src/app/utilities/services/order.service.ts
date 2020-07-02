@@ -10,6 +10,7 @@ import { ReceiptService } from './receipt.service';
 
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+
 import { ActionType } from '../redux/action-type';
 
 import { environment } from 'src/environments/environment';
@@ -31,33 +32,33 @@ export class OrderService {
     private formService: FormService,
   ) { }
 
-  // GET total products in store : http://localhost:3000/api/orders/total
+  // GET request - total products in store : http://localhost:3000/api/orders/total
   public getTotalNumberOfOrders(): Observable<number> {
     return this.http.get<number>(this.baseUrl + "/total")
   }
 
 
-  // POST new order : http://localhost:3000/api/orders
+  // POST request  - new order : http://localhost:3000/api/orders
   public handleNewOrder(data: OrderModel): void {
     this.http.post<OrderModel>(this.baseUrl, data).pipe(
       switchMap((order: OrderModel) => {
         this.formService.handleStore(ActionType.GetOrderData, order)
         this.receiptService.handleReceiptData()
-        return this.cartService.disActiveCart(order.cartId)
+        return this.cartService.deactivateCart(order.cartId)
       }),
     ).subscribe(
       () => {
         this.dialogService.handleOrderDialog()
-      }
+      } 
     )
   }
-  // GET latest order : http://localhost:3000/api/orders/latset/:cartId
+  // GET request - latest order : http://localhost:3000/api/orders/latset/:cartId
 
   public getLatestOrder(cartId: string): Observable<any> {
     return this.http.get<any>(this.baseUrl + `/latest/${cartId}`)
   }
 
-  // GET order occupied dates : http://localhost:3000/api/orders/dates
+  // GET request - order occupied dates : http://localhost:3000/api/orders/dates
   public getOccupiedDates(): Observable<number[]> {
     return this.http.get<number[]>(this.baseUrl + "/dates").pipe(
       map(dates => {
@@ -72,6 +73,8 @@ export class OrderService {
     )
   } 
 
+  // end of request section
+
   // logic section
 
   private isLeapYear(): boolean {
@@ -79,6 +82,8 @@ export class OrderService {
     const year = date.getFullYear()
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
+
+  // end of logic section
 
 
 

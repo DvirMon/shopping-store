@@ -171,10 +171,12 @@ export class FormService {
     })
   };
 
+  // generic function for redux store dispatch
   public handleStore(type: ActionType, payload?: any): void {
     store.dispatch({ type, payload })
   }
-
+  
+  // generic function form screen size
   public isMobile(): Observable<boolean> {
     return this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(

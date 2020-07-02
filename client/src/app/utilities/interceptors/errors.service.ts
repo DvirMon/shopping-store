@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ErrorsService {
 
+  
 
   constructor(
     private dialogService: DialogService,
@@ -36,14 +37,14 @@ export class ErrorsService {
       }
 
       environment.production
-        ? this.dialogService.handleErrorDialog({ message: "An error has occurred", status: null })
+        ? this.dialogService.handleErrorDialog(this.dialogService.errorData) 
         : this.dialogService.handleErrorDialog(error)
     }
     else {
 
-      spinnerRef.close()
+      spinnerRef.close() 
 
-      this.dialogService.handleErrorDialog({ message: "An error has occurred", status: null })
+      this.dialogService.handleErrorDialog(this.dialogService.errorData)
       console.error(error);
 
     }
