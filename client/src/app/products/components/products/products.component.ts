@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public searchEntries: ProductModel[] = [];
   public paginationData: PaginationDataModel;
 
-  public cartOpen: boolean = false;
+  public cartOpen: boolean = true;
   public isAdmin: boolean = false
   public categoryId: string
   public alias: string
@@ -171,11 +171,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private handleGridSize(value: boolean): void {
 
     this.cartOpen = value
-    this.products = this.getPageProducts()
-
+    
     value
-      ? this.paginator.pageSize = 6
-      : this.paginator.pageSize = 8
+    ? this.paginator.pageSize = 6
+    : this.paginator.pageSize = 8
+
+    this.products = this.getPageProducts()
   }
 
 }

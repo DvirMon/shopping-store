@@ -1,24 +1,21 @@
 @import "~src/style/styles";
 
+button {
+  font-size: 16px;
+}
 
-mat-list > mat-list-item {
-  display: inline-block;
-  margin-left: 1%;
-  width: auto;
-  color: white;
-  
-  button {
-    font-size: 16px;
+@media screen and (min-width: size(lg)) {
+  mat-list > .nav-main {
+    display: inline-block;
+    margin-left: 1%;
+    width: auto;
   }
 }
 
-
-@media (max-width: size(md)) {
-  mat-list > mat-list-item {
+@media screen and (max-width: size(md)) {
+  mat-list > .nav-main {
     display: initial;
     height: 60px;
     margin-left: 0;
-    width: auto;
-    color: black;
   }
 }

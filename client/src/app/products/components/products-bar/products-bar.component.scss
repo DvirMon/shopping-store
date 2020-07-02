@@ -3,7 +3,7 @@
 .sidenav-container {
   height: 92vh;
 
-  .sidenav .mat-toolbar { 
+  .sidenav .mat-toolbar {
     background: color(info);
     color: white;
   }
@@ -11,11 +11,6 @@
 
 .mat-drawer.mat-sidenav.sidenav {
   height: inherit;
-}
- 
-.sidenav {
-  width: 450px; 
-  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
 }
 
 .mat-sidenav-content .mat-toolbar {
@@ -34,13 +29,19 @@ mat-divider {
   margin-right: 10px;
 }
 
-@media (max-width: size(md)) {
-  .sidenav {
-    width: 100%; 
-  }
-  
-  .sidenav-products {
-    width: 50%; 
+@media screen and (min-width: 992px) {
+  mat-sidenav.sidenav {
+    width: 450px;
+    box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
   }
 }
 
+@media screen and (max-width: 660px) {
+  mat-sidenav.sidenav {
+    width: 100%;
+  }
+
+  mat-sidenav.sidenav-products {
+    width: 50%;
+  }
+}

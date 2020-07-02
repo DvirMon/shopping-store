@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { ProductsService } from 'src/app/utilities/services/products.service';
 
 import { faCartPlus,  } from '@fortawesome/free-solid-svg-icons/faCartPlus';
@@ -26,6 +25,9 @@ export class ProductsNavComponent {
   constructor(
     private productsService: ProductsService
   ) { }
+
+  public isMobile :Observable<boolean> = this.productsService.isMobile()
+
 
 
   public onDrawerCart() {

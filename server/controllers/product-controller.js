@@ -115,7 +115,8 @@ router.put(
   middleware.file.upload,
   async (request, response, next) => {
     try {
-      const product = request.body;
+
+      const product = request.body; 
       product._id = request.params._id;
       delete product.alias;
       const updatedProduct = await productLogic.updateProductAsync(

@@ -23,7 +23,7 @@ export class CartListComponent implements OnInit {
 
   @Input() public orderMode: boolean = false;
 
-  @Output() public emitClose: EventEmitter<boolean> = new EventEmitter()
+  @Output() public closeDrawer: EventEmitter<boolean> = new EventEmitter()
 
   public cartItem: CartItemModel = new CartItemModel()
   public searchControl = new FormControl();
@@ -96,7 +96,7 @@ export class CartListComponent implements OnInit {
   }
 
   public closeCartDrawer(): void {
-    this.emitClose.emit(false)
+    this.closeDrawer.emit(false)
   }
 
   // end of logic section

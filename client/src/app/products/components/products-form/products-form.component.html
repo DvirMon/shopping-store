@@ -1,11 +1,14 @@
 <mat-toolbar appBarBackgroundColor>
+  <button *ngIf="isMobile |async" type="button" aria-label="Toggle sidenav" mat-button (click)="closeDrawer()">
+    <mat-icon>navigate_next</mat-icon>
+  </button>
   <button mat-button type="button" (click)="onClearForm($event)">Clear
     <mat-icon>delete</mat-icon>
   </button>
   <span class="spacer"></span>
   <button mat-button type="button" (click)="onAddProduct()">Add Product
     <mat-icon>add</mat-icon>
-  </button> 
+  </button>
 </mat-toolbar>
 <div *ngIf="formMode; then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
@@ -28,7 +31,7 @@
           </mat-select>
           <mat-error>Please Choose an option</mat-error>
         </mat-form-field>
-      </mat-grid-tile> 
+      </mat-grid-tile>
     </mat-grid-list>
     <app-upload-input [control]="imagePath" [product]="product" [editMode]="editMode" (fileEmit)="saveFile($event)">
     </app-upload-input>

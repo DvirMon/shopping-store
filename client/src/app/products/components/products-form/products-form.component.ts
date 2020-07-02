@@ -1,6 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+import { Observable } from 'rxjs';
+
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
@@ -16,6 +20,8 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class ProductsFormComponent implements OnInit, AfterViewInit {
 
+  @Input() drawer: MatSidenav;
+
   public categories: CategoryModel[] = store.getState().products.categories
   public productForm: FormGroup
   public editMode: boolean = false
@@ -29,6 +35,8 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     private formService: FormService,
     public product: ProductModel,
   ) { }
+
+  public isMobile :Observable<boolean> = this.formService.isMobile()
 
   ngOnInit(): void {
 
@@ -200,6 +208,10 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
   private clearFormMessage(message: string): boolean {
     const answer = confirm(message)
     return answer
+  }
+
+  public closeDrawer() {
+    this.drawer.toggle()
   }
 
 

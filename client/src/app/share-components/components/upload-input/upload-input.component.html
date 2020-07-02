@@ -19,6 +19,6 @@
     </ng-template>
   </mat-grid-tile>
   <mat-grid-tile colspan="1">
-    <mat-error *ngIf="control.errors?.requiredFileType">file format need to be png, jpg or jpeg</mat-error>
+    <mat-error *ngIf="control.errors?.requiredFileType">file format is not png, jpg or jpeg (your file name may contain a dot)</mat-error>
   </mat-grid-tile>
 </mat-grid-list>
