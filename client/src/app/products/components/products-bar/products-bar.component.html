@@ -12,7 +12,7 @@
 
 
     <ng-template #elseBlock>
-      <app-cart-list (closeDrawer)="drawerCart.toggle()"></app-cart-list>
+      <app-cart-list [drawer]="drawerCart"></app-cart-list>
     </ng-template>
   </mat-sidenav>
 

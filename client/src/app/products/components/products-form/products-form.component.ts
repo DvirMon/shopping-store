@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { store } from 'src/app/utilities/redux/store';
   selector: 'app-products-form',
   templateUrl: './products-form.component.html',
 })
-export class ProductsFormComponent implements OnInit, AfterViewInit {
+export class ProductsFormComponent implements OnInit {
 
   @Input() drawer: MatSidenav;
 
@@ -36,21 +36,15 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     public product: ProductModel,
   ) { }
 
-  public isMobile :Observable<boolean> = this.formService.isMobile()
+  public isMobile: Observable<boolean> = this.formService.isMobile()
 
   ngOnInit(): void {
 
-    this.createForm()
-    this.subscribeToRoute()
-    this.subscribeToFormControls()
-    this.subscribeToSubject()
-
-
-  }
-
-  ngAfterViewInit(): void {
-
-  }
+    this.createForm();
+    this.subscribeToRoute();
+    this.subscribeToFormControls();
+    this.subscribeToSubject();
+  };
 
   // form section
   private createForm(): FormGroup {
@@ -80,8 +74,8 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     this.productService.handleUpdate.subscribe(
       (data: ProductData) => {
         if (data) {
-          this.handleStatusUpdate(data.product)
-          this.handleFormUpdate(data.product)
+          this.handleStatusUpdate(data.product);
+          this.handleFormUpdate(data.product);
         }
       })
   }
@@ -90,12 +84,12 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
   private subscribeToFormControls(): void {
     this.productForm.valueChanges.subscribe(
       (product) => {
-        this.product.name = product.name
-        this.product.price = product.price
-        this.product.categoryId = product.categoryId
+        this.product.name = product.name;
+        this.product.price = product.price;
+        this.product.categoryId = product.categoryId;
 
         if (product.categoryId) {
-          this.alias = this.productService.getCategoryAlias(this.product)
+          this.alias = this.productService.getCategoryAlias(this.product);
         }
 
       }
@@ -106,7 +100,7 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
   private subscribeToRoute(): void {
     this.activeRouter.params.subscribe(
       (params) => {
-        this.alias = params.alias
+        this.alias = params.alias;
       }
     )
   }
@@ -121,7 +115,7 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
       ? this.handleUpdateRequest()
       : this.handleAddRequest()
 
-    this.onClearForm()
+    this.onClearForm();
   }
 
   // handle request data
@@ -136,11 +130,9 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
   private handleAddRequest(): void {
     this.productService.addProduct(this.handleRequestData())
       .subscribe((product: ProductModel) => {
-
         this.productService.addProductToStore(product, this.alias)
 
-      }
-      )
+      })
   }
 
   // handle update product request
@@ -148,11 +140,17 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     this.productService.updateProduct(this.handleRequestData(), this.product._id)
       .subscribe((product: ProductModel) => {
         this.productService.updateProductToStore(product, this.alias)
-      }
-      )
+      })
   }
 
+
+  // end of request section
+
+  // ---------------------------------------------------------------- //
+
   // logic section
+
+  // button to add new form
   public onAddProduct(): void {
 
     this.formMode = true
@@ -182,20 +180,23 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     this.productForm.reset()
   }
 
+  // end if function
+
   // save file
   public saveFile(file: File): void {
     this.file = file
     this.product.imagePath = this.file
   }
 
-
+  // update c;ass status
   private handleStatusUpdate(product: ProductModel): void {
     this.product = { ...product }
     this.formMode = true
     this.editMode = true
     this.file = null
   }
-
+  
+  // update form data
   private handleFormUpdate(product: ProductModel): void {
     this.productForm.patchValue({
       name: product.name,
@@ -204,7 +205,7 @@ export class ProductsFormComponent implements OnInit, AfterViewInit {
     })
   }
 
-
+  // message before clear form
   private clearFormMessage(message: string): boolean {
     const answer = confirm(message)
     return answer

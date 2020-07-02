@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -22,8 +24,8 @@ import { environment } from 'src/environments/environment'
 export class CartListComponent implements OnInit {
 
   @Input() public orderMode: boolean = false;
+  @Input() drawer: MatSidenav;
 
-  @Output() public closeDrawer: EventEmitter<boolean> = new EventEmitter()
 
   public cartItem: CartItemModel = new CartItemModel()
   public searchControl = new FormControl();
@@ -93,10 +95,6 @@ export class CartListComponent implements OnInit {
   public backToSore(): void {
     this.receiptService.resetReceiptState()
     this.router.navigateByUrl(environment.productLandingPage)
-  }
-
-  public closeCartDrawer(): void {
-    this.closeDrawer.emit(false)
   }
 
   // end of logic section
