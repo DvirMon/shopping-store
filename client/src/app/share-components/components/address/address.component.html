@@ -1,4 +1,6 @@
 <mat-grid-list class="address-container" [formGroup]="controlGroup" cols="1" [rowHeight]="rowHeight">
+  
+  <!-- city select -->
   <mat-grid-tile>
     <mat-form-field field appearance="fill">
       <mat-label>Select City:</mat-label>
@@ -12,6 +14,8 @@
       </button>
     </mat-form-field>
   </mat-grid-tile>
+
+  <!-- street select -->
   <mat-grid-tile>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Select Street:</mat-label>
@@ -25,6 +29,7 @@
       </button>
     </mat-form-field>
   </mat-grid-tile>
+
 </mat-grid-list>
 <mat-grid-list *ngIf="user" cols="1" rowHeight="10vh">
   <mat-grid-tile>

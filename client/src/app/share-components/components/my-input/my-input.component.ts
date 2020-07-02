@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+
 import { FormService } from 'src/app/utilities/services/form.service';
 import { AuthService } from 'src/app/utilities/services/auth.service';
 
-// import { generate } from 'generate-password'
 import { MatInput } from '@angular/material/input';
 
 
@@ -23,12 +23,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild(MatInput) input: HTMLInputElement;
 
-  @Input() public control: FormControl
-  @Input() public type: string
-  @Input() public hint: string
-  @Input() public controlName: string
-  @Input() public placeHolder: string
-  @Input() public serverErrorMode: boolean
+  @Input() public control: FormControl;
+  @Input() public type: string;
+  @Input() public hint: string;
+  @Input() public controlName: string;
+  @Input() public placeHolder: string;
+  @Input() public serverErrorMode: boolean;
 
   public value: any
   public error: string
@@ -46,11 +46,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
 
-    this.subscribeToSubject()
-    this.subscribeToControl()
+    this.subscribeToSubject();
+    this.subscribeToControl();
   }
 
-  // handle default value
+  // ControlValueAccessor logic
+
   public writeValue(value: any): void {
     this.value = value ? value : ""
   }
@@ -124,7 +125,6 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
         this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
       }
     )
-
   }
 
   // end of logic section

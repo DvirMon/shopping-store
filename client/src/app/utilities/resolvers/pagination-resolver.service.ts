@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 import { ProductsService } from '../services/products.service';
-import { store } from '../redux/store';
-import { ProductModel } from '../models/product-model';
 import { PaginationDataModel } from '../models/pagination-model';
-import { PaginationService } from '../services/pagination.service';
+
+import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'

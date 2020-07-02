@@ -5,7 +5,6 @@ import { DialogData } from 'src/app/utilities/services/dialog.service';
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent  {
 

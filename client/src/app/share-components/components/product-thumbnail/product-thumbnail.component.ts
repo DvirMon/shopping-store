@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductModel } from 'src/app/utilities/models/product-model';
 import { ActivatedRoute } from '@angular/router';
+
+import { ProductModel } from 'src/app/utilities/models/product-model';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,10 +11,10 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductThumbnailComponent implements OnInit {
 
-  @Input() product: ProductModel = new ProductModel()
-  @Input() imageHeight: number
-  @Input() imageWidth: number
-  @Input() alias: string
+  @Input() product: ProductModel;
+  @Input() imageHeight: number;
+  @Input() imageWidth: number;
+  @Input() alias: string;
 
   public routAlias: string
   public environment = environment
@@ -22,7 +24,7 @@ export class ProductThumbnailComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {
+  ngOnInit() : void {
     this.activeRoute.params.subscribe(
       (params) => {
         this.routAlias = params.alias

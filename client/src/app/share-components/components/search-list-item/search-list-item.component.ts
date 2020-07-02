@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductsService } from 'src/app/utilities/services/products.service';
+
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 
@@ -12,16 +12,14 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class SearchListItemComponent implements OnInit {
 
-  @Input() public product: ProductModel = new ProductModel()
-  @Input() public searchTerm: string
+  @Input() public product: ProductModel;
+  @Input() public searchTerm: string;
 
   public categories: CategoryModel[];
-  public alias: string
+  public alias: string;
 
   constructor(
-    private productService : ProductsService
   ) {
-
     this.categories = store.getState().products.categories
   }
 

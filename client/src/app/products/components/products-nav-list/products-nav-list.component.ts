@@ -18,10 +18,10 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class ProductsNavListComponent {
 
-  public categories: CategoryModel[] = store.getState().products.categories
-  public closeDrawer: EventEmitter<boolean> = new EventEmitter()
+  public categories: CategoryModel[] = store.getState().products.categories;
+  public closeDrawer: EventEmitter<boolean> = new EventEmitter();
 
-  public isAdmin: boolean = store.getState().auth.isAdmin
+  public isAdmin: boolean = store.getState().auth.isAdmin;
 
   public icons = [
     faCarrot,
@@ -38,6 +38,7 @@ export class ProductsNavListComponent {
 
   ) { }
 
+  // function to navigate
   public onNavigate(category) {
 
     this.isAdmin
