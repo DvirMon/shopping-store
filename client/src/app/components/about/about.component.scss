@@ -13,8 +13,7 @@ mat-list {
   }
 
   mat-list-item {
-    @include float-shadow();
-    margin: 5%;
+    margin: 5%; 
     cursor: pointer;
   }
 
