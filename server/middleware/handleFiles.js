@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     request.body.imagePath = imagePath;
     cb(null, fileName);
   },
-});
+}); 
 
 // allow only jpg.jpeg extension
 const fileFilter = (request, file, cb) => {

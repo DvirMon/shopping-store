@@ -1,9 +1,10 @@
 @import "~src/style/styles";
 
-mat-list {
+mat-list.about {
 
   margin: auto;
   width: 80%;
+  padding : 2%;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
 
   div.list-header {
