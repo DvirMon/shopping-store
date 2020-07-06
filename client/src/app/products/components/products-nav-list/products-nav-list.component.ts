@@ -24,12 +24,12 @@ export class ProductsNavListComponent {
   public isAdmin: boolean = store.getState().auth.isAdmin;
 
   public icons = [
-    faCarrot,
+    faWineBottle, 
+    faCandyCane,
+    faCheese,
     faBreadSlice,
     faDrumstickBite,
-    faCheese,
-    faWineBottle,
-    faCandyCane,
+    faCarrot,
   ];
 
 
