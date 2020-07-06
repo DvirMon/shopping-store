@@ -10,8 +10,6 @@
     }
   },
   "s3": {
-    "id" : "AKIAQVJGMWHN4DAGWZFX",
-    "secretKey" : "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",
     "bucketName" : "products-images-bucket"
   },
   "secret": {
