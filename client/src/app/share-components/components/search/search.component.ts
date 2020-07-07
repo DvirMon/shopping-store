@@ -167,7 +167,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // prevent search with special symbols
   private validFormat(searchTerm: string): boolean {
-    const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     return regex.test(searchTerm)
   }
 
