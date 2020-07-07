@@ -96,7 +96,9 @@ router.post(
   async (request, response, next) => {
     try {
       const product = request.body;
+
       product.price = JSON.parse(request.body.price);
+      delete product.alias;
 
       const addedProduct = await productLogic.addProductAsync(
         new Product(request.body)
@@ -117,8 +119,11 @@ router.put(
     try {
 
       const product = request.body; 
+      
       product._id = request.params._id;
+      product.price = JSON.parse(request.body.price);
       delete product.alias;
+
       const updatedProduct = await productLogic.updateProductAsync(
         new Product(product)
       );
