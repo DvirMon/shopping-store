@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-    <app-cart-list [orderMode]="true" (emitClose)="drawer.toggle()"></app-cart-list>
+    <app-cart-list [orderMode]="true"  [drawer]="drawer"></app-cart-list>
   </mat-sidenav>
   <mat-sidenav-content> 
     <mat-toolbar>
