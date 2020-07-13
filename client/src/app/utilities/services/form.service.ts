@@ -183,7 +183,6 @@ export class FormService {
         map(result => result.matches),
         shareReplay()
       );
-
   }
 }
 
