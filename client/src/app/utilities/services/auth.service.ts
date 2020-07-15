@@ -15,6 +15,8 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { environment } from 'src/environments/environment';
 
+declare const gapi: any;
+
 export interface Login {
   email: string,
   password: string
@@ -28,18 +30,22 @@ export interface AuthData {
 @Injectable({
   providedIn: 'root'
 })
+    export class AuthService {
 
-export class AuthService {
 
-  // subjects
-  public serverError = new Subject<string>()
-  public loginDate = new BehaviorSubject<any>(null)
+      
+      
+      
+      // subjects
+      public serverError = new Subject<string>()
+      public loginDate = new BehaviorSubject<any>(null)
   public isRegister = new BehaviorSubject<boolean>(false)
-
+  
   private tokenHelper: JwtHelperService = new JwtHelperService()
-
+  
   private url: string = `${environment.server}/api/auth`
-
+  public auth2: any;
+  
 
   constructor(
     private http: HttpClient,
@@ -171,6 +177,38 @@ export class AuthService {
     const expirationDate = this.tokenHelper.getTokenExpirationDate(token);
     const expirationTokenDate = new Date(expirationDate).getTime() - new Date().getTime()
     return expirationTokenDate
+  }
+
+  // -----------------------------------------------------------------------------
+
+  
+  public googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      this.attachSignin(document.getElementById('googleBtn'));
+    });
+  }
+  
+  public attachSignin(element) {
+    this.auth2.attachClickHandler(element, {},
+      (googleUser) => {
+
+        let profile = googleUser.getBasicProfile();
+        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        //YOUR CODE HERE
+
+
+      }, (error) => {
+        alert(JSON.stringify(error, undefined, 2));
+      });
   }
 
 

@@ -19,12 +19,12 @@ export class ProductsNavComponent {
   @Input() isAdmin: boolean
   
   public cartPlus: IconDefinition = faCartPlus
+  public isMobile :Observable<boolean> = this.productsService.isMobile()
 
   constructor(
     private productsService: ProductsService
   ) { }
 
-  public isMobile :Observable<boolean> = this.productsService.isMobile()
 
 
 

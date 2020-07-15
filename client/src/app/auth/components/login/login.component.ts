@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 
+import { Observable } from 'redux';
 import { store } from 'src/app/utilities/redux/store';
 
 
@@ -18,21 +19,26 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class LoginComponent implements OnInit {
 
+  
+
   public loginForm: FormGroup
 
   public isLogin: boolean
   public isCartActive: boolean
   public serverError: string
-
+  
+  public isMobile = this.productsService.isMobile()
+  
   constructor(
     private router: Router,
     private formService: FormService,
     private authService: AuthService,
     private productsService: ProductsService,
     public user: UserModel,
-  ) { }
+    ) { }
+    
 
-  ngOnInit(): void {
+    ngOnInit(): void {
 
     this.createForm()
     this.subscribeToStore()

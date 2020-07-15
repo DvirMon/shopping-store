@@ -1,17 +1,5 @@
 @import "~src/style/variables";
 
-@media (min-width: size(lg)) {
-  form {
-    @include pos-top(20vh);
-
-  }
-}
-@media (max-width: size(md)) {
-  form {
-    @include pos-top(5vh);
-  }
-}
-
 form {
   @include formAuth("initial");
   border-radius: 10px;
