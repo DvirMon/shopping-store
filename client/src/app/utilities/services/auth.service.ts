@@ -15,6 +15,10 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { environment } from 'src/environments/environment';
 
+import { SocialAuthService } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
+
+
 declare const gapi: any;
 
 export interface Login {
@@ -30,27 +34,24 @@ export interface AuthData {
 @Injectable({
   providedIn: 'root'
 })
-    export class AuthService {
+export class AuthService {
 
-
-      
-      
-      
-      // subjects
-      public serverError = new Subject<string>()
-      public loginDate = new BehaviorSubject<any>(null)
+  // subjects
+  public serverError = new Subject<string>()
+  public loginDate = new BehaviorSubject<any>(null)
   public isRegister = new BehaviorSubject<boolean>(false)
-  
+
   private tokenHelper: JwtHelperService = new JwtHelperService()
-  
+
   private url: string = `${environment.server}/api/auth`
   public auth2: any;
-  
+
 
   constructor(
     private http: HttpClient,
     private formService: FormService,
     private router: Router,
+    private socialAuthService: SocialAuthService
   ) { }
 
   // request section 
@@ -68,6 +69,11 @@ export interface AuthData {
   // POST request - http://localhost:3000/api/auth/register
   public register(registerInfo: UserModel): Observable<UserModel> {
     return this.handleUser("/register", registerInfo)
+  }
+
+  // POST request - http://localhost:3000/api/auth/login/google 
+  public googleLogin(email: string): Observable<UserModel | null> {
+    return this.handleUser("/login/google", { email })
   }
 
   // GET request - http://localhost:3000/api/auth/refresh-token
@@ -111,7 +117,7 @@ export interface AuthData {
   // login/register logic section
 
   // generic function to user login/register
-  private handleUser(path: string, data): Observable<UserModel> {
+  private handleUser(path: string, data: any): Observable<UserModel | null> {
     return this.http.post<AuthData>(this.url + path, data)
       .pipe(
         switchMap((response: AuthData) => {
@@ -134,12 +140,16 @@ export interface AuthData {
     this.formService.handleStore(ActionType.Logout)
   }
 
-  public autoLogin(): void {
+  public async autoLogin() {
     const token: string = store.getState().auth.refreshToken
     const user: UserModel = store.getState().auth.user
     if (!token) {
+      await this.signOutWithGoogle()
       this.logout()
       return
+    }
+    if (store.getState().auth.socialUser) {
+      await this.signInWithGoogle()
     }
     this.handleRoleRoute(user)
   }
@@ -150,6 +160,38 @@ export interface AuthData {
       this.router.navigateByUrl("admin" + environment.productLandingPage)
       : this.router.navigateByUrl(`home/${user._id}`)
   }
+
+  // google Section
+
+  public authStatus() {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.formService.handleStore(ActionType.SocialUser, user)
+    });
+  }
+
+  public async signInWithGoogle() {
+    try {
+      await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+
+    }
+    catch (err) {
+      console.log("err")
+      console.log(err)
+    }
+  }
+  public async signOutWithGoogle() {
+    try {
+      if (store.getState().auth.socialUser) {
+        await this.socialAuthService.signOut()
+      }
+    }
+    catch (err) {
+      console.log("error")
+      console.log(err)
+    }
+  }
+
+  // end if google section
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
@@ -181,7 +223,7 @@ export interface AuthData {
 
   // -----------------------------------------------------------------------------
 
-  
+
   public googleInit() {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
@@ -192,7 +234,7 @@ export interface AuthData {
       this.attachSignin(document.getElementById('googleBtn'));
     });
   }
-  
+
   public attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {

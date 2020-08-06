@@ -32,7 +32,7 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     }),
     GooglePlaceModule
   ],
-  providers: [
+   providers: [
     {
       provide: UserModel,
       useValue: new UserModel()

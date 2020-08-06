@@ -8,7 +8,6 @@ import { ProductsService } from 'src/app/utilities/services/products.service';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 
-import { Observable } from 'redux';
 import { store } from 'src/app/utilities/redux/store';
 
 
@@ -19,26 +18,26 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class LoginComponent implements OnInit {
 
-  
+
 
   public loginForm: FormGroup
 
   public isLogin: boolean
   public isCartActive: boolean
   public serverError: string
-  
+
   public isMobile = this.productsService.isMobile()
-  
+
   constructor(
     private router: Router,
     private formService: FormService,
     private authService: AuthService,
     private productsService: ProductsService,
     public user: UserModel,
-    ) { }
-    
+  ) { }
 
-    ngOnInit(): void {
+
+  ngOnInit(): void {
 
     this.createForm()
     this.subscribeToStore()
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   // subscription section
-  public subscribeToStore() {
+  public subscribeToStore(): void {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.user = store.getState().auth.user
@@ -61,33 +60,28 @@ export class LoginComponent implements OnInit {
 
 
   // form section
-  
-  public createForm() {
+
+  public createForm(): void {
     this.loginForm = this.formService.loginForm()
   }
-
   // end form section
-
+ 
 
   // logic section
-  public onLogin() {
+  public onLogin(): void {
     this.authService.login(this.loginForm.value).subscribe(
-      (user: UserModel) => {
-        return this.authService.handleRoleRoute(user)
-      },
-      err => {
-        this.authService.serverError.next(err.error)
-      }
+      (user: UserModel) => this.authService.handleRoleRoute(user),
+      (err) => this.authService.serverError.next(err.error)
     )
   }
 
   // navigate to products page
-  public toProducts() {
+  public toProducts(): void {
     this.productsService.productsLandingPage()
   }
-  
+
   // navigate to register page
-  public onRegister() {
+  public onRegister(): void {
     this.authService.isRegister.next(true)
     this.router.navigateByUrl(`/register`)
 

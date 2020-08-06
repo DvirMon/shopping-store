@@ -1,4 +1,4 @@
-global.config = require("../config.json");
+const config = require("../config");
 
 const express = require("express");
 const bcrypt = require("bcryptjs");
@@ -22,17 +22,17 @@ router.get("/password", async (request, response, next) => {
 });
 
 router.post(
-  "/login", 
-  validation.loginValidation, 
+  "/login",
+  validation.loginValidation,
   async (request, response, next) => {
     try {
       // get user from db
       const user = await authLogic.getUserAsync(request.body.email);
 
       if (!user) {
-        return next({ 
+        return next({
           status: 409,
-          message: "username or password are incorrect",
+          message: "email or password are incorrect",
         });
       }
 
@@ -45,7 +45,7 @@ router.post(
       if (!validPassword) {
         return next({
           status: 409,
-          message: "username or password are incorrect",
+          message: "email or password are incorrect",
         });
       }
 
@@ -62,10 +62,41 @@ router.post(
   }
 );
 
+router.post("/login/google", async (request, response, next) => {
+  
+  try {
+    const email = request.body.email
+
+    if(!email)
+    return next({
+      status: 404,
+      message: "Email is Missing",
+    });
+
+    const user = await authLogic.getUserAsync(email)
+
+    if (!user) {
+      return next({
+        status: 409,
+        message: "There is no user with this email, please register first",
+      });
+    }
+     // get accessToken
+     const token = await auth.setAccessToken(user);
+
+     response.json({ user, token });
+  } 
+
+  catch (err) {
+    next(err)
+  }
+
+})
+
 // get refresh token after login
 router.get(
   "/refresh-token",
-  middleware.authorize(0, config.secret.access),
+  middleware.authorize(0, process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
       const user = request.user;
@@ -102,7 +133,7 @@ router.post("/refresh-token", async (request, response, next) => {
 // get access token with refresh token
 router.get(
   "/access-token",
-  middleware.authorize(0, config.secret.refresh),
+  middleware.authorize(0, process.env.JWT_REFRESH),
   async (request, response, next) => {
     try {
       const payload = request.user;
@@ -119,12 +150,12 @@ router.post(
   "/register",
   validation.matchPasswordValidation,
   async (request, response, next) => {
-    try { 
+    try {
       const user = await authLogic.addUserAsync(new User(request.body));
 
       // get accessToken
       const token = await auth.setAccessToken(user);
- 
+
       response.json({ user, token });
     } catch (err) {
       next(err);
@@ -154,7 +185,7 @@ router.post("/unique-email", async (request, response, next) => {
   } catch (err) {
     next(err);
   }
-});
+}); 
 
 // captcha
 router.post("/captcha", async (request, response, next) => {
@@ -162,8 +193,7 @@ router.post("/captcha", async (request, response, next) => {
     next({ status: 400 });
     return;
   }
-  const secret = "6Ld15KIZAAAAAFiyUCJmazxsbTFvvCiqt8HzbNET";
-  const verifyCaptcha = `secret=${secret}&response=${request.body.captcha}`;
+  const verifyCaptcha = `secret=${process.env.CAPTCHA_SECRET}&response=${request.body.captcha}`;
 
   try {
     const data = await axios.post(

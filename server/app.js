@@ -1,9 +1,10 @@
 require("./data-access-layer/dal");
-global.config = require("./config.json");
+require('dotenv').config()
+
 const express = require("express");
 const server = express();
 
-const PORT = process.env.PORT || config.port;
+const PORT = process.env.PORT || 3000;
 
 // import middleware
 const cors = require("cors");

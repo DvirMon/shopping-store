@@ -16,6 +16,7 @@ export interface DialogData {
 }
 
 export interface ErrorData {
+  error?: string,
   message: string,
   status: any
 }
@@ -27,9 +28,9 @@ export interface ErrorData {
 
 export class DialogService {
 
-  public errorData : ErrorData =  {
-    message : "An error has occurred please try again later",
-    status : null
+  public errorData: ErrorData = {
+    message: "An error has occurred please try again later",
+    status: null
   }
 
   constructor(
@@ -72,19 +73,10 @@ export class DialogService {
 
   // handle dialog data
   private handleDate(type: string, payload?: any): DialogData {
-
     const data = { ...this.data }
-
     data.type = type
-
-    if (type === "error") {
-      data.payload = this.handleErrorData(payload)
-    } else {
-      data.payload = payload
-    }
-
+    data.payload = payload
     return data
-
   }
 
   // handle dialog configuration
@@ -137,7 +129,7 @@ export class DialogService {
 
   private handleErrorData(error: HttpErrorResponse | ErrorData): ErrorData {
 
-    let message = error?.message ? error.message : this.errorData.message
+    let message = ''
     const status = error.status ? error.status : null
 
     switch (status) {
@@ -147,7 +139,11 @@ export class DialogService {
       case 500:
         message = this.errorData.message
         break
+      case 409:
+        message = error.error
+        break
       default:
+        message = error?.message ? error.message : this.errorData.message
     }
     return { message, status }
   }

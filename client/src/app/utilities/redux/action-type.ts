@@ -3,6 +3,7 @@ export enum ActionType {
   // Auth ActionType
   Login,
   Logout,
+  SocialUser,
   AddAccessToken,
   AddRefreshToken,
   UpdateSocket,

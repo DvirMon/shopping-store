@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-global.config = require("../config.json");
+const config = require("../config");
 
 const connectAsync = () => {
   return new Promise((resolve, reject) => {

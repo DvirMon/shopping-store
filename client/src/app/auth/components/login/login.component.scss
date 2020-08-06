@@ -10,11 +10,16 @@ form {
 }
 .header {
   padding: 2%;
+  margin-top: 2%;
   h1 {
     margin: 0;
   }
 }
 
+button {
+  width: 200px;
+}
+
 .btn-shopping {
-  @include pos-top(10vh);
+  @include pos-top(0);
 }

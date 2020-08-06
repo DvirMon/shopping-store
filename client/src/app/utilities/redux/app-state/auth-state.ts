@@ -1,9 +1,11 @@
+import { SocialUser } from 'angularx-social-login';
 import { UserModel } from 'src/app/utilities/models/user-model';
 
 export class AuthAppState {
  
   public isLogin: boolean
   public isAdmin: boolean;
+  public socialUser : SocialUser
   public user: UserModel = new UserModel();
   public refreshToken: any
   public accessToken: any

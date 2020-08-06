@@ -34,14 +34,15 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Authorization': `${this.bearer} : ${this.token}`
       })
     });
+    
     return this.handAuthInterceptor(modified, next)
   }
-
+  
   private handAuthInterceptor(clone: HttpRequest<any>, next: HttpHandler) {
     return next.handle(clone).pipe(
-
+      
       catchError((error: HttpErrorResponse) => {
-
+        
         // in case if auth error
         if (error.status === 401) {
 
@@ -56,20 +57,20 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.dialogService.handleAuthDialog()
             return
           }
-
+          
           // if access token expired - get new access token and repeat request
           return this.authService.getAccessToken().pipe(
             switchMap(response => {
               return this.intercept(clone, next)
             })
-          )
-
-        }
-        return throwError(error);
-      }))
-  }
-
-  private handleToken(request: HttpRequest<any>) {
+            )
+            
+          }
+          return throwError(error);
+        }))
+      }
+      
+      private handleToken(request: HttpRequest<any>) {
     this.token = store.getState().auth.accessToken
     this.bearer = "Bearer-AccessToken"
 

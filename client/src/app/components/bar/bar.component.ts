@@ -25,7 +25,8 @@ export class BarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+
 
 
   ) { }
@@ -37,7 +38,7 @@ export class BarComponent implements OnInit {
 
   }
 
-// subscription section
+  // subscription section
 
   public subscribeToStore() {
     store.subscribe(() => {
@@ -61,16 +62,17 @@ export class BarComponent implements OnInit {
 
   // logic section
 
-  public onLogin() : void {
+  public onLogin(): void {
     this.router.navigateByUrl('/login')
     this.isRegister = false
   }
 
-  public onLogOut() : void {
+  public async onLogOut() {
+    await this.authService.signOutWithGoogle();
     this.authService.logout()
   }
 
-  public onHome() : void {
+  public onHome(): void {
     this.authService.handleRoleRoute(this.user)
   }
 

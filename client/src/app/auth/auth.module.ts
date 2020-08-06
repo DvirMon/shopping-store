@@ -6,9 +6,15 @@ import { SharedModule } from '../share-components/shared-components.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
-import { ReCaptchaComponent} from './components/re-captcha/re-captcha.component';
+import { ReCaptchaComponent } from './components/re-captcha/re-captcha.component';
 import { RegisterAuthComponent } from './components/register-auth/register-auth.component';
-import { RegisterPersonalComponent } from './components/register-personal/register-personal.component'
+import { RegisterPersonalComponent } from './components/register-personal/register-personal.component';
+import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component'
+
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
+import { environment } from '../../environments/environment'
 
 
 @NgModule({
@@ -18,13 +24,31 @@ import { RegisterPersonalComponent } from './components/register-personal/regist
     AuthDialogComponent,
     ReCaptchaComponent,
     RegisterAuthComponent,
-    RegisterPersonalComponent, 
+    RegisterPersonalComponent,
+    GoogleSignInComponent,
 
   ],
   imports: [
     CoreModule,
     RouterModule,
     SharedModule,
+    SocialLoginModule
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        // autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.googleClientId
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    }
   ],
   exports: [
     LoginComponent,

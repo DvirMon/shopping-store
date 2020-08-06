@@ -6,7 +6,7 @@ const orderLogic = require("../business-layer-logic/order-logic");
 const validation = require("../services/validation.service");
 
 const middleware = require("../middleware/middleware");
-const key = config.secret.access;
+const key = process.env.JWT_ACCESS;
 
 // get total orders in store
 router.get("/total", async (request, response, next) => {

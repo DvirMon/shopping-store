@@ -6,13 +6,16 @@ import { AuthService } from 'src/app/utilities/services/auth.service';
   selector: 'app-auth-dialog',
   templateUrl: './auth-dialog.component.html',
 })
-export class AuthDialogComponent  {
+export class AuthDialogComponent {
+
 
   constructor(
     private dialogRef: MatDialogRef<AuthDialogComponent>,
     private authService: AuthService,
 
+
   ) { }
+
 
   // get new refresh token when refresh token expired
   public refreshExpireToken() {

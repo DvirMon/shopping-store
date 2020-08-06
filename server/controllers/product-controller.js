@@ -4,8 +4,8 @@ const router = express.Router();
 const Product = require("../models/product-model");
 const productLogic = require("../business-layer-logic/product-logic");
 const middleware = require("../middleware/middleware");
-
-const key = config.secret.access;
+ 
+const key = process.env.JWT_ACCESS;
 
 router.post(
   "/ids",

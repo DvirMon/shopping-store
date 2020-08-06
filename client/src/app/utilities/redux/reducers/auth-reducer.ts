@@ -16,6 +16,9 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.user['isAdmin'] ? newAppState.isAdmin = true : newAppState.isAdmin = false
       sessionStorage.setItem("user", JSON.stringify(action.payload['user']));
       break
+    case ActionType.SocialUser:
+      newAppState.socialUser = action.payload
+      break
     case ActionType.AddAccessToken:
       newAppState.accessToken = action.payload
       break

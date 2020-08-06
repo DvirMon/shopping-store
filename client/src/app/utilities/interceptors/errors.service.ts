@@ -27,24 +27,28 @@ export class ErrorsService {
       spinnerRef = this.dialogService.openSpinner()
     });
 
-
+    
     if (error instanceof HttpErrorResponse) {
-
+      
       spinnerRef.close()
+      
+      console.log(error);
 
       if (error.status === 401 || error.status === 409) {
         return
       }
-
+      
+      console.log(error);
+      
       environment.production
-        ? this.dialogService.handleErrorDialog(this.dialogService.errorData) 
-        : this.dialogService.handleErrorDialog(error)
+      ? this.dialogService.handleErrorDialog(this.dialogService.errorData) 
+      : this.dialogService.handleErrorDialog(error)
     }
     else {
 
       spinnerRef.close() 
 
-      this.dialogService.handleErrorDialog(this.dialogService.errorData)
+      // this.dialogService.handleErrorDialog(this.dialogService.errorData)
       console.error(error);
 
     }

@@ -15,11 +15,11 @@
   <span *ngIf="placeHolder ==='Price'" matSuffix>.00</span>
 
   <!-- shred input hint -->
-  <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Email' && controlName !== 'street'">
+  <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Enter Email' && controlName !== 'street'">
     {{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
 
   <!-- costume input hint -->
-  <mat-hint *ngIf="placeHolder === 'Email' && control.untouched">
+  <mat-hint *ngIf="placeHolder === 'Enter Email' && control.untouched">
     Please enter valid email format : dom@gmail.com
   </mat-hint>
   <mat-hint *ngIf="placeHolder === 'Email' && control.touched">

@@ -7,7 +7,8 @@ const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 const authLogic = require("../business-layer-logic/auth-logic");
 
 const middleware = require("../middleware/middleware");
-const key = config.secret.access;
+
+const key = process.env.JWT_ACCESS;
 
 // get latest cart of user
 router.get(
