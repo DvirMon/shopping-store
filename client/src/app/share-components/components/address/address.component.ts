@@ -30,7 +30,7 @@ export class AddressComponent  {
 
   // function to update form address
   public addressAutoComplete(controlName: string) {
-    
+
     if (controlName === "street") {
       this.controlGroup.patchValue({ "street": this.user.street })
       return
@@ -48,9 +48,9 @@ export class AddressComponent  {
   }
 
   public handleCitySelect(payload: any) {
+
     if (payload) {
       this.controlGroup.patchValue({ "city": payload.name })
-      this.controlGroup.patchValue({ "street": payload.name })
     }
   }
 

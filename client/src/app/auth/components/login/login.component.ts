@@ -18,8 +18,6 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class LoginComponent implements OnInit {
 
-
-
   public loginForm: FormGroup
 
   public isLogin: boolean
@@ -60,13 +58,13 @@ export class LoginComponent implements OnInit {
 
 
   // form section
-
+  
   public createForm(): void {
     this.loginForm = this.formService.loginForm()
   }
   // end form section
+  
  
-
   // logic section
   public onLogin(): void {
     this.authService.login(this.loginForm.value).subscribe(
