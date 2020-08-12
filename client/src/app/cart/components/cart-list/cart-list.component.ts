@@ -44,12 +44,12 @@ export class CartListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.handleStoreSubscribe();
+    this.subscribeToStore();
   }
 
   // subscribe section
 
-  private handleStoreSubscribe(): void {
+  private subscribeToStore(): void {
     store.subscribe(
       () => {
         this.cartItems = [...store.getState().cart.cartItems];
