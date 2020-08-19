@@ -189,6 +189,7 @@ router.post("/unique-email", async (request, response, next) => {
 
 // captcha
 router.post("/captcha", async (request, response, next) => {
+  
   if (!request.body.captcha) {
     next({ status: 400 });
     return;

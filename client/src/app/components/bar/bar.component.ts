@@ -6,6 +6,7 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 import { AuthService } from 'src/app/utilities/services/auth.service';
 
 import { store } from 'src/app/utilities/redux/store';
+import { AuthGoogleService } from 'src/app/utilities/services/auth-google.service';
 
 @Component({
   selector: 'app-bar',
@@ -25,6 +26,7 @@ export class BarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private authGoogleService : AuthGoogleService,
     private router: Router,
 
 
@@ -68,7 +70,7 @@ export class BarComponent implements OnInit {
   }
 
   public async onLogOut() {
-    await this.authService.signOutWithGoogle();
+    await this.authGoogleService.signOutWithGoogle();
     this.authService.logout()
   }
 

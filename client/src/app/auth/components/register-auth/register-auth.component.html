@@ -5,11 +5,11 @@
     </app-input>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-input [control]="controlGroup.controls['email']" placeHolder="Email" type="text" controlName="email">
+    <app-input [control]="controlGroup.controls['email']" [hint]="'email address'" placeHolder="Email" type="text" controlName="email">
     </app-input>
   </mat-grid-tile>  
   <mat-grid-tile>
-    <app-input [control]="controlGroup.controls['password']" placeHolder="Enter Password" type="password"
+    <app-input [control]="controlGroup.controls['password']" placeHolder="Password" type="password"
       hint="your password, or click on the icon to generate one" controlName="password">
     </app-input>
   </mat-grid-tile>

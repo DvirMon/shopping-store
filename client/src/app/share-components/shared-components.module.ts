@@ -1,16 +1,17 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CoreModule } from '../share-modules/core.module';
 
-// import for global providers
+// GLOBAL PROVIDES
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-// services
+// SERVICES
 import { AuthInterceptorService } from '../utilities/interceptors/auth-interceptor.service';
 import { SpinnerInterceptorService } from '../utilities/interceptors/spinner-interceptor.service';
 import { ErrorsService } from '../utilities/interceptors/errors.service';
+import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 
-// shared components 
+// SHRED COMPONENTS 
 import { MyInputComponent } from './components/my-input/my-input.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -24,6 +25,7 @@ import { BarBackgroundColorDirective } from '../utilities/directives/bar-backgro
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
+import { environment } from 'src/environments/environment'
 
 
 @NgModule({
@@ -42,6 +44,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   ],
   imports: [
     CoreModule,
+    RecaptchaV3Module
 
   ],
   exports: [
@@ -76,6 +79,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { displayDefaultIndicatorType: false, showError: true }
     },
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.reCaptchaSiteKey },
+
     {
       provide: ErrorHandler,
       useClass: ErrorsService

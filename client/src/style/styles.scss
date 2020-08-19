@@ -32,10 +32,14 @@ mat-grid-tile {
   }
 }
 
-
 .spacer { 
   flex: 1;
 }
+
+.grecaptcha-badge {
+  z-index: 10;
+}
+
 
 
 

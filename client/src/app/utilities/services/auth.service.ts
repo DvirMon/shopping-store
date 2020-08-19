@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+
+import { AuthGoogleService } from './auth-google.service';
+import { FormService } from './form.service';
+
+import { UserModel } from '../models/user-model';
+
 import { Subject, BehaviorSubject, of, Observable } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-
-import { FormService } from './form.service';
-import { UserModel } from '../models/user-model';
 
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
@@ -15,8 +18,6 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { environment } from 'src/environments/environment';
 
-import { SocialAuthService } from "angularx-social-login";
-import { GoogleLoginProvider } from "angularx-social-login";
 
 
 declare const gapi: any;
@@ -51,7 +52,7 @@ export class AuthService {
     private http: HttpClient,
     private formService: FormService,
     private router: Router,
-    private socialAuthService: SocialAuthService
+    private authGoogleService: AuthGoogleService
   ) { }
 
   // request section 
@@ -106,19 +107,21 @@ export class AuthService {
       }))
   }
 
-  // POST request - captcha validation - http://localhost:3000/api/auth/captcha
-  public authReCaptcha(captcha: string): Observable<boolean> {
-    return this.http.post<boolean>(this.url + "/captcha", { captcha })
-  }
-
-  // end of request section 
+  // END OF HTTP SECTION 
 
 
-  // login/register logic section
+  // LOGIC SECTION
 
   // generic function to user login/register
   private handleUser(path: string, data: any): Observable<UserModel | null> {
-    return this.http.post<AuthData>(this.url + path, data)
+
+
+    
+    return this.authGoogleService.getReCaptcha('login').pipe(
+      switchMap((reCaptcha: string) => {
+        console.log( { data ,reCaptcha })
+        return this.http.post<AuthData>(this.url + path, { data ,reCaptcha })
+      }))
       .pipe(
         switchMap((response: AuthData) => {
           this.formService.handleStore(ActionType.AddAccessToken, response.token)
@@ -144,12 +147,12 @@ export class AuthService {
     const token: string = store.getState().auth.refreshToken
     const user: UserModel = store.getState().auth.user
     if (!token) {
-      await this.signOutWithGoogle()
+      await this.authGoogleService.signOutWithGoogle()
       this.logout()
       return
     }
     if (store.getState().auth.socialUser) {
-      await this.signInWithGoogle()
+      await this.authGoogleService.signInWithGoogle()
     }
     this.handleRoleRoute(user)
   }
@@ -161,37 +164,6 @@ export class AuthService {
       : this.router.navigateByUrl(`home/${user._id}`)
   }
 
-  // google Section
-
-  public authStatus() {
-    this.socialAuthService.authState.subscribe((user) => {
-      this.formService.handleStore(ActionType.SocialUser, user)
-    });
-  }
-
-  public async signInWithGoogle() {
-    try {
-      await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-
-    }
-    catch (err) {
-      console.log("err")
-      console.log(err)
-    }
-  }
-  public async signOutWithGoogle() {
-    try {
-      if (store.getState().auth.socialUser) {
-        await this.socialAuthService.signOut()
-      }
-    }
-    catch (err) {
-      console.log("error")
-      console.log(err)
-    }
-  }
-
-  // end if google section
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
@@ -220,39 +192,5 @@ export class AuthService {
     const expirationTokenDate = new Date(expirationDate).getTime() - new Date().getTime()
     return expirationTokenDate
   }
-
-  // -----------------------------------------------------------------------------
-
-
-  public googleInit() {
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        scope: 'profile email'
-      });
-      this.attachSignin(document.getElementById('googleBtn'));
-    });
-  }
-
-  public attachSignin(element) {
-    this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-
-        let profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        //YOUR CODE HERE
-
-
-      }, (error) => {
-        alert(JSON.stringify(error, undefined, 2));
-      });
-  }
-
-
 
 } 

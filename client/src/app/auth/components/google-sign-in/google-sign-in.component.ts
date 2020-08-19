@@ -8,6 +8,7 @@ import { SocialUser } from "angularx-social-login";
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 import { store } from 'src/app/utilities/redux/store';
+import { AuthGoogleService } from 'src/app/utilities/services/auth-google.service';
 import { AuthService } from 'src/app/utilities/services/auth.service';
 import { DialogService } from 'src/app/utilities/services/dialog.service';
 
@@ -26,6 +27,7 @@ export class GoogleSignInComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private authService: AuthService,
+    private authGoogleService: AuthGoogleService,
     private dialogService: DialogService
 
   ) {
@@ -37,13 +39,13 @@ export class GoogleSignInComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(window.env.GOOGLE_CLIENT_ID)
-    this.authService.authStatus()
+    this.authGoogleService.authStatus()
   }
 
   public async signInWithGoogle() {
-    await this.authService.signInWithGoogle()
+    await this.authGoogleService.signInWithGoogle()
     this.googleLogin()
-  }
+  } 
 
   private googleLogin(): void {
 
