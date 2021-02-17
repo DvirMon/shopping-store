@@ -1,7 +1,6 @@
+// import angular modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// import angular modules
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
@@ -63,9 +62,9 @@ import { PaginationModel } from '../utilities/models/pagination-model';
   exports: [
     CommonModule,
     NgbModule,
-    RecaptchaModule,
     ReactiveFormsModule,
     FormsModule,
+    RecaptchaModule,
     MaterialModule,
     FontAwesomeModule,
     AgmCoreModule,

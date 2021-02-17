@@ -55,6 +55,7 @@ import { environment } from 'src/environments/environment'
     SearchListItemComponent,
     ProductThumbnailComponent,
     AddressComponent,
+    
     HighLightPipe,
     BarBackgroundColorDirective,
     SidenavAdminDirective,

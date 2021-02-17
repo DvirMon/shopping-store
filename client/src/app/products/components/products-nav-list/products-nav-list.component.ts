@@ -23,14 +23,19 @@ export class ProductsNavListComponent {
 
   public isAdmin: boolean = store.getState().auth.isAdmin;
 
-  public icons = [
-    faWineBottle, 
-    faCandyCane,
-    faCheese,
-    faBreadSlice,
-    faDrumstickBite,
-    faCarrot,
-  ];
+  private icons = {
+    beverages: faWineBottle,
+    condiments: faCandyCane,
+    dairy: faCheese,
+    grains: faBreadSlice,
+    meat: faDrumstickBite,
+    produce: faCarrot,
+
+  }
+
+  ngOnInit(): void {
+    this.setNav();
+  }
 
 
   constructor(
@@ -47,6 +52,17 @@ export class ProductsNavListComponent {
 
     this.closeDrawer.emit(false)
 
+  }
+
+  private setNav() {
+
+    for (const category of this.categories) {
+      for (const icon in this.icons) {
+        if (category.alias === icon) {
+          category.icon = this.icons[icon]
+        }
+      }
+    }
   }
 
 

@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { FormService } from './form.service'
-;
+import { FormService } from './form.service';
+
+// GOOGLE SIGN-IN SERVICE
 import { SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
+
+// GOOGLE RECAPTCHA
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
+// REDUX
 import { ActionType } from '../redux/action-type';
 import { store } from '../redux/store';
+
+// RXJS
 import { Observable } from 'rxjs';
 
 @Injectable({

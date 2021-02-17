@@ -55,7 +55,7 @@ const deleteLogic = (arr, id: string) => {
     arr.splice(indexToDelete, 1)
   }
 }
-
+ 
 const updateLogic = (newAppState: CartAppState, payload: CartModel) => {
   newAppState.cartItems.find(itemToUpdate => {
     if (itemToUpdate._id === payload._id) {

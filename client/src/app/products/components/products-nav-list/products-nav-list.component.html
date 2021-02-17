@@ -1,6 +1,7 @@
 <mat-list>
-  <mat-list-item appSidenavAdminDirective class="nav-main" routerLinkActive="active" *ngFor="let category of categories;  let i = index">
-    <fa-icon [icon]="icons[i]" size="1x"></fa-icon>
+  <mat-list-item appSidenavAdminDirective class="nav-main" routerLinkActive="active"
+   *ngFor="let category of categories;  let i = index">
+    <fa-icon [icon]="category.icon" size="1x"></fa-icon>
     <button mat-button (click)="onNavigate(category)">{{category.name}}
     </button>
     <mat-divider class="d-md-none"></mat-divider>

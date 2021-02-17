@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+
 const uniqueValidator = require("mongoose-unique-validator");
+
+const bcrypt = require("bcryptjs");
 const validation = require("../services/validation.service");
 
 const UserSchema = mongoose.Schema(
@@ -14,7 +16,7 @@ const UserSchema = mongoose.Schema(
       maxlength: [9],
       validate: [validation.regex.personalId, "id is not valid"],
     },
-    email: {  
+    email: {
       type: String,
       required: true,
       unique: true,

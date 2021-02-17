@@ -114,12 +114,10 @@ export class AuthService {
 
   // generic function to user login/register
   private handleUser(path: string, data: any): Observable<UserModel | null> {
-
-
     
-    return this.authGoogleService.getReCaptcha('login').pipe(
+    return this.authGoogleService.getReCaptcha('login')
+    .pipe(
       switchMap((reCaptcha: string) => {
-        console.log( { data ,reCaptcha })
         return this.http.post<AuthData>(this.url + path, { data ,reCaptcha })
       }))
       .pipe(

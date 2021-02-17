@@ -79,6 +79,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
       (error) => {
         this.serverError = error
         if (this.serverError) {
+          console.log(error)
           this.control.setErrors({ serverError: true });
           this.input.focus()
         }

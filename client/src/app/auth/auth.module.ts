@@ -3,15 +3,17 @@ import { CoreModule } from '../share-modules/core.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../share-components/shared-components.module';
 
+// GOOGLE SIGN IN MODULES
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
+// IMPORT COMPONENTS
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { RegisterAuthComponent } from './components/register-auth/register-auth.component';
 import { RegisterPersonalComponent } from './components/register-personal/register-personal.component';
 import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component'
-
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { environment } from '../../environments/environment'
 
