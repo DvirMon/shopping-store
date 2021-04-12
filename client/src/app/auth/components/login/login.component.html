@@ -1,36 +1,19 @@
 <!-- navigation button to products -->
-<mat-grid-list class="btn-shopping" cols="1" rowHeight="5vh" *ngIf="isLogin">
-
+<!-- <mat-grid-list class="btn-shopping" cols="1" rowHeight="5vh" *ngIf="isLogin">
   <mat-grid-tile>
-    <button *ngIf="isLogin" color="primary" mat-raised-button type="button"
-      (click)="toProducts()">{{isCartActive ? 'Resume Shopping' : 'Start Shopping'}}</button>
+    <button *ngIf="isLogin" color="primary" mat-raised-button type="button" (click)="toProducts()">{{isCartActive ?
+      'Resume Shopping' : 'Start Shopping'}}</button>
+  </mat-grid-tile>
+</mat-grid-list> -->
+<!--
+  <div cla="col-lg-6 col-md-6 col-sm-2"></div>
+</div> -->
+
+
+<mat-grid-list cols="3" rowHeight="91vh" >
+  <mat-grid-tile colspan="2" class="main">
+    <app-login-form></app-login-form>
+  </mat-grid-tile>
+  <mat-grid-tile  class="fig" >
   </mat-grid-tile>
 </mat-grid-list>
-
-<!-- login form -->
-<form *ngIf="!isLogin" [formGroup]="loginForm" class="mat-elevation-z1">
-  <mat-grid-list cols="1" [rowHeight]="(isMobile | async) ? '6vh' : '7vh'">
-    <mat-grid-tile class="header">
-      <h1>Hi There!</h1>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="2">
-      <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Enter Email" type="text">
-      </app-input>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="2">
-      <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Enter Password"
-        type="password" hint="your password">
-      </app-input>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="1" rowHeight="8vh">
-    <mat-grid-tile>
-      <button class="button-login" color="primary" [disabled]="loginForm.invalid" mat-raised-button type="button"
-        (click)="onLogin()">Login</button>
-    </mat-grid-tile>
-    <mat-grid-tile >
-      <button mat-raised-button color="warn" type="button" (click)="onRegister()">New Client ? Sign in!</button>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <app-google-sign-in></app-google-sign-in>
-</form>

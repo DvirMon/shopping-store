@@ -1,21 +1,23 @@
 @import "~src/style/styles";
 
-mat-list.about {
-
-  margin: auto;
-  width: 80%;
-  padding : 2%;
+mat-list {
+  padding: 2%;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
 
   div.list-header {
     display: flex;
     justify-content: center;
-    padding-top : 5%;
+    padding-top: 5%;
   }
 
   mat-list-item {
-    margin: 5%; 
+    margin: 5%;
     cursor: pointer;
+
+    &.register-btn {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .float-icon {

@@ -9,24 +9,33 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 
 // IMPORT COMPONENTS
 import { LoginComponent } from './components/login/login.component';
+import { LoginFormComponent } from './components/login -form/login-form.component';
+
 import { RegisterComponent } from './components/register/register.component';
-import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { RegisterAuthComponent } from './components/register-auth/register-auth.component';
 import { RegisterPersonalComponent } from './components/register-personal/register-personal.component';
+
 import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component'
 
-import { environment } from '../../environments/environment'
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
+
+import { environment } from '../../environments/environment';
 
 
 @NgModule({
   declarations: [
+
     LoginComponent,
+    LoginFormComponent,
+
     RegisterComponent,
-    AuthDialogComponent,
+    RegisterFormComponent,
     RegisterAuthComponent,
     RegisterPersonalComponent,
-    GoogleSignInComponent,
 
+    AuthDialogComponent,
+    GoogleSignInComponent,
   ],
   imports: [
     CoreModule,
@@ -38,7 +47,6 @@ import { environment } from '../../environments/environment'
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        // autoLogin: false,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,

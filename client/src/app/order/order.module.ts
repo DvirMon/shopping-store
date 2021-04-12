@@ -12,12 +12,12 @@ import { OrderDialogComponent } from './components/order-dialog/order-dialog.com
 import { DateInputComponent } from './components/date-input/date-input.component';
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
 import { OrderNavComponent } from './components/order-nav/order-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+// import { LayoutModule } from '@angular/cdk/layout';
+// import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatListModule } from '@angular/material/list';
 
 
 
@@ -36,12 +36,12 @@ import { MatListModule } from '@angular/material/list';
     SharedModule,
     OrderRoutingModule,
     CartModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
+    // LayoutModule,
+    // MatToolbarModule,
+    // MatButtonModule,
+    // MatSidenavModule,
+    // MatIconModule,
+    // MatListModule,
   ]
 })
 export class OrderModule { }

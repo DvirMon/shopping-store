@@ -26,7 +26,7 @@ export class BarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private authGoogleService : AuthGoogleService,
+    private authGoogleService: AuthGoogleService,
     private router: Router,
 
 
@@ -62,17 +62,26 @@ export class BarComponent implements OnInit {
   // end of subscription section
 
 
-  // logic section
+  // LOGIC SECTION
 
+  // navigate login
   public onLogin(): void {
     this.router.navigateByUrl('/login')
     this.isRegister = false
   }
 
+  // navigate logout
   public async onLogOut() {
     await this.authGoogleService.signOutWithGoogle();
     this.authService.logout()
   }
+
+  // navigate to register page
+  public onRegister(): void {
+    this.authService.isRegister.next(true)
+    this.router.navigateByUrl(`/register`)
+  }
+
 
   public onHome(): void {
     this.authService.handleRoleRoute(this.user)

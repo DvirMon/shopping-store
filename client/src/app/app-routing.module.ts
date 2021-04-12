@@ -1,29 +1,74 @@
+//ANGULAR CORE
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+
+// COMPONENTS
+import { LoginComponent } from './auth/components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthGuard } from './utilities/guards/auth.guard';
+
+// RESOLVER
 import { InfoResolver } from './utilities/resolvers/info-resolver.service';
 
+// GUARDS
+import { AuthGuard } from './utilities/guards/auth.guard';
 
 const routes: Routes = [
-  { path: "login", component: HomeComponent },
+
+  {
+    path: "",
+    component: HomeComponent
+  },
+
   {
     path: "home/:userId",
     component: HomeComponent,
-    canActivate: [AuthGuard], 
+    canActivate: [AuthGuard],
     resolve: { info: InfoResolver }
   },
-  {
-    path: "register", component: RegisterComponent,
 
+  // LOGIN
+  {
+    path: "login",
+    component: LoginComponent,
   },
-  { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-  { path: "products/:alias/:categoryId", loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
-  { path: "order/:userId/:cartId", loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
-  { path: "", redirectTo: "/login", pathMatch: 'full' },
-  { path: "**", component: PageNotFoundComponent },
+  // REGISTER
+  {
+    path: "register",
+    component: RegisterComponent,
+  },
+
+  // ADMIN MODULE
+  {
+    path: "admin",
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+
+  // PRODUCTS MODULE
+  {
+    path: "products/:alias/:categoryId",
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+  },
+
+  // ORDER MODULE
+  {
+    path: "order/:userId/:cartId",
+    loadChildren: () => import('./order/order.module').then(m => m.OrderModule)
+  },
+
+  // REDIRECT TO HOME PAGE
+  {
+    path: "",
+    redirectTo: "/",
+    pathMatch: 'full'
+  },
+
+  // HANDLE PAGE-NOT-FOUND
+  {
+    path: "**",
+    component: PageNotFoundComponent
+  },
 ];
 
 @NgModule({

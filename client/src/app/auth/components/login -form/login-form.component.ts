@@ -1,0 +1,87 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+
+import { FormService } from 'src/app/utilities/services/form.service';
+import { AuthService } from 'src/app/utilities/services/auth.service';
+import { ProductsService } from 'src/app/utilities/services/products.service';
+
+import { UserModel } from 'src/app/utilities/models/user-model';
+
+import { store } from 'src/app/utilities/redux/store';
+
+
+@Component({
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss']
+})
+export class LoginFormComponent implements OnInit {
+
+  public loginForm: FormGroup
+
+  public isLogin: boolean
+  public isCartActive: boolean
+  public serverError: string
+
+  public isMobile = this.productsService.isMobile()
+
+  constructor(
+    private router: Router,
+    private formService: FormService,
+    private authService: AuthService,
+    private productsService: ProductsService,
+    public user: UserModel,
+  ) { }
+
+
+  ngOnInit(): void {
+    this.createForm()
+    this.subscribeToStore()
+  }
+
+  // subscription section
+  public subscribeToStore(): void {
+    store.subscribe(() => {
+      this.isLogin = store.getState().auth.isLogin
+      this.user = store.getState().auth.user
+      this.isCartActive = store.getState().cart.isCartActive
+    }
+    )
+    this.isLogin = store.getState().auth.isLogin
+    this.user = store.getState().auth.user
+    this.isCartActive = store.getState().cart.isCartActive
+  }
+  // end of subscription section
+
+
+  // form section
+
+  public createForm(): void {
+    this.loginForm = this.formService.loginForm()
+  }
+  // end form section
+
+
+  // logic section
+  public onLogin(): void {
+    this.authService.login(this.loginForm.value).subscribe(
+      (user: UserModel) => this.authService.handleRoleRoute(user),
+      (err) => this.authService.serverError.next(err.error)
+    )
+  }
+
+  // navigate to products page
+  public toProducts(): void {
+    this.productsService.productsLandingPage()
+  }
+
+  // navigate to register page
+  public onRegister(): void {
+    this.authService.isRegister.next(true)
+    this.router.navigateByUrl(`/register`)
+  }
+
+  // end logic section
+
+}

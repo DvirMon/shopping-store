@@ -5,23 +5,33 @@
         <li>
           <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
         </li>
-        <li>
-          <span>Grocery-Online</span>
+        <li >
+          <button (click)="onHome()" mat-button>Grocery-Online</button>
         </li>
       </ul>
       <span class="spacer"></span>
-      <button mat-button *ngIf="!isLogin && isRegister" (click)="onLogin()">Back To Login</button>
+      <!-- <button mat-button *ngIf="!isLogin && isRegister" (click)="onLogin()">Back To Login</button> -->
+
+      <button (click)="onLogin()" mat-button>Login</button>
+      <button (click)="onRegister()" mat-button>Register</button>
+
+
       <span class="d-none d-lg-block" *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
+
       <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
+
       </button>
+
       <mat-menu #menu="matMenu">
-        <button *ngIf="isLogin" (click)="onHome()" mat-menu-item>
-          <span>Home</span>
-        </button>
-        <button *ngIf="isLogin" (click)="onLogOut()" mat-menu-item>
-          <span>Logout</span>
-        </button>
+        <div *ngIf="isLogin">
+          <button (click)="onHome()" mat-menu-item>
+            <span>Home</span>
+          </button>
+          <button (click)="onLogOut()" mat-menu-item>
+            <span>Logout</span>
+          </button>
+        </div>
       </mat-menu>
     </mat-toolbar>
     <ng-content></ng-content>

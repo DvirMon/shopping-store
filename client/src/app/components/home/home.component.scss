@@ -1,5 +1,13 @@
 @import "src/style/variables";
 
+div {
+  @include bg-image("/assets/images/about.jpg");
+}
+
+mat-grid-list {
+  background-color: transparent;
+}
+
 @mixin background-default($height) {
   height: $height;
   width: 100%;
@@ -13,6 +21,7 @@
 div.d-none.d-md-block {
   margin: auto;
 }
+
 .row {
   @include background-default(92vh);
   @include bg-image("/assets/images/about.jpg");

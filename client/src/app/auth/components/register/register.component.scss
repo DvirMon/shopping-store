@@ -1,21 +1,17 @@
 @import "~src/style/variables";
 
-div {
-  @include bg-image("/assets/images/shopPicture.jpg");
-  height: 92vh;
+.main {
+  background-color: white;
+
+  app-register-form {
+    width: 100%;
+    height: 100%;
+  }
 }
 
-form {
-  @include formAuth(85vh);
-  @include pos-top(3%);
-  width: 90%;
-}
-
-::ng-deep div.mat-horizontal-content-container {
-  height: 77.9vh;
-}
-
-mat-grid-list.details {
-  width: 50%;
-  margin: auto;
+.fig {
+  background-image: url("src/assets/images/2.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

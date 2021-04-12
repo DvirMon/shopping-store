@@ -1,0 +1,15 @@
+@import "~src/style/variables";
+
+form {
+  @include formAuth(100vh);
+  width: 100%;
+}
+
+::ng-deep div.mat-horizontal-content-container {
+  height: 77.9vh;
+}
+
+mat-grid-list.details {
+  width: 50%;
+  margin: auto;
+}

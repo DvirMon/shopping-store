@@ -19,7 +19,6 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { environment } from 'src/environments/environment';
 
 
-
 declare const gapi: any;
 
 export interface Login {
@@ -55,7 +54,7 @@ export class AuthService {
     private authGoogleService: AuthGoogleService
   ) { }
 
-  // request section 
+  // request section
 
   // GET request - http://localhost:3000/api/auth/password
   public password(): Observable<string> {
@@ -72,7 +71,7 @@ export class AuthService {
     return this.handleUser("/register", registerInfo)
   }
 
-  // POST request - http://localhost:3000/api/auth/login/google 
+  // POST request - http://localhost:3000/api/auth/login/google
   public googleLogin(email: string): Observable<UserModel | null> {
     return this.handleUser("/login/google", { email })
   }
@@ -107,14 +106,14 @@ export class AuthService {
       }))
   }
 
-  // END OF HTTP SECTION 
+  // END OF HTTP SECTION
 
 
   // LOGIC SECTION
 
   // generic function to user login/register
   private handleUser(path: string, data: any): Observable<UserModel | null> {
-    
+
     return this.authGoogleService.getReCaptcha('login')
     .pipe(
       switchMap((reCaptcha: string) => {
@@ -165,7 +164,7 @@ export class AuthService {
 
   public logout(): Promise<boolean> {
     this.formService.handleStore(ActionType.Logout)
-    return this.router.navigateByUrl(`/login`)
+    return this.router.navigateByUrl(`/`)
   }
 
   // end of login/register logic
@@ -191,4 +190,4 @@ export class AuthService {
     return expirationTokenDate
   }
 
-} 
+}
