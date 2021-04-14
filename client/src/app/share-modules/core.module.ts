@@ -11,15 +11,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AgmCoreModule} from '@agm/core'
 
-
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
 import { CartModel } from '../utilities/models/cart-model';
 import { UserModel } from '../utilities/models/user-model';
 import { CartItemModel } from '../utilities/models/cart-item-model';
 import { PaginationModel } from '../utilities/models/pagination-model';
-
-
 
 @NgModule({
   declarations: [],

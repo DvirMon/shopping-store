@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // COMPONENTS
-import { LoginComponent } from './auth/components/login/login.component';
+// import { LoginComponent } from './auth/components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './auth/components/register/register.component';
+// import { RegisterComponent } from './auth/components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // RESOLVER
@@ -30,14 +30,18 @@ const routes: Routes = [
 
   // LOGIN
   {
-    path: "login",
-    component: LoginComponent,
+    path: "auth",
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   // REGISTER
   {
-    path: "register",
-    component: RegisterComponent,
+    path: "auth",
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
+  // {
+  //   path: "register",
+  //   component: RegisterComponent,
+  // },
 
   // ADMIN MODULE
   {

@@ -1,8 +1,51 @@
-<mat-grid-list cols="3" rowHeight="91vh" >
-  <mat-grid-tile colspan="2" class="main">
-    <app-register-form></app-register-form> 
-  </mat-grid-tile>
-  <mat-grid-tile  class="fig" >
-  </mat-grid-tile>
-</mat-grid-list>
+  <!-- register form -->
 
+  <form [formGroup]="registerForm">
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="authDetails" state="security">
+        <ng-template matStepLabel>
+          Authentication Details
+        </ng-template>
+        <app-register-auth [controlGroup]="authDetails"></app-register-auth>
+      </mat-step>
+      <mat-step [stepControl]="personalDetails" state="person">
+        <ng-template matStepLabel>
+          Personal Details
+        </ng-template>
+        <app-address [controlGroup]="personalDetails" [rowHeight]=100></app-address>
+        <app-register-personal [controlGroup]="personalDetails"></app-register-personal>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>
+          Confirm
+        </ng-template>
+        <mat-grid-list cols="2" rowHeight="10vh" class="details">
+          <mat-grid-tile>Email : </mat-grid-tile>
+          <mat-grid-tile>{{auth.email.value}}</mat-grid-tile>
+          <mat-grid-tile>Name : </mat-grid-tile>
+          <mat-grid-tile>{{personal.firstName.value}}</mat-grid-tile>
+          <mat-grid-tile>Last Name : </mat-grid-tile>
+          <mat-grid-tile>{{personal.lastName.value}}</mat-grid-tile>
+          <mat-grid-tile>City : </mat-grid-tile>
+          <mat-grid-tile>{{personal.city.value}}</mat-grid-tile>
+          <mat-grid-tile>Street :</mat-grid-tile>
+          <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="1" rowHeight="25vh">
+          <mat-grid-tile>
+            <button (click)="onSubmit()" type="button"
+              mat-raised-button>Create new Account </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-step>
+
+      <!-- Icon overrides. -->
+      <ng-template matStepperIcon="security">
+        <mat-icon>security</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="person">
+        <mat-icon>person</mat-icon>
+      </ng-template>
+
+    </mat-horizontal-stepper>
+  </form>

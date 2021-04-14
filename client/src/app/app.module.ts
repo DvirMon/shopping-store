@@ -7,8 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './share-modules/core.module';
 import { SharedModule } from './share-components/shared-components.module'
 
-import { AuthModule } from './auth/auth.module';
-
+// GOOGLE SIGN IN MODULES
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { AppComponent } from './components/app/app.component';
 import { BarComponent } from './components/bar/bar.component';
@@ -17,6 +18,8 @@ import { InfoComponent } from './components/info/info.component';
 import { AboutComponent } from './components/about/about.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
+import { environment } from '../environments/environment';
+import { MaterialModule } from './share-modules/material.module';
 
 
 
@@ -36,9 +39,24 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    AuthModule,
+    MaterialModule,
+    SocialLoginModule
+
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.googleClientId
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    }
+  ],  bootstrap: [AppComponent],
 })
 export class AppModule { }

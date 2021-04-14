@@ -30,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -61,6 +62,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatNativeDateModule,
     MatPaginatorModule,
     MatSortModule,
+    LayoutModule,
+
   ]
 })
 export class MaterialModule { }

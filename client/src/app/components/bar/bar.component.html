@@ -10,7 +10,6 @@
         </li>
       </ul>
       <span class="spacer"></span>
-      <!-- <button mat-button *ngIf="!isLogin && isRegister" (click)="onLogin()">Back To Login</button> -->
 
       <button (click)="onLogin()" mat-button>Login</button>
       <button (click)="onRegister()" mat-button>Register</button>
@@ -33,7 +32,12 @@
           </button>
         </div>
       </mat-menu>
+      
     </mat-toolbar>
+
+
+    <!-- render view -->
     <ng-content></ng-content>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

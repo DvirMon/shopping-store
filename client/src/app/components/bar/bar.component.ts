@@ -42,7 +42,7 @@ export class BarComponent implements OnInit {
 
   // subscription section
 
-  public subscribeToStore() {
+  public subscribeToStore(): void {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.isAdmin = store.getState().auth.isAdmin
@@ -53,7 +53,7 @@ export class BarComponent implements OnInit {
     this.user = store.getState().auth.user
   }
 
-  private subscribeToSubject() {
+  private subscribeToSubject(): void {
     this.authService.isRegister.subscribe(
       (isRegister) => this.isRegister = isRegister
     )
@@ -65,26 +65,32 @@ export class BarComponent implements OnInit {
   // LOGIC SECTION
 
   // navigate login
-  public onLogin(): void {
-    this.router.navigateByUrl('/login')
+  public onLogin(): Promise<boolean> {
     this.isRegister = false
+    return this.router.navigateByUrl('auth/login')
   }
 
   // navigate logout
-  public async onLogOut() {
+  public async onLogOut(): Promise<boolean> {
     await this.authGoogleService.signOutWithGoogle();
-    this.authService.logout()
+    return this.authService.logout()
   }
 
   // navigate to register page
-  public onRegister(): void {
+  public onRegister(): Promise<boolean> {
     this.authService.isRegister.next(true)
-    this.router.navigateByUrl(`/register`)
+    return this.router.navigateByUrl(`auth/register`)
   }
 
 
-  public onHome(): void {
-    this.authService.handleRoleRoute(this.user)
+  public onHome(): Promise<boolean> {
+
+    if (this.isLogin) {
+      return this.authService.handleRoleRoute(this.user)
+    }
+
+    return this.router.navigateByUrl(`/`)
+
   }
 
   // end of logic section
