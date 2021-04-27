@@ -1,15 +1,19 @@
+
+<!-- BAR -->
 <mat-toolbar appBarBackgroundColor>
-  <button *ngIf="isMobile |async" type="button" aria-label="Toggle sidenav" mat-button (click)="closeDrawer()">
+  <button *ngIf="isMobile |async" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="closeDrawer()">
     <mat-icon>navigate_next</mat-icon>
   </button>
-  <button mat-button type="button" (click)="onClearForm($event)">Clear
+  <button mat-icon-button type="button" (click)="onClearForm($event)">
     <mat-icon>delete</mat-icon>
   </button>
   <span class="spacer"></span>
-  <button mat-button type="button" (click)="onAddProduct()">Add Product
+  <button mat-icon-button type="button" (click)="onAddProduct()">
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>
+
+<!-- FORM -->
 <div *ngIf="formMode; then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
   <form [formGroup]="productForm" encType="multipart/form-data">
@@ -22,6 +26,7 @@
         <app-input type="number" [control]="price" placeHolder="Price" hint="product price">
         </app-input>
       </mat-grid-tile>
+
       <mat-grid-tile>
         <mat-form-field field appearance="fill">
           <mat-label>Select Category:</mat-label>
@@ -33,8 +38,10 @@
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
+
     <app-upload-input [control]="imagePath" [product]="product" [editMode]="editMode" (fileEmit)="saveFile($event)">
     </app-upload-input>
+
     <mat-grid-list cols="1" rowHeight="15vh">
       <mat-grid-tile>
         <button (click)="handleRequest()" type="button" color="warn"
@@ -45,6 +52,7 @@
     </mat-grid-list>
   </form>
 </ng-template>
+
 <ng-template #elseBlock>
   <mat-grid-list cols="1" rowHeight="15vh">
     <mat-grid-tile>

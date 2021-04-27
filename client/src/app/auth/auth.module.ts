@@ -2,34 +2,40 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from '../share-modules/core.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../share-components/shared-components.module';
+import { CodeInputModule } from 'angular-code-input';
+import { AuthRoutingModule } from './auth-routing.module';
 
 // IMPORT COMPONENTS
-import { AuthDashboardComponent } from './components/auth-dashboard/auth-dashboard.component';
+
+import { RootComponent } from './components/root/root.component';
+import { AuthBarComponent } from './components/auth-bar/auth-bar.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
-import { RegisterAuthComponent } from './components/register-auth/register-auth.component';
-import { RegisterPersonalComponent } from './components/register-personal/register-personal.component';
-
-import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component'
-
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
- 
-import { AuthRoutingModule } from './auth-routing.module';
+
+import { ResetComponent } from './components/reset/reset.component';
+import { ResetAuthComponent } from './components/reset-auth/reset-auth.component';
+import { ResetConfirmComponent } from './components/reset-confirm/reset-confirm.component';
+import { ResetNewPasswordComponent } from './components/reset-new-password/reset-new-password.component';
+
+// import { AboutComponent } from '../share-components/components/about/about.component';
 
 @NgModule({
   declarations: [
+    AuthBarComponent,
 
     LoginComponent,
     RegisterComponent,
+    ResetAuthComponent,
 
-    RegisterAuthComponent,
-    RegisterPersonalComponent,
+    ResetConfirmComponent,
+    ResetNewPasswordComponent,
 
     AuthDialogComponent,
-    GoogleSignInComponent,
-    AuthDashboardComponent,
+    ResetComponent,
+    RootComponent,
 
 
   ],
@@ -38,6 +44,10 @@ import { AuthRoutingModule } from './auth-routing.module';
     RouterModule,
     AuthRoutingModule,
     SharedModule,
+    CodeInputModule.forRoot({
+      codeLength: 6,
+      isCharsCode: false,
+    }),
   ],
   providers: [],
   exports: []

@@ -11,9 +11,9 @@ import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operato
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
-import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
-import { DialogService } from 'src/app/utilities/services/dialog.service';
-import { PaginationService } from 'src/app/utilities/services/pagination.service';
+import { ProductsService, ProductData } from 'src/app/services/products.service';
+import { DialogService } from 'src/app/services/dialog.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 
 import { store } from 'src/app/utilities/redux/store';
 
@@ -90,7 +90,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
 
-  // end of subscription section 
+  // end of subscription section
 
   // ---------------------------------------------------------------//
 
@@ -178,7 +178,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchEntries = of([]);
     return of([]);
   }
-  
+
   // handle search success
   private handleSuccess(response: ProductModel[]): Observable<ProductModel[]> {
     this.results = false

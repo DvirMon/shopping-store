@@ -3,10 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 
-import { ProductsService } from 'src/app/utilities/services/products.service';
-import { CartService } from 'src/app/utilities/services/cart.service';
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
-import { DialogService } from 'src/app/utilities/services/dialog.service';
+import { ProductsService } from 'src/app/services/products.service';
+import { CartService } from 'src/app/services/cart.service';
+import { ReceiptService } from 'src/app/services/receipt.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 import { store } from 'src/app/utilities/redux/store';
 
@@ -99,7 +99,7 @@ export class CartListItemComponent implements OnInit {
     }
   }
 
-  // open product dialog 
+  // open product dialog
   public onUpdateClick(): void {
     this.dialogService.handleProductDialog({ product: this.product, alias: this.alias })
   }

@@ -9,9 +9,9 @@ import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
-import { FormService } from 'src/app/utilities/services/form.service';
-import { CartService, CartActionInfo } from 'src/app/utilities/services/cart.service';
-import { DialogData } from 'src/app/utilities/services/dialog.service';
+import { FormService } from 'src/app/services/form.service';
+import { CartService, CartActionInfo } from 'src/app/services/cart.service';
+import { DialogData } from 'src/app/services/dialog.service';
 
 import { map } from 'rxjs/operators';
 

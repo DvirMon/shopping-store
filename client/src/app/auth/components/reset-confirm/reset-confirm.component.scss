@@ -1,0 +1,37 @@
+
+@import "~src/style/variables";
+
+
+.container {
+  width: 50%;
+  code-input {
+    --item-spacing: 10px;
+    --item-height: 2em;
+    --item-border: none;
+    --item-border-bottom: 2px solid black;
+    --item-border-has-value: none;
+    --item-border-bottom-has-value: 2px solid #888888;
+    --item-border-focused: none;
+    --item-border-bottom-focused: 2px solid #809070;
+    --item-shadow-focused: none;
+    --item-border-radius: 0px;
+    font-size: 30px;
+  }
+}
+
+.query {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+}
+
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 80%;
+  }
+}
+
+  mat-grid-tile.input-error {
+    color : color(input-error)
+  }

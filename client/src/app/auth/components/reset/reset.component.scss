@@ -1,0 +1,28 @@
+@import "~src/style/variables";
+
+div.main {
+  background-image: url("src/assets/images/register-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 91vh;
+}
+
+.container {
+  display: flex;
+  height: inherit;
+  justify-content: center;
+  margin: auto;
+
+  mat-horizontal-stepper {
+    height: 81vh;
+    margin-top: 5vh;
+  }
+
+  @media screen and (max-width: 600px) {
+    mat-horizontal-stepper {
+      width: 95%;
+    }
+  }
+}

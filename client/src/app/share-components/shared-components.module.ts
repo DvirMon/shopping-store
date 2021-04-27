@@ -4,6 +4,7 @@ import { CoreModule } from '../share-modules/core.module';
 // GLOBAL PROVIDES
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 // SERVICES
 import { AuthInterceptorService } from '../utilities/interceptors/auth-interceptor.service';
@@ -11,25 +12,35 @@ import { SpinnerInterceptorService } from '../utilities/interceptors/spinner-int
 import { ErrorsService } from '../utilities/interceptors/errors.service';
 import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 
-// SHRED COMPONENTS 
+// SHRED COMPONENTS
+import { AboutComponent } from './components/about/about.component';
+
 import { MyInputComponent } from './components/my-input/my-input.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
+
 import { DialogComponent } from './components/dialog/dialog.component';
+
 import { SearchComponent } from './components/search/search.component';
 import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
+
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
+
 import { AddressComponent } from './components/address/address.component';
 
-import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
+
+// DIRECTIVE
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
+import { BackgroundImageDirective } from '../utilities/directives/background-image.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
+// PIPES
+import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
 import { environment } from 'src/environments/environment'
 
-
 @NgModule({
   declarations: [
+    AboutComponent,
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
@@ -38,9 +49,11 @@ import { environment } from 'src/environments/environment'
     ProductThumbnailComponent,
     AddressComponent,
     HighLightPipe,
+
     BarBackgroundColorDirective,
+    BackgroundImageDirective,
     SidenavAdminDirective,
-    
+
   ],
   imports: [
     CoreModule,
@@ -48,6 +61,7 @@ import { environment } from 'src/environments/environment'
 
   ],
   exports: [
+    AboutComponent,
     MyInputComponent,
     UploadInputComponent,
     DialogComponent,
@@ -55,9 +69,11 @@ import { environment } from 'src/environments/environment'
     SearchListItemComponent,
     ProductThumbnailComponent,
     AddressComponent,
-    
+
     HighLightPipe,
+
     BarBackgroundColorDirective,
+    BackgroundImageDirective,
     SidenavAdminDirective,
   ],
   providers: [

@@ -1,51 +1,42 @@
-  <!-- register form -->
-
-  <form [formGroup]="registerForm">
-    <mat-horizontal-stepper #stepper>
-      <mat-step [stepControl]="authDetails" state="security">
-        <ng-template matStepLabel>
-          Authentication Details
-        </ng-template>
-        <app-register-auth [controlGroup]="authDetails"></app-register-auth>
-      </mat-step>
-      <mat-step [stepControl]="personalDetails" state="person">
-        <ng-template matStepLabel>
-          Personal Details
-        </ng-template>
-        <app-address [controlGroup]="personalDetails" [rowHeight]=100></app-address>
-        <app-register-personal [controlGroup]="personalDetails"></app-register-personal>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>
-          Confirm
-        </ng-template>
-        <mat-grid-list cols="2" rowHeight="10vh" class="details">
-          <mat-grid-tile>Email : </mat-grid-tile>
-          <mat-grid-tile>{{auth.email.value}}</mat-grid-tile>
-          <mat-grid-tile>Name : </mat-grid-tile>
-          <mat-grid-tile>{{personal.firstName.value}}</mat-grid-tile>
-          <mat-grid-tile>Last Name : </mat-grid-tile>
-          <mat-grid-tile>{{personal.lastName.value}}</mat-grid-tile>
-          <mat-grid-tile>City : </mat-grid-tile>
-          <mat-grid-tile>{{personal.city.value}}</mat-grid-tile>
-          <mat-grid-tile>Street :</mat-grid-tile>
-          <mat-grid-tile>{{personal.street.value}}</mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="1" rowHeight="25vh">
-          <mat-grid-tile>
-            <button (click)="onSubmit()" type="button"
-              mat-raised-button>Create new Account </button>
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-step>
-
-      <!-- Icon overrides. -->
-      <ng-template matStepperIcon="security">
-        <mat-icon>security</mat-icon>
-      </ng-template>
-      <ng-template matStepperIcon="person">
-        <mat-icon>person</mat-icon>
-      </ng-template>
-
-    </mat-horizontal-stepper>
-  </form>
+<div class="main">
+  <div class="space"></div>
+  <div class="container">
+    <div class="main-card mat-elevation-z1">
+      <div *ngIf="!(isMobile | async)" class="left">
+        <app-about></app-about>
+      </div>
+      <div class="right">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <mat-grid-list cols="1" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile rowspan="2">
+              <app-input [control]="registerForm.controls['name']" placeHolder="Name" type="text" hint="your name"
+                controlName="name">
+              </app-input>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="2">
+              <app-input [control]="registerForm.controls['email']" [hint]="'email address'" placeHolder="Email"
+                type="text" controlName="email" [serverErrorMode]="true">
+              </app-input>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="2">
+              <app-input [control]="registerForm.controls['password']" placeHolder="Password" type="password"
+                hint="your password" controlName="password">
+              </app-input>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="2">
+              <app-input [control]="registerForm.controls['confirmPassword']" placeHolder="Confirmation Password"
+                type="password" hint="confirmation password" controlName="confirmPassword">
+              </app-input>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="1" rowHeight="10vh">
+            <mat-grid-tile>
+              <button mat-button color="primary" type="submit" [disabled]="registerForm.invalid">Sign In</button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

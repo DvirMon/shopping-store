@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,OAAO,EAAE,WAAW;EACpB,cAAc,EAAE,MAAM;EACtB,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,IAAI;EACjB,cAAc,EAAE,IAAI;CACrB;;AAED,AAAA,aAAa,GAAG,IAAI,CAAC;EACnB,YAAY,EAAE,IAAI;CACnB;;AAED,AAAA,mBAAmB,CAAC;EAClB,UAAU,EAAE,KAAK;EACjB,OAAO,EAAE,WAAW;CACrB",
-    "sources": [
-        "order-dialog.component.scss"
-    ],
-    "names": [],
-    "file": "order-dialog.component.css"
-}

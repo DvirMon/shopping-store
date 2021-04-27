@@ -1,0 +1,27 @@
+mat-step {
+  height: 91vh;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  mat-form-field {
+    width: 40%;
+
+    mat-hint {
+      font-size: 130%;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    mat-form-field {
+      width: 80%;
+
+      mat-hint {
+        font-size: 110%;
+      }
+    }
+  }
+}

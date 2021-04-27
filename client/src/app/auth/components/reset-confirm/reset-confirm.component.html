@@ -1,0 +1,26 @@
+<mat-grid-list cols="1" rowHeight="5vh">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile rowspan="2">
+    <h1>
+      Please enter confirmation code
+    </h1>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="3">
+    <div class="container">
+      <code-input [isCodeHidden]="false" [isNonDigitsCode]="false" [codeLength]="6"
+        (codeCompleted)="onCodeCompleted($event)">
+      </code-input>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile class="input-error">
+    {{serverError}}
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="2">
+    <div class="query">
+      Didn't get any code ?
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="2">
+    <button type='button' mat-raised-button color="primary" (click)="onClick()">Send Again</button>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -4,7 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, Htt
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
-import { DialogService } from '../services/dialog.service';
+import { DialogService } from '../../services/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,10 @@ export class SpinnerInterceptorService implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (request.url === "assets/images/Google__G__Logo.svg") {
+      return next.handle(request)
+    }
 
     let spinnerRef;
 
@@ -37,7 +41,7 @@ export class SpinnerInterceptorService implements HttpInterceptor {
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            spinnerRef.close() 
+            spinnerRef.close()
           }
         }),
       catchError((error: HttpErrorResponse) => {

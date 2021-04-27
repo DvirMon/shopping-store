@@ -1,40 +1,44 @@
 <mat-form-field class="full-width" appearance="fill">
 
-  <input matInput [type]="type" [placeholder]="placeHolder" [disabled]="disabled" [formControl]="control"
-    control="control" autocomplete="off" (input)="handleChange($event.target.value)" (blur)="validate()" required
-    (mouseenter)="generatePassword()" #input>
+  <mat-label>{{placeHolder}}</mat-label>
+  <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
+    (input)="handleChange($event.target.value)" (focusout)="validate()" required #input (focus)="onFocus()">
 
-  <!-- password icon -->
-  <button *ngIf="placeHolder ==='Password'" mat-icon-button matSuffix matTooltip="Generate strong password"
-    matTooltipPosition="right" (click)="pushPassword()">
-    <mat-icon>vpn_key</mat-icon>
-  </button>
 
   <!-- price icons -->
-  <span *ngIf="placeHolder ==='Price'" matPrefix>$&nbsp;</span>
-  <span *ngIf="placeHolder ==='Price'" matSuffix>.00</span>
+  <ng-container *ngIf="placeHolder === 'Price'">
+    <span matPrefix>$&nbsp;</span>
+    <span *ngIf="placeHolder === 'Price'" matSuffix>.00</span>
+  </ng-container>
+
 
   <!-- shred input hint -->
-  <mat-hint *ngIf="placeHolder !== 'Password' && placeHolder !== 'Enter Email' && controlName !== 'street'">
-    {{control.pending ? ' verifying in database...' : 'Please enter '+ hint}}</mat-hint>
+  <mat-hint *ngIf="control.invalid && !loginHint && !addressHint">{{'Please enter '+ hint}}</mat-hint>
+
+  <!-- verifying in database hint -->
+  <mat-hint *ngIf="!loginHint && !addressHint && control.pending">verifying in database...</mat-hint>
 
   <!-- costume input hint -->
-  <mat-hint *ngIf="placeHolder === 'Enter Email' && control.untouched">
+  <mat-hint *ngIf="loginHint && control.untouched">
     Please enter valid email format : dom@gmail.com
   </mat-hint>
-  <mat-hint *ngIf="placeHolder === 'Password' && password">Recommended password : {{password}}</mat-hint>
-  <mat-hint *ngIf="placeHolder === 'Password' && !password">Enter a password ot click on the icon to generate one
-  </mat-hint>
-  <mat-hint *ngIf="controlName === 'street'">Double click on the icon for auto complete</mat-hint>
+
+  <!-- INPUT FOR ADDRESS -->
+  <mat-hint *ngIf="addressHint">Double click on the icon for auto complete</mat-hint>
+
+  <mat-hint *ngIf="control.valid && control.touched" class="success">Good job!</mat-hint>
 
   <!-- shred input error -->
   <mat-error *ngIf=!control.errors?.required>{{error}}</mat-error>
-  <mat-error *ngIf=control.errors?.required>{{placeHolder | lowercase}} is required</mat-error>
+  <mat-error *ngIf="control.errors?.required">{{placeHolder | lowercase}} is required</mat-error>
 
   <!-- costume input error -->
-  <mat-error *ngIf=control.errors?.serverError>{{serverError}}</mat-error>
+  <mat-error *ngIf="control.errors?.serverError && serverErrorMode">{{serverError}}</mat-error>
   <mat-error *ngIf=control.errors?.unique>This {{placeHolder.toLocaleLowerCase()}} is already in use</mat-error>
-  <mat-error *ngIf=control.errors?.mustMatch>passwords are not match</mat-error> 
+  <mat-error *ngIf=control.errors?.exist>No account with that address exist</mat-error>
+  <mat-error *ngIf=control.errors?.mustMatch>Passwords are not match</mat-error>
   <mat-error *ngIf=control.errors?.creditCard>We only get AMEX, JBC Mastercard and VISA</mat-error>
 
 </mat-form-field>
+
+<span class="hint" *ngIf="placeHolder === 'Password' && password">Recommended password : {{password}}</span>

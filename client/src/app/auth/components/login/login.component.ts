@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
-import { FormService } from 'src/app/utilities/services/form.service';
-import { AuthService } from 'src/app/utilities/services/auth.service';
-import { ProductsService } from 'src/app/utilities/services/products.service';
+import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 
 import { store } from 'src/app/utilities/redux/store';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -24,13 +24,12 @@ export class LoginComponent implements OnInit {
   public isCartActive: boolean
   public serverError: string
 
-  public isMobile = this.productsService.isMobile()
+  public isMobile : Observable<boolean> = this.formService.isMobile()
 
   constructor(
     private router: Router,
     private formService: FormService,
     private authService: AuthService,
-    private productsService: ProductsService,
     public user: UserModel,
   ) { }
 
@@ -55,31 +54,33 @@ export class LoginComponent implements OnInit {
   // end of subscription section
 
 
-  // form section
+  // FORM SECTION
 
   public createForm(): void {
     this.loginForm = this.formService.loginForm()
   }
-  // end form section
 
 
-  // logic section
-  public onLogin(): void {
+  // LOGIC SECTION
+
+  // method to handle login
+  public onSubmit(): void {
+
     this.authService.login(this.loginForm.value).subscribe(
       (user: UserModel) => this.authService.handleRoleRoute(user),
       (err) => this.authService.serverError.next(err.error)
     )
   }
 
-  // navigate to products page
-  public toProducts(): void {
-    this.productsService.productsLandingPage()
+  // navigate to register page
+  public onRegister(): Promise<boolean> {
+    this.authService.isRegister.next(true)
+    return this.router.navigateByUrl(`/register`)
   }
 
-  // navigate to register page
-  public onRegister(): void {
-    this.authService.isRegister.next(true)
-    this.router.navigateByUrl(`/register`)
+  // navigate to restart password
+  public onForget():  Promise<boolean> {
+    return this.router.navigateByUrl(`/auth/reset`)
   }
 
   // end logic section

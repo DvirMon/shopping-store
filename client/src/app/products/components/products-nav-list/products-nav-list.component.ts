@@ -2,6 +2,8 @@ import { Component, EventEmitter } from '@angular/core';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { Router } from '@angular/router';
 
+import { AuthService } from 'src/app/services/auth.service';
+
 import { faCarrot } from "@fortawesome/free-solid-svg-icons/faCarrot"
 import { faBreadSlice } from "@fortawesome/free-solid-svg-icons/faBreadSlice"
 import { faCheese } from "@fortawesome/free-solid-svg-icons/faCheese"
@@ -40,6 +42,7 @@ export class ProductsNavListComponent {
 
   constructor(
     private router: Router,
+    private authService : AuthService
 
   ) { }
 
@@ -65,5 +68,8 @@ export class ProductsNavListComponent {
     }
   }
 
+  public logout() {
+    this.authService.logout()
+  }
 
 }

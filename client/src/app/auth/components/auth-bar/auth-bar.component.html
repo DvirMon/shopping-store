@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content  >
+    <mat-toolbar color="primary" ngClass="{mat-elevation-z10 : isLogin">
+      <ng-container>
+        <ul>
+          <li>
+            <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
+          </li>
+          <li>
+            <button (click)="onHome()" mat-button>Grocery-Online</button>
+          </li>
+        </ul>
+        <span class="spacer"></span>
+
+        <button (click)="onLogin()" mat-button>Login</button>
+
+        <button (click)="onRegister()" mat-button>Register</button>
+      </ng-container>
+
+      <ng-container *ngIf="isLogin">
+
+        <span class="d-none d-lg-block">Welcome Back! {{ user.name}}</span>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </ng-container>
+
+      <mat-menu #menu="matMenu">
+        <ng-container *ngIf="isLogin">
+          <button (click)="onHome()" mat-menu-item>
+            <span>Home</span>
+          </button>
+          <button (click)="onLogOut()" mat-menu-item>
+            <span>Logout</span>
+          </button>
+        </ng-container>
+      </mat-menu>
+
+    </mat-toolbar>
+
+
+    <!-- render view -->
+    <ng-content></ng-content>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

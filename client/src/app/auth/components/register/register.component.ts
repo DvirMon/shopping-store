@@ -1,20 +1,22 @@
 import { Component } from '@angular/core';
-import { FormService } from 'src/app/utilities/services/form.service';
-import { AuthService } from 'src/app/utilities/services/auth.service';
+import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/utilities/models/user-model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent  {
-
+export class RegisterComponent {
 
   public registerForm: FormGroup
+  public isMobile : Observable<boolean> = this.formService.isMobile()
   public captcha: boolean = false;
+
 
   constructor(
     private formService: FormService,
@@ -32,36 +34,22 @@ export class RegisterComponent  {
     this.registerForm = this.formService.registerForm()
   }
 
-  get personalDetails() {
-    return this.registerForm.get('personalDetails') as FormGroup
-  }
-
-  get authDetails() {
-    return this.registerForm.get('authDetails') as FormGroup
-  }
-
-  // get values access on dom
-  get personal() {
-    return this.registerForm.controls['personalDetails']['controls']
-  }
-
-  get auth() {
-    return this.registerForm.controls['authDetails']['controls']
-  }
-
 
   // end of form section
 
   // request section
 
   public onSubmit() {
-    const user: UserModel = { ...this.personalDetails.value, ...this.authDetails.value }
-    this.authService.register(user).subscribe(
-      (user: UserModel) => this.router.navigateByUrl(`/home/${user._id}`)
-    )
+    const user: UserModel = { ...this.registerForm.controls }
+
+    console.log(user)
+
+    // this.authService.register(user).subscribe(
+    //   (user: UserModel) => this.router.navigateByUrl(`/home/${user._id}`)
+    // )
   }
   // end of request section
- 
+
   public handleCaptcha(captcha) {
     this.captcha = captcha
   }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { DialogService } from 'src/app/utilities/services/dialog.service';
-import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
+import { DialogService } from 'src/app/services/dialog.service';
+import { ProductsService, ProductData } from 'src/app/services/products.service';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 

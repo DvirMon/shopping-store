@@ -15,6 +15,7 @@ const routes: Routes = [
       {
         path: "products/:alias/:categoryId",
         component: ProductsComponent,
+   
         resolve: {
           categories: CategoriesResolver,
           pagination: PaginationResolver,

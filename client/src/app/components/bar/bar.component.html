@@ -1,38 +1,43 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav-content>
-    <mat-toolbar class="mat-elevation-z10" color="primary">
-      <ul>
-        <li>
-          <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
-        </li>
-        <li >
-          <button (click)="onHome()" mat-button>Grocery-Online</button>
-        </li>
-      </ul>
-      <span class="spacer"></span>
+  <mat-sidenav-content  >
+    <mat-toolbar  ngClass="{mat-elevation-z10 : isLogin">
 
-      <button (click)="onLogin()" mat-button>Login</button>
-      <button (click)="onRegister()" mat-button>Register</button>
+      <ng-container *ngIf="isLogin">
+        <ul>
+          <li>
+            <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
+          </li>
+          <li>
+            <button (click)="onHome()" mat-button>Grocery-Online</button>
+          </li>
+        </ul>
+        <span class="spacer"></span>
 
+        <button (click)="onLogin()" mat-button>Login</button>
 
-      <span class="d-none d-lg-block" *ngIf="isLogin">Welcome Back! {{ user.firstName}} {{user.lastName}}</span>
+        <button (click)="onRegister()" mat-button>Register</button>
+      </ng-container>
 
-      <button *ngIf="isLogin" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
+      <ng-container *ngIf="isLogin">
 
-      </button>
+        <span class="d-none d-lg-block">Welcome Back! {{ user.name}}</span>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </ng-container>
 
       <mat-menu #menu="matMenu">
-        <div *ngIf="isLogin">
+        <ng-container *ngIf="isLogin">
           <button (click)="onHome()" mat-menu-item>
             <span>Home</span>
           </button>
           <button (click)="onLogOut()" mat-menu-item>
             <span>Logout</span>
           </button>
-        </div>
+        </ng-container>
       </mat-menu>
-      
+
     </mat-toolbar>
 
 

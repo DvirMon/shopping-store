@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ProductsService } from 'src/app/utilities/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { ActivatedRoute, Data } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -8,7 +8,7 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { PaginationModel, PaginationDataModel } from 'src/app/utilities/models/pagination-model';
 
-import { PaginationService } from 'src/app/utilities/services/pagination.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 
 import { tap } from 'rxjs/operators';
 
@@ -171,7 +171,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private handleGridSize(value: boolean): void {
 
     this.cartOpen = value
-    
+
     value
     ? this.paginator.pageSize = 6
     : this.paginator.pageSize = 8

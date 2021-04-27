@@ -3,9 +3,9 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { MatSelect } from '@angular/material/select';
 import { FormGroup, FormControl } from '@angular/forms';
 
-import { FormService } from 'src/app/utilities/services/form.service';
+import { FormService } from 'src/app/services/form.service';
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { OrderService } from 'src/app/utilities/services/order.service';
+import { OrderService } from 'src/app/services/order.service';
 
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { OrderModel } from 'src/app/utilities/models/order-model';
@@ -86,7 +86,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   // end of subscribe section
 
-  //------------------------------------------------------// 
+  //------------------------------------------------------//
 
   // form section
 
@@ -108,10 +108,10 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   // end of form section
 
-  //------------------------------------------------------// 
+  //------------------------------------------------------//
 
 
-  //  request section 
+  //  request section
 
   public onPayment(): void {
     this.orderService.handleNewOrder(this.order)
@@ -119,7 +119,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   }
   // end of request section
 
-  //------------------------------------------------------// 
+  //------------------------------------------------------//
 
 
   // order logic section

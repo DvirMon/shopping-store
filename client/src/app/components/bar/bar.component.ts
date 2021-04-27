@@ -3,10 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { AuthService } from 'src/app/utilities/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { store } from 'src/app/utilities/redux/store';
-import { AuthGoogleService } from 'src/app/utilities/services/auth-google.service';
+import { GoogleService } from 'src/app/services/google.service';
 
 @Component({
   selector: 'app-bar',
@@ -26,7 +26,7 @@ export class BarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private authGoogleService: AuthGoogleService,
+    private googleService: GoogleService,
     private router: Router,
 
 
@@ -40,7 +40,7 @@ export class BarComponent implements OnInit {
 
   }
 
-  // subscription section
+  // SUBSCRIPTION SECTION
 
   public subscribeToStore(): void {
     store.subscribe(() => {
@@ -72,7 +72,7 @@ export class BarComponent implements OnInit {
 
   // navigate logout
   public async onLogOut(): Promise<boolean> {
-    await this.authGoogleService.signOutWithGoogle();
+    await this.googleService.signOutWithGoogle();
     return this.authService.logout()
   }
 
@@ -89,7 +89,7 @@ export class BarComponent implements OnInit {
       return this.authService.handleRoleRoute(this.user)
     }
 
-    return this.router.navigateByUrl(`/`)
+    return this.router.navigateByUrl(`/auth/reset`)
 
   }
 

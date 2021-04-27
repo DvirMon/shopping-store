@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { TokenService } from '../../services/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,14 @@ import { AuthService } from '../services/auth.service';
 export class ProductsGuard implements CanActivate {
 
   constructor(
-    private authService : AuthService
-  ) {}  
+    private tokenServcie: TokenService,
+  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authService.isTokenExpired('accessToken');
+    return this.tokenServcie.isTokenExpired('accessToken');
   }
-  
+
 }

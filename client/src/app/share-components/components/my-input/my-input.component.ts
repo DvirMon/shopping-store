@@ -1,10 +1,11 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
-import { FormService } from 'src/app/utilities/services/form.service';
-import { AuthService } from 'src/app/utilities/services/auth.service';
+import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { MatInput } from '@angular/material/input';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -30,6 +31,9 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   @Input() public placeHolder: string;
   @Input() public serverErrorMode: boolean;
 
+  @Input() public loginHint: boolean;
+  @Input() public addressHint: boolean;
+
   public value: any
   public error: string
   public serverError: string
@@ -40,8 +44,8 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   disabled: boolean
 
   constructor(
-    private formService: FormService,
     private authService: AuthService,
+    private messageServcie: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +76,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
     this.value = value
   }
 
+  public onFocus() {
+    if (this.controlName === 'password') {
+      this.generatePassword()
+    }
+  }
+
   // subscription section
 
   private subscribeToSubject() {
@@ -79,7 +89,7 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
       (error) => {
         this.serverError = error
         if (this.serverError) {
-          console.log(error)
+          console.log(1) 
           this.control.setErrors({ serverError: true });
           this.input.focus()
         }
@@ -90,11 +100,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   private subscribeToControl() {
     this.control.statusChanges.subscribe(
       (status) => {
+
         if (status === "VALID") {
           this.input.focus()
+
         }
-      }
-    )
+      })
   }
 
   // end of subscription section
@@ -103,13 +114,13 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
 
   // function to generate password
   public generatePassword() {
+
     if (this.password || this.placeHolder !== "Password") {
       return
     }
 
-    this.authService.password().subscribe(
-      (password) => this.password = password
-    )
+    this.password = this.messageServcie.generate()
+
   }
 
   // function to update password to the control
@@ -120,10 +131,11 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   // function to handle validation messages
   public validate() {
 
-    this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+    this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+
     this.control.valueChanges.subscribe(
       () => {
-        this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
       }
     )
   }

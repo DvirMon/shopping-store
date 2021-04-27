@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { ReceiptService } from 'src/app/services/receipt.service';
 import { store } from 'src/app/utilities/redux/store';
 import { UserModel } from 'src/app/utilities/models/user-model';
 

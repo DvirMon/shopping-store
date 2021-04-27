@@ -1,0 +1,28 @@
+<mat-grid-list cols="1" rowHeight="5vh">
+    <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <h1>Reset your Password</h1>
+  </mat-grid-tile>
+  <!-- <mat-grid-tile>
+      <span>To receive a link to reset your password, please enter your email address.</span>
+  </mat-grid-tile> -->
+  <form (ngSubmit)="onSubmit()">
+    <mat-grid-tile rowspan="4">
+      <mat-form-field class="full-width" appearance="fill">
+        <span *ngIf="prefix" matPrefix>{{prefix}}</span>
+        <input #resetInput matInput type="text" placeholder="enter email or phone number" [formControl]="control"
+          name="control" autocomplete="off" required>
+        <mat-error *ngIf="control.errors?.required">Email or phone number are required</mat-error>
+        <mat-error *ngIf="control.errors?.pattern">Email or phone number are not in valid format</mat-error>
+        <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
+        <mat-hint>For now we can only work with israel local numbers</mat-hint>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="3">
+      <button type="button" (click)="onSubmit()" color="primary" [disabled]="!control.valid" mat-raised-button>Get Code</button>
+    </mat-grid-tile>
+  </form>
+  <mat-grid-tile>
+    This code will be valid for 5 minutes
+  </mat-grid-tile>
+</mat-grid-list>

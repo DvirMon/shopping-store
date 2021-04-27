@@ -1,4 +1,5 @@
 import { Directive, HostBinding } from '@angular/core';
+import { Router } from '@angular/router';
 import { store } from '../redux/store';
 
 @Directive({
@@ -12,11 +13,17 @@ export class BarBackgroundColorDirective {
   public isAdmin: boolean = store.getState().auth.isAdmin
 
   constructor(
-  ) { 
+    private router: Router
+  ) {
     if (this.isAdmin) {
-    this.backgroundColor = "#f44336"
-    this.color = "white"
+      this.backgroundColor = "#f44336"
+      this.color = "white"
+    } else {
+      this.backgroundColor = "transparent"
     }
+
+    // console.log(this.router.url)
   }
+
 
 }

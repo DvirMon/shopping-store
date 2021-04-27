@@ -1,15 +1,55 @@
 @import "~src/style/variables";
 
-form {
-  @include formAuth(100vh);
-  width: 100%;
-}
+.main {
+  background-image: url("src/assets/images/register-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 91vh;
 
-::ng-deep div.mat-horizontal-content-container {
-  height: 77.9vh;
-}
+  .space {
+    width: 100%;
+    height: 10vh;
+  }
 
-mat-grid-list.details {
-  width: 50%;
-  margin: auto;
+  .container {
+    border-radius: 5%;
+  }
+
+  .main-card {
+    width: 70%;
+    height: 70vh;
+    margin: auto;
+    display: flex;
+
+    .left,
+    .right {
+      width: 50%;
+    }
+
+    .left {
+      background-color: rgba($color: white, $alpha: 0.4);
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+    .right {
+      background-color: white;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+
+      form {
+        width: 100%;
+        margin: auto;
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .main-card,
+    .main-card > .right {
+      width: 100%;
+    }
+
+  }
 }

@@ -3,9 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // COMPONENTS
-// import { LoginComponent } from './auth/components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-// import { RegisterComponent } from './auth/components/register/register.component';
+import { RootComponent } from './components/root/root.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // RESOLVER
@@ -13,17 +11,20 @@ import { InfoResolver } from './utilities/resolvers/info-resolver.service';
 
 // GUARDS
 import { AuthGuard } from './utilities/guards/auth.guard';
+import { CategoriesResolver } from './utilities/resolvers/categories-resolver.service';
+import { PaginationResolver } from './utilities/resolvers/pagination-resolver.service';
+import { RoleGuard } from './utilities/guards/role.guard';
 
 const routes: Routes = [
 
   {
     path: "",
-    component: HomeComponent
+    component: RootComponent
   },
 
   {
     path: "home/:userId",
-    component: HomeComponent,
+    component: RootComponent,
     canActivate: [AuthGuard],
     resolve: { info: InfoResolver }
   },
@@ -33,20 +34,17 @@ const routes: Routes = [
     path: "auth",
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
-  // REGISTER
-  {
-    path: "auth",
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
-  // {
-  //   path: "register",
-  //   component: RegisterComponent,
-  // },
 
   // ADMIN MODULE
   {
-    path: "admin",
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    path: "admin/products/:alias/:categoryId",
+    // loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    canActivate: [RoleGuard],
+    resolve: {
+      categories: CategoriesResolver,
+      pagination: PaginationResolver,
+    },
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
   },
 
   // PRODUCTS MODULE
@@ -76,7 +74,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

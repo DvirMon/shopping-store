@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { ProductsService } from 'src/app/utilities/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 import { faCartPlus,  } from '@fortawesome/free-solid-svg-icons/faCartPlus';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -17,7 +17,7 @@ export class ProductsNavComponent {
   @Input() drawerCart: MatSidenav
   @Input() drawerProduct: MatSidenav
   @Input() isAdmin: boolean
-  
+
   public cartPlus: IconDefinition = faCartPlus
   public isMobile :Observable<boolean> = this.productsService.isMobile()
 
@@ -32,7 +32,7 @@ export class ProductsNavComponent {
     this.drawerCart.toggle()
     this.productsService.handleDrawerToggle.next(this.drawerCart.opened)
   }
-  
+
   public onDrawerProducts() {
     this.drawerProduct.toggle()
   }

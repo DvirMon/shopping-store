@@ -10,8 +10,8 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 
-import { CartService } from 'src/app/utilities/services/cart.service';
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { CartService } from 'src/app/services/cart.service';
+import { ReceiptService } from 'src/app/services/receipt.service';
 
 import { store } from 'src/app/utilities/redux/store';
 import { environment } from 'src/environments/environment'

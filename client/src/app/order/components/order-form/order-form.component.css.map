@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,aAAa;AACb,aAAa;AACb,oBAAoB;AACpB,IAAI,CAAC;EACH,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI;CACZ;;AAED,AAAA,QAAQ,CAAC;EACP,OAAO,EAAG,EAAE;CACb",
-    "sources": [
-        "order-form.component.scss"
-    ],
-    "names": [],
-    "file": "order-form.component.css"
-}

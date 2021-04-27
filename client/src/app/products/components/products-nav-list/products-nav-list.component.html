@@ -1,9 +1,18 @@
 <mat-list>
   <mat-list-item appSidenavAdminDirective class="nav-main" routerLinkActive="active"
-   *ngFor="let category of categories;  let i = index">
+    *ngFor="let category of categories;  let i = index">
     <fa-icon [icon]="category.icon" size="1x"></fa-icon>
     <button mat-button (click)="onNavigate(category)">{{category.name}}
     </button>
     <mat-divider class="d-md-none"></mat-divider>
+  </mat-list-item>
+  <mat-list-item appSidenavAdminDirective class="nav-main" routerLinkActive="active">
+
+    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button> 
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
   </mat-list-item>
 </mat-list>

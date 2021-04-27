@@ -1,20 +1,39 @@
-<form *ngIf="!isLogin" [formGroup]="loginForm">
-  <app-google-sign-in></app-google-sign-in>
-  <mat-grid-list cols="1" [rowHeight]="(isMobile | async) ? '6vh' : '8vh'">
-    <mat-grid-tile rowspan="2">
-      <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Enter Email" type="text">
-      </app-input>
+<mat-grid-list  cols="3" rowHeight="91vh">
+
+  <mat-grid-tile [colspan]="(isMobile | async) ? '3' : '2'" class="main">
+
+    <!-- <mat-grid-list *ngIf="(isMobile | async)" cols="1" rowHeight="91vh">
+    <mat-grid-tile class="main">
     </mat-grid-tile>
-    <mat-grid-tile rowspan="2">
-      <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Enter Password"
-        type="password" hint="your password">
-      </app-input>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="1" rowHeight="9vh">
-    <mat-grid-tile>
-      <button class="button-login" color="primary" [disabled]="loginForm.invalid" mat-raised-button type="button"
-        (click)="onLogin()">Login</button>
-    </mat-grid-tile>
-  </mat-grid-list>
-</form>
+  </mat-grid-list> -->
+
+    <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-grid-list cols="1" rowHeight="8vh">
+        <mat-grid-tile rowspan="2">
+          <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="email"
+            [loginHint]="true" serverErrorMode="true">
+          </app-input>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="2">
+          <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Password"
+            type="password" hint="your password" [serverErrorMode]="true">
+          </app-input>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="1" rowHeight="9vh">
+        <mat-grid-tile>
+          <button class="button-login" color="primary" [disabled]="loginForm.invalid" mat-raised-button
+            type="submit">Login</button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button class="button-login" color="primary" mat-raised-button type="button" (click)="onForget()">
+            Forget your password ?</button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+
+  </mat-grid-tile>
+  <!-- DISABLE ON MOBILE -->
+  <mat-grid-tile *ngIf="!(isMobile | async)" class="fig">
+  </mat-grid-tile>
+</mat-grid-list>

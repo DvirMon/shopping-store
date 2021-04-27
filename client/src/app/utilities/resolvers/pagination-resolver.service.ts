@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { ProductsService } from '../services/products.service';
+import { ProductsService } from '../../services/products.service';
 import { PaginationDataModel } from '../models/pagination-model';
 
 import { store } from '../redux/store';
@@ -29,7 +29,7 @@ export class PaginationResolver implements Resolve<Observable<PaginationDataMode
       return this.productService.getProductsPagination(1, 6, categoryId, alias)
     } else {
       pagination.products = pagination.products.slice(0, 6)
-      return of(pagination) 
+      return of(pagination)
     }
   }
 }

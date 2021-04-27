@@ -5,7 +5,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-import { ReceiptService } from 'src/app/utilities/services/receipt.service';
+import { ReceiptService } from 'src/app/services/receipt.service';
 
 import { environment } from 'src/environments/environment';
 

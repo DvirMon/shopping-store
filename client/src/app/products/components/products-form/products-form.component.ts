@@ -9,8 +9,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
-import { ProductsService, ProductData } from 'src/app/utilities/services/products.service';
-import { FormService } from 'src/app/utilities/services/form.service';
+import { ProductsService, ProductData } from 'src/app/services/products.service';
+import { FormService } from 'src/app/services/form.service';
 
 import { store } from 'src/app/utilities/redux/store';
 
@@ -107,7 +107,7 @@ export class ProductsFormComponent implements OnInit {
 
   // end of subscribe section
 
-  // request section 
+  // request section
 
   public handleRequest(): void {
 
@@ -195,7 +195,7 @@ export class ProductsFormComponent implements OnInit {
     this.editMode = true
     this.file = null
   }
-  
+
   // update form data
   private handleFormUpdate(product: ProductModel): void {
     this.productForm.patchValue({

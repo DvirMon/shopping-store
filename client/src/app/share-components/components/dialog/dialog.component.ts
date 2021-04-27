@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from 'src/app/utilities/services/dialog.service';
+import { DialogData } from 'src/app/services/dialog.service';
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./dialog.component.scss']
 
 })
-export class DialogComponent { 
+export class DialogComponent {
 
   public development : boolean = environment.production
 
@@ -17,4 +17,4 @@ export class DialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) { }
 
-} 
+}

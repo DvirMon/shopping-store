@@ -3,7 +3,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 
-import { InfoService, Info } from 'src/app/utilities/services/info.service';
+import { InfoService, Info } from 'src/app/services/info.service';
 
 import { store } from 'src/app/utilities/redux/store';
 

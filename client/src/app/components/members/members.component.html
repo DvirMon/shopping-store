@@ -1,0 +1,20 @@
+<div class="members">
+  <div class="container">
+    <div class="title">
+      <h1 [@fade-up]="state.title" (@fade-up.done)="animationEnded('red')">
+        For Members only !
+      </h1>
+    </div>
+    <div class="row">
+      <div [@fade-up-card]="state.red" (@fade-up-card.done)="animationEnded('green')">
+        <img src="/assets/images/start.png" width="350px">
+      </div>
+      <div [@fade-up-card]="state.green" (@fade-up-card.done)="animationEnded('blue')">
+        <img src="/assets/images/middle.png" width="350px">
+      </div>
+      <div [@fade-up-card]="state.blue">
+        <img src="/assets/images/end.png" width="350px">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+@import "~src/style/styles";
+
+mat-list {
+  height: 100%;
+  padding: 2%;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
+  margin: auto;
+
+  div.list-header {
+    display: flex;
+    justify-content: center;
+    padding-top: 5%;
+  }
+
+  mat-list-item {
+    margin: 5%;
+    cursor: pointer;
+
+    &.register-btn {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .float-icon {
+    @include box();
+    @include icon-box();
+  }
+
+  mat-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    text-align: center;
+    margin: auto;
+  }
+  fa-icon {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+  }
+}
