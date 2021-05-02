@@ -4,7 +4,12 @@ const Category = require("./category-model");
 
 const ProductSchema = mongoose.Schema(
   {
-    name: { type: String, required: true, minlemgth: [4], maxlength: [50] },
+    name: {
+      type: String,
+      required: true,
+      minlemgth: [4],
+      maxlength: [50]
+    },
     categoryId: {
       type: mongoose.Types.ObjectId,
       ref: Category,
@@ -19,9 +24,8 @@ const ProductSchema = mongoose.Schema(
   },
   { versionKey: false, autoIndex: false }
 );
- 
+
 ProductSchema.plugin(mongoosePaginate);
 
-const Products = mongoose.model("Product", ProductSchema, "products");
-
-module.exports = Products;
+const Product = mongoose.model("Product", ProductSchema, "products");
+module.exports = Product;

@@ -2,8 +2,14 @@ const mongoose = require("mongoose");
 
 const CategorySchema = mongoose.Schema(
   {
-    name: { type: String },
-    alias: { type: String },
+    name: {
+      type: String,
+      required  :true
+    },
+    alias: {
+      type: String,
+      required  :true
+    },
   },
   { versionKey: false }
 );

@@ -8,7 +8,14 @@ const config = {
       useUnifiedTopology: true,
       useCreateIndex: true
     }
-  }
+  },
+  session: {
+    secret: "wexO23UXGezfTKHc",
+    resave: true,
+    saveUninitialized: false,
+    // cookie: { secure: false },
+  },
 }
+
 
 module.exports = config

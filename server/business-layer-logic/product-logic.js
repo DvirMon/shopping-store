@@ -22,7 +22,10 @@ const getTotalDocsAsync = async () => {
 const getProductsPaginationAsync = async (query, options) => {
   return await Product.paginate(query, options, (err, result) => {
     if (err) {
-      return next(err);
+
+      console.log(err)
+
+      throw new Error(err);
     }
     return result;
   });

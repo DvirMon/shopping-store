@@ -5,8 +5,8 @@ const Cart = require("../models/cart-model");
 const cartLogic = require("../business-layer-logic/cart-logic");
 const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 const authLogic = require("../business-layer-logic/auth-logic");
-
-const middleware = require("../middleware/middleware");
+ 
+const middleware = require("../services/middleware");
 
 const key = process.env.JWT_ACCESS;
 

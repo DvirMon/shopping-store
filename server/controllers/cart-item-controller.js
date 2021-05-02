@@ -4,10 +4,10 @@ const router = express.Router();
 const CartItem = require("../models/cartItem-model");
 const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 
-const middleware = require("../middleware/middleware");
+const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
-router.post("/",middleware.authorize(false, key), async (request, response, next) => {
+router.post("/", middleware.authorize(false, key), async (request, response, next) => {
   try {
     // validate if cart exist? for postmen?
 
@@ -29,17 +29,18 @@ router.get("/:cartId", async (request, response, next) => {
     );
 
     if (!currentCart) {
-      return next({ status: 404, message: "cart is not exist" });
+      return response.json({cartItems : [] , price : 0});
     }
 
     response.json(currentCart);
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
 
 // update cart item
-router.put("/:_id",middleware.authorize(false, key), async (request, response, next) => {
+router.put("/:_id", middleware.authorize(false, key), async (request, response, next) => {
   try {
     const cartItem = request.body;
     cartItem._id = request.params._id;
@@ -56,7 +57,7 @@ router.put("/:_id",middleware.authorize(false, key), async (request, response, n
 
 
 // delete cart item
-router.delete("/:_id",middleware.authorize(false, key), async (request, response) => {
+router.delete("/:_id", middleware.authorize(false, key), async (request, response) => {
   await cartItemLogic.deleteCartItemAsync(request.params._id)
   response.sendStatus(204);
 });

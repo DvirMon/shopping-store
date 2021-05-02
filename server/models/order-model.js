@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Cart = require("./cart-model");
 const User = require("./user-model");
-const validation = require("../services/validation.service");
+const validation = require("../services/schema");
 
 // format credit card number
 const obfuscate = (cc) => {
@@ -10,17 +10,26 @@ const obfuscate = (cc) => {
 
 const OrderSchema = mongoose.Schema(
   {
-    userId: { type: mongoose.Types.ObjectId, ref: User, required: true },
-    cartId: { type: mongoose.Types.ObjectId, ref: Cart, required: true },
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: User,
+      required: true
+    },
+    cartId: {
+      type: mongoose.Types.ObjectId,
+      ref: Cart,
+      required: true
+    },
     totalPrice: {
       type: Number,
       required: true,
-      validate: [
-        validation.regex.positive,
-        "price can`t be negative or equal to 0",
-      ],
     },
-    city: { type: String, required: true, minlength: [3], maxlength: [30] },
+    city: {
+      type: String,
+      required: true,
+      minlength: [3],
+      maxlength: [30]
+    },
     street: { type: String, required: true, minlength: [5], maxlength: [30] },
     shippingDate: { type: Date, required: true },
     orderDate: { type: Date, required: true, default: Date.now },
@@ -42,6 +51,7 @@ const OrderSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Order", OrderSchema, "orders");
+const Order = mongoose.model("Order", OrderSchema, "orders");
+module.exports = Order
 
 

@@ -1,5 +1,5 @@
-const CartItem = require("../models/cartItem-model");
 const mongoose = require("mongoose");
+const CartItem = require("../models/cartItem-model");
 
 const getAllCartItemsByCartAsync = async (cartId) => {
   return await CartItem.find({ cartId }).exec();
@@ -24,9 +24,15 @@ const getCartTotalPrice = async (cartId) => {
 };
 
 const getCurrentCartAsync = async (cartId) => {
+
   const cartItems = await CartItem.find({ cartId }).exec();
+
+  if (cartItems.length === 0) {
+    return null
+  }
+
   const cartTotalPrice = await getCartTotalPrice(cartId);
-  return cartItems.length === 0 ? null : { price: cartTotalPrice, cartItems };
+  return { price: cartTotalPrice, cartItems };
 };
 
 const addCartItemAsync = async (cartItem) => {

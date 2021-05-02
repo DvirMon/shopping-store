@@ -1,5 +1,12 @@
 const handleError = (err, request, response, next) => {
 
+  if (process.env.NODE_ENV === "production") {
+    return response
+      .status(500)
+      .send("an error has occurred, please ty again later");
+  }
+ 
+  // console.log(2)
   if (err.status) {
     return response.status(err.status).json(err.message);
   }
@@ -10,24 +17,19 @@ const handleError = (err, request, response, next) => {
   if (error.type === "mongoose-unique-validator") {
     return response.status(409).json(error);
   }
-  
+
   // handle schema error
   if (err.name === "ValidationError") {
     return response.status(404).json(formatErrorMessage(err));
-  }  
-
-  if (config.production) {
-    return response
-      .status(500)
-      .send("an error has occurred, please ty again later");
-  } else {
-    return response.status(500).json(err.message);
   }
+
+
+  return response.status(500).json(err.message);
 };
 
 const formatErrorMessage = (err) => {
   const arr = err.message.split(":");
-    if(err.errors) {
+  if (err.errors) {
     const error = err.errors[arr[1].trim()];
     if (error["properties"]) {
       return error.properties;

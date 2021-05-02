@@ -1,20 +1,13 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const uniqueValidator = require("mongoose-unique-validator");
 
-const bcrypt = require("bcryptjs");
-const validation = require("../services/validation.service");
-
 const UserSchema = mongoose.Schema(
   {
-    isAdmin: { type: Boolean, default: false },
-    personalId: {
-      type: String,
-      required: true,
-      unique: true,
-      minlength: [8],
-      maxlength: [9],
-      validate: [validation.regex.personalId, "id is not valid"],
+    isAdmin: {
+      type: Boolean,
+      default: false
     },
     email: {
       type: String,
@@ -22,43 +15,82 @@ const UserSchema = mongoose.Schema(
       unique: true,
       minlength: [10],
       maxlength: [30],
-      validate: [validation.regex.email, "email format is not valid"],
     },
     password: {
       type: String,
-      required: true,
-      minlength: [8, "password must be 8-24 characters long"],
-      maxlength: [24, "password must be 8-24 characters long"],
-      validate: [
-        validation.regex.password,
-        "first name must contain only letters",
-      ],
+      // validate: [
+      //   validation.regex.password,
+      //   "password must conation at least one number, character a-z, A-Z",
+      // ],
     },
     firstName: {
       type: String,
       required: true,
       minlength: [3],
       maxlength: [30],
-      validate: [
-        validation.regex.name,
-        "first name should only include a-z/A-Z characters",
-      ],
     },
     lastName: {
       type: String,
       required: true,
       minlength: [3],
       maxlength: [30],
-      validate: [
-        validation.regex.name,
-        "last name should only include a-z/A-Z characters",
-      ],
     },
-    city: { type: String, required: true, minlength: [3], maxlength: [30] },
-    street: { type: String, required: true, minlength: [5], maxlength: [30] },
+    city: {
+      type: String,
+      minlength: [3],
+      maxlength: [30]
+    },
+    street: {
+      type: String,
+      minlength: [5],
+      maxlength: [30]
+    },
   },
   { versionKey: false }
 );
+
+// VIRTUALS
+
+UserSchema.virtual("fullName").get(function () {
+  return this.getFullName()
+})
+
+
+UserSchema.statics.findUser = async function (email) {
+  return await this.findOne({ email })
+}
+
+UserSchema.statics.loginGoogle = async function (gmailUser) {
+
+  const user = await this.findUser(gmailUser.email)
+
+  if (!user) {
+
+    // sign in with google
+    return await User.create(gmailUser)
+  }
+
+  return user
+}
+
+UserSchema.methods.validatePassword = async function (password) {
+  // validate password
+
+  return await bcrypt.compare(
+    password,
+    this.password ? this.password : ""
+  );
+}
+
+UserSchema.methods.updatePassword = async function (password) {
+  this.password = password
+  await this.save()
+  return this
+}
+
+UserSchema.methods.getFullName = function () {
+  return this.firstName + " " + this.lastName
+}
 
 // validate unique email and personalId
 UserSchema.plugin(uniqueValidator, {
@@ -66,11 +98,20 @@ UserSchema.plugin(uniqueValidator, {
   message: "This {PATH} ({VALUE}) is already in use",
 });
 
+// UserSchema.path('email').validate(async (email) => {
+//   console.log(1)
+//   const emailCount = await mongoose.models.users.countDocuments({ email })
+//   return !emailCount
+// }, 'Email already exists')
+
 // hush password
 UserSchema.pre("save", async function (next) {
+
   if (!this.isModified("password")) next();
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 12);
   return next();
 });
 
-module.exports = mongoose.model("User", UserSchema, "users");
+const User = mongoose.model("User", UserSchema, "users");
+
+module.exports = User

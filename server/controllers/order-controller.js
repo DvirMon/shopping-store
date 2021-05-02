@@ -3,9 +3,9 @@ const router = express.Router();
 
 const Order = require("../models/order-model");
 const orderLogic = require("../business-layer-logic/order-logic");
-const validation = require("../services/validation.service");
 
-const middleware = require("../middleware/middleware");
+const middleware = require("../services/middleware");
+
 const key = process.env.JWT_ACCESS;
 
 // get total orders in store

@@ -1,11 +1,11 @@
 const User = require("../models/user-model");
 
-const getUserAsync = async (email) => {
+const findUser = async (email) => {
   return await User.findOne({ email }).exec();
 };
 
-const addUserAsync = async (User) => {
-  const user = await User.save();
+const addUserAsync = async (payload) => {
+  const user = await User.create(payload);
   user.password = undefined;
   return user;
 };
@@ -18,12 +18,12 @@ const validUniqueEmailAsync = async (email) => {
   return await User.countDocuments({ email }).exec();
 };
 
-const isUserExist = async (userId) => {
-  return await User.countDocuments({ _id: userId }).exec();
+const isUserExist = async (_id) => {
+  return await User.find({ _id }, { _id: 1 }).exec();
 };
 
 module.exports = {
-  getUserAsync,
+  findUser,
   addUserAsync,
   validUniquePersonalIdAsync,
   validUniqueEmailAsync,

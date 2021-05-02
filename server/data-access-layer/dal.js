@@ -20,7 +20,7 @@ const connectAsync = () => {
 const connectToDatabase = async () => {
   try {
     const db = await connectAsync();
-    console.log("We are connect to " + db.name + " on MongoDB database");
+    console.log("We are connect to " + db.connections[0].name + " on MongoDB database");
   } catch (err) {
     console.log(err);
   }

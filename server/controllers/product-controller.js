@@ -3,8 +3,8 @@ const router = express.Router();
 
 const Product = require("../models/product-model");
 const productLogic = require("../business-layer-logic/product-logic");
-const middleware = require("../middleware/middleware");
- 
+const middleware = require("../services/middleware");
+
 const key = process.env.JWT_ACCESS;
 
 router.post(
@@ -51,24 +51,27 @@ router.get("/total", async (request, response, next) => {
 router.post(
   "/pagination/:page/:limit",
   middleware.authorize(false, key),
-  middleware.pagination, 
+  middleware.pagination,
   async (request, response, next) => {
     try {
       const categoryId = request.body.categoryId;
+
 
       const data = await productLogic.getProductsPaginationAsync(
         categoryId ? { categoryId } : {},
         request.options
       );
- 
+
+
       const products = data.docs;
       const pagination = { ...data };
       delete pagination.docs;
 
-      response.json({ products, pagination });
+      return response.json({ products, pagination });
     } catch (err) {
+      console.log(err)
       next(err);
-    }
+    } 
   }
 );
 
@@ -118,8 +121,8 @@ router.put(
   async (request, response, next) => {
     try {
 
-      const product = request.body; 
-      
+      const product = request.body;
+
       product._id = request.params._id;
       product.price = JSON.parse(request.body.price);
       delete product.alias;
