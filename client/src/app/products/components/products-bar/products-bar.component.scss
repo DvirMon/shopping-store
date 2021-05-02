@@ -15,7 +15,6 @@
 
 .mat-sidenav-content .mat-toolbar {
   background: color(info);
-  width: 100%;
   background-size: contain;
 
   ul {
@@ -30,11 +29,22 @@ mat-divider {
 }
 
 @media screen and (min-width: 992px) {
-  
   mat-sidenav.sidenav {
-    width: 450px;
+    width: 400px;
     box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
   }
+
+  mat-sidenav:not(.mat-drawer-opened).sidenav-products {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    width: 60px !important;
+    overflow: hidden;
+  }
+
+  mat-sidenav-content.mat-drawer-close {
+    padding-left: 40px;
+  }
+
 }
 
 @media screen and (max-width: 660px) {
@@ -46,3 +56,4 @@ mat-divider {
     width: 50%;
   }
 }
+

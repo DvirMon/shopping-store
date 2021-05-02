@@ -110,7 +110,6 @@ export class FormService {
     return this.fb.group({
       email: ['',
         [Validators.required, Validators.pattern(this.validationService.regex.email)],
-        // [this.validationService.emailAsyncValidation.bind(this)]
       ],
       password: ['', [
         Validators.required,

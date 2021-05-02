@@ -5,26 +5,34 @@ import { CoreModule } from '../share-modules/core.module';
 import { SharedModule } from '../share-components/shared-components.module';
 import { ProductsRoutingModule } from './products-routing.module';
 
-import { ProductsComponent } from './components/products/products.component';
+import { CartModule } from '../cart/cart.module';
+
+import { RootComponent } from './components/root/root.component';
 import { ProductsBarComponent } from './components/products-bar/products-bar.component';
+
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
-import { CartModule } from '../cart/cart.module';
+
 import { ProductsNavComponent } from './components/products-nav/products-nav.component';
+import { ProductsSidenavComponent } from './components/products-sidenav/products-sidenav.component'
+
 import { ProductsFormComponent } from './components/products-form/products-form.component';
-import { ProductsNavListComponent } from './components/products-nav-list/products-nav-list.component'
- 
+
 
 
 @NgModule({
   declarations: [
-    ProductsComponent,
+
+    RootComponent,
     ProductsBarComponent,
     ProductsItemComponent,
+
     ProductsDialogComponent,
-    ProductsNavComponent,
     ProductsFormComponent,
-    ProductsNavListComponent
+
+    ProductsNavComponent,
+    ProductsSidenavComponent
+    // ProductsNavListComponent,
 
   ],
   imports: [
@@ -35,7 +43,7 @@ import { ProductsNavListComponent } from './components/products-nav-list/product
     ProductsRoutingModule
   ],
   exports: [
-    ProductsComponent,
+    RootComponent,
     ProductsBarComponent,
     ProductsItemComponent,
     ProductsDialogComponent,

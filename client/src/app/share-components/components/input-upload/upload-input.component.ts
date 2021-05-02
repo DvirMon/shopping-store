@@ -12,12 +12,12 @@ import { ProductsService } from 'src/app/services/products.service';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UploadInputComponent),
+      useExisting: forwardRef(() => InputUploadComponent),
       multi: true
     },
   ]
 })
-export class UploadInputComponent implements OnInit {
+export class InputUploadComponent implements OnInit {
 
   @Input() control: FormControl
   @Input() editMode: boolean = false

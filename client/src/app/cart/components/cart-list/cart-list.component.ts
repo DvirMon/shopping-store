@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
@@ -14,6 +14,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 
 import { store } from 'src/app/utilities/redux/store';
+
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -21,24 +22,24 @@ import { environment } from 'src/environments/environment'
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss']
 })
-export class CartListComponent implements OnInit {
+export class CartListComponent implements OnInit, OnDestroy {
 
+  @Input() public drawer: MatSidenav;
   @Input() public orderMode: boolean = false;
-  @Input() drawer: MatSidenav;
 
-
-  public cartItem: CartItemModel = new CartItemModel()
   public searchControl = new FormControl();
-  public cartItems: CartItemModel[] = [];
-  public cartTotalPrice: number;
+  public cartItems: CartItemModel[];
+  public cartTotalPrice: number;  
+
+  private user: UserModel = new UserModel();
+  private cart: CartModel = new CartModel();
+  private unsubscribeToStore: Function;
 
   constructor(
     private router: Router,
     private receiptService: ReceiptService,
     private cartService: CartService,
-    public product: ProductModel,
-    public cart: CartModel,
-    private user: UserModel
+
 
 
   ) { }
@@ -47,10 +48,14 @@ export class CartListComponent implements OnInit {
     this.subscribeToStore();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribeToStore()
+  }
+
   // subscribe section
 
   private subscribeToStore(): void {
-    store.subscribe(
+    this.unsubscribeToStore = store.subscribe(
       () => {
         this.cartItems = [...store.getState().cart.cartItems];
         this.cart = store.getState().cart.cart;
@@ -58,11 +63,12 @@ export class CartListComponent implements OnInit {
         this.user = store.getState().auth.user;
       }
     )
-    this.cartItems = store.getState().cart.cartItems;
+    this.cartItems = [...store.getState().cart.cartItems];
     this.cart = store.getState().cart.cart;
     this.cartTotalPrice = store.getState().cart.cartTotalPrice;
     this.user = store.getState().auth.user;
   }
+
 
   // end of subscribe section
 
@@ -78,7 +84,7 @@ export class CartListComponent implements OnInit {
   // end of request section
 
 
-  // logic section
+  // LOGIC SECTION
 
   // navigate to order
   public goToOrder(): Promise<boolean> {

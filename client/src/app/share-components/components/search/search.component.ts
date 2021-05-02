@@ -47,6 +47,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
     this.getStoreProducts();
     this.subscribeToRoute();
     this.search();

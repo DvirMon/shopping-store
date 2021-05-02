@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProductsComponent } from './components/products/products.component';
-import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
+// IMPORT COMPONENTS
+import { RootComponent } from './components/root/root.component';
+
+// IMPORT GUARD
 import { ProductsGuard } from '../utilities/guards/products.guard';
+
+// IMPORT RESOLVERS
+import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
 import { PaginationResolver } from '../utilities/resolvers/pagination-resolver.service';
 
 
 const routes: Routes = [
   {
     path: "",
-    component: ProductsComponent,
     canActivate: [ProductsGuard],
     resolve: {
       categories: CategoriesResolver,
       pagination: PaginationResolver,
-    }
+    },
+    component: RootComponent
+
   },
 ];
 

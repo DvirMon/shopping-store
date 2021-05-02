@@ -6,7 +6,11 @@ import { OrderResolver } from '../utilities/resolvers/order-resolver.service'
 
 
 const routes: Routes = [
-  { path: "", component: OrderComponent, resolve: { dates: OrderResolver } },
+  {
+    path: "",
+    component: OrderComponent,
+    resolve: { dates: OrderResolver }
+  },
 ];
 
 @NgModule({

@@ -81,6 +81,13 @@ export class InfoService {
 
       // get current cart products
       switchMap((response: CurrentCartModel) => {
+
+        console.log(response)
+
+        if (response.cartItems.length === 0) {
+          return of(response)
+        }
+
         this.productsService.getProductOfCurrentCart(this.getProductsIds(response))
         return of(response)
 

@@ -53,8 +53,6 @@ export class GoogleSignInComponent implements OnInit {
 
     const socialUser: SocialUser = store.getState().auth.socialUser
 
-    console.log(socialUser)
-
     if (socialUser) {
       this.authService.loginGoogle(socialUser).subscribe(
         (user: UserModel) => this.authService.handleRoleRoute(user),

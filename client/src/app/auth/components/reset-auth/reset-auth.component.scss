@@ -8,10 +8,11 @@ form {
   justify-content: center;
 
   mat-form-field {
-    width: 40%;
+    width: 300px;
+    display: inline-block;
 
     mat-hint {
-      font-size: 130%;
+      font-size: 110%;
     }
   }
 

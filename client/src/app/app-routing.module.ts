@@ -23,10 +23,10 @@ const routes: Routes = [
   },
 
   {
-    path: "home/:userId",
-    component: RootComponent,
+    path: "home/:userId/products/:alias/:categoryId",
     canActivate: [AuthGuard],
-    resolve: { info: InfoResolver }
+    resolve: { info: InfoResolver },
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
   },
 
   // LOGIN
@@ -38,7 +38,6 @@ const routes: Routes = [
   // ADMIN MODULE
   {
     path: "admin/products/:alias/:categoryId",
-    // loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     canActivate: [RoleGuard],
     resolve: {
       categories: CategoriesResolver,

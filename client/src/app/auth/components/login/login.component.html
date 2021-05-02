@@ -1,23 +1,18 @@
-<mat-grid-list  cols="3" rowHeight="91vh">
+<mat-grid-list cols="3" rowHeight="91vh">
 
   <mat-grid-tile [colspan]="(isMobile | async) ? '3' : '2'" class="main">
 
-    <!-- <mat-grid-list *ngIf="(isMobile | async)" cols="1" rowHeight="91vh">
-    <mat-grid-tile class="main">
-    </mat-grid-tile>
-  </mat-grid-list> -->
-
-    <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="1" rowHeight="8vh">
         <mat-grid-tile rowspan="2">
           <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="email"
-            [loginHint]="true" serverErrorMode="true">
+            loginHint="true" serverErrorMode="true" hint="a valid email format : dom@gmail.com">
           </app-input>
         </mat-grid-tile>
         <mat-grid-tile rowspan="2">
-          <app-input [control]="loginForm.controls['password']" controlName="password" placeHolder="Password"
-            type="password" hint="your password" [serverErrorMode]="true">
-          </app-input>
+          <app-input-password placeHolder="password" [control]="loginForm.controls['password']" controlName="password"
+            hint="your password" serverErrorState="true" loginState="true">
+          </app-input-password>
         </mat-grid-tile>
       </mat-grid-list>
       <mat-grid-list cols="1" rowHeight="9vh">

@@ -1,12 +1,21 @@
 <mat-toolbar appBarBackgroundColor>
-  <button class="d-lg-none" type="button" aria-label="Toggle sidenav" mat-button (click)="onDrawerProducts()">
-    Our Products
+
+  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="onDrawerProducts()">
+    <mat-icon>menu</mat-icon>
   </button>
-  <app-products-nav-list class="d-none d-lg-block" (closeDrawer)="drawerProduct.toggle()"></app-products-nav-list>
+  <app-search *ngIf="!(isMobile | async)"></app-search>
+
   <span class="spacer"></span>
-  <button type="button" aria-label="Toggle sidenav" mat-button (click)="onDrawerCart()">
-    {{isAdmin ? '':'My Cart' }}
-    <fa-icon *ngIf="!isAdmin" [icon]="cartPlus" size="2x"></fa-icon>
+
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="onDrawerCart()">
+    <mat-icon *ngIf="!isAdmin">shopping_cart</mat-icon>
     <mat-icon *ngIf="isAdmin && isMobile | async">navigate_before</mat-icon>
   </button>
+  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+
 </mat-toolbar>

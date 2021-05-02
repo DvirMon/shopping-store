@@ -15,11 +15,11 @@ import { tap } from 'rxjs/operators';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  selector: 'app-root',
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.scss']
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class RootComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -29,18 +29,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public paginationData: PaginationDataModel;
 
   public cartOpen: boolean = true;
-  public isAdmin: boolean = false
-  public categoryId: string
-  public alias: string
+  public isAdmin: boolean = false;
+  public categoryId: string;
+  public alias: string;
+  public pagination: PaginationModel = new PaginationModel();
 
   constructor(
+    private activeRoute: ActivatedRoute,
     private productService: ProductsService,
     private paginationService: PaginationService,
-    public pagination: PaginationModel,
-    private activeRoute: ActivatedRoute,
   ) { }
-
-  // public mobile = this
 
   ngOnInit(): void {
     this.subscribeToRoute();
@@ -55,7 +53,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
 
-  // subscription section
+  // SUBSCTIPTION SECTION
 
   private subscribeToStore(): void {
     store.subscribe(
@@ -71,6 +69,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private subscribeToRoute(): void {
     this.getData();
     this.getParams();
+
+    
 
   }
 
@@ -97,6 +97,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // sucscrube to paginator
   private subscribeToPaginator(): void {
     this.paginator.page
       .pipe(
@@ -119,9 +120,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     )
   }
 
-  // end of subscription section
+  // ----------------------------------------------------------------------------------
 
-  // request section
+  // HTTTP SECTION
 
   // get products with page data
   private getProductsPagination(): void {
@@ -147,9 +148,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // end of request section
+  //---------------------------------------------------------------------------------------------------------------------
 
-  // logic section
+  // LOGIC SECTION
 
   // valid if products page are already in store
   private isPageExist(): boolean {

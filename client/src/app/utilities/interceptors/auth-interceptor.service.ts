@@ -76,11 +76,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   private handleToken(request: HttpRequest<any>) {
 
-    console.log(request.url)
-
     const confirmation : ResetModel = JSON.parse(sessionStorage.getItem("confirmation"))
-
-    console.log(confirmation)
 
     if (confirmation) {
 

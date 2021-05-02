@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth.service';
 
+// font awoswme icons
 import { faCarrot } from "@fortawesome/free-solid-svg-icons/faCarrot"
 import { faBreadSlice } from "@fortawesome/free-solid-svg-icons/faBreadSlice"
 import { faCheese } from "@fortawesome/free-solid-svg-icons/faCheese"
@@ -11,15 +12,18 @@ import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons/faDrumstickBi
 import { faCandyCane } from "@fortawesome/free-solid-svg-icons/faCandyCane"
 import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
 
-import { store } from 'src/app/utilities/redux/store';
 import { MatSidenav } from '@angular/material/sidenav';
 
+import { store } from 'src/app/utilities/redux/store';
+import { FormService } from 'src/app/services/form.service';
+import { Observable } from 'rxjs';
+
 @Component({
-  selector: 'app-products-nav-list',
-  templateUrl: './products-nav-list.component.html',
-  styleUrls: ['./products-nav-list.component.scss']
+  selector: 'app-products-sidenav',
+  templateUrl: './products-sidenav.component.html',
+  styleUrls: ['./products-sidenav.component.scss']
 })
-export class ProductsNavListComponent {
+export class ProductsSidenavComponent {
 
   @Input() drawerProduct: MatSidenav
 
@@ -28,6 +32,7 @@ export class ProductsNavListComponent {
 
   public isAdmin: boolean = store.getState().auth.isAdmin;
   public isExpanded: boolean = false;
+  public isMobile :Observable<boolean> = this.formService.isMobile()
 
   private icons = {
     beverages: faWineBottle,
@@ -40,17 +45,21 @@ export class ProductsNavListComponent {
   }
 
   ngOnInit(): void {
-    this.setNav();
+    this.setNavigationBar();
   }
 
   constructor(
     private router: Router,
-    private authService: AuthService
-
+    private formService : FormService
   ) { }
 
-  // function to navigate
+
+  // LOGIC SERCTION
+
+  // method to navigate
   public onNavigate(category) {
+
+
 
     this.isAdmin
       ? this.router.navigateByUrl(`/admin/products/${category.alias}/${category._id}`)
@@ -60,7 +69,8 @@ export class ProductsNavListComponent {
 
   }
 
-  private setNav() {
+  // method to build navigation
+  private setNavigationBar() {
 
     for (const category of this.categories) {
       for (const icon in this.icons) {
@@ -71,6 +81,7 @@ export class ProductsNavListComponent {
     }
   }
 
+// method to change sidnav witdh
   public toggleDrawer() {
     this.drawerProduct.toggle()
     this.isExpanded = !this.isExpanded

@@ -69,30 +69,9 @@ export class ValidationService {
       take(1),
       switchMap((payload: string) => {
 
-        return this.http.post(`${environment.server}/api/valid/unique-email`, { email: payload }).pipe(
+        return this.http.post(`${environment.server}/api/valid/unique-email`, { email: payload.toLowerCase() }).pipe(
           map((error: boolean) => {
             return error ? ({ unique: true }) : (null)
-          })
-        )
-      })
-    )
-  }
-  public emailAsyncValidation(control: AbstractControl): Observable<ValidationErrors | null> {
-
-    if (!control || String(control.value).length === 0 || control.errors) {
-      return of(null)
-    }
-
-    return control.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      take(1),
-      switchMap((payload: string) => {
-
-        return this.http.post(`${environment.server}/api/valid/unique-email`, { email: payload }).pipe(
-          map((error: boolean) => {
-            console.log(error)
-            return !error ? ({ exist: true }) : (null)
           })
         )
       })

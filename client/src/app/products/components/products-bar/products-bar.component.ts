@@ -13,7 +13,7 @@ export class ProductsBarComponent  {
 
   public isAdmin: boolean = store.getState().auth.isAdmin
 
-  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  public isMobile: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()

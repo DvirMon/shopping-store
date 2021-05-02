@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Input } from '@angular/core';
 import { CoreModule } from '../share-modules/core.module';
 
 // GLOBAL PROVIDES
@@ -15,8 +15,7 @@ import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 // SHRED COMPONENTS
 import { AboutComponent } from './components/about/about.component';
 
-import { MyInputComponent } from './components/my-input/my-input.component';
-import { UploadInputComponent } from './components/upload-input/upload-input.component';
+import { InputUploadComponent } from './components/input-upload/upload-input.component';
 
 import { DialogComponent } from './components/dialog/dialog.component';
 
@@ -37,16 +36,23 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
 import { environment } from 'src/environments/environment'
+import { InputComponent } from './components/input/input.component';
+import { InputPasswordComponent } from './components/input-password/input-password.component';
 
 @NgModule({
   declarations: [
     AboutComponent,
-    MyInputComponent,
-    UploadInputComponent,
+
+    InputComponent,
+    InputPasswordComponent,
+    InputUploadComponent,
+
     DialogComponent,
+
     SearchComponent,
     SearchListItemComponent,
     ProductThumbnailComponent,
+
     AddressComponent,
     HighLightPipe,
 
@@ -62,13 +68,19 @@ import { environment } from 'src/environments/environment'
   ],
   exports: [
     AboutComponent,
-    MyInputComponent,
-    UploadInputComponent,
+
+    ProductThumbnailComponent,
+
+    InputComponent,
+    InputPasswordComponent,
+    InputUploadComponent,
+    AddressComponent,
+
     DialogComponent,
+
     SearchComponent,
     SearchListItemComponent,
-    ProductThumbnailComponent,
-    AddressComponent,
+
 
     HighLightPipe,
 

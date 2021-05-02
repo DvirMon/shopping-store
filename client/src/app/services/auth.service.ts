@@ -28,8 +28,8 @@ export interface Login {
 }
 
 export interface AuthData {
-  token: string
   user: UserModel
+  token: string
 }
 
 @Injectable({
@@ -37,12 +37,11 @@ export interface AuthData {
 })
 export class AuthService {
 
-  // subjects
+  // SUBJECTS
   public serverError = new Subject<string>()
-  // public loginDate = new BehaviorSubject<any>(null)
   public isRegister = new BehaviorSubject<boolean>(false)
-  public auth2: any;
 
+  // SERVICE URL
   private url: string = `${environment.server}/api/auth`
 
 
@@ -119,7 +118,7 @@ export class AuthService {
     const user: UserModel = store.getState().auth.user
     if (!token) {
       await this.googleService.signOutWithGoogle()
-      // this.logout()
+      this.logout()
       return
     }
     if (store.getState().auth.socialUser) {
@@ -130,9 +129,10 @@ export class AuthService {
 
   // method to navigate according to user role
   public handleRoleRoute(user: UserModel): Promise<boolean> {
+
     return user.isAdmin ?
       this.router.navigateByUrl("admin" + environment.productLandingPage)
-      : this.router.navigateByUrl(`home/${user._id}`)
+      : this.router.navigateByUrl(`home/${user._id}` + environment.productLandingPage)
   }
 
   // method to logout

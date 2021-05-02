@@ -1,12 +1,15 @@
 <!-- tool bar header - products-->
 
 <mat-toolbar *ngIf="!orderMode">
-  <button mat-button type="button" (click)="drawer.toggle()">Close View</button>
+
+  <button mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
   <span class="spacer"></span>
-  <button mat-button type="button" (click)="deleteAllCartItems()">Delete Cart</button>
-  <mat-icon>delete</mat-icon>
-  <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to
-    store</button>
+  <button mat-icon-button type="button" (click)="deleteAllCartItems()">
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to store</button>
+
 </mat-toolbar>
 
 <!-- end of tool bar header - products-->
@@ -20,9 +23,9 @@
     <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
     <mat-icon>search</mat-icon>
   </mat-form-field>
-  
+
   <span class="spacer"></span>
-  
+
   <button mat-button type="button" (click)="drawer.toggle()">Close View</button>
 </mat-toolbar>
 

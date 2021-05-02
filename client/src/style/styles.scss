@@ -32,7 +32,7 @@ mat-grid-tile {
   }
 }
 
-.spacer { 
+.spacer {
   flex: 1;
 }
 
@@ -40,6 +40,15 @@ mat-grid-tile {
   z-index: 10;
 }
 
-
-
-
+mat-option.password > span.mat-option-text {
+  display: flex;
+  font-size: 12px;
+  > .spacer {
+    flex: 0.8;
+  }
+  > span.password {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+}

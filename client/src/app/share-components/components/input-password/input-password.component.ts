@@ -1,7 +1,6 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
-import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { MatInput } from '@angular/material/input';
@@ -9,35 +8,37 @@ import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './my-input.component.html',
-  styleUrls: ['./my-input.component.scss'],
+  selector: 'app-input-password',
+  templateUrl: './input-password.component.html',
+  styleUrls: ['./input-password.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MyInputComponent),
+      useExisting: forwardRef(() => InputPasswordComponent),
       multi: true
     },
   ]
 })
-export class MyInputComponent implements OnInit, ControlValueAccessor {
+export class InputPasswordComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild(MatInput) input: HTMLInputElement;
 
   @Input() public control: FormControl;
+
   @Input() public type: string;
   @Input() public hint: string;
   @Input() public controlName: string;
   @Input() public placeHolder: string;
-  @Input() public serverErrorMode: boolean;
 
-  @Input() public loginHint: boolean;
-  @Input() public addressHint: boolean;
+  @Input() public serverErrorState: boolean;
+  @Input() public loginState: boolean;
 
   public value: any
   public error: string
   public serverError: string
   public password: string
+  public hide: boolean = true
+  public passwordAutocomplete: boolean = true;
 
   onChange: (event) => void
   onTouched: () => void
@@ -49,7 +50,6 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   ) { }
 
   ngOnInit(): void {
-
     this.subscribeToSubject();
     this.subscribeToControl();
   }
@@ -77,9 +77,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   }
 
   public onFocus() {
-    if (this.controlName === 'password') {
-      this.generatePassword()
+
+    if (this.loginState || this.password) {
+      return
     }
+
+    this.generatePassword()
   }
 
   // subscription section
@@ -89,7 +92,6 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
       (error) => {
         this.serverError = error
         if (this.serverError) {
-          console.log(1) 
           this.control.setErrors({ serverError: true });
           this.input.focus()
         }
@@ -108,19 +110,11 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
       })
   }
 
-  // end of subscription section
-
-  // logic section
+  // LOGIC SECTION
 
   // function to generate password
   public generatePassword() {
-
-    if (this.password || this.placeHolder !== "Password") {
-      return
-    }
-
     this.password = this.messageServcie.generate()
-
   }
 
   // function to update password to the control
@@ -131,7 +125,12 @@ export class MyInputComponent implements OnInit, ControlValueAccessor {
   // function to handle validation messages
   public validate() {
 
+    console.log(this.control.errors)
+    console.log(this.control)
+
     this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+
+    console.log(this.error)
 
     this.control.valueChanges.subscribe(
       () => {

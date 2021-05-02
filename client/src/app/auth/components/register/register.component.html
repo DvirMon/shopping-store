@@ -8,26 +8,29 @@
       <div class="right">
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <mat-grid-list cols="1" rowHeight="50px">
-            <mat-grid-tile></mat-grid-tile>
+            <!-- <mat-grid-tile></mat-grid-tile> -->
             <mat-grid-tile rowspan="2">
               <app-input [control]="registerForm.controls['name']" placeHolder="Name" type="text" hint="your name"
                 controlName="name">
               </app-input>
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">
-              <app-input [control]="registerForm.controls['email']" [hint]="'email address'" placeHolder="Email"
-                type="text" controlName="email" [serverErrorMode]="true">
+              <app-input [control]="registerForm.controls['email']" [hint]="'an email address'" placeHolder="Email"
+                type="text" controlName="email" serverErrorMode="true">
               </app-input>
             </mat-grid-tile>
+
             <mat-grid-tile rowspan="2">
-              <app-input [control]="registerForm.controls['password']" placeHolder="Password" type="password"
-                hint="your password" controlName="password">
-              </app-input>
+              <app-input-password [control]="registerForm.controls['password']" placeHolder="Password" type="password"
+                hint="your password" controlName="password" serverErrorState="false"></app-input-password>
             </mat-grid-tile>
+
             <mat-grid-tile rowspan="2">
-              <app-input [control]="registerForm.controls['confirmPassword']" placeHolder="Confirmation Password"
-                type="password" hint="confirmation password" controlName="confirmPassword">
-              </app-input>
+              <app-input-password [control]="registerForm.controls['confirmPassword']"
+                placeHolder="Confirmation Password" type="password" hint="confirmation password"
+                controlName="confirmPassword" [serverErrorState]="false">
+              </app-input-password>
+
             </mat-grid-tile>
           </mat-grid-list>
           <mat-grid-list cols="1" rowHeight="10vh">

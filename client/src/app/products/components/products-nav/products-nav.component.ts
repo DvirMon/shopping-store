@@ -4,8 +4,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { ProductsService } from 'src/app/services/products.service';
 
-import { faCartPlus,  } from '@fortawesome/free-solid-svg-icons/faCartPlus';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-products-nav',
@@ -18,14 +19,12 @@ export class ProductsNavComponent {
   @Input() drawerProduct: MatSidenav
   @Input() isAdmin: boolean
 
-  public cartPlus: IconDefinition = faCartPlus
   public isMobile :Observable<boolean> = this.productsService.isMobile()
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private authService : AuthService
   ) { }
-
-
 
 
   public onDrawerCart() {
@@ -37,5 +36,8 @@ export class ProductsNavComponent {
     this.drawerProduct.toggle()
   }
 
+  public logout() {
+    this.authService.logout()
+  }
 
 }

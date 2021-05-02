@@ -12,12 +12,16 @@ export class MessageService {
   // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
 
-    if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
-      return this.passwordCustomErrorMessage(control, placeHolder)
+
+    if (control.hasError('required')) {
+      return 'value is required ';
     }
 
     if (control.hasError('min')) {
       return 'Value in not valid ';
+    }
+    if (placeHolder === "Password" || placeHolder === "Confirmation Password") {
+      return this.passwordCustomErrorMessage(control, placeHolder)
     }
 
     if (control.hasError('maxlength')) {
@@ -44,7 +48,7 @@ export class MessageService {
 
   }
 
-  public generate() : string {
+  public generate(): string {
 
     const passwordLength = 12;
     const lowerCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
