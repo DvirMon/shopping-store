@@ -16,17 +16,15 @@
   <mat-hint *ngIf="control.invalid && !customHint">{{'Please enter '+ hint}}</mat-hint>
   <mat-hint *ngIf="control.invalid && customHint">{{customHint}}</mat-hint>
 
-  <!-- costume input hint -->
-  <!-- <mat-hint *ngIf="loginHint && control.untouched"></mat-hint> -->
 
   <!-- verifying in database hint -->
-  <!-- <mat-hint *ngIf="!loginHint && !addressHint && control.pending">verifying in database...</mat-hint> -->
+  <mat-hint *ngIf="control.pending">verifying in database...</mat-hint>
 
 
   <!-- INPUT FOR ADDRESS -->
   <mat-hint *ngIf="addressHint">Double click on the icon for auto complete</mat-hint>
 
-  <mat-hint *ngIf="control.valid && control.touched" class="success">Good job!</mat-hint>
+  <mat-hint *ngIf="control.valid" class="success">Good job!</mat-hint>
 
   <!-- shred input error -->
   <mat-error *ngIf=control.errors>{{error}}</mat-error>

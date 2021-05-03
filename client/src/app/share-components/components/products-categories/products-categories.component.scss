@@ -1,0 +1,11 @@
+.product-categories {
+  img:hover {
+    cursor: pointer;
+    filter: brightness(50%);
+  }
+  .text {
+    position: absolute;
+    font-size: 30px;
+    color: white;
+  }
+}

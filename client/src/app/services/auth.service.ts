@@ -130,9 +130,14 @@ export class AuthService {
   // method to navigate according to user role
   public handleRoleRoute(user: UserModel): Promise<boolean> {
 
+
+    if (!user) {
+      return this.router.navigateByUrl("products/categories")
+    }
+
     return user.isAdmin ?
       this.router.navigateByUrl("admin" + environment.productLandingPage)
-      : this.router.navigateByUrl(`home/${user._id}` + environment.productLandingPage)
+      : this.router.navigateByUrl("products/categories")
   }
 
   // method to logout

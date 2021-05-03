@@ -7,6 +7,7 @@ const middleware = require("../services/middleware");
 
 const key = process.env.JWT_ACCESS;
 
+// POST request - get multiple products with ids array
 router.post(
   "/ids",
   middleware.authorize(false, key),
@@ -25,9 +26,9 @@ router.post(
   }
 );
 
+// GET request - get products categories
 router.get(
   "/categories",
-  middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const categories = await productLogic.getAllCategories();
@@ -38,7 +39,7 @@ router.get(
   }
 );
 
-// get total store products
+// GET request- get total store products
 router.get("/total", async (request, response, next) => {
   try {
     const totalDocs = await productLogic.getTotalDocsAsync();
@@ -48,9 +49,10 @@ router.get("/total", async (request, response, next) => {
   }
 });
 
+// POST request - products pagination
 router.post(
   "/pagination/:page/:limit",
-  middleware.authorize(false, key),
+  // middleware.authorize(false, key),
   middleware.pagination,
   async (request, response, next) => {
     try {
@@ -75,9 +77,10 @@ router.post(
   }
 );
 
+// GET request - search for product
 router.get(
   "/search/:query",
-  middleware.authorize(false, key),
+  // middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.searchProductsAsync(

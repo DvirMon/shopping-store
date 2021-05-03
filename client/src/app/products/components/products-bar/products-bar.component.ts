@@ -23,5 +23,4 @@ export class ProductsBarComponent  {
     private breakpointObserver: BreakpointObserver,
   ) { }
 
-
 }

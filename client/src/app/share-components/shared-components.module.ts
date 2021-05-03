@@ -38,6 +38,7 @@ import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 import { environment } from 'src/environments/environment'
 import { InputComponent } from './components/input/input.component';
 import { InputPasswordComponent } from './components/input-password/input-password.component';
+import { ProductsCategoriesComponent } from './components/products-categories/products-categories.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,9 @@ import { InputPasswordComponent } from './components/input-password/input-passwo
 
     SearchComponent,
     SearchListItemComponent,
+
     ProductThumbnailComponent,
+    ProductsCategoriesComponent,
 
     AddressComponent,
     HighLightPipe,
@@ -70,6 +73,7 @@ import { InputPasswordComponent } from './components/input-password/input-passwo
     AboutComponent,
 
     ProductThumbnailComponent,
+    ProductsCategoriesComponent,
 
     InputComponent,
     InputPasswordComponent,

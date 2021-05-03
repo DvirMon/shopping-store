@@ -4,8 +4,6 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ActivatedRoute } from '@angular/router';
 
-import { MatSort, Sort } from '@angular/material/sort';
-
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 
@@ -22,10 +20,9 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
 
 
@@ -34,14 +31,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
   public totalProducts: Observable<number>;
   public isAdmin: boolean = store.getState().auth.isAdmin;
   public results: boolean = false;
+
+
   private alias: string;
 
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
-    private paginationService: PaginationService,
-    private activeRoute: ActivatedRoute,
 
   ) { }
 
@@ -49,33 +46,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.getStoreProducts();
-    this.subscribeToRoute();
     this.search();
   }
 
-  ngAfterViewInit(): void {
-    this.subscribeToSort();
-    this.subscribeToRoute();
-  }
 
   // subscription section
 
-  private subscribeToRoute(): void {
-    this.activeRoute.params.subscribe(
-      (params) => {
-        this.alias = params.alias
-        if (this.sort) {
-          this.paginationService.getSortedData(this.alias, this.sort)
-        }
-      }
-    );
-  }
-
-  private subscribeToSort(): void {
-    this.sort.sortChange.subscribe(
-      (sort: Sort) => this.paginationService.getSortedData(this.alias, this.sort)
-    )
-  }
 
   // function that listen to user search query
   public subscribeToControl(): Observable<ProductModel[]> {
@@ -88,8 +64,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
         }
         return this.handleSearch(searchTerm.trim())
       }))
-  }
 
+
+  }
 
   // end of subscription section
 
@@ -104,7 +81,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this.searchInput.nativeElement.focus()
       },
       (err) => {
-        console.log(err)
         this.searchInput.nativeElement.focus()
       }
     )
@@ -135,7 +111,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   // logic section
 
   // action to fire when search tab is selected
-  public onSelect(product : ProductModel) {
+  public onSelect(product: ProductModel) {
 
     this.panel.openPanel()
 

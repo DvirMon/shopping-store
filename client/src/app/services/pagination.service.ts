@@ -9,11 +9,14 @@ import { FormService } from './form.service';
 
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaginationService {
+
+  public scrollToTop = new BehaviorSubject<boolean>(false)
 
   constructor(
     private formService: FormService

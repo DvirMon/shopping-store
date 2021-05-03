@@ -7,15 +7,15 @@
       <mat-icon>search</mat-icon>
     </mat-form-field>
   </form>
-  <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
+  <!-- <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
     <li arrowPosition="after" mat-sort-header="price">
       Price
     </li>
-  </ul>
+  </ul> -->
   <mat-autocomplete  class="d-none d-lg-block single-autocomplete" autoActiveFirstOption #panel #auto="matAutocomplete">
-    <mat-option *ngIf="results"> 
+    <mat-option *ngIf="results">
       No search result was found...
-    </mat-option> 
+    </mat-option>
     <mat-option *ngFor="let option of searchEntries | async" (click)="onSelect(option)">
       <app-search-list-item [product]="option" [searchTerm]="searchControl.value?.trim()"></app-search-list-item>
     </mat-option>

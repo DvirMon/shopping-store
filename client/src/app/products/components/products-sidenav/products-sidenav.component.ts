@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { store } from 'src/app/utilities/redux/store';
 import { FormService } from 'src/app/services/form.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-products-sidenav',
@@ -25,47 +26,48 @@ import { Observable } from 'rxjs';
 })
 export class ProductsSidenavComponent {
 
-  @Input() drawerProduct: MatSidenav
+  @Input() public drawerProduct: MatSidenav
+  @Input() public isExpanded: boolean;
 
-  public categories: CategoryModel[] = store.getState().products.categories;
-  public closeDrawer: EventEmitter<boolean> = new EventEmitter();
-
+  private user: UserModel = store.getState().auth.user
   public isAdmin: boolean = store.getState().auth.isAdmin;
-  public isExpanded: boolean = false;
-  public isMobile :Observable<boolean> = this.formService.isMobile()
+  public isLogin: boolean = store.getState().auth.isLogin;
+  public categories: CategoryModel[] = store.getState().products.categories;
+
+  public isMobile: Observable<boolean> = this.formService.isMobile()
 
   private icons = {
     beverages: faWineBottle,
-    condiments: faCandyCane,
+    sweets: faCandyCane,
     dairy: faCheese,
     grains: faBreadSlice,
     meat: faDrumstickBite,
     produce: faCarrot,
-
   }
 
   ngOnInit(): void {
     this.setNavigationBar();
+
   }
 
   constructor(
     private router: Router,
-    private formService : FormService
+    private formService: FormService
   ) { }
-
 
   // LOGIC SERCTION
 
   // method to navigate
-  public onNavigate(category) {
+  public onNavigate(category): Promise<boolean> {
 
+    if (!this.isLogin) {
+      return this.router.navigateByUrl(`/products/categories/${category.alias}/${category._id}`)
+    }
 
+    return this.isAdmin
+      ? this.router.navigateByUrl(`/products/admin/${category.alias}/${category._id}`)
+      : this.router.navigateByUrl(`/products/${this.user._id}/${category.alias}/${category._id}`)
 
-    this.isAdmin
-      ? this.router.navigateByUrl(`/admin/products/${category.alias}/${category._id}`)
-      : this.router.navigateByUrl(`/products/${category.alias}/${category._id}`)
-
-    this.closeDrawer.emit(false)
 
   }
 
@@ -81,10 +83,11 @@ export class ProductsSidenavComponent {
     }
   }
 
-// method to change sidnav witdh
+  // method to change sidnav witdh
   public toggleDrawer() {
-    this.drawerProduct.toggle()
     this.isExpanded = !this.isExpanded
+    this.drawerProduct.toggle()
   }
+
 
 }

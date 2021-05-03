@@ -24,7 +24,6 @@ import { RootComponent } from './components/root/root.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
-import { ProductsCateogoriesComponent } from './components/products-cateogories/products-cateogories.component';
 
 import { InfoComponent } from './components/info/info.component';
 import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component';
@@ -47,7 +46,6 @@ import { environment } from '../environments/environment';
     HomePageComponent,
     MembersComponent,
     ProductsSlideComponent,
-    ProductsCateogoriesComponent,
   ],
   imports: [
     BrowserModule,

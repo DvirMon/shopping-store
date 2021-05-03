@@ -2,8 +2,9 @@
 
   <app-home-page></app-home-page>
 
-  <app-members *ngIf="false"></app-members>
+  <app-members></app-members>
 
-  <app-products-slide *ngIf="false"></app-products-slide>
+  <app-products-categories [cols]="(isMobile | async) ? '2' : '6'" rowHeight="600"></app-products-categories>
+
 
 </div>

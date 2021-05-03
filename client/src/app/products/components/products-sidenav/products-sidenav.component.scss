@@ -21,17 +21,18 @@ button {
 }
 
 @media screen and (max-width: size(md)) {
-  mat-list > .nav-main {
-    height: 60px;
-    margin-left: 0;
+  mat-list {
+
+    .nav-main {
+      height: 60px;
+      margin-left: 0;
+    }
   }
 }
 
 mat-list-item {
-
   &:hover {
     filter: brightness(1%);
     cursor: pointer;
   }
 }
-

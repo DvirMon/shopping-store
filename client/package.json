@@ -41,6 +41,7 @@
     "ng2-file-upload": "^1.4.0",
     "ngx-cleave-directive": "^1.1.3",
     "ngx-google-places-autocomplete": "^2.0.4",
+    "ngx-virtual-scroller": "^4.0.3",
     "payment-icons": "^1.2.1",
     "pdfmake": "^0.1.65",
     "redux": "^4.0.5",

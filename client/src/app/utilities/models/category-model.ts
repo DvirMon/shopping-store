@@ -5,7 +5,8 @@ export class CategoryModel {
     public _id?: string,
     public name?: string,
     public alias?: string,
-    public icon?
+    public icon?,
+    public hide? : boolean
   ) {
   }
 }

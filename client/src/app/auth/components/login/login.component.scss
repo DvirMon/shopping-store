@@ -40,6 +40,11 @@ form {
 button {
   width: 200px;
   height: 40px;
+
+  &.login {
+    background-color: black;
+    color: white;
+  }
 }
 
 .btn-shopping {

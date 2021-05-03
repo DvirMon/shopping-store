@@ -29,7 +29,7 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   public searchControl = new FormControl();
   public cartItems: CartItemModel[];
-  public cartTotalPrice: number;  
+  public cartTotalPrice: number;
 
   private user: UserModel = new UserModel();
   private cart: CartModel = new CartModel();
@@ -52,7 +52,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.unsubscribeToStore()
   }
 
-  // subscribe section
+  // SUBSCRIBE SECTION
 
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
@@ -75,7 +75,13 @@ export class CartListComponent implements OnInit, OnDestroy {
   // request section
 
   public deleteAllCartItems(): void {
+
+    if (this.cartItems.length === 0) {
+      return
+    }
+
     const answer = confirm("Delete Cart?")
+    
     if (!answer) {
       return
     }

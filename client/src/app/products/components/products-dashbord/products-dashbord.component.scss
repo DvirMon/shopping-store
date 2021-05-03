@@ -1,0 +1,48 @@
+.container-products {
+  background-color: white;
+  text-align: center;
+}
+
+.row {
+  width: 97%;
+  margin: auto;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  background-color: white;
+}
+
+img {
+  width: 100%;
+}
+
+app-products-item {
+  height: 100%;
+  width: inherit;
+  justify-content: center;
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2%;
+
+  ul > li {
+    font-size: 14px;
+    display: flex;
+    justify-self: self-end;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  mat-toolbar {
+    padding-right: 5%;
+  }
+}
+

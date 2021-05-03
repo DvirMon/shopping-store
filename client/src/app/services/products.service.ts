@@ -40,7 +40,7 @@ export class ProductsService {
   public handleSearchEntries = new Subject<ProductModel[]>();
   public handleDrawerToggle = new Subject<boolean>();
 
-  public productLandingPage: string = environment.productLandingPage
+  // public productLandingPage: string = environment.productLandingPage
 
   constructor(
     private http: HttpClient,
@@ -90,8 +90,17 @@ export class ProductsService {
   // GET request - products categories : http://localhost:3000/api/products/categories
   public getCategories(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(this.baseUrl + "/categories").pipe(
-      tap((response: CategoryModel[]) => {
-        this.formService.handleStore(ActionType.GetCategories, response)
+      map((response: CategoryModel[]) => {
+
+        const categories = response.map(category => {
+          category.icon = ""
+          category.hide = true
+          return category
+        })
+
+
+        this.formService.handleStore(ActionType.GetCategories, categories)
+        return categories
       })
     )
   }

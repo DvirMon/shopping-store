@@ -3,27 +3,25 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="spacer"></span>
-  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawerProduct.toggle()">
-    <mat-icon >navigate_before</mat-icon>
+  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
+    (click)="drawerProduct.toggle()">
+    <mat-icon>navigate_before</mat-icon>
   </button>
 </mat-toolbar>
 
 <mat-list>
-  <mat-list-item appSidenavAdminDirective class="nav-main" routerLinkActive="active"
-    *ngFor="let category of categories;  let i = index" (click)="onNavigate(category)">
+  <mat-list-item appSidenavAdminDirective class="nav-main" *ngFor="let category of categories;  let i = index">
 
-    <button *ngIf="isExpanded" mat-icon-button (click)="onNavigate(category)">
+    <button mat-icon-button (click)="onNavigate(category)">
       <fa-icon [icon]="category.icon" size="1x"></fa-icon>
     </button>
 
-    <ng-container *ngIf="!isExpanded">
-      <fa-icon [icon]="category.icon" size="1x"></fa-icon>
-      <button mat-button >
+    <ng-container *ngIf="isExpanded">
+      <button mat-button (click)="onNavigate(category)" routerLinkActive="active">
         {{category.name}}
       </button>
     </ng-container>
 
     <mat-divider class="d-md-none"></mat-divider>
   </mat-list-item>
-
 </mat-list>

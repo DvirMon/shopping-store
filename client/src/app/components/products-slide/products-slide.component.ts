@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsSlideComponent implements OnInit {
 
-  public categories : string[] = ["grains", "meat", "dairy", "vegetables"]
 
   constructor() { }
 

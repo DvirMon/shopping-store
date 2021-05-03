@@ -7,7 +7,7 @@ export class ProductsAppState {
   // public products: ProductModel[] = []
   public categories: CategoryModel[] = []
   public beverages: PaginationDataModel = new PaginationDataModel();
-  public condiments: PaginationDataModel = new PaginationDataModel();
+  public sweets: PaginationDataModel = new PaginationDataModel();
   public dairy: PaginationDataModel = new PaginationDataModel();
   public grains: PaginationDataModel = new PaginationDataModel();
   public meat: PaginationDataModel = new PaginationDataModel();

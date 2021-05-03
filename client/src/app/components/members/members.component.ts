@@ -17,7 +17,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
           opacity: 1,
           transform: 'translateY(70px)'
         })),
-      // transition('normal => start', animate(0)),
       transition('start => end', animate(600)),
     ]),
     trigger('fade-up-card', [
@@ -31,7 +30,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
           opacity: 1,
           transform: 'translateY(50px)'
         })),
-      // transition('normal => start', animate(0)),
       transition('start => end', animate(600)),
     ]),
 
@@ -52,12 +50,8 @@ export class MembersComponent implements OnInit {
     const componentPosition = this.el.nativeElement.offsetTop
     const scrollPosition = window.pageYOffset
 
-    // console.log(scrollPosition)
-
-
     if (scrollPosition >= 200) {
       this.state.title = "end"
-      console.log("enter")
     }
   }
 
@@ -67,23 +61,13 @@ export class MembersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.checkScroll()
   }
 
-
-  // public state: boolean = false
-
-
-
-  animationEnded(stateClass: string) {
+  public animationEnded(stateClass: string) {
 
     if (this.state.title === "start") {
       return
     }
-
-    console.log(stateClass)
-
-    // console.log(this.state[state])
     this.state[stateClass] = "end"
 
   }
