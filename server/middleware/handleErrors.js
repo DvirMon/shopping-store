@@ -6,7 +6,6 @@ const handleError = (err, request, response, next) => {
       .send("an error has occurred, please ty again later");
   }
  
-  // console.log(2)
   if (err.status) {
     return response.status(err.status).json(err.message);
   }

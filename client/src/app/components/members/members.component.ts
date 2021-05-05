@@ -1,5 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FormService } from 'src/app/services/form.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-members',
@@ -38,10 +40,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class MembersComponent implements OnInit {
 
+  public isMobile : Observable<boolean> = this.formService.isMobile();
+
   public state = {
     title: "start",
-    green: "start",
     red: "start",
+    green: "start",
     blue: "start"
   }
 
@@ -57,7 +61,8 @@ export class MembersComponent implements OnInit {
 
 
   constructor(
-    public el: ElementRef
+    private el: ElementRef,
+    private formService : FormService
   ) { }
 
   ngOnInit(): void {

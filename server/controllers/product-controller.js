@@ -71,7 +71,6 @@ router.post(
 
       return response.json({ products, pagination });
     } catch (err) {
-      console.log(err)
       next(err);
     } 
   }

@@ -40,9 +40,6 @@ const setTemplate = async (name, code) => {
 
   return new Promise((resolve, reject) => {
 
-    console.log(path + "/views/reset.ejs",
-    )
-
     ejs.renderFile(
       path + "/views/reset.ejs",
       {
@@ -51,7 +48,6 @@ const setTemplate = async (name, code) => {
       },
       (err, data) => {
         if (err) {
-          console.log(err)
           reject(err)
           return
         }

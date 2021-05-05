@@ -5,9 +5,6 @@ const formatPhone = async (request, response, next) => {
   if (payload.type == "phone" && payload.contact.startsWith("0")) {
 
     const str = payload.contact.substring(1)
-
-    console.log(str)
-
   }
 
 

@@ -34,7 +34,6 @@ router.get("/:cartId", async (request, response, next) => {
 
     response.json(currentCart);
   } catch (err) {
-    console.log(err)
     next(err);
   }
 });

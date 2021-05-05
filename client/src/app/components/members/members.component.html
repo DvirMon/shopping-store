@@ -1,11 +1,35 @@
 <div class="members">
   <div class="container">
+
     <div class="title">
       <h1 [@fade-up]="state.title" (@fade-up.done)="animationEnded('red')">
         For Members only !
       </h1>
     </div>
-    <div class="row">
+
+    <mat-grid-list [cols]="(isMobile | async) ? '1' : '3'" gutterSize="10px" [rowHeight]="(isMobile | async) ? '53vh' : '50vh'">
+
+      <mat-grid-tile>
+        <div [@fade-up-card]="state.red" (@fade-up-card.done)="animationEnded('green')">
+          <img src="/assets/images/members/start.png" width="350px">
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div [@fade-up-card]="state.green" (@fade-up-card.done)="animationEnded('blue')">
+          <img src="/assets/images/members/middle.png" width="350px">
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div [@fade-up-card]="state.blue">
+          <img src="/assets/images/members/end.png" width="350px">
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+    <!-- <div class="row">
       <div [@fade-up-card]="state.red" (@fade-up-card.done)="animationEnded('green')">
         <img src="/assets/images/start.png" width="350px">
       </div>
@@ -16,5 +40,5 @@
         <img src="/assets/images/end.png" width="350px">
       </div>
     </div>
+  </div> -->
   </div>
-</div>

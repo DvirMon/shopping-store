@@ -8,7 +8,6 @@
       <div class="right">
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <mat-grid-list cols="1" rowHeight="50px">
-            <!-- <mat-grid-tile></mat-grid-tile> -->
             <mat-grid-tile rowspan="2">
               <app-input [control]="registerForm.controls['name']" placeHolder="Name" type="text" hint="your name"
                 controlName="name">

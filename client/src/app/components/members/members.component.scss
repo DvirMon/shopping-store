@@ -1,18 +1,18 @@
 .members {
   background-color: white;
-  height: 75vh;
+  height: 70vh;
 
   .container {
     text-align: center;
     height: 100px;
 
     .title {
-      height: 120px;
       display: flex;
       justify-content: center;
       vertical-align: middle;
 
       h1 {
+        height: 80px;
         margin: 0;
         font-size: 50px;
         opacity: 0;
@@ -22,19 +22,13 @@
           opacity: 1;
         }
       }
+
+      @media screen and (max-width: 600px) {
+        h1 {
+          font-size: 35px;
+        }
+      }
     }
-  }
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  height: 300px;
-
-  div {
-    text-align: center;
-    width: 300px;
-    height: 300px;
   }
 }
 
@@ -46,5 +40,11 @@
   to {
     transform: translateY(0px);
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .members {
+    height: 180vh;
   }
 }

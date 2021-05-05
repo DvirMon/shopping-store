@@ -36,7 +36,6 @@ const getRefreshToken = (user) => {
 
 // function to create an access token
 const getConfirmationToken = (contact) => {
-  console.log(contact)
   return new Promise((resolve, reject) => {
     jwt.sign(
       { contact },

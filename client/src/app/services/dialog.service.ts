@@ -40,13 +40,15 @@ export class DialogService {
   ) { }
 
 
+
+
   // open spinner dialog
   public openSpinner(): MatDialogRef<DialogComponent> {
     const data = this.handleDate("spinner")
     return this.dialog.open(DialogComponent, this.handleConfig(data));
   }
 
-  // open error dialog 
+  // open error dialog
   public handleErrorDialog(error: HttpErrorResponse | ErrorData) {
     const payload = this.handleErrorData(error)
     const data = this.handleDate("error", payload)

@@ -9,7 +9,7 @@
   </ul>
 </mat-toolbar>
 <div class="container-products">
-  
+
   <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card"
       *ngFor="let product of searchEntries.length > 0 ? searchEntries :products">
@@ -21,5 +21,7 @@
     [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
     [pageSize]="6" [pageSizeOptions]="[6]">
   </mat-paginator>
+
+
 
 </div>

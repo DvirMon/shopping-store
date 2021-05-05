@@ -29,7 +29,7 @@ import { AddressComponent } from './components/address/address.component';
 
 // DIRECTIVE
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
-import { BackgroundImageDirective } from '../utilities/directives/background-image.directive';
+import { BackgroundHeightDirective } from '../utilities/directives/background-height.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
 
 // PIPES
@@ -60,7 +60,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
     HighLightPipe,
 
     BarBackgroundColorDirective,
-    BackgroundImageDirective,
+    BackgroundHeightDirective,
     SidenavAdminDirective,
 
   ],
@@ -89,7 +89,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
     HighLightPipe,
 
     BarBackgroundColorDirective,
-    BackgroundImageDirective,
+    BackgroundHeightDirective,
     SidenavAdminDirective,
   ],
   providers: [

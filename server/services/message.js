@@ -3,9 +3,7 @@ const getMessage = (errors) => {
   
   if (errors) { 
     const error = errors.details.map((error) => errorFormat(error));
-    console.log(error)
     return error[0]
-    // return next({ status: 404, message: error[0] });
   }
   return null
 };

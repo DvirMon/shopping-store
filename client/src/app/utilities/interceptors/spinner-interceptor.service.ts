@@ -14,7 +14,7 @@ export class SpinnerInterceptorService implements HttpInterceptor {
 
   constructor(
     private dialogService: DialogService,
-    private ngZone: NgZone,
+    private zone: NgZone,
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,7 +25,7 @@ export class SpinnerInterceptorService implements HttpInterceptor {
 
     let spinnerRef;
 
-    this.ngZone.run(() => {
+    this.zone.run(() => {
       spinnerRef = this.dialogService.openSpinner()
     });
 

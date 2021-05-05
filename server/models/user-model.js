@@ -99,7 +99,6 @@ UserSchema.plugin(uniqueValidator, {
 });
 
 // UserSchema.path('email').validate(async (email) => {
-//   console.log(1)
 //   const emailCount = await mongoose.models.users.countDocuments({ email })
 //   return !emailCount
 // }, 'Email already exists')

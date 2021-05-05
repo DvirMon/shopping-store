@@ -71,6 +71,7 @@ export class ProductsDashbordComponent implements OnInit {
     this.isAdmin = store.getState().auth.isAdmin;
   }
 
+
   // handle route subscription
   private subscribeToRoute(): void {
     this.getData();

@@ -55,7 +55,6 @@ router.post("/confirm",
 
     try {
       const payload = request.body
-      console.log(payload)
 
       const reset = await Reset.findEntry(request.contact)
 
@@ -69,7 +68,6 @@ router.post("/confirm",
       response.json(true)
     }
     catch (err) {
-      console.log(err)
       next(err)
     }
   })
