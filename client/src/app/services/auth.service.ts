@@ -19,6 +19,7 @@ import { store } from '../utilities/redux/store';
 
 
 import { environment } from 'src/environments/environment';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 declare const gapi: any;
 
@@ -107,6 +108,7 @@ export class AuthService {
       .pipe(
         map((response: AuthData) => {
           this.formService.handleStore(ActionType.AddRefreshToken, response.token)
+          this.formService.handleStore(ActionType.Login, response)
           return response.user
         }))
   }

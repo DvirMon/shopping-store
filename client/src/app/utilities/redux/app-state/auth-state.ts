@@ -1,4 +1,6 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { SocialUser } from 'angularx-social-login';
+import { Observable } from 'rxjs';
 import { UserModel } from 'src/app/utilities/models/user-model';
 
 export class AuthAppState {
@@ -10,8 +12,12 @@ export class AuthAppState {
   public refreshToken: any
   public accessToken: any
   public socket: any
+  public isMobile: Observable<boolean>
 
-  constructor() {
+  constructor(
+
+  ) {
+
     this.refreshToken = sessionStorage.getItem("jwt")
     this.isLogin = this.refreshToken !== null;
 

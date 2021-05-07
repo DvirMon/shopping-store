@@ -46,6 +46,7 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToStore();
+    console.log(this.cartItems)
   }
 
   ngOnDestroy(): void {
@@ -57,16 +58,18 @@ export class CartListComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
-        this.cartItems = [...store.getState().cart.cartItems];
+        this.cartItems = [...store.getState().cart.cart.getItems()];
         this.cart = store.getState().cart.cart;
-        this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+        this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
         this.user = store.getState().auth.user;
       }
     )
-    this.cartItems = [...store.getState().cart.cartItems];
+    this.cartItems = [...store.getState().cart.cart.getItems()];
     this.cart = store.getState().cart.cart;
-    this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+    this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
     this.user = store.getState().auth.user;
+
+
   }
 
 
@@ -81,11 +84,11 @@ export class CartListComponent implements OnInit, OnDestroy {
     }
 
     const answer = confirm("Delete Cart?")
-    
+
     if (!answer) {
       return
     }
-    this.cartService.deleteCartAndCartItems(this.cart._id)
+    this.cartService.deleteCartAndCartItems(this.cart.get_id())
   }
   // end of request section
 
@@ -100,7 +103,7 @@ export class CartListComponent implements OnInit, OnDestroy {
       return
     }
 
-    return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart._id}`)
+    return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart.get_id()}`)
   }
 
   // navigate back to store

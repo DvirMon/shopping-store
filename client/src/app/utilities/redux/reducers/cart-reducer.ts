@@ -11,40 +11,40 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
 
   switch (action.type) {
     case ActionType.AddCart:
-      newAppState.cart = action.payload
+      newAppState.cart = CartModel.create(action.payload)
       break
     case ActionType.IsCartActive:
-      newAppState.isCartActive = action.payload
+      newAppState.cart.setIsActive(action.payload)
       break
     case ActionType.SetCartItems:
-      newAppState.cartItems = action.payload
+      newAppState.cart.setItems(action.payload)
       break
     case ActionType.SetCartProducts:
       newAppState.cartProducts = action.payload
       break
     case ActionType.SetCartPrice:
-      newAppState.cartTotalPrice = action.payload
+      newAppState.cart.setTotalPrice(action.payload)
       break
     case ActionType.AddCartItem:
-      newAppState.cartItems.push(action.payload)
+      newAppState.cart.addItem(action.payload)
       break
     case ActionType.AddCartProduct:
       newAppState.cartProducts.push(action.payload)
       break
-    case ActionType.UpdatedItemCart:
-      updateLogic(newAppState, action.payload)
+    case ActionType.UpdateCartItem:
+      newAppState.cart.updateItem(action.payload);
       break
     case ActionType.ResetCartState:
       newAppState = new CartAppState()
       break
     case ActionType.DeleteCartItem:
-      deleteLogic(newAppState.cartItems, action.payload)
+      newAppState.cart.deleteitem(action.payload)
       break
     case ActionType.DeleteCartProduct:
       deleteLogic(newAppState.cartProducts, action.payload)
       break
     case ActionType.Logout:
-      newAppState = new CartAppState()
+      newAppState = new CartAppState() 
   }
   return newAppState
 }
@@ -55,15 +55,4 @@ const deleteLogic = (arr, id: string) => {
     arr.splice(indexToDelete, 1)
   }
 }
- 
-const updateLogic = (newAppState: CartAppState, payload: CartModel) => {
-  newAppState.cartItems.find(itemToUpdate => {
-    if (itemToUpdate._id === payload._id) {
-      for (const prop in payload) {
-        if (prop in itemToUpdate) {
-          itemToUpdate[prop] = payload[prop]
-        }
-      }
-    }
-  })
-}
+

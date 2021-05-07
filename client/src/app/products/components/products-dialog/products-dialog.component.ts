@@ -10,7 +10,7 @@ import { CartModel } from 'src/app/utilities/models/cart-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
 import { FormService } from 'src/app/services/form.service';
-import { CartService, CartActionInfo } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/services/cart.service';
 import { DialogData } from 'src/app/services/dialog.service';
 
 import { map } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { map } from 'rxjs/operators';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products-dialog',
@@ -32,13 +33,12 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   @ViewChild(MatTooltip) toolTip: MatTooltip;
   @ViewChild('cartItemQuantity') cartItemQuantity: NgModel;
 
-  public quantityControl: FormControl
+  private distinctChange: boolean = false
+  private editMode: boolean = false
 
-  public cartItem: CartItemModel = new CartItemModel()
-  public cartItems: CartItemModel[] = []
+  public quantityControl: FormControl
+  public editState$: Observable<boolean> = this.cartService.getEditState()
   public minQuantity: boolean = false
-  public editMode: boolean = false
-  public distinctChange: boolean = false
   public alias: string
 
 
@@ -50,22 +50,25 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+
     private breakpointObserver: BreakpointObserver,
     private formService: FormService,
     private cartService: CartService,
-    public product: ProductModel,
+
+    public cartItem: CartItemModel,
     public cart: CartModel,
+    public product: ProductModel,
 
   ) { }
 
   ngOnInit(): void {
 
-    this.product = this.data.payload.product;
-    this.alias = this.data.payload.alias;
+    this.setDilaogProps()
     this.subscribeToStore();
     this.subscribeToBreakPoints()
-    this.handleUpdateState();
-
+    this.subscribtToEditMode()
+    this.subscribeToCartItem()
+    this.handleCartItemData();
   }
 
   ngAfterViewInit() {
@@ -75,7 +78,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   }
 
 
-  // form section
+  // FORM SECTION
 
   private InvokeQuantityFormControl() {
     this.quantityControl = this.cartItemQuantity.control
@@ -105,19 +108,17 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // end of form section
 
-  // subscription section
 
+  // SUBSCRIBTION SECTION
+
+  // method to subscribt to store data
   private subscribeToStore(): void {
     store.subscribe(
       () => {
-        this.cartItems = [...store.getState().cart.cartItems];
         this.cart = store.getState().cart.cart;
       }
     )
-    this.cartItems = store.getState().cart.cartItems;
-    this.cartItem.totalPrice = this.product.price
     this.cart = store.getState().cart.cart;
   }
 
@@ -142,93 +143,125 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private subscribtToEditMode() {
+    this.editState$.subscribe(
+      (editMode: boolean) => {
+        this.editMode = editMode;
+      }
+    )
+  }
+
+  private subscribeToCartItem() {
+    this.cartService.getCartItemSubject().subscribe(
+      (cartItem: CartItemModel) => {
+        this.cartItem = cartItem
+      }
+    )
+  }
+
+  private subcribeToRoureData() {
+
+}
+
   // end of subscribe section
 
-  // request section
+  // HTTP SECTION
 
   public handleRequest(): void {
-    if (this.cartItems.length === 0) {
-      this.cartService.getNewCart(this.cartItem).subscribe(
-        (response: CartActionInfo) => {
-          this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
-          this.formService.handleStore(ActionType.AddCartProduct, this.product)
-          this.handleRequestSuccess(response)
-          this.editMode = true
-        }
-      )
-      return
-    }
 
-    if (!this.editMode) {
-      this.AddCartItem()
-    }
-    else if (this.distinctChange) {
-      this.updateCartItem()
-    }
+  if(this.cart.getItems().length === 0) {
+  return this.crateCart()
+}
+
+if (!this.editMode) {
+  return this.AddCartItem()
+}
+
+if (this.distinctChange) {
+  return this.updateCartItem()
+}
 
   }
 
-  public AddCartItem(): void {
+  private crateCart(): void {
+  this.cartService.createCart(this.cartItem).subscribe(
+    (cartItem: CartItemModel) => {
+      this.handleRequestSuccess(cartItem)
+    }
+  )
+}
+
+  private AddCartItem(): void {
+  console.log(this.cartItem)
     this.cartService.addCartItem(this.cartItem).subscribe(
-      (response: CartActionInfo) => {
-        this.formService.handleStore(ActionType.AddCartItem, response.cartItem)
-        this.formService.handleStore(ActionType.AddCartProduct, this.product)
-        this.formService.handleStore(ActionType.IsCartActive, true)
-        this.handleRequestSuccess(response)
-        this.editMode = true
-      }
-    )
-  }
+    (cartItem: CartItemModel) => {
+      console.log(cartItem)
+      this.handleRequestSuccess(cartItem)
+    }
+  )
+}
 
-  public updateCartItem(): void {
-    this.cartService.updateCartItem(this.cartItem).subscribe(
-      (response: CartActionInfo) => {
-        this.formService.handleStore(ActionType.UpdatedItemCart, response.cartItem)
-        this.cartService.cartItemQuantity.next(response.cartItem)
-        this.handleRequestSuccess(response)
-        this.distinctChange = false
-      }
-    )
-  }
+  private updateCartItem(): void {
+  this.cartService.updateCartItem(this.cartItem).subscribe(
+    (cartItem: CartItemModel) => {
+      console.log(cartItem)
+      this.handleRequestSuccess(cartItem)
+      this.distinctChange = false
+    }
+  )
+}
 
-  private handleRequestSuccess(response: CartActionInfo): void {
-    this.formService.handleStore(ActionType.SetCartPrice, response.cartTotalPrice)
-    this.cartItem = response.cartItem
+  // TODO - calculate cart total price
+
+  // main method to handle cart item actions
+  private handleRequestSuccess(cartItem: CartItemModel): void {
+
+  if(this.editMode) {
+  this.formService.handleStore(ActionType.UpdateCartItem, cartItem)
+} else {
+  this.formService.handleStore(ActionType.AddCartItem, cartItem)
+  this.formService.handleStore(ActionType.AddCartProduct, this.product)
+  this.cartService.emitEditState(true);
+}
+this.cartService.emitCartItem(cartItem)
 
   }
 
   // end of request section
 
-  // logic section
+  // LOGIC SECTION
 
-  // set update state if item already exist in the cart
-  private handleUpdateState(): void {
+  // set cart item values
+  private handleCartItemData(): void {
 
-    const cartItem = this.isCartItemInCart();
-    if (cartItem) {
-      this.cartItem = cartItem;
-      this.editMode = true;
-    }
-    else {
-      this.cartItemDefaultValues();
-    }
+  this.cart.getItems().length > 0
+    ? this.cartItemUpdateValue()
+    : this.cartItemDefaultValues();
 
+}
+
+  // method to update exist cart item values
+  private cartItemUpdateValue() {
+  const cartItem = this.cart.findCartItem(this.product._id);
+  if (cartItem) {
+    this.cartService.emitCartItem(cartItem)
+    this.cartService.emitEditState(true);
+  } else {
+    this.cartItemDefaultValues()
   }
-
-  // find if item is already exist in the cart
-  private isCartItemInCart(): CartItemModel {
-    return this.cartItems.find(cartItem => {
-      if (cartItem.productId === this.product._id) {
-        return cartItem
-      }
-    })
-  }
+}
 
   // default values for cart item
   private cartItemDefaultValues(): void {
-    this.cartItem.cartId = this.cart._id
-    this.cartItem.productId = this.product._id
-    this.cartItem.quantity = 1
-  }
+  console.log(this.cart.get_id())
+    this.cartItem.cartId = this.cart.get_id();
+  this.cartItem.productId = this.product._id;
+  this.cartItem.quantity = 1;
+}
+
+  private setDilaogProps(): void {
+  this.product = this.data.payload.product;
+  this.alias = this.data.payload.alias;
+}
 
 }

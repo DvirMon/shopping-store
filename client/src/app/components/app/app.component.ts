@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormService } from 'src/app/services/form.service';
+import { ActionType } from 'src/app/utilities/redux/action-type';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private formService : FormService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.authService.autoLogin()
+    this.formService.handleStore(ActionType.IsMobile, this.formService.isMobile())
   }
 
 }

@@ -6,7 +6,7 @@ export enum ActionType {
   SocialUser,
   AddAccessToken,
   AddRefreshToken,
-  UpdateSocket,
+  IsMobile,
 
   // Cart ActionType
   AddCart,
@@ -16,22 +16,22 @@ export enum ActionType {
   AddCartProduct,
   SetCartPrice,
   AddCartItem,
-  UpdatedItemCart,
+  UpdateCartItem,
   DeleteCartItem,
   DeleteCartProduct,
   ResetCartState,
-  
+
   // Receipt Actions
   AddReceiptItem,
   DeleteReceiptItem,
   ResetReceiptState,
   GetOrderData,
-  
+
   // Products Actions
   AddProduct,
-  SetProducts, 
+  SetProducts,
   GetCategories,
   SetProductsPaginationData,
   AddProductsPaginationData,
   UpdateProduct,
-} 
+}

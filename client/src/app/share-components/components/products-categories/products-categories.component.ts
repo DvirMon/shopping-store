@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
+import { UserModel } from 'src/app/utilities/models/user-model';
 import { store } from 'src/app/utilities/redux/store';
 
 interface RouteModel {
@@ -20,8 +21,8 @@ export class ProductsCategoriesComponent implements OnInit {
   @Input() rowHeight: string
 
   public categories: CategoryModel[]
-
   public hide: boolean = true
+  public user : UserModel = store.getState().auth.user
 
 
   constructor(
@@ -52,7 +53,11 @@ export class ProductsCategoriesComponent implements OnInit {
   }
 
   // EVENET SECTION
-  public onClick(category: CategoryModel): Promise<boolean> {
+  public onClick(category: CategoryModel): Promise<boolean> { 
+
+    if(this.user) {
+      return this.router.navigateByUrl(`/products/${this.user._id}/${category.alias}/${category._id}`)
+    }
     return this.router.navigateByUrl(`/products/categories/${category.alias}/${category._id}`)
   }
 

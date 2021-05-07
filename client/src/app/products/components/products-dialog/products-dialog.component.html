@@ -24,8 +24,7 @@
             <mat-form-field>
               <input matInput type="number" class="input-size" name="quantity" #cartItemQuantity="ngModel"
                 [(ngModel)]="cartItem.quantity">
-            </mat-form-field>
-            units
+            </mat-form-field>units
             <button matTooltip="{{minQuantity ? 'min quantity is 1 unit' : ''}}" (click)="onRemoveQuantity()"
               [disableRipple]="true" mat-icon-button matSuffix matTooltipPosition="right">
               <mat-icon>remove_circle_outline</mat-icon>
@@ -34,11 +33,11 @@
         </div>
         <mat-grid-list class="btn-action" cols="params.cols" rowHeight="10vh">
           <mat-grid-tile>
-            Total Price : {{cartItem.totalPrice | currency}}
+            Total Price : {{(product.price * cartItem.quantity) | currency}}
           </mat-grid-tile>
           <mat-grid-tile>
             <button type="button" mat-flat-button color="warn" [disabled]="cartItemQuantity.invalid"
-              (click)="handleRequest()">{{editMode ? 'Update Item' :'Add To Cart'}}</button>
+              (click)="handleRequest()">{{(editState$ |async) ? 'Update Item' :'Add To Cart'}}</button>
           </mat-grid-tile>
         </mat-grid-list>
       </div>

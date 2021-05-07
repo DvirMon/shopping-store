@@ -46,10 +46,10 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
-        this.cartItems = [...store.getState().cart.cartItems];
+        this.cartItems = [...store.getState().cart.cart.getItems()];
       }
     )
-    this.cartItems = [...store.getState().cart.cartItems];
+    this.cartItems = [...store.getState().cart.cart.getItems()];
   }
 
 

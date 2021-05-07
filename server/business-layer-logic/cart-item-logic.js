@@ -6,6 +6,7 @@ const getAllCartItemsByCartAsync = async (cartId) => {
 };
 
 const getCartTotalPrice = async (cartId) => {
+
   cartId = mongoose.Types.ObjectId(cartId);
 
   const cartTotalPrice = await CartItem.aggregate([
@@ -24,27 +25,19 @@ const getCartTotalPrice = async (cartId) => {
 };
 
 const getCurrentCartAsync = async (cartId) => {
-
   const cartItems = await CartItem.find({ cartId }).exec();
-
-  if (cartItems.length === 0) {
-    return null
-  }
-
-  const cartTotalPrice = await getCartTotalPrice(cartId);
-  return { price: cartTotalPrice, cartItems };
+  return cartItems
 };
 
 const addCartItemAsync = async (cartItem) => {
-  const addedCartItem = await cartItem.save();
-  const cartTotalPrice = await getCartTotalPrice(addedCartItem.cartId);
-  return { cartItem, cartTotalPrice };
+  console.log(cartItem)
+  return cartItem.save();
+
 };
 
 const updateCartItemAsync = async (cartItem) => {
   const info = await CartItem.updateOne({ _id: cartItem._id }, cartItem).exec();
-  const cartTotalPrice = await getCartTotalPrice(cartItem.cartId);
-  return info.n ? { cartItem, cartTotalPrice } : null;
+  return info.n ? cartItem : null;
 };
 
 const deleteCartItemAsync = async (_id) => {

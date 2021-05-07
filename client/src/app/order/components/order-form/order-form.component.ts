@@ -61,12 +61,12 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
       () => {
         this.user = store.getState().auth.user;
         this.cart = store.getState().cart.cart;
-        this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+        this.cartTotalPrice = store.getState().cart.cart.getTotalPrice()
       }
     )
     this.user = store.getState().auth.user;
     this.cart = store.getState().cart.cart;
-    this.cartTotalPrice = store.getState().cart.cartTotalPrice;
+    this.cartTotalPrice = store.getState().cart.cart.getTotalPrice()
   }
 
   private subscribeToForm(): void {
@@ -125,7 +125,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   // order logic section
 
   private orderDefaultValues(): void {
-    this.order.cartId = this.cart._id
+    this.order.cartId = this.cart.get_id()
     this.order.userId = this.user._id
     this.order.totalPrice = this.cartTotalPrice
   }

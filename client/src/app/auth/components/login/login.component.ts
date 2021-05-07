@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   public isCartActive: boolean
   public serverError: string
 
-  public isMobile : Observable<boolean> = this.formService.isMobile()
+  public isMobile: Observable<boolean> = this.formService.isMobile()
 
   constructor(
     private router: Router,
@@ -39,18 +39,21 @@ export class LoginComponent implements OnInit {
     this.subscribeToStore()
   }
 
-  // subscription section
+  // SUBSCRIBTION SECTION
+
   public subscribeToStore(): void {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.user = store.getState().auth.user
-      this.isCartActive = store.getState().cart.isCartActive
+      this.isCartActive = store.getState().cart.cart.getIsActive()
     }
     )
     this.isLogin = store.getState().auth.isLogin
     this.user = store.getState().auth.user
-    this.isCartActive = store.getState().cart.isCartActive
+    this.isCartActive = store.getState().cart.cart.getIsActive()
+
   }
+
   // end of subscription section
 
 
@@ -79,7 +82,7 @@ export class LoginComponent implements OnInit {
   }
 
   // navigate to restart password
-  public onForget():  Promise<boolean> {
+  public onForget(): Promise<boolean> {
     return this.router.navigateByUrl(`/auth/reset`)
   }
 

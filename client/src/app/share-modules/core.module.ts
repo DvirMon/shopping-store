@@ -9,7 +9,7 @@ import { RecaptchaModule } from 'ng-recaptcha'
 import { MaterialModule } from './material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-import { AgmCoreModule} from '@agm/core'
+import { AgmCoreModule } from '@agm/core'
 
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
@@ -24,18 +24,18 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     CommonModule,
     FontAwesomeModule,
     AgmCoreModule.forRoot({
-      apiKey : "AIzaSyDILBPfSAiKKypPQU-hO92beFbyaQGE0uw"
+      apiKey: "AIzaSyDILBPfSAiKKypPQU-hO92beFbyaQGE0uw"
     }),
     GooglePlaceModule
   ],
-   providers: [
+  providers: [
     {
       provide: UserModel,
       useValue: new UserModel()
     },
     {
-      provide: OrderModel,
-      useValue: new OrderModel()
+      provide: ProductModel,
+      useValue: new ProductModel()
     },
     {
       provide: CartModel,
@@ -46,8 +46,8 @@ import { PaginationModel } from '../utilities/models/pagination-model';
       useValue: new CartItemModel()
     },
     {
-      provide: ProductModel,
-      useValue: new ProductModel()
+      provide: OrderModel,
+      useValue: new OrderModel()
     },
     {
       provide: PaginationModel,

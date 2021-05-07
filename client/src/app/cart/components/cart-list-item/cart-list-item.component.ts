@@ -16,7 +16,7 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class CartListItemComponent implements OnInit {
 
-  @Input() public cartItem: CartItemModel = new CartItemModel()
+  @Input() public cartItem: CartItemModel
   @Input() public orderMode: boolean = false
   @Input() public searchTerm: string
 
@@ -56,8 +56,8 @@ export class CartListItemComponent implements OnInit {
     this.cartProducts = store.getState().cart.cartProducts;
   }
 
-  private subscribeToSubject(): void {
-    this.cartService.cartItemQuantity.subscribe(
+  private subscribeToSubject(): void { 
+    this.cartService.getCartItemSubject().subscribe(
       (cartItem: CartItemModel) => {
         if (cartItem._id === this.cartItem._id) {
           this.quantity = cartItem.quantity

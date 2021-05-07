@@ -12,6 +12,7 @@ import { ProductsService } from './products.service';
 import { FormService } from './form.service';
 
 import { ActionType } from 'src/app/utilities/redux/action-type';
+import { CartItemModel, CurrentCartItemModel } from '../utilities/models/cart-item-model';
 
 export interface Info {
   new: boolean,
@@ -48,15 +49,17 @@ export class InfoService {
   // get login information : new client, latest cart, latest order
   public getNotification(userId): Observable<Info> {
 
+    console.log(1)
+
     return this.cartService.getLatestCart(userId).pipe(
       take(1),
       switchMap(cart => {
         if (cart === null) {
           return this.handleNewClient()
         }
-        this.formService.handleStore(ActionType.IsCartActive, cart.isActive)
+        // this.formService.handleStore(ActionType.IsCartActive, cart.getIsActive())
 
-        if (cart.isActive) {
+        if (cart.getIsActive()) {
           return this.handleCurrentCart(cart)
         }
         return this.handleLatestOrder(cart)
@@ -77,19 +80,17 @@ export class InfoService {
 
     this.formService.handleStore(ActionType.AddCart, cart)
 
-    return this.cartService.getLatestCartItems(cart._id).pipe(
+    return this.cartService.getLatestCartItems(cart.get_id()).pipe(
 
       // get current cart products
-      switchMap((response: CurrentCartModel) => {
+      switchMap((cartItems: CurrentCartItemModel[]) => {
 
-        console.log(response)
-
-        if (response.cartItems.length === 0) {
-          return of(response)
+        if (cartItems.length === 0) {
+          return of()
         }
 
-        this.productsService.getProductOfCurrentCart(this.getProductsIds(response))
-        return of(response)
+        this.productsService.getProductOfCurrentCart(this.getProductsIds(cartItems))
+        return of()
 
       }),
 
@@ -103,15 +104,15 @@ export class InfoService {
   }
 
 
-  private getProductsIds(response: CurrentCartModel): string[] {
+  private getProductsIds(cartItems: CurrentCartItemModel[]): string[] {
     let productsIds: string[] = []
-    response.cartItems.map(cartItem => productsIds.push(cartItem.productId))
+    cartItems.map(cartItem => productsIds.push(cartItem.product._id))
     return productsIds
   }
 
   // handle latest order data
   private handleLatestOrder(cart: CartModel): Observable<Info> {
-    return this.orderService.getLatestOrder(cart._id).pipe(
+    return this.orderService.getLatestOrder(cart.get_id()).pipe(
       take(1),
       map(order => {
         const loginInfo = this.handleOrderDataFormat(order)

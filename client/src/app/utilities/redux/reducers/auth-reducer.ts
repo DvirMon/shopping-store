@@ -13,7 +13,7 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.isLogin = true;
       newAppState.accessToken = action.payload['accessToken']
       newAppState.user = action.payload['user']
-      newAppState.user['isAdmin'] ? newAppState.isAdmin = true : newAppState.isAdmin = false
+      newAppState.isAdmin = newAppState.user['isAdmin']
       sessionStorage.setItem("user", JSON.stringify(action.payload['user']));
       break
     case ActionType.SocialUser:
@@ -26,8 +26,8 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.refreshToken = action.payload
       sessionStorage.setItem("jwt", action.payload);
       break
-    case ActionType.UpdateSocket:
-      newAppState.socket = action.payload
+    case ActionType.IsMobile:
+      newAppState.isMobile = action.payload
       break
     case ActionType.Logout:
       newAppState.isLogin = false

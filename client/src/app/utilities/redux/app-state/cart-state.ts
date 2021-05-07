@@ -4,9 +4,7 @@ import { CartItemModel } from '../../models/cart-item-model';
 
 export class CartAppState {
 
+  // public cart: CartModel = new CartModel("", "", false, new Date(), [], 0)
   public cart: CartModel = new CartModel()
-  public cartItems: CartItemModel[] = []
   public cartProducts: ProductModel[] = []
-  public isCartActive: boolean = false
-  public cartTotalPrice: number = 0
 }
