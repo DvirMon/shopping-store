@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { FormService } from './form.service';
 
-import { CartModel, CurrentCartModel } from '../utilities/models/cart-model';
-import { CartItemModel, CurrentCartItemModel } from '../utilities/models/cart-item-model';
+import { CartModel } from '../utilities/models/cart-model';
+import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 
 import { map, switchMap, take } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
@@ -21,7 +21,13 @@ import { ProductsService } from './products.service';
 })
 export class CartService {
 
-  private cartItemSubject = new Subject<CartItemModel>();
+  private cartItemSubject = new Subject<CurrentItemModel>();
+
+  private itemsSubject = new BehaviorSubject<CurrentItemModel[]>([]);
+  private items$: Observable<CurrentItemModel[]> = this.itemsSubject.asObservable()
+
+
+
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
 
@@ -38,7 +44,7 @@ export class CartService {
 
   // GETTER SECTION
 
-  public getCartItemSubject(): Subject<CartItemModel> {
+  public getCartItemSubject(): Subject<CurrentItemModel> {
     return this.cartItemSubject
   }
 
@@ -90,16 +96,17 @@ export class CartService {
   // ----------------------------------------------------------------------------------//
 
   // GET request - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
-  public getLatestCartItems(cartId): Observable<CurrentCartItemModel[]> {
-    return this.http.get<CurrentCartItemModel[]>(this.cartItemUrl + `/${cartId}`).pipe(
+  public getLatestCartItems(cartId): Observable<CurrentItemModel[]> {
+    return this.http.get<CurrentItemModel[]>(this.cartItemUrl + `/${cartId}`).pipe(
       map(cartItems => {
         return cartItems
       })
-    )
-  }
+      )
+    }
 
+    // GET request - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
   public getCurentCartItems(cart: CartModel): Observable<CartModel> {
-    return this.http.get<CartItemModel[]>(this.cartItemUrl + `/${cart.get_id()}`).pipe(
+    return this.http.get<CurrentItemModel[]>(this.cartItemUrl + `/${cart.get_id()}`).pipe(
       map(cartItems => {
         cart.setItems(cartItems)
         this.formService.handleStore(ActionType.SetCartItems, cartItems)
@@ -109,13 +116,13 @@ export class CartService {
   }
 
   // POST request - add cart item : http://localhost:3000/api/cart-item"
-  public addCartItem(cartItem: CartItemModel): Observable<CartItemModel> {
-    return this.http.post<CartItemModel>(this.cartItemUrl, cartItem)
+  public addCartItem(cartItem: CartItemModel): Observable<CurrentItemModel> {
+    return this.http.post<CurrentItemModel>(this.cartItemUrl, cartItem)
   }
 
   // PUT request - update cart item : http://localhost:3000/api/cart-item/:_id"
-  public updateCartItem(cartItem: CartItemModel): Observable<CartItemModel> {
-    return this.http.put<CartItemModel>(this.cartItemUrl + `/${cartItem._id}`, cartItem)
+  public updateCartItem(cartItem: CartItemModel): Observable<CurrentItemModel> {
+    return this.http.put<CurrentItemModel>(this.cartItemUrl + `/${cartItem._id}`, cartItem)
   }
 
   // DELETE request - delete cart item : http://localhost:3000/api/cart-item/:_id"
@@ -141,7 +148,7 @@ export class CartService {
   // LOIGC SECTION
 
   // main method for new cart
-  public createCart(cartItem: CartItemModel): Observable<CartItemModel> {
+  public createCart(cartItem: CartItemModel): Observable<CurrentItemModel> {
 
     const user = store.getState().auth.user
 
@@ -157,7 +164,7 @@ export class CartService {
   }
 
 
-  private createCartLogic(payload, cartItem): Observable<CartItemModel> {
+  private createCartLogic(payload, cartItem): Observable<CurrentItemModel> {
     const cart = CartModel.create(payload)
     this.formService.handleStore(ActionType.AddCart, cart)
     cartItem.cartId = cart.get_id()
@@ -165,8 +172,8 @@ export class CartService {
   }
 
 
-  public emitCartItem(cartitem: CartItemModel) {
-    return this.cartItemSubject.next(cartitem)
+  public emitCartItem(cartItem: CurrentItemModel) {
+    return this.cartItemSubject.next(cartItem)
   }
 
   public emitEditState(state: boolean) {

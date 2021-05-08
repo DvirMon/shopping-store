@@ -12,7 +12,7 @@ import { ProductsService } from './products.service';
 import { FormService } from './form.service';
 
 import { ActionType } from 'src/app/utilities/redux/action-type';
-import { CartItemModel, CurrentCartItemModel } from '../utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 
 export interface Info {
   new: boolean,
@@ -76,14 +76,14 @@ export class InfoService {
   }
 
   // handle current cart data
-  private handleCurrentCart(cart: CartModel): Observable<Info> {
+  private handleCurrentCart(cart: CartModel): Observable<any> {
 
     this.formService.handleStore(ActionType.AddCart, cart)
 
     return this.cartService.getLatestCartItems(cart.get_id()).pipe(
 
       // get current cart products
-      switchMap((cartItems: CurrentCartItemModel[]) => {
+      switchMap((cartItems: CurrentItemModel[]) => {
 
         if (cartItems.length === 0) {
           return of()
@@ -104,9 +104,9 @@ export class InfoService {
   }
 
 
-  private getProductsIds(cartItems: CurrentCartItemModel[]): string[] {
+  private getProductsIds(currentItems: CurrentItemModel[]): string[] {
     let productsIds: string[] = []
-    cartItems.map(cartItem => productsIds.push(cartItem.product._id))
+    currentItems.map(currentItem => productsIds.push(currentItem.productRef._id))
     return productsIds
   }
 

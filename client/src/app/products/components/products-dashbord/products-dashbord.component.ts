@@ -176,4 +176,6 @@ export class ProductsDashbordComponent implements OnInit {
   private scrollToTop() {
   }
 
+  
+
 }

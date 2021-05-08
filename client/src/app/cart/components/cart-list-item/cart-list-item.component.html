@@ -1,15 +1,15 @@
 
 <!-- cart item -->
-<mat-grid-list cols="4" *ngIf="product" rowHeight="5vh">
+<mat-grid-list cols="4" *ngIf="cartItem" rowHeight="5vh">
   <mat-grid-tile rowspan="2">
-    <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="50" [imageWidth]="50">
+    <app-product-thumbnail [product]="cartItem?.productRef" [alias]="alias" [imageHeight]="50" [imageWidth]="50">
     </app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile rowspan="2">
-    <span [innerHTML]="product.name  | titlecase | highLight: searchTerm"></span>
+    <span [innerHTML]="cartItem.productRef?.name  | titlecase | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{quantity * product.price| currency}}
+    {{quantity * cartItem.productRef?.price| currency}}
   </mat-grid-tile>
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
     <button type="button" mat-icon-button (click)="deleteCartItem()">

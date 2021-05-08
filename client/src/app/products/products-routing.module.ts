@@ -21,21 +21,21 @@ const routes: Routes = [
   {
     path: "",
     // canActivate: [ProductsGuard],
-    component: RootComponent,
     resolve: {
       categories: CategoriesResolver,
     },
+    component: RootComponent,
     children: [
       {
         path: "categories",
-        component: ProductsMenuComponent
+        component: ProductsMenuComponent,
       },
       {
         path: ":userId/:alias/:categoryId",
         canActivate: [AuthGuard, ProductsGuard],
         resolve: {
           pagination: PaginationResolver,
-          cart : CartResolver
+          cart: CartResolver
 
         },
         component: ProductsDashbordComponent

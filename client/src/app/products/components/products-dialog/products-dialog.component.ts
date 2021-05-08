@@ -5,7 +5,7 @@ import { FormControl, NgModel, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
@@ -19,6 +19,7 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'app-products-dialog',
@@ -52,13 +53,14 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
     private breakpointObserver: BreakpointObserver,
+    private activatedRoute: ActivatedRoute,
     private formService: FormService,
     private cartService: CartService,
 
-    public cartItem: CartItemModel,
-    public cart: CartModel,
     public product: ProductModel,
-
+    public cart: CartModel,
+    public cartItem: CartItemModel,
+    public currentItem: CurrentItemModel
   ) { }
 
   ngOnInit(): void {
@@ -107,9 +109,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       this.distinctChange = true
     }
   }
-
-
-
   // SUBSCRIBTION SECTION
 
   // method to subscribt to store data
@@ -120,6 +119,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
       }
     )
     this.cart = store.getState().cart.cart;
+
   }
 
   private subscribeToControls() {
@@ -129,7 +129,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
           this.quantityControl.setValue(1)
           quantity = 1
         }
-        this.cartItem.totalPrice = quantity * this.product.price
       })
     ).subscribe()
   }
@@ -146,6 +145,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   private subscribtToEditMode() {
     this.editState$.subscribe(
       (editMode: boolean) => {
+        console.log(editMode)
         this.editMode = editMode;
       }
     )
@@ -153,15 +153,14 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   private subscribeToCartItem() {
     this.cartService.getCartItemSubject().subscribe(
-      (cartItem: CartItemModel) => {
-        this.cartItem = cartItem
-      }
-    )
+      (curentItem: CurrentItemModel) => {
+        this.cartItem._id = curentItem._id
+        this.cartItem.cartId = curentItem.cartId
+        this.cartItem.quantity = curentItem.quantity
+        this.cartItem.productRef = curentItem.productRef._id
+      })
   }
 
-  private subcribeToRoureData() {
-
-}
 
   // end of subscribe section
 
@@ -169,61 +168,58 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   public handleRequest(): void {
 
-  if(this.cart.getItems().length === 0) {
-  return this.crateCart()
-}
+    if (this.cart.getItems().length === 0) {
+      return this.crateCart()
+    }
 
-if (!this.editMode) {
-  return this.AddCartItem()
-}
+    if (!this.editMode) {
+      return this.AddCartItem()
+    }
 
-if (this.distinctChange) {
-  return this.updateCartItem()
-}
+    if (this.distinctChange) {
+      return this.updateCartItem()
+    }
 
   }
 
   private crateCart(): void {
-  this.cartService.createCart(this.cartItem).subscribe(
-    (cartItem: CartItemModel) => {
-      this.handleRequestSuccess(cartItem)
-    }
-  )
-}
+    this.cartService.createCart(this.cartItem).subscribe(
+      (cartItem: CurrentItemModel) => {
+        this.handleRequestSuccess(cartItem)
+      }
+    )
+  }
 
   private AddCartItem(): void {
-  console.log(this.cartItem)
     this.cartService.addCartItem(this.cartItem).subscribe(
-    (cartItem: CartItemModel) => {
-      console.log(cartItem)
-      this.handleRequestSuccess(cartItem)
-    }
-  )
-}
+      (cartItem: CurrentItemModel) => {
+        this.handleRequestSuccess(cartItem)
+      }
+    )
+  }
 
   private updateCartItem(): void {
-  this.cartService.updateCartItem(this.cartItem).subscribe(
-    (cartItem: CartItemModel) => {
-      console.log(cartItem)
-      this.handleRequestSuccess(cartItem)
-      this.distinctChange = false
-    }
-  )
-}
+    this.cartService.updateCartItem(this.cartItem).subscribe(
+      (cartItem: CurrentItemModel) => {
+        this.handleRequestSuccess(cartItem)
+        this.distinctChange = false
+      }
+    )
+  }
 
   // TODO - calculate cart total price
 
   // main method to handle cart item actions
-  private handleRequestSuccess(cartItem: CartItemModel): void {
+  private handleRequestSuccess(cartItem: CurrentItemModel): void {
 
-  if(this.editMode) {
-  this.formService.handleStore(ActionType.UpdateCartItem, cartItem)
-} else {
-  this.formService.handleStore(ActionType.AddCartItem, cartItem)
-  this.formService.handleStore(ActionType.AddCartProduct, this.product)
-  this.cartService.emitEditState(true);
-}
-this.cartService.emitCartItem(cartItem)
+    if (this.editMode) {
+      this.formService.handleStore(ActionType.UpdateCartItem, cartItem)
+    } else {
+      this.formService.handleStore(ActionType.AddCartItem, cartItem)
+      this.formService.handleStore(ActionType.AddCartProduct, this.product)
+      this.cartService.emitEditState(true);
+    }
+    this.cartService.emitCartItem(cartItem)
 
   }
 
@@ -234,34 +230,34 @@ this.cartService.emitCartItem(cartItem)
   // set cart item values
   private handleCartItemData(): void {
 
-  this.cart.getItems().length > 0
-    ? this.cartItemUpdateValue()
-    : this.cartItemDefaultValues();
+    this.cart.getItems().length > 0
+      ? this.cartItemUpdateValue()
+      : this.cartItemDefaultValues();
 
-}
+  }
 
   // method to update exist cart item values
   private cartItemUpdateValue() {
-  const cartItem = this.cart.findCartItem(this.product._id);
-  if (cartItem) {
-    this.cartService.emitCartItem(cartItem)
-    this.cartService.emitEditState(true);
-  } else {
-    this.cartItemDefaultValues()
+    const cartItem = this.cart.findCartItem(this.product._id);
+    if (cartItem) {
+      this.cartService.emitCartItem(cartItem)
+      this.cartService.emitEditState(true);
+    } else {
+      this.cartItemDefaultValues()
+    }
   }
-}
 
   // default values for cart item
   private cartItemDefaultValues(): void {
-  console.log(this.cart.get_id())
     this.cartItem.cartId = this.cart.get_id();
-  this.cartItem.productId = this.product._id;
-  this.cartItem.quantity = 1;
-}
+    this.cartItem.productRef = this.product._id;
+    this.cartItem.quantity = 1;
+    this.cartService.emitEditState(false);
+  }
 
   private setDilaogProps(): void {
-  this.product = this.data.payload.product;
-  this.alias = this.data.payload.alias;
-}
+    this.product = this.data.payload.product;
+    this.alias = this.data.payload.alias;
+  }
 
 }

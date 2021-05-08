@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
 
@@ -31,8 +30,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   public cartItems: CartItemModel[];
   public cartTotalPrice: number;
 
+  public cart: CartModel = new CartModel();
   private user: UserModel = new UserModel();
-  private cart: CartModel = new CartModel();
   private unsubscribeToStore: Function;
 
   constructor(
@@ -46,7 +45,6 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToStore();
-    console.log(this.cartItems)
   }
 
   ngOnDestroy(): void {
@@ -58,16 +56,16 @@ export class CartListComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
-        this.cartItems = [...store.getState().cart.cart.getItems()];
         this.cart = store.getState().cart.cart;
         this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
         this.user = store.getState().auth.user;
       }
     )
-    this.cartItems = [...store.getState().cart.cart.getItems()];
     this.cart = store.getState().cart.cart;
     this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
     this.user = store.getState().auth.user;
+
+    console.log(this.cart.getItems())
 
 
   }

@@ -10,7 +10,7 @@ import { store } from '../redux/store';
 })
 export class CartResolver implements Resolve<any> {
 
-  private isLogin = store.getState().auth.isLogin
+  private isLogin: boolean = store.getState().auth.isLogin
 
   constructor(
     private cartService: CartService

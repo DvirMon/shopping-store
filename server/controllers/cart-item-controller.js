@@ -7,27 +7,7 @@ const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
-// POST request - add cart item : http://localhost:3000/api/cart-item"
-
-router.post("/",
-  // middleware.authorize(false, key),
-  async (request, response, next) => {
-    try {
-
-      console.log(request.body)
-
-      const cartItem = await cartItemLogic.addCartItemAsync(new CartItem(request.body));
-
-      console.log(cartItem)
-
-      response.status(201).json(cartItem);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-
-// GET request - get  cart Items data - total price and items -  http://localhost:3000/api/cart-item/:cartId"
+// GET request - get Items by cart-  http://localhost:3000/api/cart-item/:cartId"
 router.get("/:cartId", async (request, response, next) => {
   try {
 
@@ -35,15 +15,24 @@ router.get("/:cartId", async (request, response, next) => {
       request.params.cartId
     );
  
-    // if (!cartItems) {
-    //   return response.json({ cartItems: [], price: 0 });
-    // }
-
     response.json(cartItems);
   } catch (err) {
     next(err);
   }
 });
+
+// POST request - add cart item : http://localhost:3000/api/cart-item"
+router.post("/",
+  // middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+
+      const cartItem = await cartItemLogic.addCartItemAsync(new CartItem(request.body));
+      response.status(201).json(cartItem);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 // PUT request - update cart item
 router.put("/:_id", middleware.authorize(false, key), async (request, response, next) => {

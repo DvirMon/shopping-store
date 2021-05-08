@@ -1,15 +1,13 @@
-import { CartItemModel } from './cart-item-model'
+import { CurrentItemModel } from './cart-item-model'
 
 export class CartModel {
-
-
 
   public constructor(
     private _id?: string,
     private userId?: string,
     private isActive?: boolean,
     private createDate?: Date,
-    private items?: CartItemModel[],
+    private items?: CurrentItemModel[],
     private totalPrice?: number
 
   ) { }
@@ -46,11 +44,11 @@ export class CartModel {
     return this.createDate;
   }
 
-  public getItems(): CartItemModel[] {
+  public getItems(): CurrentItemModel[] {
     return this.items ? [...this.items] : []
   }
 
-  public setItems(items: CartItemModel[]): void {
+  public setItems(items: CurrentItemModel[]): void {
     this.items = [...items];
   }
 
@@ -63,31 +61,31 @@ export class CartModel {
   }
 
   // METHODS SECTION
-  private findIndexItem(cartItem: CartItemModel): number {
+  private findIndexItem(cartItem: CurrentItemModel): number {
     return this.items.findIndex(item => item._id === cartItem._id);
   }
 
-  public findCartItem(productId: string): CartItemModel {
+  public findCartItem(productRef: string): CurrentItemModel {
 
     if (this.items.length > 0) {
-      return this.items.find((cartItem) => cartItem.productId === productId
+      return this.items.find((cartItem) => cartItem.productRef._id === productRef
       )
     }
     return null
   }
 
-  public isCartItem(productId: string): boolean {
-    if (this.findCartItem(productId)) {
+  public isCartItem(productRef: string): boolean {
+    if (this.findCartItem(productRef)) {
       return true
     }
     return false
   }
 
-  public addItem(cartItem: CartItemModel) {
+  public addItem(cartItem: CurrentItemModel) {
     this.items.push(cartItem)
   }
 
-  public updateItem(cartItem: CartItemModel) {
+  public updateItem(cartItem: CurrentItemModel) {
 
     const itemIndex = this.findIndexItem(cartItem);
 
@@ -106,7 +104,7 @@ export class CartModel {
     // })
   }
 
-  public deleteitem(cartItem: CartItemModel) {
+  public deleteitem(cartItem: CurrentItemModel) {
     const itemIndex = this.findIndexItem(cartItem);
     if (itemIndex >= 0) {
       this.items.splice(itemIndex, 1)
@@ -117,28 +115,7 @@ export class CartModel {
 
 export class CurrentCartModel {
   public price?: number
-  public cartItems?: CartItemModel[]
+  public cartItems?: CurrentItemModel[]
 }
 
-export class CurrentModel {
 
-  private price: number
-  private cartItems: CartItemModel[]
-
-  public getPrice(): number {
-    return this.price;
-  }
-
-  public setPrice(price: number): void {
-    this.price = price;
-  }
-
-  public getCartItems(): CartItemModel[] {
-    return this.cartItems;
-  }
-
-  public setCartItems(cartItems: CartItemModel[]): void {
-    this.cartItems = cartItems;
-  }
-
-}

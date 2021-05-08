@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { FormService } from './form.service';
 
-import { CartItemModel } from '../utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 import { ReceiptItemData } from '../utilities/models/receipt-model';
 import { ProductModel } from '../utilities/models/product-model';
 import { OrderModel } from '../utilities/models/order-model';
@@ -103,7 +103,7 @@ export class ReceiptService {
   }
 
   // save cart item as receipt format in store
-  public setReceiptItem(product: ProductModel, cartItem: CartItemModel): void {
+  public setReceiptItem(product: ProductModel, cartItem: CurrentItemModel): void {
     if (product) {
 
       const recipeItem = new ReceiptItemData(
@@ -111,7 +111,8 @@ export class ReceiptService {
         product.name,
         product.price.toString(),
         cartItem.quantity.toString(),
-        cartItem.totalPrice.toString(),
+        (cartItem.quantity * product.price).toString(),
+        
       )
       this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
     }

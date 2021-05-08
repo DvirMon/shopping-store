@@ -5,7 +5,7 @@ const Cart = require("./cart-model");
 
 const CartItemSchema = mongoose.Schema(
   {
-    productId: {
+    productRef: {
       type: mongoose.Types.ObjectId,
       ref: Product,
       required: true
@@ -19,8 +19,13 @@ const CartItemSchema = mongoose.Schema(
   },
   { versionKey: false },
 
-  );
-  
+);
+
+CartItemSchema.statics.findItem = async function (_id) {
+  return await this.findById({ _id }).populate("productRef").exec()
+}
+
+
 const CartItem = mongoose.model("CartItem", CartItemSchema, "cartItems");
 module.exports = CartItem
 

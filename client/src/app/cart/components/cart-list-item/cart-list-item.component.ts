@@ -1,14 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
-import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 import { DialogService } from 'src/app/services/dialog.service';
-
-import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-cart-list-item',
@@ -16,11 +14,11 @@ import { store } from 'src/app/utilities/redux/store';
 })
 export class CartListItemComponent implements OnInit {
 
-  @Input() public cartItem: CartItemModel
+  @Input() public cartItem: CurrentItemModel
   @Input() public orderMode: boolean = false
   @Input() public searchTerm: string
 
-  public cartProducts: ProductModel[] = []
+  // public cartProducts: ProductModel[] = []
   public alias: string
   public rowSpan: number;
   public quantity: number
@@ -30,7 +28,7 @@ export class CartListItemComponent implements OnInit {
     private cartService: CartService,
     private dialogService: DialogService,
     private receiptService: ReceiptService,
-    public product: ProductModel,
+    // public product: ProductModel,
 
   ) { }
 
@@ -39,7 +37,6 @@ export class CartListItemComponent implements OnInit {
     this.handleRowSpan();
     this.subscribeToStore();
     this.handleQuantity();
-    this.getProductFromStore();
     this.getProductAlias();
     this.setReceiptItem();
   }
@@ -48,17 +45,17 @@ export class CartListItemComponent implements OnInit {
   // subscription section
 
   private subscribeToStore(): void {
-    store.subscribe(
-      () => {
-        this.cartProducts = store.getState().cart.cartProducts;
-      }
-    )
-    this.cartProducts = store.getState().cart.cartProducts;
+    // store.subscribe(
+    //   () => {
+    //     this.cartProducts = store.getState().cart.cartProducts;
+    //   }
+    // )
+    // this.cartProducts = store.getState().cart.cartProducts;
   }
 
-  private subscribeToSubject(): void { 
+  private subscribeToSubject(): void {
     this.cartService.getCartItemSubject().subscribe(
-      (cartItem: CartItemModel) => {
+      (cartItem: CurrentItemModel) => {
         if (cartItem._id === this.cartItem._id) {
           this.quantity = cartItem.quantity
         }
@@ -84,24 +81,24 @@ export class CartListItemComponent implements OnInit {
 
   // logic section
 
-  public getProductFromStore(): void {
-    this.product = this.cartProducts.find(product => product._id === this.cartItem.productId)
-  }
+  // public getProductFromStore(): void {
+  //   this.product = this.cartProducts.find(product => product._id === this.cartItem.product)
+  // }
 
   public getProductAlias(): void {
-    this.alias = this.productService.getCategoryAlias(this.product)
+    this.alias = this.productService.getCategoryAlias(this.cartItem.productRef)
 
   }
 
   private setReceiptItem(): void {
     if (!this.orderMode) {
-      this.receiptService.setReceiptItem(this.product, this.cartItem)
+      this.receiptService.setReceiptItem(this.cartItem.productRef, this.cartItem)
     }
   }
 
   // open product dialog
   public onUpdateClick(): void {
-    this.dialogService.handleProductDialog({ product: this.product, alias: this.alias })
+    this.dialogService.handleProductDialog({ product: this.cartItem.productRef, alias: this.alias })
   }
 
 

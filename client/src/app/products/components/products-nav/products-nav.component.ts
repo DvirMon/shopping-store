@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +22,7 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
   @Input() isAdmin: boolean
 
   public isMobile: Observable<boolean> = this.productsService.isMobile()
-  public cartItems: CartItemModel[]
+  public currentItems: CurrentItemModel[]
 
   private unsubscribeToStore: Function;
 
@@ -46,18 +46,14 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
-        this.cartItems = [...store.getState().cart.cart.getItems()];
+        this.currentItems = [...store.getState().cart.cart.getItems()];
       }
     )
-    this.cartItems = [...store.getState().cart.cart.getItems()];
+    this.currentItems = [...store.getState().cart.cart.getItems()];
   }
 
 
   // LOGIC SECTION
-  public onDrawerCart() {
-    this.drawerCart.toggle()
-    this.productsService.handleDrawerToggle.next(this.drawerCart.opened)
-  }
 
   public onDrawerProducts() {
     this.drawerProduct.toggle()
