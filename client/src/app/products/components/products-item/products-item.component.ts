@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { DialogService } from 'src/app/services/dialog.service';
 import { ProductsService, ProductData } from 'src/app/services/products.service';
@@ -16,9 +17,9 @@ export class ProductsItemComponent implements OnInit {
 
   @Input() public product: ProductModel;
 
+  public isMobile: Observable<boolean> = this.productService.isMobile()
   public isAdmin: boolean = store.getState().auth.isAdmin;
   public alias: string;
-
 
   constructor(
     private dialogService: DialogService,
@@ -29,7 +30,7 @@ export class ProductsItemComponent implements OnInit {
     this.alias = this.productService.getCategoryAlias(this.product)
   }
 
-  public handleProductDialog() : void {
+  public handleProductDialog(): void {
 
     this.isAdmin
       ? this.productService.handleUpdate.next(this.handleProductData())

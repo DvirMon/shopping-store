@@ -5,11 +5,6 @@ import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { UserModel } from 'src/app/utilities/models/user-model';
 import { store } from 'src/app/utilities/redux/store';
 
-interface RouteModel {
-  path: string
-  imageUrl: string
-}
-
 @Component({
   selector: 'app-products-categories',
   templateUrl: './products-categories.component.html',

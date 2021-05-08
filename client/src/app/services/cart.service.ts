@@ -23,10 +23,8 @@ export class CartService {
 
   private cartItemSubject = new Subject<CurrentItemModel>();
 
-  private itemsSubject = new BehaviorSubject<CurrentItemModel[]>([]);
-  private items$: Observable<CurrentItemModel[]> = this.itemsSubject.asObservable()
-
-
+  public itemsSubject = new BehaviorSubject<CurrentItemModel[]>([]);
+  public items$: Observable<CurrentItemModel[]> = this.itemsSubject.asObservable()
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
@@ -159,8 +157,6 @@ export class CartService {
       switchMap((payload: CartModel) => {
         return this.createCartLogic(payload, cartItem)
       }))
-
-
   }
 
 

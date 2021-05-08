@@ -1,14 +1,14 @@
 @import "~src/style/styles";
 
 .sidenav-container {
-  height: 100%;
+  height: inherit;
 
-  .sidenav .mat-toolbar {
-    background: color(info);
-    color: white;
+  .mat-sidenav {
+    width: 110px;
+    box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
   }
 
   .mat-sidenav-content {
-    height: 100%;
+    height: inherit;
   }
 }

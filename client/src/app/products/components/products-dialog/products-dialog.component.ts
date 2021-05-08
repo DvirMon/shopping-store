@@ -21,13 +21,18 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Data } from '@angular/router';
 
+
+export interface imageParams {
+  cols: number,
+  height: number,
+  width: number
+}
+
 @Component({
   selector: 'app-products-dialog',
   templateUrl: './products-dialog.component.html',
   styleUrls: ['./products-dialog.component.scss']
 })
-
-
 
 export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
@@ -37,23 +42,19 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   private distinctChange: boolean = false
   private editMode: boolean = false
 
+  public isMobile: Observable<boolean> = this.formService.isMobile()
   public quantityControl: FormControl
   public editState$: Observable<boolean> = this.cartService.getEditState()
   public minQuantity: boolean = false
   public alias: string
 
 
-  public params = {
-    cols: 2,
-    height: 350,
-    width: 350
-  }
+  public params: imageParams
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
-    private breakpointObserver: BreakpointObserver,
-    private activatedRoute: ActivatedRoute,
     private formService: FormService,
     private cartService: CartService,
 
@@ -67,7 +68,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
     this.setDilaogProps()
     this.subscribeToStore();
-    this.subscribeToBreakPoints()
+    this.subscribeToMobile()
     this.subscribtToEditMode()
     this.subscribeToCartItem()
     this.handleCartItemData();
@@ -133,19 +134,24 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     ).subscribe()
   }
 
-  private subscribeToBreakPoints() {
-    const small: boolean = this.breakpointObserver.isMatched('(max-width: 660px)')
-    if (small) {
-      this.params.cols = 1
-      this.params.height = 250
-      this.params.width = 250
-    }
+  private subscribeToMobile() {
+
+    this.isMobile.subscribe(
+      (isMobile) => {
+
+        if (isMobile) {
+          this.params = { cols: 1, height: 150, width: 150 }
+        }
+        else {
+          this.params = { cols: 2, height: 350, width: 350 }
+        }
+      }
+    )
   }
 
   private subscribtToEditMode() {
     this.editState$.subscribe(
       (editMode: boolean) => {
-        console.log(editMode)
         this.editMode = editMode;
       }
     )

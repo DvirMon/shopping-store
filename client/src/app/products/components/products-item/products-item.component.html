@@ -1,9 +1,25 @@
-<mat-grid-list class="item" cols="3" rowHeight="5vh" (click)="handleProductDialog()">
-  <mat-grid-tile rowspan="6" colspan="2">
-    <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="180" [imageWidth]="180">
-    </app-product-thumbnail>
-  </mat-grid-tile>
-  <mat-grid-tile rowspan="1"></mat-grid-tile>
-  <mat-grid-tile rowspan="2" class="price">{{product.price | currency}}</mat-grid-tile>
-  <mat-grid-tile rowspan="2" class="name">{{product.name | titlecase}}</mat-grid-tile>
-</mat-grid-list>
+<div *ngIf="isMobile | async; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+  <mat-grid-list class="item" cols="3" rowHeight="16vh" (click)="handleProductDialog()">
+    <mat-grid-tile>
+      <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="90" [imageWidth]="90">
+      </app-product-thumbnail>
+    </mat-grid-tile>
+    <mat-grid-tile class="price">{{product.price | currency}}</mat-grid-tile>
+    <mat-grid-tile class="name">{{product.name | titlecase}}</mat-grid-tile>
+  </mat-grid-list>
+</ng-template>
+
+
+<ng-template #elseBlock>
+  <mat-grid-list class="item" cols="3" rowHeight="5vh" (click)="handleProductDialog()">
+    <mat-grid-tile rowspan="6" colspan="2">
+      <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="180" [imageWidth]="180">
+      </app-product-thumbnail>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="1"></mat-grid-tile>
+    <mat-grid-tile rowspan="2" class="name">{{product.name | titlecase}}</mat-grid-tile>
+    <mat-grid-tile rowspan="2" class="price">{{product.price | currency}}</mat-grid-tile>
+  </mat-grid-list>
+</ng-template>

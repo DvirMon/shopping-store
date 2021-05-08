@@ -1,0 +1,18 @@
+mat-toolbar {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+
+  &.not-mobile {
+    background-color: black;
+    color: white;
+  }
+
+  &.mobile {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+  }
+}

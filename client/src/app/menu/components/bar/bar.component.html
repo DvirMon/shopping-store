@@ -1,16 +1,16 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <mat-sidenav-content >
+  <mat-sidenav #drawer [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'"
+    mode="over" opened="false" position="end">
+    <app-menu-account-sidenav></app-menu-account-sidenav>
+  </mat-sidenav>
 
-  <mat-toolbar appBarBackgroundColor>
-    <span class="spacer"></span>
-    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" xPosition="before">
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
-  </mat-toolbar>
+
+  <mat-sidenav-content>
+    <app-menu-toolbar [drawer]="drawer" [isMobile]="isMobile" *ngIf="!(isMobile | async)"></app-menu-toolbar>
     <ng-content></ng-content>
+    <app-menu-toolbar [isMobile]="isMobile" *ngIf="isMobile | async"></app-menu-toolbar>
   </mat-sidenav-content>
+
+
 </mat-sidenav-container>
