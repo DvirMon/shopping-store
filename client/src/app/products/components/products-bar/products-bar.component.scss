@@ -1,7 +1,7 @@
 @import "~src/style/styles";
 
 .sidenav-container {
-  height: 100vh;
+  height: inherit;
 
   .sidenav .mat-toolbar {
     background: color(info);
@@ -13,10 +13,12 @@
   height: inherit;
 }
 
+.mat-sidenav-content {
+  height: inherit;
+}
 .mat-sidenav-content .mat-toolbar {
   background: color(info);
   background-size: contain;
-
   ul {
     z-index: 2;
     margin: 0;
@@ -40,7 +42,6 @@ mat-divider {
     width: 60px !important;
     overflow: hidden;
   }
-
 }
 
 @media screen and (max-width: 660px) {
@@ -51,6 +52,4 @@ mat-divider {
   mat-sidenav.sidenav-products {
     width: 55%;
   }
-
 }
-

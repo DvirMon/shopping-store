@@ -1,3 +1,6 @@
+.sidenav-container {
+  height: 100%;
+
 .container-products {
   background-color: white;
   text-align: center;
@@ -13,7 +16,9 @@
 }
 
 img {
-  width: 100%;
+  width: 50%;
+  height: auto;
+  overflow: hidden;
 }
 
 app-products-item {
@@ -40,9 +45,19 @@ mat-toolbar {
   }
 }
 
+}
+
+mat-sidenav.sidenav {
+  width: 400px;
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
+}
+
+
 @media screen and (max-width: 660px) {
   mat-toolbar {
     padding-right: 5%;
   }
+  mat-sidenav.sidenav {
+    width: 100%;
+  }
 }
-

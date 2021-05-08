@@ -1,0 +1,6 @@
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="onDrawerCart()">
+    <mat-icon [matBadge]="currentItems.length > 0 ? currentItems.length : ''" matBadgeColor="warn" *ngIf="!isAdmin">
+      {{currentItems.length > 0 ? 'add_shopping_cart' : 'shopping_cart'}}
+    </mat-icon>
+    <mat-icon *ngIf="isAdmin && isMobile | async">navigate_before</mat-icon>
+  </button>

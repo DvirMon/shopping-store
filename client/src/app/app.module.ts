@@ -32,6 +32,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 // ENVIROMENT
 import { environment } from '../environments/environment';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
 
 
 
@@ -46,6 +47,7 @@ import { environment } from '../environments/environment';
     HomePageComponent,
     MembersComponent,
     ProductsSlideComponent,
+    DashbordComponent,
   ],
   imports: [
     BrowserModule,

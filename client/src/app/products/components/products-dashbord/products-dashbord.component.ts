@@ -11,8 +11,6 @@ import { PaginationModel, PaginationDataModel } from 'src/app/utilities/models/p
 import { ProductsService } from 'src/app/services/products.service';
 import { PaginationService } from 'src/app/services/pagination.service';
 
-import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
-
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -27,7 +25,6 @@ export class ProductsDashbordComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(VirtualScrollerComponent) scroll: VirtualScrollerComponent;
 
   public categories: CategoryModel[] = []
   public products: ProductModel[] = []
@@ -172,10 +169,6 @@ export class ProductsDashbordComponent implements OnInit {
     return this.paginationService.getPagedData([...products], pagination)
   }
 
-  // scroll to top
-  private scrollToTop() {
-  }
 
-  
 
 }

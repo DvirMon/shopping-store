@@ -1,23 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { MatSidenav } from '@angular/material/sidenav';
-
-import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
-
+import { Observable } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
-import { AuthService } from 'src/app/services/auth.service';
-
+import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
-  selector: 'app-products-nav',
-  templateUrl: './products-nav.component.html',
-  styleUrls: ['./products-nav.component.scss']
+  selector: 'app-cart-button',
+  templateUrl: './cart-button.component.html',
+  styleUrls: ['./cart-button.component.scss']
 })
-export class ProductsNavComponent implements OnInit, OnDestroy {
+export class CartButtonComponent implements OnInit ,OnDestroy{
 
-  @Input() drawerProduct: MatSidenav
+  @Input() public drawerCart: MatSidenav 
   @Input() isAdmin: boolean
 
   public isMobile: Observable<boolean> = this.productsService.isMobile()
@@ -25,11 +20,8 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
 
   private unsubscribeToStore: Function;
 
-
   constructor(
-    private productsService: ProductsService,
-    private authService: AuthService
-
+    private productsService: ProductsService
   ) { }
 
   ngOnInit(): void {
@@ -40,8 +32,6 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
     this.unsubscribeToStore()
   }
 
-  // SUBSCRIBE SECTION
-
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
@@ -51,11 +41,9 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
     this.currentItems = [...store.getState().cart.cart.getItems()];
   }
 
-
-  // LOGIC SECTION
-
-  public onDrawerProducts() {
-    this.drawerProduct.toggle()
+  public onDrawerCart() {
+    this.drawerCart.toggle()
+    this.productsService.handleDrawerToggle.next(this.drawerCart.opened)
   }
 
 

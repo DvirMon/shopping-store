@@ -53,12 +53,12 @@ export class ProductsCategoriesComponent implements OnInit {
   }
 
   // EVENET SECTION
-  public onClick(category: CategoryModel): Promise<boolean> { 
+  public onClick(category: CategoryModel): Promise<boolean> {
 
     if(this.user) {
-      return this.router.navigateByUrl(`/products/${this.user._id}/${category.alias}/${category._id}`)
+      return this.router.navigateByUrl(`home/products/${this.user._id}/${category.alias}/${category._id}`)
     }
-    return this.router.navigateByUrl(`/products/categories/${category.alias}/${category._id}`)
+    return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)
   }
 
 

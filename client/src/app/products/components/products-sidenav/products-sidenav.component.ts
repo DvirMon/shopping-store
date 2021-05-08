@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { UserModel } from 'src/app/utilities/models/user-model';
+import { CategoryModel } from 'src/app/utilities/models/category-model';
+
+import { FormService } from 'src/app/services/form.service';
 
 // font awoswme icons
 import { faCarrot } from "@fortawesome/free-solid-svg-icons/faCarrot"
@@ -14,10 +16,9 @@ import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
 
 import { MatSidenav } from '@angular/material/sidenav';
 
+import { Observable } from 'rxjs';
+
 import { store } from 'src/app/utilities/redux/store';
-import { FormService } from 'src/app/services/form.service';
-import { Observable, of } from 'rxjs';
-import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-products-sidenav',
@@ -61,12 +62,12 @@ export class ProductsSidenavComponent {
   public onNavigate(category): Promise<boolean> {
 
     if (!this.isLogin) {
-      return this.router.navigateByUrl(`/products/categories/${category.alias}/${category._id}`)
+      return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)
     }
 
     return this.isAdmin
-      ? this.router.navigateByUrl(`/products/admin/${category.alias}/${category._id}`)
-      : this.router.navigateByUrl(`/products/${this.user._id}/${category.alias}/${category._id}`)
+      ? this.router.navigateByUrl(`home/products/admin/${category.alias}/${category._id}`)
+      : this.router.navigateByUrl(`home/products/${this.user._id}/${category.alias}/${category._id}`)
 
 
   }

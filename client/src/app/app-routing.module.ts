@@ -30,25 +30,8 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: "products",
-    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
-  },
-
-
-  // PRODUCTS MODULE
-  {
-    path: "products/admin/:alias/:categoryId",
-    canActivate: [RoleGuard],
-    resolve: {
-      pagination: PaginationResolver,
-    },
-    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
-  },
-
-  // ORDER MODULE
-  {
-    path: "order/:userId/:cartId",
-    loadChildren: () => import('./order/order.module').then(m => m.OrderModule)
+    path: 'home',
+    loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule)
   },
 
   // REDIRECT TO HOME PAGE

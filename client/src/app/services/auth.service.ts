@@ -134,12 +134,12 @@ export class AuthService {
 
 
     if (!user) {
-      return this.router.navigateByUrl("products/categories")
+      return this.router.navigateByUrl("home")
     }
 
     return user.isAdmin ?
-      this.router.navigateByUrl("admin" + environment.productLandingPage)
-      : this.router.navigateByUrl("products/categories")
+      this.router.navigateByUrl("home/admin" + environment.productLandingPage)
+      : this.router.navigateByUrl("home")
   }
 
   // method to logout

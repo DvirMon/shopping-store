@@ -1,0 +1,14 @@
+@import "~src/style/styles";
+
+.sidenav-container {
+  height: 100%;
+
+  .sidenav .mat-toolbar {
+    background: color(info);
+    color: white;
+  }
+
+  .mat-sidenav-content {
+    height: 100%;
+  }
+}

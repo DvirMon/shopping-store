@@ -15,8 +15,6 @@ import { ProductsBarComponent } from './components/products-bar/products-bar.com
 import { ProductsNavComponent } from './components/products-nav/products-nav.component';
 import { ProductsSidenavComponent } from './components/products-sidenav/products-sidenav.component'
 
-import { ProductsMenuComponent } from './components/products-menu/products-menu.component';
-
 import { ProductsDashbordComponent } from './components/products-dashbord/products-dashbord.component';
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsFormComponent } from './components/products-form/products-form.component';
@@ -36,11 +34,9 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     ProductsNavComponent,
     ProductsSidenavComponent,
     ProductsDashbordComponent,
-    ProductsMenuComponent,
   ],
   imports: [
     CoreModule,
-    RouterModule,
     SharedModule,
     CartModule,
     ProductsRoutingModule,

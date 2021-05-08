@@ -1,33 +1,46 @@
-<div>
-  <img src="/assets/images/banner/{{alias}}.png" alt="{{'banner-' + alias}}">
-</div>
-<mat-toolbar>
-  <!-- <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="onDrawerCart()">
-    <mat-icon [matBadge]="currentItems.length > 0 ? currentItems.length : ''" matBadgeColor="warn" *ngIf="!isAdmin">
-      {{currentItems.length > 0 ? 'add_shopping_cart' : 'shopping_cart'}}
-    </mat-icon>
-    <mat-icon *ngIf="isAdmin && isMobile | async">navigate_before</mat-icon>
-  </button> -->
-  <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
-    <li arrowPosition="after" mat-sort-header="price"> 
-      Price
-    </li>
-  </ul>
-</mat-toolbar>
-<div class="container-products">
+<mat-sidenav-container class="sidenav-container">
 
-  <div class="row">
-    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card"
-      *ngFor="let product of searchEntries.length > 0 ? searchEntries :products">
-      <app-products-item [product]="product"></app-products-item>
-    </div>
+  <div>
+    <img src="/assets/images/banner/{{alias}}.png" alt="{{'banner-' + alias}}">
   </div>
+  <mat-toolbar>
 
-  <mat-paginator #paginator
-    [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
-    [pageSize]="6" [pageSizeOptions]="[6]">
-  </mat-paginator>
+    <app-cart-button [drawerCart]="drawerCart" [isAdmin]="isAdmin"></app-cart-button>
+    <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
+      <li arrowPosition="after" mat-sort-header="price">
+        Price
+      </li>
+    </ul>
+  </mat-toolbar>
+
+  <mat-sidenav #drawerCart class="sidenav" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'" mode="over"
+    [opened]="!(isMobile | async) && isAdmin" position="end">
+
+    <div *ngIf="isAdmin; then thenBlock else elseBlock"></div>
+
+    <ng-template #thenBlock>
+      <app-products-form [drawer]="drawerCart"></app-products-form>
+    </ng-template>
 
 
+    <ng-template #elseBlock>
+      <app-cart-list [drawer]="drawerCart" [orderMode]="false"></app-cart-list>
+    </ng-template>
+  </mat-sidenav>
 
-</div>
+  <div class="container-products">
+
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card"
+        *ngFor="let product of searchEntries.length > 0 ? searchEntries :products">
+        <app-products-item [product]="product"></app-products-item>
+      </div>
+    </div>
+
+    <mat-paginator #paginator
+      [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
+      [pageSize]="6" [pageSizeOptions]="[6]">
+    </mat-paginator>
+
+  </div>
+</mat-sidenav-container>
