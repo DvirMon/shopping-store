@@ -79,11 +79,7 @@ export class CartListItemComponent implements OnInit {
   // end of request section
 
 
-  // logic section
-
-  // public getProductFromStore(): void {
-  //   this.product = this.cartProducts.find(product => product._id === this.cartItem.product)
-  // }
+  // LOGIC SECTION
 
   public getProductAlias(): void {
     this.alias = this.productService.getCategoryAlias(this.cartItem.productRef)
@@ -99,7 +95,7 @@ export class CartListItemComponent implements OnInit {
   // open product dialog
   public onUpdateClick(): void {
     this.dialogService.handleProductDialog({ product: this.cartItem.productRef, alias: this.alias })
-  }
+  } 
 
 
   // style for cart item

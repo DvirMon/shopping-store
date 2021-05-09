@@ -79,13 +79,6 @@ export class ProductsService {
   }
 
 
-  // POST request - get product : http://localhost:3000/api/products/ids
-  public getProductOfCurrentCart(ids: string[]): void {
-    this.http.post<ProductModel[]>(this.baseUrl + `/ids`, { ids }).subscribe(
-      (response: ProductModel[]) => this.formService.handleStore(ActionType.SetCartProducts, response)
-    )
-  }
-
   // GET request - get search products : http://localhost:3000/api/products/search/:query
   public searchProducts(query: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.baseUrl + `/search/${query}`)

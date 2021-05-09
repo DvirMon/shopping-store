@@ -224,7 +224,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
       this.formService.handleStore(ActionType.UpdateCartItem, cartItem)
     } else {
       this.formService.handleStore(ActionType.AddCartItem, cartItem)
-      this.formService.handleStore(ActionType.AddCartProduct, this.product)
       this.cartService.emitEditState(true);
     }
     this.cartService.emitCartItem(cartItem)

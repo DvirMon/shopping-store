@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     this.refreshToken = store.getState().auth.refreshToken
-
     return this.refreshToken ? this.tokenServcie.getAccessToken() : true
   }
 }

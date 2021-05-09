@@ -47,26 +47,7 @@ export class InfoService {
   }
 
   // get login information : new client, latest cart, latest order
-  public getNotification(userId): Observable<Info> {
 
-    console.log(1)
-
-    return this.cartService.getLatestCart(userId).pipe(
-      take(1),
-      switchMap(cart => {
-        if (cart === null) {
-          return this.handleNewClient()
-        }
-        // this.formService.handleStore(ActionType.IsCartActive, cart.getIsActive())
-
-        if (cart.getIsActive()) {
-          return this.handleCurrentCart(cart)
-        }
-        return this.handleLatestOrder(cart)
-      })
-    )
-
-  }
 
   // handle new client data
   private handleNewClient(): Observable<Info> {
@@ -76,32 +57,7 @@ export class InfoService {
   }
 
   // handle current cart data
-  private handleCurrentCart(cart: CartModel): Observable<any> {
 
-    this.formService.handleStore(ActionType.AddCart, cart)
-
-    return this.cartService.getLatestCartItems(cart.get_id()).pipe(
-
-      // get current cart products
-      switchMap((cartItems: CurrentItemModel[]) => {
-
-        if (cartItems.length === 0) {
-          return of()
-        }
-
-        this.productsService.getProductOfCurrentCart(this.getProductsIds(cartItems))
-        return of()
-
-      }),
-
-      // save cart data in store and handle current cart data
-      map((response: CurrentCartModel) => {
-        this.formService.handleStore(ActionType.SetCartItems, response.cartItems)
-        this.formService.handleStore(ActionType.SetCartPrice, response.price)
-        return this.handleCartDataFormat(cart, response.price)
-      }),
-    )
-  }
 
 
   private getProductsIds(currentItems: CurrentItemModel[]): string[] {

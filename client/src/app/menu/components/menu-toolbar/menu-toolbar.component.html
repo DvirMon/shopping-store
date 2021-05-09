@@ -15,9 +15,10 @@
 </mat-toolbar>
 
 <mat-toolbar class="mobile" *ngIf="isMobile | async">
-  <button *ngFor="let route of mobileRoutes" type="button" mat-button [routerLink]="route.path" routerLinkActive="active-link">
-    <mat-icon *ngIf="route.path !== '/cart'">{{route.icon}}</mat-icon>
-    <mat-icon class="cart" *ngIf="route.path === '/cart'" [matBadge]="currentItems.length">
+  <button *ngFor="let route of mobileRoutes" type="button" mat-button [routerLink]="route.path"
+    [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link">
+    <mat-icon *ngIf="route.icon !== 'shopping_cart'">{{route.icon}}</mat-icon>
+    <mat-icon class="cart" *ngIf="route.icon === 'shopping_cart'" [matBadge]="currentItems.length">
       {{currentItems.length > 0 ? 'add_shopping_cart' : 'shopping_cart'}}
     </mat-icon>
   </button>

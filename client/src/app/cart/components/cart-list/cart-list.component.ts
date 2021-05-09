@@ -28,7 +28,6 @@ export class CartListComponent implements OnInit, OnDestroy {
   @Input() public orderMode: boolean = false;
 
   public searchControl = new FormControl();
-  public cartItems: CartItemModel[];
   public cartTotalPrice: number;
 
   public cart: CartModel = new CartModel();
@@ -58,24 +57,24 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.unsubscribeToStore = store.subscribe(
       () => {
         this.cart = store.getState().cart.cart;
-        this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
         this.user = store.getState().auth.user;
+        this.cartTotalPrice = this.cart.getTotalPrice()
       }
     )
     this.cart = store.getState().cart.cart;
-    this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
     this.user = store.getState().auth.user;
+    this.cartTotalPrice = this.cart.getTotalPrice()
 
   }
 
 
   // end of subscribe section
 
-  // request section
+  // HTTP SECTION
 
   public deleteAllCartItems(): void {
 
-    if (this.cartItems.length === 0) {
+    if (this.cart.getItems().length === 0) {
       return
     }
 
@@ -86,20 +85,24 @@ export class CartListComponent implements OnInit, OnDestroy {
     }
     this.cartService.deleteCartAndCartItems(this.cart.get_id())
   }
-  // end of request section
 
 
   // LOGIC SECTION
 
+  // calcaulate total cart price
+
+  private getTotelProce() {
+  }
+
   // navigate to order
   public goToOrder(): Promise<boolean> {
 
-    if (this.cartItems.length === 0) {
+    if (this.cart.getItems().length === 0) {
       alert("your cart is empty")
       return
     }
 
-    return this.router.navigateByUrl(`/order/${this.user._id}/${this.cart.get_id()}`)
+    return this.router.navigateByUrl(`/home/order/${this.user._id}/${this.cart.get_id()}`)
   }
 
   // navigate back to store

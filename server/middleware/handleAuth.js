@@ -7,7 +7,7 @@ const authorize = (role, key) => (request, response, next) => {
 
     const token = validateHeader(request)
 
-    if (!token) { 
+    if (!token) {
       next({
         status: 401,
         message: "Unauthorized : Request missing authorization header or token",
@@ -16,7 +16,7 @@ const authorize = (role, key) => (request, response, next) => {
 
     // verify token
 
-    const payload = jwt.verify(token, key); 
+    const payload = jwt.verify(token, key);
 
     if (key === process.env.JWT_CONFIRMATION) {
 
@@ -37,7 +37,7 @@ const authorize = (role, key) => (request, response, next) => {
     }
 
 
-    next(); 
+    next();
   } catch (err) {
     const message = process.env.JWT_CONFIRMATION ? "Confirmation code has expired" : "Please login to continue";
     next({ message });

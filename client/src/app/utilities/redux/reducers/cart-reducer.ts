@@ -13,24 +13,20 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.AddCart:
       newAppState.cart = CartModel.create(action.payload)
       break
-    case ActionType.IsCartActive:
-      newAppState.cart.setIsActive(action.payload)
-      break
+    // case ActionType.IsCartActive:
+    //   newAppState.cart.setIsActive(action.payload)
+    //   break
     case ActionType.SetCartItems:
       newAppState.cart.setItems(action.payload)
       break
-    case ActionType.SetCartProducts:
-      newAppState.cartProducts = action.payload
-      break
+
     case ActionType.SetCartPrice:
       newAppState.cart.setTotalPrice(action.payload)
       break
     case ActionType.AddCartItem:
       newAppState.cart.addItem(action.payload)
       break
-    case ActionType.AddCartProduct:
-      newAppState.cartProducts.push(action.payload)
-      break
+
     case ActionType.UpdateCartItem:
       newAppState.cart.updateItem(action.payload);
       break
@@ -40,19 +36,12 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.DeleteCartItem:
       newAppState.cart.deleteitem(action.payload)
       break
-    case ActionType.DeleteCartProduct:
-      deleteLogic(newAppState.cartProducts, action.payload)
-      break
     case ActionType.Logout:
-      newAppState = new CartAppState() 
+      newAppState = new CartAppState()
   }
   return newAppState
 }
 
-const deleteLogic = (arr, id: string) => {
-  const indexToDelete = arr.findIndex(doc => doc._id === id)
-  if (indexToDelete >= 0) {
-    arr.splice(indexToDelete, 1)
-  }
-}
+
+
 

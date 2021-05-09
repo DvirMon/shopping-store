@@ -5,18 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 // COMPONENTS
 import { RootComponent } from './components/root/root.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { ProductsCategoriesComponent } from './share-components/components/products-categories/products-categories.component';
-
-// RESOLVER
-import { InfoResolver } from './utilities/resolvers/info-resolver.service';
-import { CategoriesResolver } from './utilities/resolvers/categories-resolver.service';
-import { PaginationResolver } from './utilities/resolvers/pagination-resolver.service';
-
-// GUARDS
-import { AuthGuard } from './utilities/guards/auth.guard';
-import { RoleGuard } from './utilities/guards/role.guard';
-
-
 
 const routes: Routes = [
 

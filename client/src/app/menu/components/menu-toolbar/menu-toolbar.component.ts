@@ -31,8 +31,8 @@ export class MenuToolbarComponent implements OnInit {
   ]
   public mobileRoutes: PathMotel[] = [
     { path: "/home", icon: "home" },
-    { path: "/account", icon: "account_circle" },
-    { path: "/cart", icon: "shopping_cart" },
+    { path: "/home/account", icon: "account_circle" },
+    { path: "/home/cart", icon: "shopping_cart" },
     { path: "/menu", icon: "menu" },
   ]
 

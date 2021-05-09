@@ -2,10 +2,12 @@ const jwt = require("jsonwebtoken");
 const generator = require("generate-password");
 
 // function to create an access token
-const getAccessToken = (user) => {
+const getAccessToken = (payload) => {
   return new Promise((resolve, reject) => {
-    jwt.sign(
-      { user },
+
+    const user = { _id: payload._id, email: payload.email }
+
+    jwt.sign({ user },
       process.env.JWT_ACCESS,
       { expiresIn: "5m" },
       (err, result) => {
@@ -20,9 +22,14 @@ const getAccessToken = (user) => {
 // end of function
 
 // function to create a refresh token
-const getRefreshToken = (user) => {
+const getRefreshToken = (payload) => {
+
+  const user = { _id: payload._id, email: payload.email }
+
   return new Promise((resolve, reject) => {
-    jwt.sign({ user }, process.env.JWT_REFRESH, { expiresIn: "3d" },
+    jwt.sign({ user },
+      process.env.JWT_REFRESH,
+      { expiresIn: "3d" },
       (err, result) => {
         if (err) {
           reject(err);

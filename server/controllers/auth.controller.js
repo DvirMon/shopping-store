@@ -15,7 +15,7 @@ router.post("/login",
     try {
 
       const data = request.body.data ? request.body.data : request.body
-      const user = request.user 
+      const user = request.user
 
       if (!await user.validatePassword(data.password)) {
 
@@ -23,15 +23,15 @@ router.post("/login",
           status: 409,
           message: "email or password are incorrect",
         });
-      } 
+      }
 
-      user.password = undefined;
-      user.personalId = undefined;
+      delete user.password;
+      delete user.personalId;
 
       // get accessToken
       const token = await tokenService.getAccessToken(user);
 
-      response.json({ user, token }); 
+      response.json({ user, token });
     } catch (err) {
       next(err);
     }
@@ -47,6 +47,9 @@ router.post("/login/google",
 
       const user = await User.loginGoogle(gmailUser)
 
+      delete user.password;
+      delete user.personalId;
+      
       // get accessToken
       const token = await tokenService.getAccessToken(user);
 
@@ -69,6 +72,9 @@ router.post(
       const payload = request.body.data
 
       const user = await authLogic.addUserAsync(payload);
+
+      delete user.password;
+      delete user.personalId;
 
       // get accessToken
       const token = await tokenService.getAccessToken(user);

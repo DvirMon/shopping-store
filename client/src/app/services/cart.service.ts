@@ -58,18 +58,23 @@ export class CartService {
       take(1),
       switchMap((payload: CartModel) => {
 
+        console.log(payload)
+
+
         if (!payload) {
-          return of(new CartModel())
+          const cart = new CartModel()
+          this.formService.handleStore(ActionType.AddCart, cart)
+          return of(cart)
         }
 
         const cart = CartModel.create(payload)
-
         this.formService.handleStore(ActionType.AddCart, cart)
 
         if (cart.getIsActive()) {
           // get cart items
           return this.getCurentCartItems(cart)
         }
+        
         return of(cart)
       }))
   }
@@ -94,15 +99,6 @@ export class CartService {
   // ----------------------------------------------------------------------------------//
 
   // GET request - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
-  public getLatestCartItems(cartId): Observable<CurrentItemModel[]> {
-    return this.http.get<CurrentItemModel[]>(this.cartItemUrl + `/${cartId}`).pipe(
-      map(cartItems => {
-        return cartItems
-      })
-      )
-    }
-
-    // GET request - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
   public getCurentCartItems(cart: CartModel): Observable<CartModel> {
     return this.http.get<CurrentItemModel[]>(this.cartItemUrl + `/${cart.get_id()}`).pipe(
       map(cartItems => {

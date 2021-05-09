@@ -20,8 +20,6 @@ import { ResetAuthComponent } from './components/reset-auth/reset-auth.component
 import { ResetConfirmComponent } from './components/reset-confirm/reset-confirm.component';
 import { ResetNewPasswordComponent } from './components/reset-new-password/reset-new-password.component';
 
-// import { AboutComponent } from '../share-components/components/about/about.component';
-
 @NgModule({
   declarations: [
     AuthBarComponent,
@@ -36,8 +34,6 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
     AuthDialogComponent,
     ResetComponent,
     RootComponent,
-
-
   ],
   imports: [
     CoreModule,

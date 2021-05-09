@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
 import { CartModel } from '../models/cart-model';
+import { UserModel } from '../models/user-model';
 import { store } from '../redux/store';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { store } from '../redux/store';
 })
 export class CartResolver implements Resolve<any> {
 
-  private isLogin: boolean = store.getState().auth.isLogin
+  private user : UserModel = store.getState().auth.user
 
   constructor(
     private cartService: CartService
@@ -23,8 +24,8 @@ export class CartResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<CartModel> | Observable<CartModel> | any {
 
-    if (this.isLogin) {
-      return this.cartService.getLatestCart(route.params.userId)
+    if (this.user) {
+      return this.cartService.getLatestCart(this.user._id)
     }
 
   }

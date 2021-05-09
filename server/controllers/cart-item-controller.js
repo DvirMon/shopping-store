@@ -35,7 +35,7 @@ router.post("/",
       response.status(201).json(cartItem);
     } catch (err) {
       next(err);
-    } 
+    }
   });
 
 // PUT request - update cart item

@@ -13,10 +13,12 @@ router.get(
   middleware.authorize(false, process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
+
       const user = request.user;
 
       // get refreshToken
       const token = await tokenService.getRefreshToken(user);
+
       response.json({ user, token });
     } catch (err) {
       next(err);
@@ -30,9 +32,8 @@ router.get(
   middleware.authorize(false, process.env.JWT_REFRESH),
   async (request, response, next) => {
     try {
-      const payload = request.user;
-      const accessToken = await tokenService.getAccessToken(payload);
-
+      const user = request.user;
+      const accessToken = await tokenService.getAccessToken(user);
       response.json(accessToken);
     } catch (err) {
       next(err);
@@ -50,6 +51,9 @@ router.post("/", async (request, response, next) => {
     if (!isExist) {
       return next({ status: 404 });
     }
+
+    delete user.password;
+    delete user.personalId;
 
     // get refreshToken
     const token = await tokenService.getRefreshToken(user);

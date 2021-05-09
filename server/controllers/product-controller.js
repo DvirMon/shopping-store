@@ -30,7 +30,7 @@ router.post(
 router.get(
   "/categories",
   async (request, response, next) => {
-    try {
+    try { 
       const categories = await productLogic.getAllCategories();
       response.json(categories);
     } catch (err) {

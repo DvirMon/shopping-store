@@ -1,4 +1,4 @@
-import { CurrentItemModel } from './cart-item-model'
+import { CartItemModel, CurrentItemModel } from './cart-item-model'
 
 export class CartModel {
 
@@ -53,7 +53,13 @@ export class CartModel {
   }
 
   public getTotalPrice(): number {
-    return this.totalPrice;
+    if (this.items.length > 0) {
+      this.totalPrice = this.items
+        .map(item => item.quantity * item.productRef.price)
+        .reduce((accumulator, currentValue) => accumulator + currentValue);
+      return this.totalPrice
+    }
+    return 0
   }
 
   public setTotalPrice(totalPrice: number): void {
@@ -61,10 +67,14 @@ export class CartModel {
   }
 
   // METHODS SECTION
-  private findIndexItem(cartItem: CurrentItemModel): number {
-    return this.items.findIndex(item => item._id === cartItem._id);
+
+  // method to find cart item index by id
+  private findItemIndex(_id: string): number {
+    return this.items.findIndex(item => item._id === _id);
   }
 
+
+  // method to fins cart item by product
   public findCartItem(productRef: string): CurrentItemModel {
 
     if (this.items.length > 0) {
@@ -74,8 +84,9 @@ export class CartModel {
     return null
   }
 
-  public isCartItem(productRef: string): boolean {
-    if (this.findCartItem(productRef)) {
+  // mtethod to find if cart item exist
+  public isCartItem(cartItem: CartItemModel): boolean {
+    if (this.findCartItem(cartItem.productRef)) {
       return true
     }
     return false
@@ -87,29 +98,22 @@ export class CartModel {
 
   public updateItem(cartItem: CurrentItemModel) {
 
-    const itemIndex = this.findIndexItem(cartItem);
+    const itemIndex = this.findItemIndex(cartItem._id);
 
     if (itemIndex >= 0) {
       this.items[itemIndex] = { ...cartItem }
     }
 
-    // this.items.find(itemToUpdate => {
-    //   if (itemToUpdate._id === cartItem._id) {
-    //     for (const prop in cartItem) {
-    //       if (prop in itemToUpdate) {
-    //         itemToUpdate[prop] = cartItem[prop]
-    //       }
-    //     }
-    //   }
-    // })
   }
 
-  public deleteitem(cartItem: CurrentItemModel) {
-    const itemIndex = this.findIndexItem(cartItem);
+  public deleteitem(_id: string) {
+    const itemIndex = this.findItemIndex(_id);
+    console.log(itemIndex)
     if (itemIndex >= 0) {
       this.items.splice(itemIndex, 1)
     }
   }
+
 
 }
 
