@@ -32,10 +32,6 @@ export class SearchComponent implements OnInit {
   public isAdmin: boolean = store.getState().auth.isAdmin;
   public results: boolean = false;
 
-
-  private alias: string;
-
-
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,

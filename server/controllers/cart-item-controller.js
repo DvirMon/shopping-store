@@ -14,7 +14,7 @@ router.get("/:cartId", async (request, response, next) => {
     const cartItems = await cartItemLogic.getCurrentCartAsync(
       request.params.cartId
     );
- 
+
     response.json(cartItems);
   } catch (err) {
     next(err);
@@ -27,11 +27,15 @@ router.post("/",
   async (request, response, next) => {
     try {
 
-      const cartItem = await cartItemLogic.addCartItemAsync(new CartItem(request.body));
+      const item = { ...request.body }
+      delete item._id
+      console.log(item)
+
+      const cartItem = await cartItemLogic.addCartItemAsync(new CartItem(item));
       response.status(201).json(cartItem);
     } catch (err) {
       next(err);
-    }
+    } 
   });
 
 // PUT request - update cart item
@@ -39,6 +43,7 @@ router.put("/:_id", middleware.authorize(false, key), async (request, response, 
   try {
     const cartItem = request.body;
     cartItem._id = request.params._id;
+    console.log(cartItem)
     const updatedCartItem = await cartItemLogic.updateCartItemAsync(cartItem);
     if (updatedCartItem === null) {
       return next({ status: 404, message: "item do not exist" });

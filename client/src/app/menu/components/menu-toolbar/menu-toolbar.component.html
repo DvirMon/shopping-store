@@ -3,15 +3,22 @@
     Home
   </button>
   <span class="spacer"></span>
-  <button type="button" mat-button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
   </button>
-  <button type="button" mat-button (click)="drawer.toggle()">
-    My Account
-  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let route of routes" (click)="onClick(route.path)">
+      <mat-icon>{{route.icon}}</mat-icon>
+      <span>{{route.name}}</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-toolbar class="mobile" *ngIf="isMobile | async">
-  <button *ngFor="let route of routes" type="button" mat-icon-button [routerLink]="route.path">
-    <mat-icon>{{route.icon}}</mat-icon>
+  <button *ngFor="let route of mobileRoutes" type="button" mat-button [routerLink]="route.path" routerLinkActive="active-link">
+    <mat-icon *ngIf="route.path !== '/cart'">{{route.icon}}</mat-icon>
+    <mat-icon class="cart" *ngIf="route.path === '/cart'" [matBadge]="currentItems.length">
+      {{currentItems.length > 0 ? 'add_shopping_cart' : 'shopping_cart'}}
+    </mat-icon>
   </button>
 </mat-toolbar>

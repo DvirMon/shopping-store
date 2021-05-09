@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { FormControl, NgModel, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -17,9 +17,7 @@ import { map } from 'rxjs/operators';
 
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { ActivatedRoute, Data } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 
 export interface imageParams {
@@ -34,7 +32,7 @@ export interface imageParams {
   styleUrls: ['./products-dialog.component.scss']
 })
 
-export class ProductsDialogComponent implements OnInit, AfterViewInit {
+export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatTooltip) toolTip: MatTooltip;
   @ViewChild('cartItemQuantity') cartItemQuantity: NgModel;
@@ -42,15 +40,16 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   private distinctChange: boolean = false
   private editMode: boolean = false
 
-  public isMobile: Observable<boolean> = this.formService.isMobile()
+  private unsubscribeCartItem: Subscription
+  private unsubscribeToEdit: Subscription
+  private unsubscribeToMobile: Subscription
+
+  public isMobile: Observable<boolean> = this.formService.isMobile$
   public quantityControl: FormControl
   public editState$: Observable<boolean> = this.cartService.getEditState()
   public minQuantity: boolean = false
   public alias: string
-
-
   public params: imageParams
-
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -80,6 +79,11 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
     this.subscribeToControls()
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribeCartItem.unsubscribe()
+    this.unsubscribeToEdit.unsubscribe()
+    this.unsubscribeToMobile.unsubscribe()
+  }
 
   // FORM SECTION
 
@@ -129,6 +133,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
         if (this.quantityControl.errors) {
           this.quantityControl.setValue(1)
           quantity = 1
+          console.log(quantity)
         }
       })
     ).subscribe()
@@ -136,9 +141,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   private subscribeToMobile() {
 
-    this.isMobile.subscribe(
+    this.unsubscribeToMobile = this.isMobile.subscribe(
       (isMobile) => {
-
+        console.log(isMobile)
         if (isMobile) {
           this.params = { cols: 1, height: 150, width: 150 }
         }
@@ -150,7 +155,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   }
 
   private subscribtToEditMode() {
-    this.editState$.subscribe(
+    this.unsubscribeToEdit = this.editState$.subscribe(
       (editMode: boolean) => {
         this.editMode = editMode;
       }
@@ -158,12 +163,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
   }
 
   private subscribeToCartItem() {
-    this.cartService.getCartItemSubject().subscribe(
+    this.unsubscribeCartItem = this.cartService.getCartItemSubject().subscribe(
       (curentItem: CurrentItemModel) => {
-        this.cartItem._id = curentItem._id
-        this.cartItem.cartId = curentItem.cartId
-        this.cartItem.quantity = curentItem.quantity
-        this.cartItem.productRef = curentItem.productRef._id
+        this.cartItem = CartItemModel.create(curentItem)
       })
   }
 
@@ -244,9 +246,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   // method to update exist cart item values
   private cartItemUpdateValue() {
-    const cartItem = this.cart.findCartItem(this.product._id);
-    if (cartItem) {
-      this.cartService.emitCartItem(cartItem)
+    const currentItem = this.cart.findCartItem(this.product._id);
+    if (currentItem) {
+      this.cartService.emitCartItem(currentItem)
       this.cartService.emitEditState(true);
     } else {
       this.cartItemDefaultValues()
@@ -255,9 +257,8 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit {
 
   // default values for cart item
   private cartItemDefaultValues(): void {
-    this.cartItem.cartId = this.cart.get_id();
-    this.cartItem.productRef = this.product._id;
-    this.cartItem.quantity = 1;
+    const currentItem = CurrentItemModel.create(this.product, this.cart.get_id())
+    this.cartService.emitCartItem(currentItem)
     this.cartService.emitEditState(false);
   }
 

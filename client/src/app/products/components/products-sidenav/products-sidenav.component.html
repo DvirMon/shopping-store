@@ -1,11 +1,8 @@
 <mat-toolbar>
-  <button *ngIf="!(isMobile | async)" mat-icon-button type="button" (click)="toggleDrawer()">
-    <mat-icon>menu</mat-icon>
-  </button>
   <span class="spacer"></span>
-  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
-    (click)="drawerProduct.toggle()">
-    <mat-icon>navigate_before</mat-icon>
+  
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawerProduct.toggle()">
+    <mat-icon>{{drawerProduct.opened ? 'navigate_before' : 'navigate_next'}}</mat-icon>
   </button>
 </mat-toolbar>
 

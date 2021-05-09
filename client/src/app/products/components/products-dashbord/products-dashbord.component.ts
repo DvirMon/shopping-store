@@ -53,7 +53,7 @@ export class ProductsDashbordComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.subscribeToPaginator();
-    this.subscribeToSort()
+    // this.subscribeToSort()
   }
 
 
@@ -83,6 +83,8 @@ export class ProductsDashbordComponent implements OnInit {
         this.categoryId = params.categoryId;
         this.alias = params.alias;
         this.paginationData = store.getState().products[this.alias];
+        console.log(1)
+        this.productService.handleCateogryAlias.next(this.alias)
       }
     );
   }
@@ -101,10 +103,12 @@ export class ProductsDashbordComponent implements OnInit {
 
   // sucscrube to paginator
   private subscribeToPaginator(): void {
-    this.paginator.page
-      .pipe(
-        tap(() => this.handleProductsSource()))
-      .subscribe()
+    if (this.paginator) {
+      this.paginator?.page
+        .pipe(
+          tap(() => this.handleProductsSource()))
+        .subscribe()
+    }
   }
 
 

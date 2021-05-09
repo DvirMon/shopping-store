@@ -56,3 +56,8 @@ mat-option.password > span.mat-option-text {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+mat-icon.cart > span {
+  background-color: transparent;
+  color: black;
+}

@@ -11,4 +11,14 @@
   .mat-sidenav-content {
     height: inherit;
   }
+
+  @media screen and (max-width: 660px) {
+
+    .mat-sidenav-content {
+      height: 93vh;
+      background-color: gainsboro;
+    }
+
+  }
+
 }

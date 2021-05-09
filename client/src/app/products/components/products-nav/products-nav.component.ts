@@ -18,6 +18,7 @@ import { store } from 'src/app/utilities/redux/store';
 export class ProductsNavComponent implements OnInit, OnDestroy {
 
   @Input() drawerProduct: MatSidenav
+  @Input() drawerCart: MatSidenav
   @Input() isAdmin: boolean
 
   public isMobile: Observable<boolean> = this.productsService.isMobile()

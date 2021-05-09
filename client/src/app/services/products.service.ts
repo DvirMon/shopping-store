@@ -40,6 +40,10 @@ export class ProductsService {
   public handleSearchEntries = new Subject<ProductModel[]>();
   public handleDrawerToggle = new Subject<boolean>();
 
+  public handleCateogryAlias = new BehaviorSubject<string>("");
+  public alias$ : Observable<string> = this.handleCateogryAlias.asObservable();
+
+
   // public productLandingPage: string = environment.productLandingPage
 
   constructor(

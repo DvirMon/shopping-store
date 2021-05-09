@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
@@ -19,7 +19,8 @@ import { environment } from 'src/environments/environment'
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
-  styleUrls: ['./cart-list.component.scss']
+  styleUrls: ['./cart-list.component.scss'],
+  // changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
@@ -64,9 +65,6 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.cart = store.getState().cart.cart;
     this.cartTotalPrice = store.getState().cart?.cart.getTotalPrice()
     this.user = store.getState().auth.user;
-
-    console.log(this.cart.getItems())
-
 
   }
 

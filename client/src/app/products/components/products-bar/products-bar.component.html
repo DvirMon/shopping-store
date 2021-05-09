@@ -1,13 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
-
-  <mat-sidenav #drawerProduct class="sidenav-products" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'"
-    [mode]="(isMobile | async) ? 'over' : 'push'" opened="false" position="start">
-    <app-products-sidenav [drawerProduct]="drawerProduct" [isExpanded]="drawerProduct.opened"></app-products-sidenav>
-  </mat-sidenav>
-
-
-  <mat-sidenav-content >
-    <app-products-nav [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"></app-products-nav>
+  <mat-sidenav-content>
+    <app-product-banner></app-product-banner>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

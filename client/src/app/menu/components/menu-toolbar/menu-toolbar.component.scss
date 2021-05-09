@@ -1,3 +1,5 @@
+@import "~src/style/styles";
+
 mat-toolbar {
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -15,4 +17,11 @@ mat-toolbar {
     z-index: 10;
     bottom: 0;
   }
+
+  .active-link {
+    border-top: color(info) solid 5px;
+    color: color(info);
+  }
+
+
 }

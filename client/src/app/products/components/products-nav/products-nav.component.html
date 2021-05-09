@@ -2,8 +2,16 @@
 
   <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
     (click)="onDrawerProducts()">
-    <mat-icon>menu</mat-icon>
+    <mat-icon>navigate_next</mat-icon>
   </button>
   <app-search *ngIf="!(isMobile | async)"></app-search>
+
+  <app-cart-button *ngIf="!(isMobile | async)" [drawerCart]="drawerCart" [isAdmin]="isAdmin"></app-cart-button>
+
+  <!-- <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
+    <li arrowPosition="after" mat-sort-header="price">
+      Price
+    </li>
+  </ul> -->
 
 </mat-toolbar>

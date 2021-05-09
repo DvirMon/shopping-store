@@ -20,6 +20,7 @@ import { ProductsItemComponent } from './components/products-item/products-item.
 import { ProductsFormComponent } from './components/products-form/products-form.component';
 
 import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
+import { ProductBannerComponent } from './components/product-banner/product-banner.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     ProductsNavComponent,
     ProductsSidenavComponent,
     ProductsDashbordComponent,
+    ProductBannerComponent,
   ],
   imports: [
     CoreModule,

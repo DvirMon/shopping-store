@@ -7,7 +7,7 @@ import { ProductModel } from '../utilities/models/product-model';
 import { ValidationService } from './validation.service';
 
 import { map, shareReplay } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
 export class FormService {
 
   public serverError = new Subject<string>()
+  public isMobile$: Observable<boolean> = this.isMobile()
 
   constructor(
     private fb: FormBuilder,
@@ -162,6 +163,8 @@ export class FormService {
         shareReplay()
       );
   }
+
+
 }
 
 

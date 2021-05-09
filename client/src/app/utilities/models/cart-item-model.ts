@@ -9,6 +9,9 @@ export class CartItemModel {
     public cartId?: string,
   ) { }
 
+  static create(curentItem: CurrentItemModel): CartItemModel {
+    return new CartItemModel(curentItem._id, curentItem.productRef._id, curentItem.quantity, curentItem.cartId)
+  }
 }
 
 export class CurrentItemModel {
@@ -18,5 +21,9 @@ export class CurrentItemModel {
     public quantity?: number,
     public cartId?: string,
   ) { }
+
+  static create(product: ProductModel, cartId: string): CurrentItemModel {
+    return new CurrentItemModel(null, product, 1, cartId)
+  }
 
 }

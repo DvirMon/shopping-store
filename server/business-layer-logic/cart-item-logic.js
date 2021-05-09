@@ -7,17 +7,6 @@ const getAllCartItemsByCartAsync = async (cartId) => {
 
 const getCurrentCartAsync = async (cartId) => {
   const cartItems = await CartItem.find({ cartId }).populate("productRef").exec();
-
-  // const currentItems = cartItems.map((cartItem) => {
-  //   return {
-  //     _id: cartItem._id,
-  //     product: { ...cartItem.productRef._doc },
-  //     quantity : cartItem.quantity,
-  //     cartId: cartItem.cartId
-  //   }
-  // })
-
-
   return cartItems
 };
 

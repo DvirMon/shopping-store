@@ -1,20 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <div>
-    <img src="/assets/images/banner/{{alias}}.png" alt="{{'banner-' + alias}}">
-  </div>
-
-  <mat-toolbar>
-
-    <app-cart-button [drawerCart]="drawerCart" [isAdmin]="isAdmin"></app-cart-button>
-
-    <ul matSort matSortActive="price" matSortDirection="asc" matSortDisableClear>
-      <li arrowPosition="after" mat-sort-header="price">
-        Price
-      </li>
-    </ul>
-  </mat-toolbar>
-
   <mat-sidenav #drawerCart class="sidenav" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'" mode="over"
     [opened]="!(isMobile | async) && isAdmin" position="end">
 
@@ -30,19 +15,28 @@
     </ng-template>
   </mat-sidenav>
 
-  <div class="container-products">
+  <mat-sidenav #drawerProduct class="sidenav-products" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'"
+    [mode]="(isMobile | async) ? 'over' : 'push'" opened="false" position="start">
+    <app-products-sidenav [drawerProduct]="drawerProduct" [isExpanded]="drawerProduct.opened"></app-products-sidenav>
+  </mat-sidenav>
 
-    <mat-paginator #paginator
+
+  <mat-sidenav-content class="container-products">
+
+
+    <app-products-nav [drawerCart]="drawerCart" [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"></app-products-nav>
+
+    <mat-grid-list class="conatiner" [cols]="(isMobile | async) ? '1' : '3'"
+      [rowHeight]="(isMobile | async) ? '15vh' : '40vh'">
+      <mat-grid-tile *ngFor="let product of products">
+        <app-products-item [product]="product"></app-products-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-paginator *ngIf="!(isMobile | async)" #paginator
       [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
       [pageSize]="6" [pageSizeOptions]="[6]">
     </mat-paginator>
-    
-    <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card" *ngFor="let product of products">
-        <app-products-item [product]="product"></app-products-item>
-      </div>
-    </div>
 
-
-  </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

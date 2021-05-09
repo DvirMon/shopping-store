@@ -1,0 +1,5 @@
+<mat-grid-list cols="1" [rowHeight]="(isMobile | async) ? '15vh' : '40vh'">
+  <mat-grid-tile>
+    <img src="/assets/images/banner/{{alias | async}}.png" alt="{{'banner-' + (alias | async)}}"> 
+  </mat-grid-tile>
+</mat-grid-list>
