@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AuthGuard } from '../utilities/guards/auth.guard';
-import { ProductsGuard } from '../utilities/guards/products.guard';
 import { RoleGuard } from '../utilities/guards/role.guard';
+import { ProductsGuard } from '../utilities/guards/products.guard';
+
 import { CartResolver } from '../utilities/resolvers/cart-resolver.service';
 import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
-import { AccountComponent } from './components/account/account.component';
-import { CartComponent } from './components/cart/cart.component';
-import { MenuDashbordComponent } from './components/menu-dashbord/menu-dashbord.component';
 
 // COMPONENTS
 import { RootComponent } from './components/root/root.component';
+import { MenuDashbordComponent } from './components/menu-dashbord/menu-dashbord.component';
+import { AccountComponent } from './components/account/account.component';
+import { CartComponent } from './components/cart/cart.component';
+import { MenuComponent } from './components/menu/menu.component';
+
 
 const routes: Routes = [
 
@@ -34,6 +38,10 @@ const routes: Routes = [
       {
         path: "cart",
         component: CartComponent
+      },
+      {
+        path: "menu",
+        component: MenuComponent
       },
       {
         path: "products",

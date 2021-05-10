@@ -1,0 +1,3 @@
+// CART ACTIONS TYPE
+export const ADD_CART = "ADD_CART";
+export const ADD_CART_ITEMS = 'SET_CART_ITEMS';

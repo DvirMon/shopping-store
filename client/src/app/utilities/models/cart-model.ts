@@ -13,6 +13,7 @@ export class CartModel {
   ) { }
 
   static create(payload: CartModel) {
+
     return new CartModel(
       payload._id,
       payload?.userId,
@@ -108,7 +109,6 @@ export class CartModel {
 
   public deleteitem(_id: string) {
     const itemIndex = this.findItemIndex(_id);
-    console.log(itemIndex)
     if (itemIndex >= 0) {
       this.items.splice(itemIndex, 1)
     }
@@ -116,10 +116,4 @@ export class CartModel {
 
 
 }
-
-export class CurrentCartModel {
-  public price?: number
-  public cartItems?: CurrentItemModel[]
-}
-
 

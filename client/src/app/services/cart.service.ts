@@ -13,7 +13,9 @@ import { store } from '../utilities/redux/store';
 import { ActionType } from '../utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
-import { ProductsService } from './products.service';
+import { CartState } from '../utilities/ngrx/state/cart-state';
+import { Store } from '@ngrx/store';
+import * as CartActions from '../utilities/ngrx/action'
 
 
 @Injectable({
@@ -21,14 +23,12 @@ import { ProductsService } from './products.service';
 })
 export class CartService {
 
-  private cartItemSubject = new Subject<CurrentItemModel>();
-
-  public itemsSubject = new BehaviorSubject<CurrentItemModel[]>([]);
-  public items$: Observable<CurrentItemModel[]> = this.itemsSubject.asObservable()
+  public cart$: Observable<CartState> = this.ngrxStore.select('cart');
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
 
+  private cartItemSubject = new Subject<CurrentItemModel>();
 
   private cartUrl: string = `${environment.server}/api/carts`;
   private cartItemUrl: string = `${environment.server}/api/cart-item`
@@ -36,7 +36,7 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private productsService: ProductsService
+    private ngrxStore: Store<{ cart: CartState }>,
   ) { }
 
 
@@ -58,23 +58,21 @@ export class CartService {
       take(1),
       switchMap((payload: CartModel) => {
 
-        console.log(payload)
-
 
         if (!payload) {
           const cart = new CartModel()
           this.formService.handleStore(ActionType.AddCart, cart)
+          // this.ngrxStore.dispatch({ type: CartActions.ADD_CART, cart })
           return of(cart)
         }
 
         const cart = CartModel.create(payload)
         this.formService.handleStore(ActionType.AddCart, cart)
-
         if (cart.getIsActive()) {
           // get cart items
           return this.getCurentCartItems(cart)
         }
-        
+
         return of(cart)
       }))
   }
@@ -104,6 +102,7 @@ export class CartService {
       map(cartItems => {
         cart.setItems(cartItems)
         this.formService.handleStore(ActionType.SetCartItems, cartItems)
+        this.ngrxStore.dispatch(new CartActions.AddCartItems(cartItems))
         return cart
       })
     )

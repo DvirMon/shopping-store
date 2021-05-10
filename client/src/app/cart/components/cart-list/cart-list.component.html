@@ -30,10 +30,9 @@
 </mat-toolbar>
 
 <!-- end of tool bar header - order-->
-
 <!--products list  -->
 <mat-nav-list>
-  <app-cart-list-item *ngFor="let cartItem of (cart.getItems())" [cartItem]="cartItem" [orderMode]="orderMode"
+  <app-cart-list-item *ngFor="let cartItem of (cart$ | async).cart.getItems() " [cartItem]="cartItem" [orderMode]="orderMode"
     [searchTerm]="searchControl.value">
   </app-cart-list-item>
 </mat-nav-list>
@@ -41,7 +40,8 @@
 <!--   footer  - products-->
 <mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile mat-icon class="my-cart">
-    <mat-icon [matBadge]=" (cart.getItems()).length > 0 ? cart.getItems().length : '' " matBadgeColor="warn">shopping_cart</mat-icon>
+    <mat-icon [matBadge]=" (cart.getItems()).length > 0 ? cart.getItems().length : '' " matBadgeColor="warn">
+      shopping_cart</mat-icon>
   </mat-grid-tile>
   <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
   <mat-grid-tile class="payment" colspan="2">

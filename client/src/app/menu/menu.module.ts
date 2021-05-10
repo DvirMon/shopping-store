@@ -11,6 +11,7 @@ import { MenuToolbarComponent } from './components/menu-toolbar/menu-toolbar.com
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartModule } from '../cart/cart.module';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 
@@ -21,7 +22,8 @@ import { CartModule } from '../cart/cart.module';
     MenuDashbordComponent,
     MenuToolbarComponent,
     AccountComponent,
-    CartComponent
+    CartComponent,
+    MenuComponent
   ],
   imports: [
     CoreModule,

@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { forkJoin } from 'rxjs'
-import { switchMap, take, map } from 'rxjs/operators'
+import {  take, map } from 'rxjs/operators'
 
-import { CartModel, CurrentCartModel } from '../utilities/models/cart-model';
+import { CartModel } from '../utilities/models/cart-model';
 
 import { OrderService } from './order.service';
 import { CartService } from './cart.service';
 import { ProductsService } from './products.service';
 import { FormService } from './form.service';
 
-import { ActionType } from 'src/app/utilities/redux/action-type';
-import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
+import {  CurrentItemModel } from '../utilities/models/cart-item-model';
 
 export interface Info {
   new: boolean,
@@ -31,9 +30,7 @@ export class InfoService {
   public loginInfo: Info;
 
   constructor(
-    private formService: FormService,
     private orderService: OrderService,
-    private cartService: CartService,
     private productsService: ProductsService
   ) { }
 

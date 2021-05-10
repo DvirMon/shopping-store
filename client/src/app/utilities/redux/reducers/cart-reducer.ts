@@ -13,9 +13,6 @@ export const cartReducer = (oldAppState = new CartAppState(), action: Action): C
     case ActionType.AddCart:
       newAppState.cart = CartModel.create(action.payload)
       break
-    // case ActionType.IsCartActive:
-    //   newAppState.cart.setIsActive(action.payload)
-    //   break
     case ActionType.SetCartItems:
       newAppState.cart.setItems(action.payload)
       break

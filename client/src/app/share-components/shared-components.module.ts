@@ -66,8 +66,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
   ],
   imports: [
     CoreModule,
-    RecaptchaV3Module
-
+    RecaptchaV3Module,
   ],
   exports: [
     AboutComponent,

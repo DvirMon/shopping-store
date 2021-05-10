@@ -7,14 +7,18 @@ import { FormControl } from '@angular/forms';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
-import { CartItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 
-import { store } from 'src/app/utilities/redux/store';
-
 import { environment } from 'src/environments/environment'
+
+import { Observable, of } from 'rxjs';
+import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
+import { Store } from '@ngrx/store';
+
+import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-cart-list',
@@ -31,20 +35,27 @@ export class CartListComponent implements OnInit, OnDestroy {
   public cartTotalPrice: number;
 
   public cart: CartModel = new CartModel();
+  public cart$: Observable<CartState> = this.cartService.cart$
+
   private user: UserModel = new UserModel();
   private unsubscribeToStore: Function;
 
   constructor(
     private router: Router,
+
     private receiptService: ReceiptService,
     private cartService: CartService,
-
-
-
   ) { }
 
   ngOnInit(): void {
     this.subscribeToStore();
+
+    this.cart$.subscribe(
+      (payload) => {
+        console.log(payload.cart.getItems())
+      }
+    )
+
   }
 
   ngOnDestroy(): void {
@@ -66,6 +77,8 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.cartTotalPrice = this.cart.getTotalPrice()
 
   }
+
+
 
 
   // end of subscribe section

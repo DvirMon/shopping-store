@@ -30,6 +30,8 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
+    "@ngrx/store": "^9.2.1",
+    "@ngrx/store-devtools": "^11.1.1",
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.52",
     "angular-code-input": "^1.4.0",

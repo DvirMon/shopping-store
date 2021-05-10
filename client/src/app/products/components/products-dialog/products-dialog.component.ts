@@ -18,6 +18,8 @@ import { map } from 'rxjs/operators';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
 import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
 
 
 export interface imageParams {
@@ -50,6 +52,10 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   public minQuantity: boolean = false
   public alias: string
   public params: imageParams
+
+
+
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,

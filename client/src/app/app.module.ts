@@ -17,10 +17,12 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 // COMPONENTS
+
+import { RootComponent } from './components/root/root.component';
 import { AppComponent } from './components/app/app.component';
 import { BarComponent } from './components/bar/bar.component';
 
-import { RootComponent } from './components/root/root.component';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
@@ -32,7 +34,11 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 // ENVIROMENT
 import { environment } from '../environments/environment';
-import { DashbordComponent } from './components/dashbord/dashbord.component';
+
+// NGRX
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ngrxStore } from './utilities/ngrx/store';
 
 
 
@@ -56,8 +62,13 @@ import { DashbordComponent } from './components/dashbord/dashbord.component';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
+    StoreModule.forRoot(ngrxStore),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx App',
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     MaterialModule,
-    SocialLoginModule
+    SocialLoginModule,
 
   ],
   providers: [
@@ -74,6 +85,6 @@ import { DashbordComponent } from './components/dashbord/dashbord.component';
         ],
       } as SocialAuthServiceConfig,
     }
-  ],  bootstrap: [AppComponent],
+  ], bootstrap: [AppComponent],
 })
 export class AppModule { }
