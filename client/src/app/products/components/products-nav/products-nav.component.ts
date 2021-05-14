@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,6 +19,7 @@ export class ProductsNavComponent implements OnInit, OnDestroy {
 
   @Input() drawerProduct: MatSidenav
   @Input() drawerCart: MatSidenav
+  @Input() drawerSearch: MatSidenav
   @Input() isAdmin: boolean
 
   public isMobile: Observable<boolean> = this.productsService.isMobile()

@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
 import { CartModel } from '../models/cart-model';
 import { UserModel } from '../models/user-model';
-import { CartState } from '../ngrx/state/cart-state';
+import { cartState } from '../ngrx/state/cart-state';
 import { store } from '../redux/store';
 import * as CartActions from '../ngrx/action'
 
@@ -19,7 +19,7 @@ export class CartResolver implements Resolve<any> {
 
   constructor(
     private cartService: CartService,
-    private ngrxStore: Store<CartState>,
+    private ngrxStore: Store<{ cart: typeof cartState }>,
   ) {
 
   }

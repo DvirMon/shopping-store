@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class OrderNavComponent {
 
-  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  public isMobile$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()

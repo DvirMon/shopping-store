@@ -39,6 +39,7 @@ import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ngrxStore } from './utilities/ngrx/store';
+import { OrdersHistoryComponent } from './order/components/orders-history/orders-history.component';
 
 
 
@@ -54,6 +55,7 @@ import { ngrxStore } from './utilities/ngrx/store';
     MembersComponent,
     ProductsSlideComponent,
     DashbordComponent,
+    OrdersHistoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -48,13 +48,14 @@ router.post(
   async (request, response, next) => {
     try {
       // valid if user exist (for postmen)
+
       const user = await authLogic.isUserExist(request.body.userId);
 
       if (!user) {
         return next({ status: 404, message: "user is not exist" });
       }
 
-      const cart = await cartLogic.addCartAsync(new Cart(request.body));
+      const cart = await Cart.findCart(request.body)
 
       response.status(201).json(cart);
     } catch (err) {

@@ -83,7 +83,6 @@ export class ProductsDashbordComponent implements OnInit {
         this.categoryId = params.categoryId;
         this.alias = params.alias;
         this.paginationData = store.getState().products[this.alias];
-        console.log(1)
         this.productService.handleCateogryAlias.next(this.alias)
       }
     );

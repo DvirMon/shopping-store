@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrderComponent } from './components/root/order.component';
+
 import { OrderResolver } from '../utilities/resolvers/order-resolver.service'
+
+import { OrderComponent } from './components/root/order.component';
+import { OrdersHistoryComponent } from './components/orders-history/orders-history.component';
 
 
 
 const routes: Routes = [
 
   {
-    path: "  :userId/:cartId",
+    path: "history",
+    component: OrdersHistoryComponent
+  },
+  {
+    path: ":userId/:cartId",
     component: OrderComponent,
     resolve: { dates: OrderResolver }
   },

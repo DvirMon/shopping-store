@@ -1,22 +1,40 @@
 import { CartModel } from "../../models/cart-model";
 import { CartActions } from "../action";
-import { CartState } from "../state/cart-state";
-import * as ActionType from "../action-type";
+import { CartActionType } from "../action-type";
+import { cartState } from "../state/cart-state";
 
-export function cartReducer(oldState = new CartState(), action: CartActions) {
+export function cartReducer(oldState = cartState, action: CartActions) {
 
-  let newState = { ...oldState }
+  let newState: CartModel = CartModel.create(oldState)
+  const cart: CartModel = CartModel.create(oldState)
 
   switch (action.type) {
-    case ActionType.ADD_CART: {
-      newState.cart = CartModel.create(action.payload)
+    case CartActionType.ADD_CART: {
+      newState = CartModel.create(action.payload)
       break
     }
-    case ActionType.ADD_CART_ITEMS: {
+    case CartActionType.SET_CART_ITEMS: {
 
-      const cart = new CartModel()
       cart.setItems(action.payload)
-      newState.cart = cart
+      console.log(cart)
+      newState = cart
+      console.log(newState)
+
+      break
+    }
+    case CartActionType.ADD_CART_ITEM: {
+      cart.addItem(action.payload)
+      newState = cart
+      break
+    }
+    case CartActionType.UPDATE_CART_ITEM: {
+      cart.updateItem(action.payload)
+      newState = cart
+      break
+    }
+    case CartActionType.DELETE_CART_ITEM: {
+      cart.deleteitem(action.payload)
+      newState = cart
       break
     }
   }

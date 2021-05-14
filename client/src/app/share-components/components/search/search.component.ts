@@ -1,19 +1,17 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { ActivatedRoute } from '@angular/router';
-
-import { Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
+import { SearchService } from 'src/app/services/search.service';
 import { ProductsService, ProductData } from 'src/app/services/products.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { PaginationService } from 'src/app/services/pagination.service';
 
 import { store } from 'src/app/utilities/redux/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -25,54 +23,37 @@ export class SearchComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
 
+  @Input() public drawer: MatSidenav;
 
   public searchControl = new FormControl();
-  public searchEntries: Observable<ProductModel[]>;
-  public totalProducts: Observable<number>;
+
+  public isMobile$: Observable<boolean> = this.productService.isMobile()
+  public results$: Observable<boolean> = this.searchService.results$
+  public searchEntries$: Observable<ProductModel[]> = this.searchService.serachEntries$
+  public totalProducts$: Observable<number> = this.productService.getTotalNumberOfProducts()
+
   public isAdmin: boolean = store.getState().auth.isAdmin;
-  public results: boolean = false;
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
+    private searchService: SearchService
 
   ) { }
 
 
   ngOnInit(): void {
 
-    this.getStoreProducts();
+    // this.getStoreProducts();
     this.search();
   }
 
 
-  // subscription section
+  // HTTP SECTION
 
-
-  // function that listen to user search query
-  public subscribeToControl(): Observable<ProductModel[]> {
-    return this.searchControl.valueChanges.pipe(
-      debounceTime(600),
-      distinctUntilChanged(),
-      switchMap((searchTerm: string) => {
-        if (!searchTerm || !searchTerm.trim() || this.validFormat(searchTerm)) {
-          return this.handleError()
-        }
-        return this.handleSearch(searchTerm.trim())
-      }))
-
-
-  }
-
-  // end of subscription section
-
-  // ---------------------------------------------------------------//
-
-  // requests section
-
-  // main search function
+  // main search method
   public search(): void {
-    this.subscribeToControl().subscribe(
+    this.searchService.search(this.searchControl).subscribe(
       () => {
         this.searchInput.nativeElement.focus()
       },
@@ -83,33 +64,16 @@ export class SearchComponent implements OnInit {
   }
 
 
-  // function to fetch result from server
 
-  private handleSearch(searchTerm): Observable<ProductModel[]> {
-    return this.productService.searchProducts(searchTerm).pipe(
-      tap((response: ProductModel[]) => {
-        this.handleMobileSearch(response)
 
-        if (response.length === 0) {
-          return this.handleError()
-        }
-        return this.handleSuccess(response)
-      })
-    )
-  }
-
-  private getStoreProducts() {
-    this.totalProducts = this.productService.getTotalNumberOfProducts()
-  }
-
-  // end of requests section
-
-  // logic section
+  // LOGIC SECTION
 
   // action to fire when search tab is selected
   public onSelect(product: ProductModel) {
 
-    this.panel.openPanel()
+    if (this.panel) {
+      this.panel.openPanel()
+    }
 
     const productData = this.handleProductDialogData(product)
 
@@ -128,34 +92,5 @@ export class SearchComponent implements OnInit {
     return this.productService.getCategoryAlias(product)
   }
 
-  // handle search entries for mobile
-  private handleMobileSearch(response: ProductModel[]) {
-    this.productService.isMobile().subscribe(
-      (mobile) => {
-        if (mobile) {
-          this.productService.handleSearchEntries.next(response)
-        }
-      })
-  }
 
-  // prevent search with special symbols
-  private validFormat(searchTerm: string): boolean {
-    const regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    return regex.test(searchTerm)
-  }
-
-  // handle search error
-  private handleError(): Observable<[]> {
-    this.results = true
-    this.productService.handleSearchEntries.next([]);
-    this.searchEntries = of([]);
-    return of([]);
-  }
-
-  // handle search success
-  private handleSuccess(response: ProductModel[]): Observable<ProductModel[]> {
-    this.results = false
-    this.searchEntries = of(response)
-    return of(response)
-  }
 }

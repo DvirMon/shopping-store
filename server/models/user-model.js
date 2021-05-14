@@ -73,6 +73,8 @@ UserSchema.statics.loginGoogle = async function (gmailUser) {
   return user
 }
 
+
+
 UserSchema.methods.validatePassword = async function (password) {
   // validate password
 

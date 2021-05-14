@@ -3,7 +3,9 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartModel } from 'src/app/utilities/models/cart-model';
 import { store } from 'src/app/utilities/redux/store';
 
 export interface PathMotel {
@@ -24,9 +26,9 @@ export class MenuToolbarComponent implements OnInit {
 
 
   public routes: PathMotel[] = [
-    { path: "/account", icon: "account_circle", name: "My Account" },
-    { path: "/cart", icon: "shopping_cart", name: "My Cart" },
-    { path: "/orders", icon: "local_shipping", name: "My Orders" },
+    { path: "/home/account", icon: "account_circle", name: "My Account" },
+    { path: "/home/cart", icon: "shopping_cart", name: "My Cart" },
+    { path: "/home/order/history", icon: "local_shipping", name: "My Orders" },
     { path: "logout", icon: "logout", name: "Logout" },
   ]
   public mobileRoutes: PathMotel[] = [
@@ -36,30 +38,24 @@ export class MenuToolbarComponent implements OnInit {
     { path: "menu", icon: "menu" },
   ]
 
-  public currentItems: CurrentItemModel[]
-
-  private unsubscribeToStore: Function;
+  public items: number
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private cartService: CartService,
   ) { }
 
   ngOnInit(): void {
     this.subscribeToStore()
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribeToStore()
-  }
-
   private subscribeToStore(): void {
-    this.unsubscribeToStore = store.subscribe(
-      () => {
-        this.currentItems = [...store.getState().cart.cart.getItems()];
+    this.cartService.cart$.subscribe(
+      (cart: CartModel) => {
+        this.items = cart.getItems().length
       }
     )
-    this.currentItems = [...store.getState().cart.cart.getItems()];
   }
 
   public onClick(path: string): Promise<boolean> {

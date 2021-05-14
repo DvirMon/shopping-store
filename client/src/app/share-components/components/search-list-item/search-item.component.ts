@@ -6,11 +6,11 @@ import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
-  selector: 'app-search-list-item',
-  templateUrl: './search-list-item.component.html',
-  styleUrls: ['./search-list-item.component.scss']
+  selector: 'app-search-item',
+  templateUrl: './search-item.component.html',
+  styleUrls: ['./search-item.component.scss']
 })
-export class SearchListItemComponent implements OnInit {
+export class SearchItemComponent implements OnInit {
 
   @Input() public product: ProductModel;
   @Input() public searchTerm: string;
@@ -29,4 +29,4 @@ export class SearchListItemComponent implements OnInit {
     ).alias
   }
 
-} 
+}

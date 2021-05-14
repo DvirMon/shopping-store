@@ -8,7 +8,6 @@ export class CartModel {
     private isActive?: boolean,
     private createDate?: Date,
     private items?: CurrentItemModel[],
-    private totalPrice?: number
 
   ) { }
 
@@ -20,7 +19,6 @@ export class CartModel {
       payload.isActive,
       payload.createDate,
       payload?.items ? payload.items : [],
-      payload.totalPrice
     )
   }
 
@@ -55,17 +53,13 @@ export class CartModel {
 
   public getTotalPrice(): number {
     if (this.items.length > 0) {
-      this.totalPrice = this.items
+      return this.items
         .map(item => item.quantity * item.productRef.price)
         .reduce((accumulator, currentValue) => accumulator + currentValue);
-      return this.totalPrice
     }
     return 0
   }
 
-  public setTotalPrice(totalPrice: number): void {
-    this.totalPrice = totalPrice;
-  }
 
   // METHODS SECTION
 
@@ -86,23 +80,34 @@ export class CartModel {
   }
 
   // mtethod to find if cart item exist
-  public isCartItem(cartItem: CartItemModel): boolean {
-    if (this.findCartItem(cartItem.productRef)) {
+  public isCartItem(currentItem: CurrentItemModel): boolean {
+    if (this.findCartItem(currentItem.productRef._id)) {
       return true
     }
     return false
   }
 
-  public addItem(cartItem: CurrentItemModel) {
-    this.items.push(cartItem)
+  public addItem(currentItem: CurrentItemModel) {
+
+
+    if (this.isCartItem(currentItem)) {
+      return
+    }
+    const items = this.getItems()
+    items.push(currentItem)
+    this.items = [...items]
   }
 
-  public updateItem(cartItem: CurrentItemModel) {
+  public updateItem(currentItem: CurrentItemModel) {
 
-    const itemIndex = this.findItemIndex(cartItem._id);
+    const itemIndex = this.findItemIndex(currentItem._id);
 
     if (itemIndex >= 0) {
-      this.items[itemIndex] = { ...cartItem }
+      const items = this.getItems()
+
+      items[itemIndex] = { ...currentItem }
+
+      this.setItems(items)
     }
 
   }
@@ -110,7 +115,9 @@ export class CartModel {
   public deleteitem(_id: string) {
     const itemIndex = this.findItemIndex(_id);
     if (itemIndex >= 0) {
-      this.items.splice(itemIndex, 1)
+      const items = this.getItems()
+      items.splice(itemIndex, 1)
+      this.setItems(items)
     }
   }
 

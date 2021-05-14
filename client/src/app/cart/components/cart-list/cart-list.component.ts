@@ -12,19 +12,20 @@ import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-i
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 
-import { environment } from 'src/environments/environment'
 
-import { Observable, of } from 'rxjs';
-import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { cartState } from 'src/app/utilities/ngrx/state/cart-state';
 
 import { store } from 'src/app/utilities/redux/store';
+
+import { environment } from 'src/environments/environment'
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss'],
-  // changeDetection : ChangeDetectionStrategy.OnPush
+  changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
@@ -34,27 +35,27 @@ export class CartListComponent implements OnInit, OnDestroy {
   public searchControl = new FormControl();
   public cartTotalPrice: number;
 
-  public cart: CartModel = new CartModel();
-  public cart$: Observable<CartState> = this.cartService.cart$
+  public isMobile : Observable<boolean> = this.formService.isMobile()
+
+  public cart$: Observable<typeof cartState> = this.cartService.cart$
 
   private user: UserModel = new UserModel();
   private unsubscribeToStore: Function;
 
   constructor(
     private router: Router,
-
-    private receiptService: ReceiptService,
+    private formService : FormService,
     private cartService: CartService,
+    private receiptService: ReceiptService,
+    
+    private cart: CartModel
   ) { }
 
   ngOnInit(): void {
     this.subscribeToStore();
+    this.subscribeToCartState()
 
-    this.cart$.subscribe(
-      (payload) => {
-        console.log(payload.cart.getItems())
-      }
-    )
+
 
   }
 
@@ -67,18 +68,20 @@ export class CartListComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     this.unsubscribeToStore = store.subscribe(
       () => {
-        this.cart = store.getState().cart.cart;
         this.user = store.getState().auth.user;
-        this.cartTotalPrice = this.cart.getTotalPrice()
       }
     )
-    this.cart = store.getState().cart.cart;
     this.user = store.getState().auth.user;
-    this.cartTotalPrice = this.cart.getTotalPrice()
 
   }
 
-
+  private subscribeToCartState() {
+    this.cart$.subscribe(
+      (state: typeof cartState) => {
+        this.cart = state
+      }
+    )
+  }
 
 
   // end of subscribe section
@@ -101,11 +104,6 @@ export class CartListComponent implements OnInit, OnDestroy {
 
 
   // LOGIC SECTION
-
-  // calcaulate total cart price
-
-  private getTotelProce() {
-  }
 
   // navigate to order
   public goToOrder(): Promise<boolean> {

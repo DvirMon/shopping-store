@@ -18,9 +18,6 @@ import { map } from 'rxjs/operators';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
 import { Observable, Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
-
 
 export interface imageParams {
   cols: number,
@@ -124,12 +121,12 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
 
   // method to subscribt to store data
   private subscribeToStore(): void {
-    store.subscribe(
-      () => {
-        this.cart = store.getState().cart.cart;
+
+    this.cartService.cart$.subscribe(
+      (cart: CartModel) => {
+        this.cart = cart
       }
     )
-    this.cart = store.getState().cart.cart;
 
   }
 
@@ -139,7 +136,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
         if (this.quantityControl.errors) {
           this.quantityControl.setValue(1)
           quantity = 1
-          console.log(quantity)
         }
       })
     ).subscribe()
@@ -149,7 +145,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.unsubscribeToMobile = this.isMobile.subscribe(
       (isMobile) => {
-        console.log(isMobile)
         if (isMobile) {
           this.params = { cols: 1, height: 150, width: 150 }
         }
@@ -181,6 +176,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   // HTTP SECTION
 
   public handleRequest(): void {
+
 
     if (this.cart.getItems().length === 0) {
       return this.crateCart()
@@ -227,9 +223,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   private handleRequestSuccess(cartItem: CurrentItemModel): void {
 
     if (this.editMode) {
-      this.formService.handleStore(ActionType.UpdateCartItem, cartItem)
     } else {
-      this.formService.handleStore(ActionType.AddCartItem, cartItem)
       this.cartService.emitEditState(true);
     }
     this.cartService.emitCartItem(cartItem)

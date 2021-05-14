@@ -20,7 +20,7 @@ import { InputUploadComponent } from './components/input-upload/upload-input.com
 import { DialogComponent } from './components/dialog/dialog.component';
 
 import { SearchComponent } from './components/search/search.component';
-import { SearchListItemComponent } from './components/search-list-item/search-list-item.component';
+import { SearchItemComponent } from './components/search-list-item/search-item.component';
 
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
@@ -51,7 +51,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
     DialogComponent,
 
     SearchComponent,
-    SearchListItemComponent,
+    SearchItemComponent,
 
     ProductThumbnailComponent,
     ProductsCategoriesComponent,
@@ -82,7 +82,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
     DialogComponent,
 
     SearchComponent,
-    SearchListItemComponent,
+    SearchItemComponent,
 
 
     HighLightPipe,

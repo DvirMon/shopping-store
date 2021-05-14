@@ -1,8 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CartModel } from 'src/app/utilities/models/cart-model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
@@ -10,17 +12,17 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './cart-button.component.html',
   styleUrls: ['./cart-button.component.scss']
 })
-export class CartButtonComponent implements OnInit ,OnDestroy{
+export class CartButtonComponent implements OnInit, OnDestroy {
 
-  @Input() public drawerCart: MatSidenav 
+  @Input() public drawerCart: MatSidenav
   @Input() isAdmin: boolean
 
   public isMobile: Observable<boolean> = this.productsService.isMobile()
   public currentItems: CurrentItemModel[]
-
-  private unsubscribeToStore: Function;
+  public items: number
 
   constructor(
+    private cartService: CartService,
     private productsService: ProductsService
   ) { }
 
@@ -29,16 +31,14 @@ export class CartButtonComponent implements OnInit ,OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeToStore()
   }
 
   private subscribeToStore(): void {
-    this.unsubscribeToStore = store.subscribe(
-      () => {
-        this.currentItems = [...store.getState().cart.cart.getItems()];
+    this.cartService.cart$.subscribe(
+      (cart: CartModel) => {
+        this.items = cart.getItems().length
       }
     )
-    this.currentItems = [...store.getState().cart.cart.getItems()];
   }
 
   public onDrawerCart() {

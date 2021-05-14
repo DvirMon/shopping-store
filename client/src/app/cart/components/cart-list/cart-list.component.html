@@ -2,7 +2,7 @@
 
 <mat-toolbar *ngIf="!orderMode">
 
-  <button mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
+  <button *ngIf="!(isMobile | async)" mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
   <span class="spacer"></span>
   <button mat-icon-button type="button" (click)="deleteAllCartItems()">
     <mat-icon>delete</mat-icon>
@@ -32,7 +32,7 @@
 <!-- end of tool bar header - order-->
 <!--products list  -->
 <mat-nav-list>
-  <app-cart-list-item *ngFor="let cartItem of (cart$ | async).cart.getItems() " [cartItem]="cartItem" [orderMode]="orderMode"
+  <app-cart-list-item *ngFor="let cartItem of (cart$ | async).getItems()" [cartItem]="cartItem" [orderMode]="orderMode"
     [searchTerm]="searchControl.value">
   </app-cart-list-item>
 </mat-nav-list>
@@ -40,10 +40,9 @@
 <!--   footer  - products-->
 <mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile mat-icon class="my-cart">
-    <mat-icon [matBadge]=" (cart.getItems()).length > 0 ? cart.getItems().length : '' " matBadgeColor="warn">
-      shopping_cart</mat-icon>
+    <mat-icon [matBadge]="(cart$ | async).getItems().length" matBadgeColor="warn">shopping_cart</mat-icon>
   </mat-grid-tile>
-  <mat-grid-tile class="my-cart" colspan="2">{{cartTotalPrice | currency}}</mat-grid-tile>
+  <mat-grid-tile class="my-cart" colspan="2">{{(cart$ | async).getTotalPrice() | currency}}</mat-grid-tile>
   <mat-grid-tile class="payment" colspan="2">
     <button class="btn-payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
   </mat-grid-tile>
@@ -51,5 +50,5 @@
 
 <!-- toll bar footer  - order-->
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
-  <mat-grid-tile class="my-cart">Total : {{cartTotalPrice | currency}}</mat-grid-tile>
+  <mat-grid-tile class="my-cart">Total : {{(cart$ | async).getTotalPrice() | currency}}</mat-grid-tile>
 </mat-grid-list>

@@ -6,14 +6,14 @@ import { FormService } from './form.service';
 import { CartModel } from '../utilities/models/cart-model';
 import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 import { store } from '../utilities/redux/store';
 import { ActionType } from '../utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
-import { CartState } from '../utilities/ngrx/state/cart-state';
+import { cartState } from '../utilities/ngrx/state/cart-state';
 import { Store } from '@ngrx/store';
 import * as CartActions from '../utilities/ngrx/action'
 
@@ -23,7 +23,7 @@ import * as CartActions from '../utilities/ngrx/action'
 })
 export class CartService {
 
-  public cart$: Observable<CartState> = this.ngrxStore.select('cart');
+  public cart$: Observable<CartModel> = this.ngrxStore.select('cart');
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
@@ -36,7 +36,8 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private ngrxStore: Store<{ cart: CartState }>,
+    // private ngrxStore: Store<{ cart: CartState }>,
+    private ngrxStore: Store<{ cart: typeof cartState }>,
   ) { }
 
 
@@ -62,7 +63,6 @@ export class CartService {
         if (!payload) {
           const cart = new CartModel()
           this.formService.handleStore(ActionType.AddCart, cart)
-          // this.ngrxStore.dispatch({ type: CartActions.ADD_CART, cart })
           return of(cart)
         }
 
@@ -99,10 +99,8 @@ export class CartService {
   // GET request - get latest cart items : : http://localhost:3000/api/cart-item/:cartId"
   public getCurentCartItems(cart: CartModel): Observable<CartModel> {
     return this.http.get<CurrentItemModel[]>(this.cartItemUrl + `/${cart.get_id()}`).pipe(
-      map(cartItems => {
-        cart.setItems(cartItems)
-        this.formService.handleStore(ActionType.SetCartItems, cartItems)
-        this.ngrxStore.dispatch(new CartActions.AddCartItems(cartItems))
+      map(currentItems => {
+        cart.setItems(currentItems)
         return cart
       })
     )
@@ -110,19 +108,27 @@ export class CartService {
 
   // POST request - add cart item : http://localhost:3000/api/cart-item"
   public addCartItem(cartItem: CartItemModel): Observable<CurrentItemModel> {
-    return this.http.post<CurrentItemModel>(this.cartItemUrl, cartItem)
+    return this.http.post<CurrentItemModel>(this.cartItemUrl, cartItem).pipe(
+      tap((currentItem: CurrentItemModel) => {
+        this.ngrxStore.dispatch(new CartActions.AddCartItem(currentItem))
+      })
+    )
   }
 
   // PUT request - update cart item : http://localhost:3000/api/cart-item/:_id"
   public updateCartItem(cartItem: CartItemModel): Observable<CurrentItemModel> {
-    return this.http.put<CurrentItemModel>(this.cartItemUrl + `/${cartItem._id}`, cartItem)
+    return this.http.put<CurrentItemModel>(this.cartItemUrl + `/${cartItem._id}`, cartItem).pipe(
+      tap((currentItem: CurrentItemModel) => {
+        this.ngrxStore.dispatch(new CartActions.UpdateCartItem(currentItem))
+      }))
   }
 
   // DELETE request - delete cart item : http://localhost:3000/api/cart-item/:_id"
   public deleteCartItem(_id) {
     this.http.delete(this.cartItemUrl + `/${_id}`).subscribe(
       () => {
-        this.formService.handleStore(ActionType.DeleteCartItem, _id)
+        // this.formService.handleStore(ActionType.DeleteCartItem, _id)
+        this.ngrxStore.dispatch(new CartActions.DeleteCartItem(_id))
         this.formService.handleStore(ActionType.DeleteReceiptItem, _id)
       }
     )
