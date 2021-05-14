@@ -18,6 +18,7 @@ import { map } from 'rxjs/operators';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 import { store } from 'src/app/utilities/redux/store';
 import { Observable, Subscription } from 'rxjs';
+import { CartItemService } from 'src/app/services/cart-item.service';
 
 export interface imageParams {
   cols: number,
@@ -59,6 +60,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
 
     private formService: FormService,
     private cartService: CartService,
+    private cartItemService : CartItemService,
 
     public product: ProductModel,
     public cart: CartModel,
@@ -164,7 +166,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private subscribeToCartItem() {
-    this.unsubscribeCartItem = this.cartService.getCartItemSubject().subscribe(
+    this.unsubscribeCartItem = this.cartItemService.getCartItemSubject().subscribe(
       (curentItem: CurrentItemModel) => {
         this.cartItem = CartItemModel.create(curentItem)
       })
@@ -201,7 +203,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private AddCartItem(): void {
-    this.cartService.addCartItem(this.cartItem).subscribe(
+    this.cartItemService.addCartItem(this.cartItem).subscribe(
       (cartItem: CurrentItemModel) => {
         this.handleRequestSuccess(cartItem)
       }
@@ -209,7 +211,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private updateCartItem(): void {
-    this.cartService.updateCartItem(this.cartItem).subscribe(
+    this.cartItemService.updateCartItem(this.cartItem).subscribe(
       (cartItem: CurrentItemModel) => {
         this.handleRequestSuccess(cartItem)
         this.distinctChange = false
@@ -226,7 +228,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     } else {
       this.cartService.emitEditState(true);
     }
-    this.cartService.emitCartItem(cartItem)
+    this.cartItemService.emitCartItem(cartItem)
 
   }
 
@@ -247,7 +249,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   private cartItemUpdateValue() {
     const currentItem = this.cart.findCartItem(this.product._id);
     if (currentItem) {
-      this.cartService.emitCartItem(currentItem)
+      this.cartItemService.emitCartItem(currentItem)
       this.cartService.emitEditState(true);
     } else {
       this.cartItemDefaultValues()
@@ -257,10 +259,10 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   // default values for cart item
   private cartItemDefaultValues(): void {
     const currentItem = CurrentItemModel.create(this.product, this.cart.get_id())
-    this.cartService.emitCartItem(currentItem)
+    this.cartItemService.emitCartItem(currentItem)
     this.cartService.emitEditState(false);
   }
-
+ 
   private setDilaogProps(): void {
     this.product = this.data.payload.product;
     this.alias = this.data.payload.alias;

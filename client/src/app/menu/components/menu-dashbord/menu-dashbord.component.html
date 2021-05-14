@@ -1,3 +1,5 @@
 <mat-sidenav-container>
-  <app-products-categories cols="2" [rowHeight]="(isMobile | async) ? '20' : '60'"></app-products-categories>
+  <app-last-purchase *ngIf="(isMobile | async)"></app-last-purchase>
+  <app-products-categories cols="1" [rowHeight]="(isMobile | async) ? '25' : '60'"></app-products-categories>
 </mat-sidenav-container>
+

@@ -7,6 +7,8 @@ const cartItemLogic = require("../business-layer-logic/cart-item-logic");
 const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
+
+
 // GET request - get Items by cart-  http://localhost:3000/api/cart-item/:cartId"
 router.get("/:cartId", async (request, response, next) => {
   try {

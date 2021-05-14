@@ -32,6 +32,7 @@ export class CartResolver implements Resolve<any> {
     if (this.user) {
       return this.cartService.getLatestCart(this.user._id).pipe(
         tap((cart: CartModel) => {
+          console.log(cart)
           this.ngrxStore.dispatch(new CartActions.AddCart(cart))
         })
       )

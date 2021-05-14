@@ -7,12 +7,12 @@
     height: 100px;
 
     .title {
+      height: 100px;
       display: flex;
       justify-content: center;
       vertical-align: middle;
 
       h1 {
-        height: 80px;
         margin: 0;
         font-size: 50px;
         opacity: 0;
@@ -45,6 +45,6 @@
 
 @media screen and (max-width: 600px) {
   .members {
-    height: 180vh;
+    height: 80vh;
   }
 }

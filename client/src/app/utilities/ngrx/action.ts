@@ -46,9 +46,14 @@ export class DeleteCartItem implements Action {
     (public payload: any) { }
 }
 
+export class DeleteCart implements Action {
+  readonly type = CartActionType.DELETE_CART
+}
+
 export type CartActions =
   AddCart |
   SetCartItems |
   AddCartItem |
   UpdateCartItem |
-  DeleteCartItem
+  DeleteCartItem |
+  DeleteCart

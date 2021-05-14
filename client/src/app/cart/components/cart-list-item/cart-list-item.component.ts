@@ -7,6 +7,7 @@ import { ProductsService } from 'src/app/services/products.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { CartItemService } from 'src/app/services/cart-item.service';
 
 @Component({
   selector: 'app-cart-list-item',
@@ -26,35 +27,25 @@ export class CartListItemComponent implements OnInit {
   constructor(
     private productService: ProductsService,
     private cartService: CartService,
+    private cartItemService: CartItemService,
     private dialogService: DialogService,
     private receiptService: ReceiptService,
-    // public product: ProductModel,
 
   ) { }
 
   ngOnInit(): void {
 
     this.handleRowSpan();
-    this.subscribeToStore();
     this.handleQuantity();
     this.getProductAlias();
     this.setReceiptItem();
   }
 
 
-  // subscription section
-
-  private subscribeToStore(): void {
-    // store.subscribe(
-    //   () => {
-    //     this.cartProducts = store.getState().cart.cartProducts;
-    //   }
-    // )
-    // this.cartProducts = store.getState().cart.cartProducts;
-  }
+  // SUBSCIPTION SECTION
 
   private subscribeToSubject(): void {
-    this.cartService.getCartItemSubject().subscribe(
+    this.cartItemService.getCartItemSubject().subscribe(
       (cartItem: CurrentItemModel) => {
         if (cartItem._id === this.cartItem._id) {
           this.quantity = cartItem.quantity
@@ -64,7 +55,7 @@ export class CartListItemComponent implements OnInit {
   }
 
 
-  // request section
+  // HTTP SECTION
   public deleteCartItem(): void {
 
     const answer = confirm("Delete Item ?")
@@ -73,7 +64,7 @@ export class CartListItemComponent implements OnInit {
       return
     }
 
-    this.cartService.deleteCartItem(this.cartItem._id)
+    this.cartItemService.deleteCartItem(this.cartItem._id)
   }
 
   // end of request section
@@ -95,7 +86,7 @@ export class CartListItemComponent implements OnInit {
   // open product dialog
   public onUpdateClick(): void {
     this.dialogService.handleProductDialog({ product: this.cartItem.productRef, alias: this.alias })
-  } 
+  }
 
 
   // style for cart item
@@ -104,7 +95,7 @@ export class CartListItemComponent implements OnInit {
   }
 
   // update cart item quantity on dom
-  private handleQuantity() : void{
+  private handleQuantity(): void {
     this.quantity = this.cartItem.quantity
     this.subscribeToSubject()
   }

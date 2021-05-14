@@ -35,7 +35,7 @@ export class MenuToolbarComponent implements OnInit {
     { path: "/home", icon: "home" },
     { path: "account", icon: "account_circle" },
     { path: "cart", icon: "shopping_cart" },
-    { path: "menu", icon: "menu" },
+    { path: "order/history", icon: "local_shipping" },
   ]
 
   public items: number

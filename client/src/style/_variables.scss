@@ -2,7 +2,7 @@
 @import "~bootstrap/scss/bootstrap-grid";
 
 $colors: (
-  info: #5bc0de,
+  info: #068297,
   text: #ffffff,
   input-error : #f44336,
   error: #721c24,
@@ -10,7 +10,7 @@ $colors: (
   forbidden: #f3727d,
 );
 
-$grid-breakpoints: (
+$grid-breakpoints: ( 
   xs: 0,
   sm: 576px,
   md: 840px,

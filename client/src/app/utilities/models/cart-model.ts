@@ -1,4 +1,5 @@
 import { CartItemModel, CurrentItemModel } from './cart-item-model'
+import { ProductModel } from './product-model';
 
 export class CartModel {
 
@@ -119,6 +120,15 @@ export class CartModel {
       items.splice(itemIndex, 1)
       this.setItems(items)
     }
+  }
+
+  public findProduct(): ProductModel {
+
+    if (this.items.length > 0) {
+      return this.items[0].productRef
+    }
+    return null
+
   }
 
 

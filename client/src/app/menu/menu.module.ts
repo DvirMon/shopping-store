@@ -11,7 +11,7 @@ import { MenuToolbarComponent } from './components/menu-toolbar/menu-toolbar.com
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartModule } from '../cart/cart.module';
-import { MenuComponent } from './components/menu/menu.component';
+import { LastPurchaseComponent } from './components/last-purchase/last-purchase.component';
 
 
 
@@ -23,7 +23,7 @@ import { MenuComponent } from './components/menu/menu.component';
     MenuToolbarComponent,
     AccountComponent,
     CartComponent,
-    MenuComponent
+    LastPurchaseComponent
   ],
   imports: [
     CoreModule,

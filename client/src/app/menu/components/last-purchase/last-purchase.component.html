@@ -1,0 +1,21 @@
+<mat-toolbar>
+  Our Grocery Store
+</mat-toolbar>
+
+<mat-grid-list *ngIf="product" cols="1" rowHeight="5vh">
+  <mat-grid-tile>
+    You recently purchase :
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="3">
+    <app-product-thumbnail [product]="product" [imageHeight]="120" [imageWidth]="120"></app-product-thumbnail>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list *ngIf="!product" cols="3" rowHeight="5vh">
+  <mat-grid-tile colspan="3">
+    In Our Grocery You can find:
+  </mat-grid-tile>
+  <mat-grid-tile *ngFor="let image of images" rowspan="3">
+    <img src="/assets/images/menu/{{image}}.png" width="80px">
+  </mat-grid-tile>
+</mat-grid-list>

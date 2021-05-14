@@ -22,7 +22,6 @@ import { RootComponent } from './components/root/root.component';
 import { AppComponent } from './components/app/app.component';
 import { BarComponent } from './components/bar/bar.component';
 
-import { DashbordComponent } from './components/dashbord/dashbord.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
@@ -54,7 +53,6 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
     HomePageComponent,
     MembersComponent,
     ProductsSlideComponent,
-    DashbordComponent,
     OrdersHistoryComponent,
   ],
   imports: [

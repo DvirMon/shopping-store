@@ -13,7 +13,6 @@ import { RootComponent } from './components/root/root.component';
 import { MenuDashbordComponent } from './components/menu-dashbord/menu-dashbord.component';
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
-import { MenuComponent } from './components/menu/menu.component';
 
 
 const routes: Routes = [
@@ -38,10 +37,6 @@ const routes: Routes = [
       {
         path: "cart",
         component: CartComponent
-      },
-      {
-        path: "menu",
-        component: MenuComponent
       },
       {
         path: "products",

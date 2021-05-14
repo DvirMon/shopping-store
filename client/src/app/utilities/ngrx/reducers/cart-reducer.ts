@@ -16,9 +16,7 @@ export function cartReducer(oldState = cartState, action: CartActions) {
     case CartActionType.SET_CART_ITEMS: {
 
       cart.setItems(action.payload)
-      console.log(cart)
       newState = cart
-      console.log(newState)
 
       break
     }
@@ -34,6 +32,11 @@ export function cartReducer(oldState = cartState, action: CartActions) {
     }
     case CartActionType.DELETE_CART_ITEM: {
       cart.deleteitem(action.payload)
+      newState = cart
+      break
+    }
+    case CartActionType.DELETE_CART: {
+      cart.setItems([])
       newState = cart
       break
     }
