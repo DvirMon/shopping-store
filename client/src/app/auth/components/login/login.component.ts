@@ -9,6 +9,9 @@ import { UserModel } from 'src/app/utilities/models/user-model';
 
 import { store } from 'src/app/utilities/redux/store';
 import { Observable } from 'rxjs';
+import { SocialUser } from 'angularx-social-login';
+import { GoogleService } from 'src/app/services/google.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 @Component({
@@ -21,15 +24,18 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup
 
   public isLogin: boolean
-  public isCartActive: boolean
   public serverError: string
 
   public isMobile: Observable<boolean> = this.formService.isMobile()
 
   constructor(
     private router: Router,
+
     private formService: FormService,
     private authService: AuthService,
+    private googleService: GoogleService,
+    private dialogService: DialogService,
+
     public user: UserModel,
   ) { }
 
@@ -37,6 +43,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.createForm()
     this.subscribeToStore()
+    this.googleService.authStatus()
   }
 
   // SUBSCRIBTION SECTION
@@ -45,12 +52,10 @@ export class LoginComponent implements OnInit {
     store.subscribe(() => {
       this.isLogin = store.getState().auth.isLogin
       this.user = store.getState().auth.user
-      this.isCartActive = store.getState().cart.cart.getIsActive()
     }
     )
     this.isLogin = store.getState().auth.isLogin
     this.user = store.getState().auth.user
-    this.isCartActive = store.getState().cart.cart.getIsActive()
 
   }
 
@@ -84,6 +89,23 @@ export class LoginComponent implements OnInit {
   // navigate to restart password
   public onForget(): Promise<boolean> {
     return this.router.navigateByUrl(`/auth/reset`)
+  }
+
+  public async signInWithGoogle() {
+    await this.googleService.signInWithGoogle()
+    this.googleLogin()
+  }
+
+  private googleLogin(): void {
+
+    const socialUser: SocialUser = store.getState().auth.socialUser
+
+    if (socialUser) {
+      this.authService.loginGoogle(socialUser).subscribe(
+        (user: UserModel) => this.authService.handleRoleRoute(user),
+        (err) => this.dialogService.handleErrorDialog(err)
+      )
+    }
   }
 
   // end logic section

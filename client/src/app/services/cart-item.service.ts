@@ -6,6 +6,7 @@ import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 import { CartModel } from '../utilities/models/cart-model';
+import { ProductModel } from '../utilities/models/product-model';
 import * as  CartActions from "../utilities/ngrx/action";
 import { cartState } from '../utilities/ngrx/state/cart-state';
 
@@ -14,14 +15,14 @@ import { cartState } from '../utilities/ngrx/state/cart-state';
 })
 export class CartItemService {
 
-  private cartItemSubject = new Subject<CurrentItemModel>();
+  private currentItemSubject = new Subject<CurrentItemModel>();
 
 
   private url: string = `${environment.server}/api/cart-item`
 
 
   constructor(
-    private http : HttpClient,
+    private http: HttpClient,
     private ngrxStore: Store<{ cart: typeof cartState }>,
 
   ) { }
@@ -30,7 +31,7 @@ export class CartItemService {
   // GETTER SECTION
 
   public getCartItemSubject(): Subject<CurrentItemModel> {
-    return this.cartItemSubject
+    return this.currentItemSubject
   }
 
   // HTTP SECTION
@@ -64,7 +65,7 @@ export class CartItemService {
   }
 
   // DELETE request - delete cart item : http://localhost:3000/api/cart-item/:_id"
-  public deleteCartItem(_id) {
+  public deleteCartItem(_id: string) {
     this.http.delete(this.url + `/${_id}`).subscribe(
       () => {
         this.ngrxStore.dispatch(new CartActions.DeleteCartItem(_id))
@@ -73,8 +74,29 @@ export class CartItemService {
     )
   }
 
-  public emitCartItem(cartItem: CurrentItemModel) {
-    return this.cartItemSubject.next(cartItem)
+  // SUBJET SECTION
+
+  public emitCurrentItem(cartItem: CurrentItemModel) {
+    return this.currentItemSubject.next(cartItem)
+  }
+
+  //LOGIC SECTION
+
+  public addTempItem(product: ProductModel, quantity: number) : CurrentItemModel {
+    const currentItem = CurrentItemModel.create(product, quantity, null)
+    this.ngrxStore.dispatch(new CartActions.AddCartItem(currentItem))
+    return currentItem
+  }
+
+  public updateTempItem(product: ProductModel, quantity: number) : CurrentItemModel{
+    const currentItem = CurrentItemModel.create(product, quantity, null)
+    this.ngrxStore.dispatch(new CartActions.UpdateCartItem(currentItem))
+    return currentItem
+  }
+
+  public deleteTempItem(_id: string) {
+    this.ngrxStore.dispatch(new CartActions.DeleteCartItem(_id))
+
   }
 
 }

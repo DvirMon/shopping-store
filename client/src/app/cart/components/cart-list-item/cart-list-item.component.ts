@@ -36,23 +36,11 @@ export class CartListItemComponent implements OnInit {
   ngOnInit(): void {
 
     this.handleRowSpan();
-    this.handleQuantity();
     this.getProductAlias();
     this.setReceiptItem();
   }
 
 
-  // SUBSCIPTION SECTION
-
-  private subscribeToSubject(): void {
-    this.cartItemService.getCartItemSubject().subscribe(
-      (cartItem: CurrentItemModel) => {
-        if (cartItem._id === this.cartItem._id) {
-          this.quantity = cartItem.quantity
-        }
-      }
-    )
-  }
 
 
   // HTTP SECTION
@@ -93,14 +81,6 @@ export class CartListItemComponent implements OnInit {
   private handleRowSpan(): void {
     this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
   }
-
-  // update cart item quantity on dom
-  private handleQuantity(): void {
-    this.quantity = this.cartItem.quantity
-    this.subscribeToSubject()
-  }
-
-
 
 
 }

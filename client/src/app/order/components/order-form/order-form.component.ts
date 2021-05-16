@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { CartService } from 'src/app/services/cart.service';
 
 
 @Component({
@@ -27,16 +28,16 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   public orderForm: FormGroup;
   public cartTotalPrice: number;
 
-  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  public isMobile$: Observable<boolean> = this.formService.isMobile()
+
+  private cart$: Observable<CartModel> = this.cartService.cart$
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
+
     private formService: FormService,
     private orderService: OrderService,
+    private cartService: CartService,
+
     private order: OrderModel,
     public user: UserModel,
     public cart: CartModel,
@@ -46,6 +47,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.createForm();
     this.subscribeToStore();
+    this.subscribeTCart()
     this.orderDefaultValues();
   }
 
@@ -60,13 +62,17 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     store.subscribe(
       () => {
         this.user = store.getState().auth.user;
-        this.cart = store.getState().cart.cart;
-        this.cartTotalPrice = store.getState().cart.cart.getTotalPrice()
       }
     )
     this.user = store.getState().auth.user;
-    this.cart = store.getState().cart.cart;
-    this.cartTotalPrice = store.getState().cart.cart.getTotalPrice()
+  }
+
+  private subscribeTCart() {
+    this.cart$.subscribe(
+      (cart: CartModel) => {
+        this.cart = cart
+      }
+    )
   }
 
   private subscribeToForm(): void {
@@ -127,7 +133,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   private orderDefaultValues(): void {
     this.order.cartId = this.cart.get_id()
     this.order.userId = this.user._id
-    this.order.totalPrice = this.cartTotalPrice
+    this.order.totalPrice = this.cart.getTotalPrice()
   }
 
   // end of logic section

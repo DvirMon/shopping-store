@@ -27,11 +27,6 @@ CartSchema.statics.build = function (cart) {
   return new Cart(cart)
 }
 
-CartSchema.statics.createCart = async function () {
-  const cart = Cart.build();
-  return await cart.save();
-}
-
 CartSchema.statics.setCart = async function () {
 
   return cart === null
@@ -39,9 +34,9 @@ CartSchema.statics.setCart = async function () {
     : Cart.build(cart)
 }
 
-CartSchema.statics.findCart = async function (payload) {
+CartSchema.statics.findCart = async function (userId) {
 
-  const cart = await Cart.findOne({ userId: payload.userId })
+  const cart = await Cart.findOne({ userId })
     .sort([["createDate", -1]])
     .exec();
 
@@ -49,12 +44,16 @@ CartSchema.statics.findCart = async function (payload) {
     return Cart.build(cart)
   }
 
-  return await Cart.create(payload)
-
-
+  return null
 }
 
-CartSchema.methods.get_id = function () {
+CartSchema.statics.updateCart = async function (payload) {
+  const cart = Cart.findCart(payload)
+  cart = { ...payload }
+  return await cart.save()
+}
+ 
+CartSchema.methods.get_id = function () { 
   return this._id
 }
 

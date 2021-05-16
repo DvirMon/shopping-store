@@ -6,7 +6,7 @@
     </button>
   </div>
   <div class="dialog-content-container">
-    <div *ngIf="!(isMobile | async)" class="dialog-content">
+    <div *ngIf="!(isMobile$ | async)" class="dialog-content">
       <div class="dialog-image">
         <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="params?.height"
           [imageWidth]="params?.width">
@@ -42,7 +42,7 @@
         </mat-grid-list>
       </div>
     </div>
-    <mat-grid-list *ngIf="(isMobile | async)" cols="1" rowHeight="11vh">
+    <mat-grid-list *ngIf="(isMobile$ | async)" cols="1" rowHeight="11vh">
       <mat-grid-tile rowspan="2">
         <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="params?.height"
           [imageWidth]="params?.width">

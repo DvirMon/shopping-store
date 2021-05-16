@@ -7,7 +7,7 @@ import { CartModel } from '../utilities/models/cart-model';
 import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 
 import { map, switchMap, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { store } from '../utilities/redux/store';
 // import { ActionType } from '../utilities/redux/action-type';
@@ -20,6 +20,7 @@ import * as  CartActions from "../utilities/ngrx/action";
 import { environment } from 'src/environments/environment';
 import { ActionType } from '../utilities/redux/action-type';
 import { CartItemService } from './cart-item.service';
+import { ProductModel } from '../utilities/models/product-model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,8 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private ngrxStore: Store<{ cart: typeof cartState }>,
-    private formService : FormService,
-    private cartItemService : CartItemService
+    private formService: FormService,
+    private cartItemService: CartItemService
   ) { }
 
 
@@ -50,46 +51,26 @@ export class CartService {
 
   // HTTP SECTION
 
-  // GET request - latest cart : http://localhost:3000/api/carts/latest/:cartId"
-  public getLatestCart(userId): Observable<CartModel> {
-    return this.http.get<CartModel>(this.url + `/latest/${userId}`).pipe(
-      take(1),
-      switchMap((payload: CartModel) => {
-
-
-        if (!payload) {
-          const cart = new CartModel()
-          return of(cart)
-        }
-
-        const cart = CartModel.create(payload)
-        if (cart.getIsActive()) {
-          // get cart items
-          return this.cartItemService.getCurentCartItems(cart)
-        }
-
-        return of(cart)
-      }))
-  }
-
-  // GET request - create new cart : http://localhost:3000/api/carts"
-
-  private tempCart(): Observable<CartModel> {
-    return this.http.get<CartModel>(this.url)
+  // GET request - user cart : http://localhost:3000/api/carts/user/:userId"
+  private getUserCart(userId): Observable<CartModel> {
+    return this.http.get<CartModel>(this.url + `/user/${userId}`)
   }
 
   // POST request - create new cart with user : http://localhost:3000/api/carts"
-  private userCart(userId: string): Observable<CartModel> {
+  private createCart(userId: string): Observable<CartModel> {
     return this.http.post<CartModel>(this.url, { userId })
+  }
+
+  // PUT request - update temp cart with user : http://localhost:3000/api/carts"
+  private updateUserCart(cart: CartModel) {
+    return this.http.put<CartModel>(this.url, cart)
+
   }
 
   // PATCH request - change cart status : http://localhost:3000/api/carts/:cartId"
   public deactivateCart(cartId: string): Observable<Object> {
     return this.http.patch(this.url + `/${cartId}`, { isActive: false })
   }
-
-
-  // ----------------------------------------------------------------------------------//
 
   // DELETE request -delete cart and cart item : http://localhost:3000/api/carts/:_id"
   public deleteCartAndCartItems(_id) {
@@ -100,37 +81,49 @@ export class CartService {
     )
   }
 
-
   // LOIGC SECTION
 
-  // main method for new cart
-  public createCart(cartItem: CartItemModel): Observable<CurrentItemModel> {
+  // main method for to get latest cart
+  public getCart(userId: string): Observable<CartModel> {
 
-    const user = store.getState().auth.user
-
-    return (user
-      ? this.userCart(user._id)
-      : this.tempCart()
-    ).pipe(
+    return this.getUserCart(userId).pipe(
+      take(1),
       switchMap((cart: CartModel) => {
-        return this.createCartLogic(cart, cartItem)
+
+        // create new cart
+        if (!cart) {
+          return this.createCart(userId)
+        }
+
+        // get active cart items
+        return this.cartItemService.getCurentCartItems(CartModel.create(cart))
       }))
   }
 
-
-  private createCartLogic(cart, cartItem): Observable<CurrentItemModel> {
-    const cartModel = CartModel.create(cart)
-    this.ngrxStore.dispatch(new CartActions.AddCart(cart))
-    cartItem.cartId = cartModel.get_id()
-    return this.cartItemService.addCartItem(cartItem)
+  public updateCart(cart: CartModel) {
+    return this.updateUserCart(cart).pipe(
+      tap((cart: CartModel) => {
+        this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+        sessionStorage.removeItem("cart")
+      })
+    )
   }
 
 
+  // SUBJECT SECTION
 
   public emitEditState(state: boolean) {
     this.editCartState.next(state);
   }
 
+  // LOGIC SECTION
+  public createTempCart() {
+    const cart = CartModel.getSessionCart()
+    this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+    CartModel.setSeeeionCart(cart)
+    this.emitEditState(true)
+  }
+
 
 }
-//
+

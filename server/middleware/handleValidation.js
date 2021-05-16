@@ -29,7 +29,6 @@ const isUserExist = async (request, response, next) => {
 
   try {
 
-
     const data = request.body.data ? request.body.data : request.body
 
     if (data.email) {

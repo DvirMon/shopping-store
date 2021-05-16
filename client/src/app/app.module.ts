@@ -27,8 +27,6 @@ import { MembersComponent } from './components/members/members.component';
 import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
 
 import { InfoComponent } from './components/info/info.component';
-import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component';
-
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // ENVIROMENT
@@ -48,7 +46,7 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
     BarComponent,
     RootComponent,
     InfoComponent,
-    GoogleSignInComponent,
+    
     PageNotFoundComponent,
     HomePageComponent,
     MembersComponent,

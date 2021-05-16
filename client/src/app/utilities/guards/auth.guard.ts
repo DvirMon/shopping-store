@@ -10,8 +10,7 @@ import { store } from '../redux/store';
 })
 export class AuthGuard implements CanActivate {
 
-  private refreshToken: string
-
+  private isLogin: boolean
 
   constructor(
     private tokenServcie: TokenService,
@@ -22,7 +21,10 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    this.refreshToken = store.getState().auth.refreshToken
-    return this.refreshToken ? this.tokenServcie.getAccessToken() : true
+
+      this.isLogin = store.getState().auth.isLogin
+      console.log(this.isLogin)
+
+    return this.isLogin ? this.tokenServcie.getAccessToken() : true
   }
 }

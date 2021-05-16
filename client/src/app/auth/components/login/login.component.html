@@ -4,6 +4,11 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="1" rowHeight="8vh">
+        <mat-grid-tile>
+          <button mat-raised-button type="button" (click)="signInWithGoogle()">
+            Continue with Google
+          </button>
+        </mat-grid-tile>
         <mat-grid-tile rowspan="2">
           <app-input [control]="loginForm.controls['email']" controlName="email" placeHolder="Email" type="email"
             loginHint="true" serverErrorMode="true" hint="a valid email format : dom@gmail.com">
@@ -17,8 +22,7 @@
       </mat-grid-list>
       <mat-grid-list cols="1" rowHeight="9vh">
         <mat-grid-tile>
-          <button class="login" [disabled]="loginForm.invalid" mat-raised-button
-            type="submit">Login</button>
+          <button class="login" [disabled]="loginForm.invalid" mat-raised-button type="submit">Login</button>
         </mat-grid-tile>
         <mat-grid-tile>
           <button color="primary" mat-raised-button type="button" (click)="onForget()">

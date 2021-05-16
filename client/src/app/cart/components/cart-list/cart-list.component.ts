@@ -47,7 +47,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     private formService : FormService,
     private cartService: CartService,
     private receiptService: ReceiptService,
-    
+
     private cart: CartModel
   ) { }
 

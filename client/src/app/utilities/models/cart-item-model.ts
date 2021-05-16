@@ -20,10 +20,10 @@ export class CurrentItemModel {
     public productRef?: ProductModel,
     public quantity?: number,
     public cartId?: string,
-  ) { }
+  ) { } 
 
-  static create(product: ProductModel, cartId: string): CurrentItemModel {
-    return new CurrentItemModel(null, product, 1, cartId)
+  static create(product: ProductModel, quantity: number, cartId: string): CurrentItemModel {
+    return new CurrentItemModel(null, product, quantity, cartId)
   }
 
 }

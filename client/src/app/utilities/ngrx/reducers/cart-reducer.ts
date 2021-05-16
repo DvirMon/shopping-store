@@ -1,7 +1,10 @@
 import { CartModel } from "../../models/cart-model";
+import { store } from "../../redux/store";
 import { CartActions } from "../action";
 import { CartActionType } from "../action-type";
 import { cartState } from "../state/cart-state";
+
+const isLogin = store.getState().auth.isLogin
 
 export function cartReducer(oldState = cartState, action: CartActions) {
 
@@ -10,6 +13,8 @@ export function cartReducer(oldState = cartState, action: CartActions) {
 
   switch (action.type) {
     case CartActionType.ADD_CART: {
+
+
       newState = CartModel.create(action.payload)
       break
     }
@@ -21,7 +26,10 @@ export function cartReducer(oldState = cartState, action: CartActions) {
       break
     }
     case CartActionType.ADD_CART_ITEM: {
+
       cart.addItem(action.payload)
+
+
       newState = cart
       break
     }
@@ -41,6 +49,8 @@ export function cartReducer(oldState = cartState, action: CartActions) {
       break
     }
   }
+
+
 
   return newState
 

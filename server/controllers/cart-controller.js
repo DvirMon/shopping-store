@@ -12,30 +12,17 @@ const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
 
-// GET request - create new cart : http://localhost:3000/api/carts"
+
+// GET request - get user cart - http://localhost:3000/api/carts/user/:userId"
 router.get(
-  "/",
-  async (request, response, next) => {
-    try {
-
-      const cart = await Cart.createCart();
-
-      response.status(201).json(cart);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-
-// GET request - get latest cart of user - http://localhost:3000/api/carts/latest/:cartId"
-router.get(
-  "/latest/:userId",
+  "/user/:userId",
   middleware.authorize(false, key),
   async (request, response, next) => {
     try {
-      const cart = await cartLogic.getLatestCartAsync(request.params.userId);
+      const cart = await Cart.findCart(request.params.userId);
       response.json(cart);
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }
@@ -47,24 +34,37 @@ router.post(
   middleware.authorize(false, key),
   async (request, response, next) => {
     try {
-      // valid if user exist (for postmen)
 
-      const user = await authLogic.isUserExist(request.body.userId);
-
-      if (!user) {
-        return next({ status: 404, message: "user is not exist" });
-      }
-
-      const cart = await Cart.findCart(request.body)
+      const cart = await Cart.create(request.body)
 
       response.status(201).json(cart);
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }
 );
 
 
+// PUT request - update cart  : http://localhost:3000/api/carts"
+router.put("/",
+  middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+
+      const cart = request.body
+
+      console.log(cart)
+
+      const updatedCart = await Cart.updateCart(cart);
+      response.json(updatedCart);
+    } catch (err) {
+
+      console.log(err)
+      next(err);
+    }
+  }
+);
 
 // PATCH request - update cart status : http://localhost:3000/api/carts/:cartId"
 router.patch(
@@ -85,7 +85,7 @@ router.patch(
   }
 );
 
-// DELETE request -delete cart and cart item : http://localhost:3000/api/carts/:_id"
+// DELETE request - delete cart and cart item : http://localhost:3000/api/carts/:_id"
 router.delete(
   "/:_id",
   middleware.authorize(false, key),

@@ -16,11 +16,26 @@ export class CartModel {
 
     return new CartModel(
       payload._id,
-      payload?.userId,
-      payload.isActive,
-      payload.createDate,
+      payload?.userId ? payload.userId : null,
+      payload.isActive ? payload.isActive : true,
+      payload.createDate ? payload.createDate : new Date(),
       payload?.items ? payload.items : [],
     )
+  }
+
+  static getSessionCart(): CartModel {
+
+    const cart = JSON.parse(sessionStorage.getItem("cart"))
+    if (cart) {
+      return this.create(cart)
+    }
+    return new CartModel()
+
+  }
+
+  static setSeeeionCart(cart) {
+    console.log(1)
+    sessionStorage.setItem("cart", JSON.stringify(cart))
   }
 
 
@@ -66,7 +81,15 @@ export class CartModel {
 
   // method to find cart item index by id
   private findItemIndex(_id: string): number {
-    return this.items.findIndex(item => item._id === _id);
+
+    if (_id !== null) {
+      return this.items.findIndex(item => item._id === _id);
+    }
+
+  }
+
+  private findItemIndexByProduct(_id: string): number {
+    return this.items.findIndex(item => item.productRef?._id === _id);
   }
 
 
@@ -88,6 +111,7 @@ export class CartModel {
     return false
   }
 
+
   public addItem(currentItem: CurrentItemModel) {
 
 
@@ -101,20 +125,29 @@ export class CartModel {
 
   public updateItem(currentItem: CurrentItemModel) {
 
-    const itemIndex = this.findItemIndex(currentItem._id);
+
+    const itemIndex = this.findItemIndex(currentItem._id) >= 0
+      ? this.findItemIndex(currentItem._id)
+      : this.findItemIndexByProduct(currentItem.productRef._id)
 
     if (itemIndex >= 0) {
-      const items = this.getItems()
 
+      const items = this.getItems()
       items[itemIndex] = { ...currentItem }
 
       this.setItems(items)
     }
 
+
   }
 
   public deleteitem(_id: string) {
-    const itemIndex = this.findItemIndex(_id);
+
+    const itemIndex = this.findItemIndex(_id) >= 0
+      ? this.findItemIndex(_id)
+      : this.findItemIndexByProduct(_id)
+
+
     if (itemIndex >= 0) {
       const items = this.getItems()
       items.splice(itemIndex, 1)

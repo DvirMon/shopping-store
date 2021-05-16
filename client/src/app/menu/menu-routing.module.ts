@@ -13,6 +13,7 @@ import { RootComponent } from './components/root/root.component';
 import { MenuDashbordComponent } from './components/menu-dashbord/menu-dashbord.component';
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
+import { OrderGuard } from '../utilities/guards/order.guard';
 
 
 const routes: Routes = [
@@ -55,6 +56,7 @@ const routes: Routes = [
       // ORDER MODULE
       {
         path: "order",
+        canActivate: [OrderGuard],
         loadChildren: () => import('../order/order.module').then(m => m.OrderModule)
       },
 

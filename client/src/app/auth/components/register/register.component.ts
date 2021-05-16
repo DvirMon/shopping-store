@@ -42,11 +42,9 @@ export class RegisterComponent {
   public onSubmit() {
     const user: UserModel = { ...this.registerForm.controls }
 
-    console.log(user)
-
-    // this.authService.register(user).subscribe(
-    //   (user: UserModel) => this.router.navigateByUrl(`/home/${user._id}`)
-    // )
+    this.authService.register(user).subscribe(
+      (user: UserModel) => this.router.navigateByUrl(`/home}`)
+    )
   }
   // end of request section
 

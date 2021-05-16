@@ -17,9 +17,8 @@ import { switchMap, map } from 'rxjs/operators';
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
 
-
 import { environment } from 'src/environments/environment';
-import { Action } from 'rxjs/internal/scheduler/Action';
+import { CartModel } from '../utilities/models/cart-model';
 
 declare const gapi: any;
 
@@ -115,9 +114,16 @@ export class AuthService {
 
 
   // method to auto login
-  public async autoLogin() {
-    const token: string = store.getState().auth.refreshToken
-    const user: UserModel = store.getState().auth.user
+  public async autoLogin(): Promise<boolean> {
+
+    const token: string = store.getState().auth.refreshToken;
+    const user: UserModel = store.getState().auth.user;
+    const cart: CartModel = CartModel.getSessionCart();
+
+    if (cart) {
+      return this.handleRoleRoute(user)
+    }
+
     if (!token) {
       await this.googleService.signOutWithGoogle()
       this.logout()
@@ -126,12 +132,12 @@ export class AuthService {
     if (store.getState().auth.socialUser) {
       await this.googleService.signInWithGoogle()
     }
-    this.handleRoleRoute(user)
+
+    return this.handleRoleRoute(user)
   }
 
   // method to navigate according to user role
   public handleRoleRoute(user: UserModel): Promise<boolean> {
-
 
     if (!user) {
       return this.router.navigateByUrl("home")

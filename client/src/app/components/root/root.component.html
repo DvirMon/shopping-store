@@ -4,15 +4,11 @@
 
   <app-members *ngIf="show"></app-members>
 
-  <mat-grid-list *ngIf="show" cols="1" [rowHeight]="(isMobile | async) ? '20vh' : '33vh'">
+  <!-- <mat-grid-list *ngIf="show" cols="1" [rowHeight]="(isMobile | async) ? '20vh' : '33vh'">
     <mat-grid-tile>
       <h1>
         Shop by Category!
       </h1>
     </mat-grid-tile>
-  </mat-grid-list>
-
-  <app-products-categories *ngIf="showCategories" [cols]="(isMobile | async) ? '2' : '6'" [rowHeight]="(isMobile | async) ? '25' : '70'"></app-products-categories>
-
-
+  </mat-grid-list> -->
 </div>

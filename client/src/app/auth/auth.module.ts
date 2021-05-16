@@ -11,6 +11,7 @@ import { RootComponent } from './components/root/root.component';
 import { AuthBarComponent } from './components/auth-bar/auth-bar.component';
 
 import { LoginComponent } from './components/login/login.component';
+import { GoogleSignInComponent } from './components/google-sign-in/google-sign-in.component';
 import { RegisterComponent } from './components/register/register.component';
 
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
@@ -26,8 +27,10 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
 
     LoginComponent,
     RegisterComponent,
-    ResetAuthComponent,
 
+    GoogleSignInComponent,
+
+    ResetAuthComponent,
     ResetConfirmComponent,
     ResetNewPasswordComponent,
 

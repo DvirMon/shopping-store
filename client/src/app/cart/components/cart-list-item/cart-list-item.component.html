@@ -9,7 +9,7 @@
     <span [innerHTML]="cartItem.productRef?.name  | titlecase | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{quantity * cartItem.productRef?.price| currency}}
+    {{cartItem.quantity * cartItem.productRef?.price| currency}}
   </mat-grid-tile>
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
     <button type="button" mat-icon-button (click)="deleteCartItem()">
@@ -17,7 +17,7 @@
     </button>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="rowSpan" class="align-left">
-    {{quantity}} units
+    {{cartItem.quantity}} units
   </mat-grid-tile>
   <mat-grid-tile rowspan="1" *ngIf="!orderMode">
     <button mat-button color="warn" type="button" (click)="onUpdateClick()">Update</button>

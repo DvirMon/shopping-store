@@ -10,11 +10,11 @@
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
-        <app-date-input [control]="shippingDate" [mobile]="(isHandset$ | async)"></app-date-input>
+        <app-date-input [control]="shippingDate" [mobile]="(isMobile$ | async)"></app-date-input>
       </mat-step>
       <mat-step [stepControl]="creditCard">
         <ng-template matStepLabel>Payment</ng-template>
-        <app-credit-card [control]="creditCard"></app-credit-card>
+        <app-credit-card [control]="creditCard"></app-credit-card> 
         <mat-grid-list cols="1" rowHeight="5vh">
           <mat-grid-tile>
             <button mat-button [disabled]="orderForm.invalid" type="button" (click)="onPayment()">Confirm And
