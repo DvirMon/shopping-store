@@ -15,7 +15,7 @@ import { store } from '../utilities/redux/store';
 
 import { Store } from '@ngrx/store';
 import { cartState } from '../utilities/ngrx/state/cart-state';
-import * as  CartActions from "../utilities/ngrx/action";
+import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
 import { ActionType } from '../utilities/redux/action-type';
@@ -53,12 +53,23 @@ export class CartService {
 
   // GET request - user cart : http://localhost:3000/api/carts/user/:userId"
   private getUserCart(userId): Observable<CartModel> {
-    return this.http.get<CartModel>(this.url + `/user/${userId}`)
+    return this.http.get<CartModel>(this.url + `/user/${userId}`).pipe(
+      map((cart: CartModel) => {
+
+        if (cart) {
+          return CartModel.create(cart)
+        }
+      }
+      ))
   }
 
   // POST request - create new cart with user : http://localhost:3000/api/carts"
   private createCart(userId: string): Observable<CartModel> {
-    return this.http.post<CartModel>(this.url, { userId })
+    return this.http.post<CartModel>(this.url, { userId }).pipe(
+      map((cart: CartModel) => {
+        return CartModel.create(cart)
+      }
+      ))
   }
 
   // PUT request - update temp cart with user : http://localhost:3000/api/carts"
@@ -96,7 +107,7 @@ export class CartService {
         }
 
         // get active cart items
-        return this.cartItemService.getCurentCartItems(CartModel.create(cart))
+        return this.cartItemService.getCurentCartItems(cart)
       }))
   }
 

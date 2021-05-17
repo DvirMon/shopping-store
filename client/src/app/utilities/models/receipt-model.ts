@@ -1,5 +1,5 @@
-export class ReceiptItemData {
- 
+export class ReceiptItemModel {
+
   public constructor(
     public id: string,
     public name: string,

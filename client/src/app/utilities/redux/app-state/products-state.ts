@@ -4,7 +4,6 @@ import { PaginationDataModel } from '../../models/pagination-model';
 
 export class ProductsAppState {
 
-  // public products: ProductModel[] = []
   public categories: CategoryModel[] = []
   public beverages: PaginationDataModel = new PaginationDataModel();
   public sweets: PaginationDataModel = new PaginationDataModel();

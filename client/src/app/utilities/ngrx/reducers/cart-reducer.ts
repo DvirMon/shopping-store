@@ -1,10 +1,8 @@
-import { CartModel } from "../../models/cart-model";
-import { store } from "../../redux/store";
-import { CartActions } from "../action";
-import { CartActionType } from "../action-type";
 import { cartState } from "../state/cart-state";
+import { CartActions } from "../actions/cart-action";
+import { CartActionType } from "../action-type";
 
-const isLogin = store.getState().auth.isLogin
+import { CartModel } from "../../models/cart-model";
 
 export function cartReducer(oldState = cartState, action: CartActions) {
 

@@ -6,7 +6,6 @@ export enum ActionType {
   SocialUser,
   AddAccessToken,
   AddRefreshToken,
-  IsMobile,
 
   // Cart ActionType
   AddCart,

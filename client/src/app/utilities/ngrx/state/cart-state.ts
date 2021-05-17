@@ -3,7 +3,7 @@ import { store } from '../../redux/store';
 
 const isLogin = store.getState().auth.isLogin
 
-let cart: CartModel = new CartModel()
+let cart: CartModel
 
 
 if (!isLogin) {

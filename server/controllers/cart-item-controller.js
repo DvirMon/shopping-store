@@ -38,6 +38,25 @@ router.post("/",
     }
   });
 
+// POST request - add cart item : http://localhost:3000/api/cart-item/all"
+router.post("/all",
+  middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+
+      const items = [...request.body]   
+
+      const currentItems = await CartItem.insertMany(items)
+
+      console.log(currentItems)
+
+      response.status(201).json(currentItems);
+    } catch (err) {
+      console.log(err)
+      next(err);
+    }
+  });
+
 // PUT request - update cart item
 router.put("/:_id",
   middleware.authorize(false, key),

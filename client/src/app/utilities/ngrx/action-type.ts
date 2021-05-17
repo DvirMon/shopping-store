@@ -9,3 +9,12 @@ export enum CartActionType {
   DELETE_CART = 'DELETE_CART'
 
 }
+
+export enum AuthActionType {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+  ADD_SOCIEL_USER = "ADD_SOCIEL_USER",
+  ADD_ACCESS_TOKEN = "ADD_ACCESS_TOKEN",
+  ADD_REFRESH_TOKEN = "ADD_REFRESH_TOKEN",
+
+}

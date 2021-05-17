@@ -26,9 +26,6 @@ export const authReducer = (oldAppState = new AuthAppState(), action: Action): A
       newAppState.refreshToken = action.payload
       sessionStorage.setItem("jwt", action.payload);
       break
-    case ActionType.IsMobile:
-      newAppState.isMobile = action.payload
-      break
     case ActionType.Logout:
       newAppState.isLogin = false
       newAppState.isAdmin = null

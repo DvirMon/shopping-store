@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
 
 
       this.isLogin = store.getState().auth.isLogin
-      console.log(this.isLogin)
 
     return this.isLogin ? this.tokenServcie.getAccessToken() : true
   }

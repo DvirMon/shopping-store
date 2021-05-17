@@ -198,6 +198,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
         })
     } else {
       this.handleAddTmepItem()
+      CartModel.setSeeeionCart(this.cart)
     }
   }
 
@@ -216,6 +217,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     }
     const currentItem = this.cartItemService.updateTempItem(this.product, this.quantityControl.value)
     this.cartItemService.emitCurrentItem(currentItem)
+    CartModel.setSeeeionCart(this.cart)
     this.distinctChange = false
 
   }

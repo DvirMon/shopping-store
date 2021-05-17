@@ -40,6 +40,7 @@ CartSchema.statics.findCart = async function (userId) {
     .sort([["createDate", -1]])
     .exec();
 
+
   if (cart && cart.isActive) {
     return Cart.build(cart)
   }
@@ -48,12 +49,12 @@ CartSchema.statics.findCart = async function (userId) {
 }
 
 CartSchema.statics.updateCart = async function (payload) {
-  const cart = Cart.findCart(payload)
-  cart = { ...payload }
+  const cart = await Cart.findCart(payload.userId)
+  cart.items = [...payload.items]
   return await cart.save()
 }
- 
-CartSchema.methods.get_id = function () { 
+
+CartSchema.methods.get_id = function () {
   return this._id
 }
 

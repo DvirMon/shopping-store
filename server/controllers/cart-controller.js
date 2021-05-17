@@ -37,7 +37,7 @@ router.post(
 
       const cart = await Cart.create(request.body)
 
-      response.status(201).json(cart);
+      response.status(201).json(cart); 
     } catch (err) {
       console.log(err)
       next(err);
@@ -53,9 +53,6 @@ router.put("/",
     try {
 
       const cart = request.body
-
-      console.log(cart)
-
       const updatedCart = await Cart.updateCart(cart);
       response.json(updatedCart);
     } catch (err) {

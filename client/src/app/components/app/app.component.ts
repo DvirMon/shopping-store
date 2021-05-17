@@ -16,12 +16,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formService : FormService
   ) { }
 
-  ngOnInit(): void { 
-    this.authService.autoLogin()
-    this.formService.handleStore(ActionType.IsMobile, this.formService.isMobile())
+  ngOnInit(): void {
+    this.authService.autoLogin() 
   }
 
 }

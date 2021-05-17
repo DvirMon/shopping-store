@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { FormService } from './form.service';
 
-import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
-import { ReceiptItemData } from '../utilities/models/receipt-model';
+import { CurrentItemModel } from '../utilities/models/cart-item-model';
+import { ReceiptItemModel } from '../utilities/models/receipt-model';
 import { ProductModel } from '../utilities/models/product-model';
 import { OrderModel } from '../utilities/models/order-model';
 
@@ -12,6 +12,7 @@ import { store } from '../utilities/redux/store';
 
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -106,13 +107,13 @@ export class ReceiptService {
   public setReceiptItem(product: ProductModel, cartItem: CurrentItemModel): void {
     if (product) {
 
-      const recipeItem = new ReceiptItemData(
+      const recipeItem = new ReceiptItemModel(
         cartItem._id,
         product.name,
         product.price.toString(),
         cartItem.quantity.toString(),
         (cartItem.quantity * product.price).toString(),
-        
+
       )
       this.formService.handleStore(ActionType.AddReceiptItem, recipeItem)
     }

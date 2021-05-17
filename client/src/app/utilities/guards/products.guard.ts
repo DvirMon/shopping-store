@@ -12,7 +12,7 @@ import { store } from '../redux/store';
 })
 export class ProductsGuard implements CanActivate {
 
-  private isLogin: boolean = store.getState().auth.isLogin
+  private isLogin: boolean
 
   constructor(
     private tokenServcie: TokenService,
@@ -21,6 +21,8 @@ export class ProductsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+      this.isLogin = store.getState().auth.isLogin
 
     return this.isLogin
       ? this.tokenServcie.isTokenExpired('accessToken')

@@ -120,7 +120,7 @@ export class AuthService {
     const user: UserModel = store.getState().auth.user;
     const cart: CartModel = CartModel.getSessionCart();
 
-    if (cart) {
+    if (cart.getItems().length > 0) {
       return this.handleRoleRoute(user)
     }
 
