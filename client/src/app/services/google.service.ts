@@ -3,18 +3,19 @@ import { Injectable } from '@angular/core';
 import { FormService } from './form.service';
 
 // GOOGLE SIGN-IN SERVICE
-import { SocialAuthService } from "angularx-social-login";
+import { SocialAuthService, SocialUser } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
 
 // GOOGLE RECAPTCHA
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
-// REDUX
-import { ActionType } from '../utilities/redux/action-type';
-import { store } from '../utilities/redux/store';
-
 // RXJS
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+
+// NGRX
+import { Store } from '@ngrx/store';
+import { AuthState } from '../utilities/ngrx/state/auth-state';
+import * as AuthActions from '../utilities/ngrx/actions/auth-actions'
 
 @Injectable({
   providedIn: 'root'
@@ -22,41 +23,30 @@ import { Observable } from 'rxjs';
 export class GoogleService {
 
   constructor(
-    private socialAuthService : SocialAuthService,
-    private reCaptchaV3Service : ReCaptchaV3Service,
-    private formService : FormService
+    private socialAuthService: SocialAuthService,
+    private reCaptchaV3Service: ReCaptchaV3Service,
+
+    private formService: FormService,
+
+    private store: Store<{ auth: AuthState }>
   ) { }
 
 
   public authStatus() {
-    this.socialAuthService.authState.subscribe((user) => {
-      this.formService.handleStore(ActionType.SocialUser, user)
+    this.socialAuthService.authState.subscribe((socielUser: SocialUser) => {
+      this.store.dispatch(new AuthActions.AddSocielUser(socielUser))
     });
   }
 
-  public async signInWithGoogle() {
-    try {
-      await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-
-    }
-    catch (err) {
-      console.log("SIGN-IN")
-      console.log(err)
-    }
-  }
-  public async signOutWithGoogle() {
-    try {
-      if (store.getState().auth.socialUser) {
-        await this.socialAuthService.signOut()
-      }
-    }
-    catch (err) {
-      console.log("SIGN-OUT")
-      console.log(err)
-    }
+  public loginGoogle(): Observable<SocialUser> {
+    return from(this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID))
   }
 
-    public getReCaptcha(action: string): Observable<string> {
+  public logoutGoogle(): Observable<any> {
+    return from(this.socialAuthService.signOut())
+  }
+
+  public getReCaptcha(action: string): Observable<string> {
     return this.reCaptchaV3Service.execute(action)
   }
 

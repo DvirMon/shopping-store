@@ -17,6 +17,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { store } from 'src/app/utilities/redux/store';
+import { AuthService } from 'src/app/services/auth.service';
 
 export interface imageParams {
   cols: number,
@@ -35,14 +36,13 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild(MatTooltip) toolTip: MatTooltip;
   @ViewChild('cartItemQuantity') cartItemQuantity: NgModel;
 
-  private isLogin: boolean = store.getState().auth.isLogin
-
-  private distinctChange: boolean = false
-  private editState: boolean = false
-
   private unsubscribeCartItem: Subscription
   private unsubscribeToEdit: Subscription
   private unsubscribeToMobile: Subscription
+
+  private isLogin: boolean = this.authService.auth.isLogin
+  private distinctChange: boolean = false
+  private editState: boolean = false
 
   public quantityControl: FormControl
 
@@ -58,6 +58,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
     private formService: FormService,
+    private authService : AuthService,
     private cartService: CartService,
     private cartItemService: CartItemService,
 

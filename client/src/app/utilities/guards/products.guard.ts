@@ -6,6 +6,7 @@ import { UserModel } from '../models/user-model';
 import { TokenService } from '../../services/token.service';
 
 import { store } from '../redux/store';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,15 @@ export class ProductsGuard implements CanActivate {
 
   constructor(
     private tokenServcie: TokenService,
+    private authService : AuthService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      this.isLogin = store.getState().auth.isLogin
-
-    return this.isLogin
-      ? this.tokenServcie.isTokenExpired('accessToken')
+      return this.authService.auth.isLogin
+      ? this.tokenServcie.isTokenExpired(this.authService.auth.accessToken)
       : true
 
   }

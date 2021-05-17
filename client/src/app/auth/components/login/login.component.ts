@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup
 
-  public isLogin: boolean
+  public isLogin: boolean = this.authService.auth.isLogin
   public serverError: string
 
   public isMobile: Observable<boolean> = this.formService.isMobile()
@@ -42,20 +42,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm()
-    this.subscribeToStore()
+    // this.subscribeToStore()
     this.googleService.authStatus()
   }
 
   // SUBSCRIBTION SECTION
 
   public subscribeToStore(): void {
-    store.subscribe(() => {
-      this.isLogin = store.getState().auth.isLogin
-      this.user = store.getState().auth.user
-    }
-    )
-    this.isLogin = store.getState().auth.isLogin
-    this.user = store.getState().auth.user
+    // store.subscribe(() => {
+    //   this.isLogin = store.getState().auth.isLogin
+    //   this.user = store.getState().auth.user
+    // }
+    // )
+    // this.isLogin = store.getState().auth.isLogin
+    // this.user = store.getState().auth.user
 
   }
 
@@ -69,16 +69,27 @@ export class LoginComponent implements OnInit {
   }
 
 
-  // LOGIC SECTION
+  // HTTP SECTION
 
-  // method to handle login
+  // login
   public onSubmit(): void {
 
     this.authService.login(this.loginForm.value).subscribe(
-      (user: UserModel) => this.authService.handleRoleRoute(user),
+      (user: UserModel) => this.authService.handleRoleRoute(),
       (err) => this.authService.serverError.next(err.error)
     )
   }
+
+
+  // login with google
+  public loginGoogle() {
+    this.authService.loginGoogle().subscribe(
+      (user: UserModel) => this.authService.handleRoleRoute(),
+      (err) => this.dialogService.handleErrorDialog(err)
+    )
+  }
+
+  // NAVIGATE SECTION
 
   // navigate to register page
   public onRegister(): Promise<boolean> {
@@ -91,23 +102,5 @@ export class LoginComponent implements OnInit {
     return this.router.navigateByUrl(`/auth/reset`)
   }
 
-  public async signInWithGoogle() {
-    await this.googleService.signInWithGoogle()
-    this.googleLogin()
-  }
-
-  private googleLogin(): void {
-
-    const socialUser: SocialUser = store.getState().auth.socialUser
-
-    if (socialUser) {
-      this.authService.loginGoogle(socialUser).subscribe(
-        (user: UserModel) => this.authService.handleRoleRoute(user),
-        (err) => this.dialogService.handleErrorDialog(err)
-      )
-    }
-  }
-
-  // end logic section
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { store } from '../redux/store';
 
@@ -10,10 +11,9 @@ import { store } from '../redux/store';
 })
 export class AuthGuard implements CanActivate {
 
-  private isLogin: boolean
-
   constructor(
     private tokenServcie: TokenService,
+    private authService: AuthService
   ) {
   }
 
@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 
-      this.isLogin = store.getState().auth.isLogin
-
-    return this.isLogin ? this.tokenServcie.getAccessToken() : true
+    return this.authService.auth.isLogin
+      ? this.tokenServcie.getAccessToken()
+      : true
   }
 }

@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,  OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
-
 import { ResetModel, ResetService } from 'src/app/services/reset.service';
 
 
@@ -27,13 +26,9 @@ export class ResetAuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.subscribtToControl()
-
   }
 
-  ngAfterViewInit(): void {
-  }
 
   // SUBSCRIBTION SECTION
 
@@ -62,7 +57,6 @@ export class ResetAuthComponent implements OnInit {
   // HTTP SECTION
 
   public onSubmit() {
-    console.log(this.control.value)
     this.resetService.getConfirmationCode(this.control.value).subscribe(
       (payload: ResetModel) => {
         this.resetService.setResetData(payload);

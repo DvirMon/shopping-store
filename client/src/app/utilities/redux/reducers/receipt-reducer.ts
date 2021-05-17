@@ -5,8 +5,6 @@ import { ActionType } from "../action-type";
 
 import { ReceiptAppState } from '../app-state/receipt-stata';
 
-import { CartModel } from 'src/app/utilities/models/cart-model';
-
 export const receiptReducer = (oldAppState = new ReceiptAppState(), action: Action): ReceiptAppState => {
 
   let newAppState = { ...oldAppState }
@@ -28,9 +26,6 @@ export const receiptReducer = (oldAppState = new ReceiptAppState(), action: Acti
       break
 
     case ActionType.ResetReceiptState:
-      newAppState = new ReceiptAppState()
-      break
-    case ActionType.Logout:
       newAppState = new ReceiptAppState()
       break
   }

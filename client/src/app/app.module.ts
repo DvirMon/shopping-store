@@ -20,13 +20,10 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { RootComponent } from './components/root/root.component';
 import { AppComponent } from './components/app/app.component';
-import { BarComponent } from './components/bar/bar.component';
 
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
-
-import { InfoComponent } from './components/info/info.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // ENVIROMENT
@@ -43,10 +40,8 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
 @NgModule({
   declarations: [
     AppComponent,
-    BarComponent,
     RootComponent,
-    InfoComponent,
-    
+
     PageNotFoundComponent,
     HomePageComponent,
     MembersComponent,

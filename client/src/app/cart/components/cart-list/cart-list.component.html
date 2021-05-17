@@ -2,7 +2,7 @@
 
 <mat-toolbar *ngIf="!orderMode">
 
-  <button *ngIf="!(isMobile | async)" mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
+  <button *ngIf="!(isMobile$ | async)" mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
   <span class="spacer"></span>
   <button mat-icon-button type="button" (click)="deleteAllCartItems()">
     <mat-icon>delete</mat-icon>
@@ -11,7 +11,7 @@
   <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to store</button>
 
 </mat-toolbar>
-
+ 
 <!-- end of tool bar header - products-->
 
 <!-- tool bar header - order-->

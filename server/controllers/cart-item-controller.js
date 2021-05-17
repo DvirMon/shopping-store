@@ -48,8 +48,6 @@ router.post("/all",
 
       const currentItems = await CartItem.insertMany(items)
 
-      console.log(currentItems)
-
       response.status(201).json(currentItems);
     } catch (err) {
       console.log(err)

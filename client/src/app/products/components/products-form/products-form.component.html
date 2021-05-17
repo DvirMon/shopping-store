@@ -1,7 +1,7 @@
 
 <!-- BAR -->
 <mat-toolbar appBarBackgroundColor>
-  <button *ngIf="isMobile |async" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="closeDrawer()">
+  <button *ngIf="isMobile$ |async" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="closeDrawer()">
     <mat-icon>navigate_next</mat-icon>
   </button>
   <button mat-icon-button type="button" (click)="onClearForm($event)">

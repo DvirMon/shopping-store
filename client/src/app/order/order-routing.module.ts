@@ -15,7 +15,7 @@ const routes: Routes = [
     component: OrdersHistoryComponent
   },
   {
-    path: ":userId/:cartId",
+    path: ":cartId",
     component: OrderComponent,
     resolve: { dates: OrderResolver }
   },

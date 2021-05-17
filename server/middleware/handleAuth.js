@@ -39,6 +39,7 @@ const authorize = (role, key) => (request, response, next) => {
 
     next();
   } catch (err) {
+    console.log(err)
     const message = process.env.JWT_CONFIRMATION ? "Confirmation code has expired" : "Please login to continue";
     next({ message });
   }

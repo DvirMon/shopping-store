@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { UserModel } from 'src/app/utilities/models/user-model';
@@ -16,14 +17,16 @@ export class ProductsCategoriesComponent implements OnInit {
   @Input() cols: string
   @Input() rowHeight: string
 
+  public user : UserModel = this.authService.auth.user
+  
   public categories: CategoryModel[]
   public hide: boolean = true
-  public user : UserModel = store.getState().auth.user
   public isMobile : Observable<boolean> = this.productService.isMobile()
 
   constructor(
     private router: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private authService : AuthService
   ) { }
 
   ngOnInit(): void {

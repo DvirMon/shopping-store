@@ -27,7 +27,7 @@ import { FormService } from 'src/app/services/form.service';
   styleUrls: ['./cart-list.component.scss'],
   changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class CartListComponent implements OnInit, OnDestroy {
+export class CartListComponent implements OnInit {
 
   @Input() public drawer: MatSidenav;
   @Input() public orderMode: boolean = false;
@@ -35,45 +35,26 @@ export class CartListComponent implements OnInit, OnDestroy {
   public searchControl = new FormControl();
   public cartTotalPrice: number;
 
-  public isMobile : Observable<boolean> = this.formService.isMobile()
+  public isMobile$ : Observable<boolean> = this.formService.isMobile()
 
   public cart$: Observable<typeof cartState> = this.cartService.cart$
 
-  private user: UserModel = new UserModel();
-  private unsubscribeToStore: Function;
-
   constructor(
     private router: Router,
+
     private formService : FormService,
     private cartService: CartService,
     private receiptService: ReceiptService,
+
 
     private cart: CartModel
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToStore();
     this.subscribeToCartState()
-
-
-
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribeToStore()
   }
 
   // SUBSCRIBE SECTION
-
-  private subscribeToStore(): void {
-    this.unsubscribeToStore = store.subscribe(
-      () => {
-        this.user = store.getState().auth.user;
-      }
-    )
-    this.user = store.getState().auth.user;
-
-  }
 
   private subscribeToCartState() {
     this.cart$.subscribe(
@@ -113,7 +94,7 @@ export class CartListComponent implements OnInit, OnDestroy {
       return
     }
 
-    return this.router.navigateByUrl(`/home/order/${this.user._id}/${this.cart.get_id()}`)
+    return this.router.navigateByUrl(`/home/order/${this.cart.get_id()}`)
   }
 
   // navigate back to store

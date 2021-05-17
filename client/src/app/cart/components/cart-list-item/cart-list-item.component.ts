@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ProductModel } from 'src/app/utilities/models/product-model';
-import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { ProductsService } from 'src/app/services/products.service';
-import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { CartItemService } from 'src/app/services/cart-item.service';
@@ -19,14 +17,11 @@ export class CartListItemComponent implements OnInit {
   @Input() public orderMode: boolean = false
   @Input() public searchTerm: string
 
-  // public cartProducts: ProductModel[] = []
   public alias: string
-  public rowSpan: number;
   public quantity: number
 
   constructor(
     private productService: ProductsService,
-    private cartService: CartService,
     private cartItemService: CartItemService,
     private dialogService: DialogService,
     private receiptService: ReceiptService,
@@ -34,8 +29,6 @@ export class CartListItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.handleRowSpan();
     this.getProductAlias();
     this.setReceiptItem();
   }
@@ -75,12 +68,5 @@ export class CartListItemComponent implements OnInit {
   public onUpdateClick(): void {
     this.dialogService.handleProductDialog({ product: this.cartItem.productRef, alias: this.alias })
   }
-
-
-  // style for cart item
-  private handleRowSpan(): void {
-    this.orderMode ? this.rowSpan = 2 : this.rowSpan = 1
-  }
-
 
 }

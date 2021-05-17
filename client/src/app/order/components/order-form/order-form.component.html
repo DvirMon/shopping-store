@@ -6,7 +6,7 @@
     <mat-horizontal-stepper #stepper>
       <mat-step [stepControl]="address">
         <ng-template matStepLabel>Address : Enter Address</ng-template>
-        <app-address [controlGroup]="address" [user]="user" [rowHeight]=200></app-address>
+        <app-address [controlGroup]="address" [rowHeight]=200></app-address>
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
@@ -14,7 +14,7 @@
       </mat-step>
       <mat-step [stepControl]="creditCard">
         <ng-template matStepLabel>Payment</ng-template>
-        <app-credit-card [control]="creditCard"></app-credit-card> 
+        <app-credit-card [control]="creditCard"></app-credit-card>
         <mat-grid-list cols="1" rowHeight="5vh">
           <mat-grid-tile>
             <button mat-button [disabled]="orderForm.invalid" type="button" (click)="onPayment()">Confirm And

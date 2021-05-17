@@ -1,5 +1,6 @@
 import { Directive, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { store } from '../redux/store';
 
 @Directive({
@@ -10,10 +11,10 @@ export class BarBackgroundColorDirective {
   @HostBinding("style.backgroundColor") public backgroundColor: string;
   @HostBinding("style.color") public color: string;
 
-  public isAdmin: boolean = store.getState().auth.isAdmin
+  public isAdmin: boolean = this.authServcie.auth.user.isAdmin
 
   constructor(
-    private router: Router
+    private authServcie : AuthService
   ) {
     if (this.isAdmin) {
       this.backgroundColor = "#f44336"

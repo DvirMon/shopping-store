@@ -16,6 +16,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -32,22 +33,23 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   private cart$: Observable<CartModel> = this.cartService.cart$
 
+  public user : OrderModel = this.authService.auth.user
+
   constructor(
 
     private formService: FormService,
     private orderService: OrderService,
     private cartService: CartService,
+    private authService : AuthService,
 
     private order: OrderModel,
-    public user: UserModel,
     public cart: CartModel,
 
   ) { }
 
   ngOnInit(): void {
     this.createForm();
-    this.subscribeToStore();
-    this.subscribeTCart()
+    this.subscribeTCartState()
     this.orderDefaultValues();
   }
 
@@ -56,18 +58,9 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   }
 
 
-  // subscribe section
+  // SUBCRIBTION SECTION
 
-  private subscribeToStore(): void {
-    store.subscribe(
-      () => {
-        this.user = store.getState().auth.user;
-      }
-    )
-    this.user = store.getState().auth.user;
-  }
-
-  private subscribeTCart() {
+  private subscribeTCartState() {
     this.cart$.subscribe(
       (cart: CartModel) => {
         this.cart = cart
@@ -89,12 +82,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
     )
   }
 
-
-  // end of subscribe section
-
-  //------------------------------------------------------//
-
-  // form section
+  // FORM SECTION
 
   private createForm(): FormGroup {
     return this.orderForm = this.formService.orderForm()
@@ -117,7 +105,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   //------------------------------------------------------//
 
 
-  //  request section
+  // HTTP SECTION
 
   public onPayment(): void {
     this.orderService.handleNewOrder(this.order)
@@ -132,7 +120,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   private orderDefaultValues(): void {
     this.order.cartId = this.cart.get_id()
-    this.order.userId = this.user._id
+    this.order.userId = this.authService.auth.user._id
     this.order.totalPrice = this.cart.getTotalPrice()
   }
 

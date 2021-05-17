@@ -124,8 +124,6 @@ export class ReceiptService {
     this.formService.handleStore(ActionType.ResetReceiptState)
   }
 
-
-
   public backToSore(): void {
     this.resetReceiptState()
     this.formService.handleStore(ActionType.ResetCartState)

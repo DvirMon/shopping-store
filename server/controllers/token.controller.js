@@ -26,7 +26,7 @@ router.get(
   }
 );
 
-// get access token 
+// get access token when expired
 router.get(
   "/access-token",
   middleware.authorize(false, process.env.JWT_REFRESH),
@@ -40,7 +40,7 @@ router.get(
     }
   }
 );
-
+ 
 // get refresh token when expired
 router.post("/", async (request, response, next) => {
   try {

@@ -17,12 +17,12 @@ export class AuthBarComponent implements OnInit {
 
   @ViewChild('drawer') drawer;
 
-  public user: UserModel = new UserModel()
-  public opened: boolean = true;
-  public isLogin: boolean = false;
-  public isRegister: boolean = false;
-  public isAdmin: boolean = false;
+  private authState = this.authService.auth
+  public isLogin: boolean = this.authState.isLogin;
+  public user: UserModel = this.authState.user
 
+  public isRegister: boolean = false;
+  public opened: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -35,7 +35,7 @@ export class AuthBarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.subscribeToStore()
+    // this.subscribeToStore()
     this.subscribeToSubject()
 
   }
@@ -43,14 +43,14 @@ export class AuthBarComponent implements OnInit {
   // SUBSCRIPTION SECTION
 
   public subscribeToStore(): void {
-    store.subscribe(() => {
-      this.isLogin = store.getState().auth.isLogin
-      this.isAdmin = store.getState().auth.isAdmin
-      this.user = store.getState().auth.user
-    })
-    this.isLogin = store.getState().auth.isLogin
-    this.isAdmin = store.getState().auth.isAdmin
-    this.user = store.getState().auth.user
+    // store.subscribe(() => {
+    //   this.isLogin = store.getState().auth.isLogin
+    //   this.isAdmin = store.getState().auth.isAdmin
+    //   this.user = store.getState().auth.user
+    // })
+    // this.isLogin = store.getState().auth.isLogin
+    // this.isAdmin = store.getState().auth.isAdmin
+    // this.user = store.getState().auth.user
   }
 
   private subscribeToSubject(): void {
@@ -71,8 +71,7 @@ export class AuthBarComponent implements OnInit {
   }
 
   // navigate logout
-  public async onLogOut(): Promise<boolean> {
-    await this.googleService.signOutWithGoogle();
+  public onLogOut(): Promise<boolean> {
     return this.authService.logout()
   }
 
@@ -86,7 +85,7 @@ export class AuthBarComponent implements OnInit {
   public onHome(): Promise<boolean> {
 
     if (this.isLogin) {
-      return this.authService.handleRoleRoute(this.user)
+      return this.authService.handleRoleRoute()
     }
 
     return this.router.navigateByUrl(`/`)

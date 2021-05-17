@@ -4,6 +4,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { TokenService } from '../../services/token.service';
 import { tap } from 'rxjs/operators';
 import { store } from '../redux/store';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class RoleGuard implements CanActivate {
 
   constructor(
     private tokenServcie: TokenService,
+    private authService : AuthService
   ) { }
 
 
@@ -25,7 +27,7 @@ export class RoleGuard implements CanActivate {
     // verify token?
     return this.tokenServcie.getAccessToken().pipe(
       tap(auth => {
-        const user = store.getState().auth.user
+        const user = this.authService.auth.user
         if (auth && user.isAdmin) {
           return true
         }

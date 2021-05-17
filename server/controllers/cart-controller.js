@@ -5,18 +5,14 @@ const Cart = require("../models/cart-model");
 
 const cartLogic = require("../business-layer-logic/cart-logic");
 const cartItemLogic = require("../business-layer-logic/cart-item-logic");
-const authLogic = require("../business-layer-logic/auth-logic");
 
 const middleware = require("../services/middleware");
-
-const key = process.env.JWT_ACCESS;
-
 
 
 // GET request - get user cart - http://localhost:3000/api/carts/user/:userId"
 router.get(
   "/user/:userId",
-  middleware.authorize(false, key),
+  middleware.authorize(false,  process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
       const cart = await Cart.findCart(request.params.userId);
@@ -31,7 +27,7 @@ router.get(
 // POST request - create new cart : http://localhost:3000/api/carts"
 router.post(
   "/",
-  middleware.authorize(false, key),
+  middleware.authorize(false,  process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
 
@@ -48,7 +44,7 @@ router.post(
 
 // PUT request - update cart  : http://localhost:3000/api/carts"
 router.put("/",
-  middleware.authorize(false, key),
+  middleware.authorize(false,  process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
 
@@ -66,7 +62,7 @@ router.put("/",
 // PATCH request - update cart status : http://localhost:3000/api/carts/:cartId"
 router.patch(
   "/:_id",
-  middleware.authorize(false, key),
+  middleware.authorize(false,  process.env.JWT_ACCESS),
   async (request, response, next) => {
     try {
       const cart = {
@@ -85,7 +81,7 @@ router.patch(
 // DELETE request - delete cart and cart item : http://localhost:3000/api/carts/:_id"
 router.delete(
   "/:_id",
-  middleware.authorize(false, key),
+  middleware.authorize(false,  process.env.JWT_ACCESS),
   async (request, response) => {
     await cartLogic.deleteCartAsync(request.params._id);
     await cartItemLogic.deleteAllCartItemsAsync(request.params._id);

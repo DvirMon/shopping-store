@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { store } from 'src/app/utilities/redux/store';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-products-dashbord',
@@ -27,6 +28,8 @@ export class ProductsDashbordComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  public isAdmin: boolean = this.authService.auth.user.isAdmin
+
   public categories: CategoryModel[] = []
   public products: ProductModel[] = []
   public searchEntries: ProductModel[] = [];
@@ -35,12 +38,12 @@ export class ProductsDashbordComponent implements OnInit {
 
   public isMobile: Observable<boolean> = this.productService.isMobile();
   public cartOpen: boolean = true;
-  public isAdmin: boolean = false;
   public categoryId: string;
   public alias: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private authService : AuthService,
     private productService: ProductsService,
     private paginationService: PaginationService,
   ) { }
@@ -53,7 +56,6 @@ export class ProductsDashbordComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.subscribeToPaginator();
-    // this.subscribeToSort()
   }
 
 
@@ -63,10 +65,8 @@ export class ProductsDashbordComponent implements OnInit {
     store.subscribe(
       () => {
         this.products = this.getPageProducts();
-        this.isAdmin = store.getState().auth.isAdmin;
         this.paginationData = store.getState().products[this.alias];
       });
-    this.isAdmin = store.getState().auth.isAdmin;
   }
 
 

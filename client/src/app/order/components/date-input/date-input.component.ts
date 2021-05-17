@@ -41,7 +41,6 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
 
   }
 
-  // ControlValueAccessor implement section 
   public writeValue(value: any): void {
     this.value = value ? value : ""
   }
@@ -80,9 +79,9 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   //end of subscription section
 
 
-  // logic section
+  // LOGIC SECTION
 
-  // function to disabled dates
+  // method to disabled dates
   public dateFilter(date: Date | null): boolean {
 
     // get date as the day number in a year
@@ -93,20 +92,20 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
 
   }
 
-  // function to calculate given day as a number in full year
+  // method to calculate given day as a number in full year
   private dayOfYear(date) {
     const x = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     const y = Date.UTC(date.getFullYear(), 0, 0)
     return (x - y) / 24 / 60 / 60 / 1000;
   }
 
-// function that handle disabled dates style
+  // method that handle disabled dates style
   public dateClass = (date: Date): MatCalendarCellCssClasses => {
     const day = this.dayOfYear(date)
     return this.occupiedDates.find(date => date === day) ? 'custom-date-error' : '';
   }
 
-  // function that handle date input error messages
+  // method that handle date input error messages
   private handleDateErrorMessage() {
     if (this.control.hasError('required')) {
       this.error = "Date is required"

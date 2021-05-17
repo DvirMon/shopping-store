@@ -5,20 +5,20 @@ import { SocialUser } from 'angularx-social-login';
 
 // SERVICES
 import { GoogleService } from './google.service';
-import { FormService } from './form.service';
 import { TokenService } from './token.service';
 
 // MODELS
 import { UserModel } from '../utilities/models/user-model';
 
-import { Subject, BehaviorSubject, of, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-
-import { ActionType } from '../utilities/redux/action-type';
-import { store } from '../utilities/redux/store';
 
 import { environment } from 'src/environments/environment';
 import { CartModel } from '../utilities/models/cart-model';
+
+import { AuthState } from '../utilities/ngrx/state/auth-state';
+import { createSelector, Store } from '@ngrx/store';
+import * as  AuthActions from "../utilities/ngrx/actions/auth-actions";
 
 declare const gapi: any;
 
@@ -37,6 +37,11 @@ export interface AuthData {
 })
 export class AuthService {
 
+  // NGRX STORE
+  private auth$: Observable<AuthState> = this.store.select('auth') 
+  private user$ : Observable<UserModel> = this.store.select((state) => state.auth.user)
+  public auth: AuthState
+
   // SUBJECTS
   public serverError = new Subject<string>()
   public isRegister = new BehaviorSubject<boolean>(false)
@@ -48,10 +53,25 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private formService: FormService,
+
     private googleService: GoogleService,
     private tokenService: TokenService,
-  ) { }
+
+    private store: Store<{ auth: AuthState }>
+  ) {
+
+    this.subscribeToAuthState()
+  }
+
+  // STORE SECTION
+
+  private subscribeToAuthState() {
+    this.auth$.subscribe(
+      (auth: AuthState) => {
+        this.auth = auth
+      }
+    )
+  }
 
   // HTTP SECTION
 
@@ -61,8 +81,14 @@ export class AuthService {
   }
 
   // POST request - http://localhost:3000/api/auth/login/google
-  public loginGoogle(socialUser: SocialUser): Observable<UserModel | null> {
-    return this.handleUser("/login/google", socialUser)
+  public loginGoogle(): Observable<UserModel> {
+    return this.googleService.loginGoogle().pipe(
+      switchMap((socialUser : SocialUser) => {
+        return this.handleUser("/login/google", socialUser)
+      })
+    )
+
+
   }
 
   // POST request - http://localhost:3000/api/auth/register
@@ -85,8 +111,8 @@ export class AuthService {
 
     return this.handleRecaptcha(path, data)
       .pipe(
-        switchMap((response: AuthData) => {
-          this.formService.handleStore(ActionType.AddAccessToken, response.token)
+        switchMap(({ token }: AuthData) => {
+          this.store.dispatch(new AuthActions.AddAccessToken(token))
           return this.setUser()
         })
       )
@@ -106,8 +132,8 @@ export class AuthService {
     return this.tokenService.getRefreshToken()
       .pipe(
         map((response: AuthData) => {
-          this.formService.handleStore(ActionType.AddRefreshToken, response.token)
-          this.formService.handleStore(ActionType.Login, response)
+          this.store.dispatch(new AuthActions.AddRefreshToken(response.token))
+          this.store.dispatch(new AuthActions.Login(response))
           return response.user
         }))
   }
@@ -116,42 +142,44 @@ export class AuthService {
   // method to auto login
   public async autoLogin(): Promise<boolean> {
 
-    const token: string = store.getState().auth.refreshToken;
-    const user: UserModel = store.getState().auth.user;
     const cart: CartModel = CartModel.getSessionCart();
 
     if (cart.getItems().length > 0) {
-      return this.handleRoleRoute(user)
+      return this.handleRoleRoute()
     }
 
-    if (!token) {
-      await this.googleService.signOutWithGoogle()
+    if (!this.auth.isLogin) {
       this.logout()
       return
     }
-    if (store.getState().auth.socialUser) {
-      await this.googleService.signInWithGoogle()
+    if (this.auth.socialUser) {
+      this.googleService.loginGoogle().subscribe()
     }
 
-    return this.handleRoleRoute(user)
+    return this.handleRoleRoute()
   }
 
   // method to navigate according to user role
-  public handleRoleRoute(user: UserModel): Promise<boolean> {
+  public handleRoleRoute(): Promise<boolean> {
 
-    if (!user) {
+    if (!this.auth.user) {
       return this.router.navigateByUrl("home")
     }
 
-    return user.isAdmin ?
+    return this.auth.user.isAdmin ?
       this.router.navigateByUrl("home/admin" + environment.productLandingPage)
-      // : this.router.navigateByUrl("home/products/5ebdac99e12dce47a86bb4b0/grains/5e91e29b9c08fc560ce2cf36")
       : this.router.navigateByUrl("home")
   }
 
   // method to logout
   public logout(): Promise<boolean> {
-    this.formService.handleStore(ActionType.Logout)
+
+    if(this.auth.socialUser) {
+      this.googleService.logoutGoogle().subscribe()
+    }
+
+
+    this.store.dispatch(new AuthActions.Logout())
     return this.router.navigateByUrl(`/`)
   }
 

@@ -15,43 +15,20 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './products-nav.component.html',
   styleUrls: ['./products-nav.component.scss']
 })
-export class ProductsNavComponent implements OnInit, OnDestroy {
+export class ProductsNavComponent  {
 
   @Input() drawerProduct: MatSidenav
   @Input() drawerCart: MatSidenav
   @Input() drawerSearch: MatSidenav
   @Input() isAdmin: boolean
 
-  public isMobile: Observable<boolean> = this.productsService.isMobile()
+  public isMobile$: Observable<boolean> = this.productsService.isMobile()
   public currentItems: CurrentItemModel[]
-
-  private unsubscribeToStore: Function;
-
 
   constructor(
     private productsService: ProductsService,
-    private authService: AuthService
-
   ) { }
 
-  ngOnInit(): void {
-    this.subscribeToStore()
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribeToStore()
-  }
-
-  // SUBSCRIBE SECTION
-
-  private subscribeToStore(): void {
-    this.unsubscribeToStore = store.subscribe(
-      () => {
-        this.currentItems = [...store.getState().cart.cart.getItems()];
-      }
-    )
-    this.currentItems = [...store.getState().cart.cart.getItems()];
-  }
 
 
   // LOGIC SECTION

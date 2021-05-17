@@ -16,12 +16,12 @@ import { cartState } from '../ngrx/state/cart-state';
 import * as CartActions from '../ngrx/actions/cart-action'
 import { CartItemModel, CurrentItemModel } from '../models/cart-item-model';
 import { CartItemService } from 'src/app/services/cart-item.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartResolver implements Resolve<any> {
-
 
   private user: UserModel
   private isLogin: boolean
@@ -30,6 +30,8 @@ export class CartResolver implements Resolve<any> {
   constructor(
     private cartService: CartService,
     private cartItemsService: CartItemService,
+    private authService : AuthService,
+
     private ngrxStore: Store<{ cart: typeof cartState }>,
   ) {
   }
@@ -39,8 +41,8 @@ export class CartResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<CartModel> | Observable<CartModel> | any {
 
-    this.isLogin = store.getState().auth.isLogin
-    this.user = store.getState().auth.user
+    this.isLogin = this.authService.auth.isLogin
+    this.user = this.authService.auth.user
     this.sessionCart = CartModel.getSessionCart()
 
     // login with temp cart

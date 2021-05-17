@@ -1,4 +1,6 @@
 import { Action } from "@ngrx/store";
+import { CurrentItemModel } from "../../models/cart-item-model";
+import { CartModel } from "../../models/cart-model";
 import { CartActionType } from "../action-type";
 
 export class AddCart implements Action {
@@ -7,7 +9,7 @@ export class AddCart implements Action {
 
   constructor
     (
-      public payload: any
+      public payload?: any
     ) { }
 }
 
@@ -17,7 +19,7 @@ export class SetCartItems implements Action {
 
   constructor
     (
-      public payload: any
+      public payload?: any[]
     ) { }
 }
 
@@ -26,7 +28,7 @@ export class AddCartItem implements Action {
   readonly type = CartActionType.ADD_CART_ITEM
 
   constructor
-    (public payload: any) { }
+    (public payload?: any) { }
 }
 
 export class UpdateCartItem implements Action {
@@ -34,7 +36,7 @@ export class UpdateCartItem implements Action {
   readonly type = CartActionType.UPDATE_CART_ITEM
 
   constructor
-    (public payload: any) { }
+    (public payload?: any) { }
 }
 
 export class DeleteCartItem implements Action {
@@ -42,7 +44,7 @@ export class DeleteCartItem implements Action {
   readonly type = CartActionType.DELETE_CART_ITEM
 
   constructor
-    (public payload: any) { }
+    (public payload?: any) { }
 }
 
 export class DeleteCart implements Action {

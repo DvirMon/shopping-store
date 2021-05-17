@@ -4,11 +4,10 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
+import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { DialogService } from '../../services/dialog.service';
 
-import { store } from '../redux/store';
-import { AuthService } from 'src/app/services/auth.service';
 import { ResetModel } from 'src/app/services/reset.service';
 
 @Injectable({
@@ -51,7 +50,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (error.status === 401) {
 
           // if user is not login
-          if (!store.getState().auth.isLogin) {
+          if (!this.authService.auth.isLogin) {
             this.authService.logout()
             return
           }
@@ -87,12 +86,12 @@ export class AuthInterceptorService implements HttpInterceptor {
 
 
     if (request.url.includes("access-token")) {
-      this.token = store.getState().auth.refreshToken
+      this.token = this.authService.auth.refreshToken
       this.bearer = "Bearer-RefreshToken"
       return
     }
 
-    this.token = store.getState().auth.accessToken
+    this.token = this.authService.auth.accessToken
     this.bearer = "Bearer-AccessToken"
     return
   }

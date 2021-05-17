@@ -12,6 +12,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 
 import { store } from 'src/app/utilities/redux/store';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -32,12 +33,13 @@ export class SearchComponent implements OnInit {
   public searchEntries$: Observable<ProductModel[]> = this.searchService.serachEntries$
   public totalProducts$: Observable<number> = this.productService.getTotalNumberOfProducts()
 
-  public isAdmin: boolean = store.getState().auth.isAdmin;
+  public isAdmin: boolean = this.authService.auth.user.isAdmin;
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private authService  :AuthService
 
   ) { }
 

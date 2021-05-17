@@ -1,5 +1,6 @@
 
 import { Action } from "@ngrx/store";
+import { SocialUser } from "angularx-social-login";
 import { AuthActionType } from "../action-type";
 
 export class Login implements Action {
@@ -7,23 +8,16 @@ export class Login implements Action {
   public type = AuthActionType.LOGIN
 
   constructor
-    (public payload: any) { }
+    (public payload?: any) { }
   }
 
-  export class Logout implements Action {
-
-    public type = AuthActionType.LOGOUT
-    constructor
-      (public payload: any) { }
-
-}
 
 export class AddSocielUser implements Action {
 
   public type = AuthActionType.ADD_SOCIEL_USER
 
   constructor
-    (public payload: any) { }
+    (public payload: SocialUser) { }
 }
 
 export class AddAccessToken implements Action {
@@ -42,10 +36,19 @@ export class AddRefreshToken implements Action {
     (public payload: string) { }
 }
 
+export class Logout implements Action {
+
+  public type = AuthActionType.LOGOUT
+  constructor
+  (public payload?: any) { }
+
+}
+
+
 export type AuthActions =
   Login |
-  Logout |
   AddSocielUser |
   AddAccessToken |
-  AddRefreshToken
+  AddRefreshToken |
+  Logout
 

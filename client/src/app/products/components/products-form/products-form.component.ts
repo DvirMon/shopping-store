@@ -36,7 +36,7 @@ export class ProductsFormComponent implements OnInit {
     public product: ProductModel,
   ) { }
 
-  public isMobile: Observable<boolean> = this.formService.isMobile()
+  public isMobile$: Observable<boolean> = this.formService.isMobile()
 
   ngOnInit(): void {
 

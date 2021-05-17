@@ -1,14 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+
+// RXJS
 import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+
+// MODELS
+import { ProductModel } from '../utilities/models/product-model';
 import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
 import { CartModel } from '../utilities/models/cart-model';
-import { ProductModel } from '../utilities/models/product-model';
-import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+
+// NGRX
+import { Store } from '@ngrx/store';
 import { cartState } from '../utilities/ngrx/state/cart-state';
+import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 // SERVICES
 import { FormService } from './form.service';
+import { AuthData, AuthService } from './auth.service';
+
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { AuthData } from './auth.service';
-import { store } from '../utilities/redux/store';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from 'src/environments/environment';
-import { ActionType } from '../utilities/redux/action-type';
 
+import { environment } from 'src/environments/environment';
+
+import { Store } from '@ngrx/store';
+import { AuthState } from '../utilities/ngrx/state/auth-state';
+import * as AuthActions from '../utilities/ngrx/actions/auth-actions'
+import { UserModel } from '../utilities/models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +28,7 @@ export class TokenService {
 
   constructor(
     private http: HttpClient,
-    private formService: FormService,
+    private store: Store<{ auth: AuthState }>
   ) { }
 
 
@@ -50,31 +54,29 @@ export class TokenService {
   }
 
   // POST request - http://localhost:3000/api/token
-  public getRefreshTokenWhenExpired() {
-    const user = store.getState().auth.user
+  public getRefreshTokenWhenExpired(user: UserModel) {
     return this.http.post<AuthData>(this.url, user).pipe(
-      tap((response: AuthData) => {
-        this.formService.handleStore(ActionType.AddRefreshToken, response.token)
+      tap(({ token }: AuthData) => {
+        this.store.dispatch(new AuthActions.AddRefreshToken(token))
       }))
   }
 
   // Logic SECTION
 
   // method to gaurd success
-  private handleAuthGuardSuccess(accessToken): void {
-    const payload = this.tokenHelper.decodeToken(accessToken)
-    this.formService.handleStore(ActionType.Login, { accessToken, user: payload.user })
+  private handleAuthGuardSuccess(token): void {
+    const { user } = this.tokenHelper.decodeToken(token)
+    this.store.dispatch(new AuthActions.Login({ token, user }))
   }
 
   // method to guard error
   private handleAuthGuardError(): void {
-    this.formService.handleStore(ActionType.Logout)
+    this.store.dispatch(new AuthActions.Logout())
   }
 
 
   // method to valid if token expired
-  public isTokenExpired(jwt: string): boolean | Observable<boolean> {
-    const token = store.getState().auth[jwt]
+  public isTokenExpired(token: string): boolean | Observable<boolean> {
     const expired = this.tokenHelper.isTokenExpired(token)
 
     // if access token expired get new one
@@ -82,14 +84,6 @@ export class TokenService {
       return this.getAccessToken()
     }
     return !expired
-  }
-
-  // method to get token expired date
-  public getTokenExpirationDate(jwt: string): number {
-    const token = store.getState().auth[jwt]
-    const expirationDate = this.tokenHelper.getTokenExpirationDate(token);
-    const expirationTokenDate = new Date(expirationDate).getTime() - new Date().getTime()
-    return expirationTokenDate
   }
 
 }

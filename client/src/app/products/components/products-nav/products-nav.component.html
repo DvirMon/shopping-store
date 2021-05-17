@@ -1,17 +1,17 @@
 <mat-toolbar appBarBackgroundColor>
 
-  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
+  <button *ngIf="(isMobile$ | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
     (click)="onDrawerProducts()">
     <mat-icon>navigate_next</mat-icon>
   </button>
 
-  <app-search *ngIf="!(isMobile | async)"></app-search>
+  <app-search *ngIf="!(isMobile$ | async)"></app-search>
 
-  <app-cart-button *ngIf="!(isMobile | async)" [drawerCart]="drawerCart" [isAdmin]="isAdmin"></app-cart-button>
+  <app-cart-button *ngIf="!(isMobile$ | async)" [drawerCart]="drawerCart" [isAdmin]="isAdmin"></app-cart-button>
 
   <span class="spacer"></span>
 
-  <button *ngIf="(isMobile | async)" type="button" aria-label="Toggle search sidenav" mat-icon-button
+  <button *ngIf="(isMobile$ | async)" type="button" aria-label="Toggle search sidenav" mat-icon-button
     (click)="drawerCart.toggle()">
     <mat-icon>search</mat-icon>
   </button>

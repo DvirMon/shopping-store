@@ -22,7 +22,7 @@ import { environment } from 'src/environments/environment';
 export class OrderService {
 
 
-  public baseUrl: string = `${environment.server}/api/orders`
+  public url: string = `${environment.server}/api/orders`
 
   constructor(
     private http: HttpClient,
@@ -34,13 +34,13 @@ export class OrderService {
 
   // GET request - total products in store : http://localhost:3000/api/orders/total
   public getTotalNumberOfOrders(): Observable<number> {
-    return this.http.get<number>(this.baseUrl + "/total")
+    return this.http.get<number>(this.url + "/total")
   }
 
 
   // POST request  - new order : http://localhost:3000/api/orders
   public handleNewOrder(data: OrderModel): void {
-    this.http.post<OrderModel>(this.baseUrl, data).pipe(
+    this.http.post<OrderModel>(this.url, data).pipe(
       switchMap((order: OrderModel) => {
         this.formService.handleStore(ActionType.GetOrderData, order)
         this.receiptService.handleReceiptData()
@@ -55,12 +55,12 @@ export class OrderService {
   // GET request - latest order : http://localhost:3000/api/orders/latset/:cartId
 
   public getLatestOrder(cartId: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + `/latest/${cartId}`)
+    return this.http.get<any>(this.url + `/latest/${cartId}`)
   }
 
   // GET request - order occupied dates : http://localhost:3000/api/orders/dates
   public getOccupiedDates(): Observable<number[]> {
-    return this.http.get<number[]>(this.baseUrl + "/dates").pipe(
+    return this.http.get<number[]>(this.url + "/dates").pipe(
       map(dates => {
 
         if (this.isLeapYear()) {

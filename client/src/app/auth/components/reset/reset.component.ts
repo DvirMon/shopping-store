@@ -20,7 +20,6 @@ export class ResetComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(1)
   }
 
   public next(step: MatStep) {

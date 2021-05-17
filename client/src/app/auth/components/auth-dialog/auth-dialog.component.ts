@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { DialogData } from 'src/app/services/dialog.service';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -16,6 +17,7 @@ export class AuthDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<AuthDialogComponent>,
     private tokenService: TokenService,
+    private authServie : AuthService,
     private router: Router
 
   ) {
@@ -29,11 +31,11 @@ export class AuthDialogComponent {
       this.router.navigateByUrl('/auth/register')
     }
     else {
-      this.tokenService.getRefreshTokenWhenExpired().subscribe()
+      this.tokenService.getRefreshTokenWhenExpired(this.authServie.auth.user).subscribe()
     }
 
     this.dialogRef.close()
-  }
+  } 
 
 
 }
