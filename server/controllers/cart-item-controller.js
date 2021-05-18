@@ -34,8 +34,6 @@ router.post("/all",
 
       response.status(201).json(currentItems);
     } catch (err) {
-      console.log("err")
-      console.log(err)
       next(err);
     }
   });

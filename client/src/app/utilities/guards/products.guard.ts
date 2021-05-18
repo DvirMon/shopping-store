@@ -13,8 +13,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProductsGuard implements CanActivate {
 
-  private isLogin: boolean
-
   constructor(
     private tokenServcie: TokenService,
     private authService: AuthService
@@ -23,8 +21,6 @@ export class ProductsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-      console.log(1)
 
     return this.tokenServcie.isTokenExpired(this.authService.auth.accessToken)
   }

@@ -12,17 +12,18 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { cartState } from '../utilities/ngrx/state/cart-state';
+import { CartState, cartState } from '../utilities/ngrx/state/cart-state';
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
+import { cartSelecotr } from '../utilities/ngrx/cart-selector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  public cart$: Observable<CartModel> = this.ngrxStore.select('cart');
+  public cart$: Observable<CartModel> = this.ngrxStore.select(cartSelecotr);
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
@@ -31,7 +32,7 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
-    private ngrxStore: Store<{ cart: typeof cartState }>,
+    private ngrxStore: Store<{ cart: CartState }>,
     private formService: FormService,
     private cartItemService: CartItemService
   ) { }
@@ -60,6 +61,7 @@ export class CartService {
 
   // POST request - create new cart with user : http://localhost:3000/api/carts"
   private createCart(userId: string): Observable<CartModel> {
+
     return this.http.post<CartModel>(this.url, { userId }).pipe(
       map((cart: CartModel) => {
         return CartModel.create(cart)

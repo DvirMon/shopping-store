@@ -2,7 +2,7 @@
   <mat-grid-tile>
     You recently purchase :
   </mat-grid-tile>
-  <mat-grid-tile [rowspan]="(isMobile$ | async) ? '3' :'5'">
+  <mat-grid-tile [rowspan]="(isMobile$ | async) ? '4' :'5'">
     <app-product-thumbnail [product]="product" [imageHeight]="(isMobile$ | async) ? 120 : 200"
       [imageWidth]="(isMobile$ | async) ? 120 : 200"></app-product-thumbnail>
   </mat-grid-tile>

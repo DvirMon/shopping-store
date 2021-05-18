@@ -10,15 +10,16 @@ export class CartModel {
     private createDate?: Date,
     private items?: CurrentItemModel[],
 
-  ) { }
+  ) {
+   }
 
-  static create(payload: CartModel) {
+  static create(payload?: CartModel) {
 
     return new CartModel(
-      payload._id,
+      payload?._id ? payload._id : null,
       payload?.userId ? payload.userId : null,
-      payload.isActive ? payload.isActive : true,
-      payload.createDate ? payload.createDate : new Date(),
+      true,
+      payload?.createDate ? payload.createDate : new Date(),
       payload?.items ? payload.items : [],
     )
   }
@@ -27,10 +28,10 @@ export class CartModel {
 
     const cart = JSON.parse(sessionStorage.getItem("cart"))
     if (cart) {
-      return this.create(cart)
+      return CartModel.create(cart)
     }
 
-    return new CartModel()
+    return CartModel.create()
 
   }
 

@@ -1,0 +1,13 @@
+<mat-toolbar>
+  <button *ngFor="let route of routes" type="button" mat-button [routerLink]="route.path"
+    [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link">
+
+    <mat-icon *ngIf="route.icon !== 'shopping_cart'">{{route.icon}}</mat-icon>
+
+    <mat-icon class="cart" *ngIf="route.icon === 'shopping_cart' && (cart$ | async) as cart"
+      [matBadge]="cart.getItems().length">
+      {{cart.getItems() > 0 ? 'add_shopping_cart' : 'shopping_cart'}}
+    </mat-icon>
+
+  </button>
+</mat-toolbar>

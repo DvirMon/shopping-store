@@ -35,7 +35,6 @@ router.post(
 
       response.status(201).json(cart); 
     } catch (err) {
-      console.log(err)
       next(err);
     }
   }

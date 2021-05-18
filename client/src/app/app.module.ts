@@ -23,7 +23,6 @@ import { AppComponent } from './components/app/app.component';
 
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MembersComponent } from './components/members/members.component';
-import { ProductsSlideComponent } from './components/products-slide/products-slide.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // ENVIROMENT
@@ -45,7 +44,6 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
     PageNotFoundComponent,
     HomePageComponent,
     MembersComponent,
-    ProductsSlideComponent,
     OrdersHistoryComponent,
   ],
   imports: [

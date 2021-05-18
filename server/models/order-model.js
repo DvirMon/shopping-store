@@ -36,11 +36,12 @@ const OrderSchema = mongoose.Schema(
     creditCard: {
       type: String,
       required: true,
-      get: obfuscate,
       validate: {
         validator: validation.validCreditCard,
         message: (props) => `${props.value} is not a valid credit card number!`,
       },
+      get: obfuscate,
+      // set: obfuscate,
     },
   },
   {
@@ -50,6 +51,10 @@ const OrderSchema = mongoose.Schema(
     versionKey: false,
   }
 );
+
+OrderSchema.statics.getOrdersHistory = async function (userId) {
+  return await Order.find({ userId }).populate('cartId').populate('productsRef')
+}
 
 const Order = mongoose.model("Order", OrderSchema, "orders");
 module.exports = Order

@@ -21,8 +21,6 @@ const CartSchema = mongoose.Schema(
 
 // MODEL METHODS 
 
-
-
 CartSchema.statics.build = function (cart) {
   return new Cart(cart)
 }
@@ -57,7 +55,6 @@ CartSchema.statics.updateCart = async function (payload) {
 CartSchema.methods.get_id = function () {
   return this._id
 }
-
 
 
 const Cart = mongoose.model("Cart", CartSchema, "carts");

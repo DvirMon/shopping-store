@@ -41,6 +41,7 @@ export class TokenService {
   public getAccessToken(): Observable<boolean> {
     return this.http.get<String>(this.url + "/access-token").pipe(
       map(data => {
+        console.log(data)
         const isAuth = !!data
         this.handleAuthGuardSuccess(data)
         return isAuth

@@ -8,16 +8,22 @@ const middleware = require("../services/middleware");
 
 const key = process.env.JWT_ACCESS;
 
-// get total orders in store
-router.get("/total", async (request, response, next) => {
-  try {
-    const totalDocs = await orderLogic.getTotalDocsAsync();
-    response.json(totalDocs);
-  } catch (err) {
-    next(err);
-  }
-});
 
+// get orders history
+router.get(
+  "/history/:userId",
+  // middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+
+      const orders = await Order.getOrdersHistory(request.params.userId)
+      response.json(orders)
+
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 // get order dates
 router.get(
   "/dates",
@@ -55,7 +61,7 @@ router.post(
       const order = request.body;
       const addedOrder = await orderLogic.addOrderAsync(new Order(order));
       response.status(201).json(addedOrder);
-    } catch (err) { 
+    } catch (err) {
       next(err);
     }
   }
