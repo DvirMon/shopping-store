@@ -2,29 +2,36 @@
   <div class="space"></div>
   <div class="container">
     <div class="main-card mat-elevation-z1">
-      <div *ngIf="!(isMobile | async)" class="left">
+      <div *ngIf="!(isMobile$ | async)" class="left">
         <app-about></app-about>
       </div>
       <div class="right">
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-          <mat-grid-list cols="1" rowHeight="50px">
+          <mat-grid-list cols="2" rowHeight="50px">
+
             <mat-grid-tile rowspan="2">
-              <app-input [control]="registerForm.controls['name']" placeHolder="Name" type="text" hint="your name"
-                controlName="name">
+              <app-input class="name" [control]="registerForm.controls['firstName']" placeHolder="First Name" type="text"
+                hint="your firstName" controlName="firstName">
               </app-input>
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">
+              <app-input class="name" [control]="registerForm.controls['lastName']" placeHolder="Surname" type="text"
+                hint="your surname" controlName="lastName">
+              </app-input>
+            </mat-grid-tile>
+
+            <mat-grid-tile rowspan="2" colspan="2">
               <app-input [control]="registerForm.controls['email']" [hint]="'an email address'" placeHolder="Email"
                 type="text" controlName="email" serverErrorMode="true">
               </app-input>
             </mat-grid-tile>
 
-            <mat-grid-tile rowspan="2">
+            <mat-grid-tile rowspan="2" colspan="2">
               <app-input-password [control]="registerForm.controls['password']" placeHolder="Password" type="password"
                 hint="your password" controlName="password" serverErrorState="false"></app-input-password>
             </mat-grid-tile>
 
-            <mat-grid-tile rowspan="2">
+            <mat-grid-tile rowspan="2" colspan="2">
               <app-input-password [control]="registerForm.controls['confirmPassword']"
                 placeHolder="Confirmation Password" type="password" hint="confirmation password"
                 controlName="confirmPassword" [serverErrorState]="false">

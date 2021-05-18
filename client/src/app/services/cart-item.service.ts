@@ -115,13 +115,14 @@ export class CartItemService {
     this.ngrxStore.dispatch(new CartActions.DeleteCartItem(_id))
   }
 
-  public setCartItemsAsCurrentItems(cart: CartModel): CartItemModel[] {
-    return cart.getItems().map(
+  public setCartItemsAsCurrentItems(items: CurrentItemModel[], cartId : string): CartItemModel[] {
+
+    return items.map(
       (item: CurrentItemModel) => {
         return {
           productRef: item.productRef._id,
           quantity: item.quantity,
-          cartId: cart.get_id()
+          cartId
         }
       })
   }

@@ -5,7 +5,7 @@ import { AuthState } from "../state/auth-state";
 
 export function authReducer(oldState = new AuthState(), action: AuthActions) {
 
-  const newState: AuthState = { ...oldState }
+  let newState: AuthState = { ...oldState }
 
   switch (action.type) {
 
@@ -26,12 +26,8 @@ export function authReducer(oldState = new AuthState(), action: AuthActions) {
       sessionStorage.setItem("jwt", action.payload);
       break
     case AuthActionType.LOGOUT:
-      newState.isLogin = false
-      newState.user = null
-      newState.refreshToken = null
-      newState.accessToken = null
       sessionStorage.clear()
-
+      newState = new AuthState()
       break
   }
 

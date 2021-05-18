@@ -11,8 +11,6 @@ export function cartReducer(oldState = cartState, action: CartActions) {
 
   switch (action.type) {
     case CartActionType.ADD_CART: {
-
-
       newState = CartModel.create(action.payload)
       break
     }
@@ -26,8 +24,6 @@ export function cartReducer(oldState = cartState, action: CartActions) {
     case CartActionType.ADD_CART_ITEM: {
 
       cart.addItem(action.payload)
-
-
       newState = cart
       break
     }
@@ -44,6 +40,11 @@ export function cartReducer(oldState = cartState, action: CartActions) {
     case CartActionType.DELETE_CART: {
       cart.setItems([])
       newState = cart
+      break
+    }
+    case CartActionType.RESET_CART: {
+      sessionStorage.clear()
+      newState = new CartModel()
       break
     }
   }

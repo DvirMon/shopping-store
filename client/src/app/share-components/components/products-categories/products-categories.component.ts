@@ -17,16 +17,17 @@ export class ProductsCategoriesComponent implements OnInit {
   @Input() cols: string
   @Input() rowHeight: string
 
-  public user : UserModel = this.authService.auth.user
-  
+  public isMobile$: Observable<boolean> = this.productService.isMobile()
   public categories: CategoryModel[]
-  public hide: boolean = true
-  public isMobile : Observable<boolean> = this.productService.isMobile()
+
+  private user : UserModel = this.authService.auth.user
+  private isLoggin: boolean = this.authService.auth.isLogin
+
 
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private authService : AuthService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -35,14 +36,8 @@ export class ProductsCategoriesComponent implements OnInit {
 
   }
 
-  private getCategories() {
-    if (store.getState().products.categories.length === 0) {
-      return this.getCategoriesHttp()
-    } else {
-      this.categories = store.getState().products.categories
-    }
-  }
 
+  // HTTP SECTION
   private getCategoriesHttp() {
     this.productService.getCategories().subscribe(
       (categories) => {
@@ -51,10 +46,20 @@ export class ProductsCategoriesComponent implements OnInit {
     )
   }
 
+  // LOGIC SECTION
+  private getCategories() {
+    if (store.getState().products.categories.length === 0) {
+      return this.getCategoriesHttp()
+    } else {
+      this.categories = store.getState().products.categories
+    }
+  }
+
   // EVENET SECTION
   public onClick(category: CategoryModel): Promise<boolean> {
 
-    if(this.user) {
+
+    if (this.isLoggin) {
       return this.router.navigateByUrl(`home/products/${this.user._id}/${category.alias}/${category._id}`)
     }
     return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)

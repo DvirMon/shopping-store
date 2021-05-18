@@ -16,9 +16,15 @@ import { switchMap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CartModel } from '../utilities/models/cart-model';
 
+// NGRX
+import { Store } from '@ngrx/store';
+
 import { AuthState } from '../utilities/ngrx/state/auth-state';
-import { createSelector, Store } from '@ngrx/store';
+
 import * as  AuthActions from "../utilities/ngrx/actions/auth-actions";
+import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+
+import { userSelecotr } from '../utilities/ngrx/auth-selectors';
 
 declare const gapi: any;
 
@@ -38,13 +44,12 @@ export interface AuthData {
 export class AuthService {
 
   // NGRX STORE
-  private auth$: Observable<AuthState> = this.store.select('auth') 
-  private user$ : Observable<UserModel> = this.store.select((state) => state.auth.user)
+  private auth$: Observable<AuthState> = this.store.select('auth')
+  private user$: Observable<UserModel> = this.store.select(userSelecotr)
   public auth: AuthState
 
   // SUBJECTS
   public serverError = new Subject<string>()
-  public isRegister = new BehaviorSubject<boolean>(false)
 
   // SERVICE URL
   private url: string = `${environment.server}/api/auth`
@@ -61,6 +66,7 @@ export class AuthService {
   ) {
 
     this.subscribeToAuthState()
+
   }
 
   // STORE SECTION
@@ -83,7 +89,7 @@ export class AuthService {
   // POST request - http://localhost:3000/api/auth/login/google
   public loginGoogle(): Observable<UserModel> {
     return this.googleService.loginGoogle().pipe(
-      switchMap((socialUser : SocialUser) => {
+      switchMap((socialUser: SocialUser) => {
         return this.handleUser("/login/google", socialUser)
       })
     )
@@ -97,8 +103,8 @@ export class AuthService {
   }
 
 
-  // POST request - handle login and register request
-  private authToServer(path: string, data: any, reCaptcha: string): Observable<AuthData> {
+  // POST REQUEST - meim http method to login and register
+  private getUser(path: string, data: any, reCaptcha: string): Observable<AuthData> {
     return this.http.post<AuthData>(this.url + path, { data, reCaptcha })
   }
   // END OF HTTP SECTION
@@ -109,10 +115,13 @@ export class AuthService {
   // generic method to user login/register
   private handleUser(path: string, data: any): Observable<UserModel | null> {
 
+    // get recaptcha
     return this.handleRecaptcha(path, data)
       .pipe(
         switchMap(({ token }: AuthData) => {
           this.store.dispatch(new AuthActions.AddAccessToken(token))
+
+          // handle server response
           return this.setUser()
         })
       )
@@ -123,11 +132,13 @@ export class AuthService {
     return this.googleService.getReCaptcha('login')
       .pipe(
         switchMap((reCaptcha: string) => {
-          return this.authToServer(path, payload, reCaptcha)
+
+          // send auth data to server
+          return this.getUser(path, payload, reCaptcha)
         }))
   }
 
-  // method to set refreshToken and user model
+  // method to set refreshToken and set user
   private setUser(): Observable<UserModel> {
     return this.tokenService.getRefreshToken()
       .pipe(
@@ -174,12 +185,13 @@ export class AuthService {
   // method to logout
   public logout(): Promise<boolean> {
 
-    if(this.auth.socialUser) {
+    if (this.auth.socialUser) {
       this.googleService.logoutGoogle().subscribe()
     }
 
 
     this.store.dispatch(new AuthActions.Logout())
+    this.store.dispatch(new CartActions.ResetCart())
     return this.router.navigateByUrl(`/`)
   }
 

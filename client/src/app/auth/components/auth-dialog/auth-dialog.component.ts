@@ -28,14 +28,14 @@ export class AuthDialogComponent {
   public onClick() {
 
     if (this.data.payload) {
-      this.router.navigateByUrl('/auth/register')
+      this.router.navigateByUrl('/auth/login')
     }
     else {
       this.tokenService.getRefreshTokenWhenExpired(this.authServie.auth.user).subscribe()
     }
 
     this.dialogRef.close()
-  } 
+  }
 
 
 }

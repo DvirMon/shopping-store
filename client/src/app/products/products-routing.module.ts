@@ -20,10 +20,18 @@ const routes: Routes = [
     component: RootComponent,
     children: [
       {
-        path: ":userId/:alias/:categoryId",
+        path: "categories/:alias/:categoryId",
         resolve: {
           pagination: PaginationResolver,
 
+        },
+        component: ProductsDashbordComponent
+      },
+      {
+        path: ":userId/:alias/:categoryId",
+        canActivate: [ProductsGuard],
+        resolve: {
+          pagination: PaginationResolver,
         },
         component: ProductsDashbordComponent
       }

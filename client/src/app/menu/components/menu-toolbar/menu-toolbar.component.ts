@@ -8,7 +8,7 @@ import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { store } from 'src/app/utilities/redux/store';
 
-export interface PathMotel {
+export interface PathMoגel {
   path: string
   icon: string
   name?: string
@@ -25,13 +25,12 @@ export class MenuToolbarComponent implements OnInit {
   @Input() drawer: MatDrawer
 
 
-  public routes: PathMotel[] = [
+  public routes: PathMoגel[] = [
     { path: "/home/account", icon: "account_circle", name: "My Account" },
-    { path: "/home/cart", icon: "shopping_cart", name: "My Cart" },
     { path: "/home/order/history", icon: "local_shipping", name: "My Orders" },
     { path: "logout", icon: "logout", name: "Logout" },
   ]
-  public mobileRoutes: PathMotel[] = [
+  public mobileRoutes: PathMoגel[] = [
     { path: "/home", icon: "home" },
     { path: "account", icon: "account_circle" },
     { path: "cart", icon: "shopping_cart" },

@@ -36,4 +36,11 @@ export class RootComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  public onClick() {
+    console.log(1)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });  }
 }

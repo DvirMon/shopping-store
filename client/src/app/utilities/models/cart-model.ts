@@ -29,6 +29,7 @@ export class CartModel {
     if (cart) {
       return this.create(cart)
     }
+
     return new CartModel()
 
   }
@@ -154,10 +155,12 @@ export class CartModel {
     }
   }
 
-  public findProduct(): ProductModel {
+  public findProduct(productIndex?: number): ProductModel {
 
-    if (this.items.length > 0) {
-      return this.items[0].productRef
+    const index: number = productIndex ? productIndex : this.items.length -1
+
+    if (this.items?.length > 0) {
+      return this.items[index].productRef
     }
     return null
 

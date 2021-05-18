@@ -35,7 +35,7 @@ router.get(
       const user = request.user;
       const accessToken = await tokenService.getAccessToken(user);
       response.json(accessToken);
-    } catch (err) {
+    } catch (err) { 
       next(err);
     }
   }

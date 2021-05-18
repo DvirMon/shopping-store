@@ -36,10 +36,6 @@ mat-grid-tile {
   flex: 1;
 }
 
-.grecaptcha-badge {
-  z-index: 10;
-}
-
 mat-option.password > span.mat-option-text {
   display: flex;
   font-size: 12px;
@@ -54,10 +50,28 @@ mat-option.password > span.mat-option-text {
 }
 
 .grecaptcha-badge {
-  visibility: hidden;
+  // visibility: hidden;
 }
 
 mat-icon.cart > span {
   background-color: transparent;
   color: black;
+}
+
+app-input.name > mat-form-field {
+  width: 145px;
+}
+
+img.logo {
+  @include vertical-center();
+  border-radius: 50px;
+  width: 50px;
+}
+
+@media screen and (min-width: 1000px) {
+  .grecaptcha-badge {
+    z-index: 10;
+    // position: absolute;
+    // top: 100px;
+  }
 }

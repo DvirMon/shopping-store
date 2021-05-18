@@ -33,6 +33,7 @@ export class ProductsSidenavComponent {
 
   private user: UserModel = this.authService.auth.user
   public isLogin: boolean = this.authService.auth.isLogin;
+
   public categories: CategoryModel[] = store.getState().products.categories;
 
   private icons = {
@@ -51,13 +52,16 @@ export class ProductsSidenavComponent {
 
   constructor(
     private router: Router,
-    private authService : AuthService,
+    private authService: AuthService,
   ) { }
 
   // LOGIC SERCTION
 
   // method to navigate
-  public onNavigate(category): Promise<boolean> {
+  public onNavigate(category: CategoryModel): Promise<boolean> {
+
+
+    this.activeLink(category._id)
 
     if (!this.isLogin) {
       return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)
@@ -70,6 +74,19 @@ export class ProductsSidenavComponent {
 
   }
 
+  public activeLink(_id: string) {
+
+    this.categories.map((category: CategoryModel) => {
+
+      category._id === _id
+        ? category.hide = true
+        : category.hide = false
+
+    })
+
+
+  }
+
   // method to build navigation
   private setNavigationBar() {
 
@@ -78,8 +95,13 @@ export class ProductsSidenavComponent {
         if (category.alias === icon) {
           category.icon = this.icons[icon]
         }
-      }
+      } 
+      // category.alias === "beverages" ? category.hide = true : category.hide = false
+      category.hide = category.alias === "beverages"
+
     }
+
+
   }
 
   // method to change sidnav witdh

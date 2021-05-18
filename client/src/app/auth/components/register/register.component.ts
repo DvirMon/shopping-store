@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class RegisterComponent {
 
   public registerForm: FormGroup
-  public isMobile : Observable<boolean> = this.formService.isMobile()
+  public isMobile$ : Observable<boolean> = this.formService.isMobile()
   public captcha: boolean = false;
 
 
@@ -40,10 +40,9 @@ export class RegisterComponent {
   // request section
 
   public onSubmit() {
-    const user: UserModel = { ...this.registerForm.controls }
-
+    const user: UserModel = { ...this.registerForm.value }
     this.authService.register(user).subscribe(
-      (user: UserModel) => this.router.navigateByUrl(`/home}`)
+      (user: UserModel) => this.router.navigateByUrl(`/home`)
     )
   }
   // end of request section

@@ -7,24 +7,6 @@ const middleware = require("../services/middleware");
 
 const key = process.env.JWT_ACCESS;
 
-// POST request - get multiple products with ids array
-router.post(
-  "/ids",
-  middleware.authorize(false, key),
-  async (request, response, next) => {
-    try {
-      const products = await productLogic.getProductWithIdsAsync(
-        request.body.ids
-      );
-      if (products.length === 0) {
-        return next({ status: 404 });
-      }
-      response.json(products);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
 
 // GET request - get products categories
 router.get(
@@ -52,9 +34,8 @@ router.get("/total", async (request, response, next) => {
 // POST request - products pagination
 router.post(
   "/pagination/:page/:limit",
-  // middleware.authorize(false, key),
   middleware.pagination,
-  async (request, response, next) => {
+  async (request, response, next) => { 
     try {
       const categoryId = request.body.categoryId;
 
@@ -79,7 +60,6 @@ router.post(
 // GET request - search for product
 router.get(
   "/search/:query",
-  // middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const products = await productLogic.searchProductsAsync(

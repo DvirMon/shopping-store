@@ -17,17 +17,16 @@ export class ProductsGuard implements CanActivate {
 
   constructor(
     private tokenServcie: TokenService,
-    private authService : AuthService
+    private authService: AuthService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      return this.authService.auth.isLogin
-      ? this.tokenServcie.isTokenExpired(this.authService.auth.accessToken)
-      : true
+      console.log(1)
 
+    return this.tokenServcie.isTokenExpired(this.authService.auth.accessToken)
   }
 
 }

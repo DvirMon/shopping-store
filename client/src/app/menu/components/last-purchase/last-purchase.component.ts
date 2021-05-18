@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  Input,  OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { CartService } from 'src/app/services/cart.service';
+
 import { CartModel } from 'src/app/utilities/models/cart-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
+
 
 @Component({
   selector: 'app-last-purchase',
@@ -10,10 +14,12 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
 })
 export class LastPurchaseComponent implements OnInit {
 
+  @Input() public isMobile$ : Observable<boolean>
 
   public images: string[] = [
     "gluten", "organic", "lactose"
   ]
+
 
   constructor(
     private cartService: CartService,
@@ -25,8 +31,6 @@ export class LastPurchaseComponent implements OnInit {
     this.subscribeToCart()
   }
 
-
-
   private subscribeToCart() {
     this.cartService.cart$.subscribe(
       (cart: CartModel) => {
@@ -34,5 +38,7 @@ export class LastPurchaseComponent implements OnInit {
       }
     )
   }
+
+
 
 }

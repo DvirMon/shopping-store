@@ -51,10 +51,15 @@ export class DeleteCart implements Action {
   readonly type = CartActionType.DELETE_CART
 }
 
+export class ResetCart implements Action {
+  readonly type = CartActionType.RESET_CART
+}
+
 export type CartActions =
   AddCart |
   SetCartItems |
   AddCartItem |
   UpdateCartItem |
   DeleteCartItem |
-  DeleteCart
+  DeleteCart |
+  ResetCart

@@ -13,6 +13,10 @@ import { store } from '../utilities/redux/store';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
+import { Store } from '@ngrx/store';
+import { cartState } from '../utilities/ngrx/state/cart-state';
+import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -35,6 +39,7 @@ export class ReceiptService {
 
   constructor(
     private formService: FormService,
+    private ngrxStore: Store<{ cart: typeof cartState }>,
     private receiptData: OrderModel
   ) { }
 
@@ -126,7 +131,7 @@ export class ReceiptService {
 
   public backToSore(): void {
     this.resetReceiptState()
-    this.formService.handleStore(ActionType.ResetCartState)
+    this.ngrxStore.dispatch(new CartActions.ResetCart())
   }
 
   // set pdf file

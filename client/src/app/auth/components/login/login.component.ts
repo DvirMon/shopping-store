@@ -42,25 +42,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm()
-    // this.subscribeToStore()
     this.googleService.authStatus()
   }
-
-  // SUBSCRIBTION SECTION
-
-  public subscribeToStore(): void {
-    // store.subscribe(() => {
-    //   this.isLogin = store.getState().auth.isLogin
-    //   this.user = store.getState().auth.user
-    // }
-    // )
-    // this.isLogin = store.getState().auth.isLogin
-    // this.user = store.getState().auth.user
-
-  }
-
-  // end of subscription section
-
 
   // FORM SECTION
 
@@ -93,7 +76,6 @@ export class LoginComponent implements OnInit {
 
   // navigate to register page
   public onRegister(): Promise<boolean> {
-    this.authService.isRegister.next(true)
     return this.router.navigateByUrl(`/register`)
   }
 

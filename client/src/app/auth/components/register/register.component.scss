@@ -51,6 +51,11 @@
     .main-card > .right {
       width: 100%;
     }
+  }
 
+  @media screen and (min-width: 800px) {
+    .main-card {
+      height: 60vh;
+    }
   }
 }

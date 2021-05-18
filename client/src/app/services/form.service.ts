@@ -45,7 +45,12 @@ export class FormService {
   // register for register form
   public registerForm(): FormGroup {
     return this.fb.group({
-      name: ['', [
+      firstName: ['', [
+        Validators.required,
+        Validators.pattern(this.validationService.regex.name),
+        Validators.minLength(3),
+        Validators.maxLength(30)]],
+      lastName: ['', [
         Validators.required,
         Validators.pattern(this.validationService.regex.name),
         Validators.minLength(3),

@@ -11,19 +11,19 @@
 
       <mat-grid-tile>
         <div [@fade-up-card]="state.red" (@fade-up-card.done)="animationEnded('green')">
-          <img src="/assets/images/members/start.png" [width]="(isMobile | async) ? '200' : '350'">
+          <img src="/assets/images/members/start.png" [width]="(isMobile | async) ? '200' : '300'">
         </div>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <div [@fade-up-card]="state.green" (@fade-up-card.done)="animationEnded('blue')">
-          <img src="/assets/images/members/middle.png" [width]="(isMobile | async) ? '200' : '350'">
+          <img src="/assets/images/members/middle.png" [width]="(isMobile | async) ? '200' : '300'">
         </div>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <div [@fade-up-card]="state.blue">
-          <img src="/assets/images/members/end.png" [width]="(isMobile | async) ? '200' : '350'">
+          <img src="/assets/images/members/end.png" [width]="(isMobile | async) ? '200' : '300'">
         </div>
       </mat-grid-tile>
 

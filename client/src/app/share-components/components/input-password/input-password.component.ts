@@ -125,12 +125,7 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
   // function to handle validation messages
   public validate() {
 
-    console.log(this.control.errors)
-    console.log(this.control)
-
     this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
-
-    console.log(this.error)
 
     this.control.valueChanges.subscribe(
       () => {

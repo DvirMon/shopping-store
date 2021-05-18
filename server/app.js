@@ -51,7 +51,7 @@ server.use(compression());
 
 // MIDDLEWARE CONTROLLERS
 server.use("/api/auth", authController);
-server.use("/api/carts", cartController);
+server.use("/api/carts", cartController); 
 server.use("/api/cart-item", cartItemController);
 server.use("/api/orders", orderController);
 server.use("/api/products", productController);

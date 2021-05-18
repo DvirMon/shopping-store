@@ -23,7 +23,7 @@ const UserSchema = mongoose.Schema(
       //   "password must conation at least one number, character a-z, A-Z",
       // ],
     },
-    firstName: {
+    firstName: { 
       type: String,
       required: true,
       minlength: [3],
@@ -34,16 +34,6 @@ const UserSchema = mongoose.Schema(
       required: true,
       minlength: [3],
       maxlength: [30],
-    },
-    city: {
-      type: String,
-      minlength: [3],
-      maxlength: [30]
-    },
-    street: {
-      type: String,
-      minlength: [5],
-      maxlength: [30]
     },
   },
   { versionKey: false }
@@ -67,7 +57,7 @@ UserSchema.statics.loginGoogle = async function (gmailUser) {
   if (!user) {
 
     // sign in with google
-    return await User.create(gmailUser)
+    return await User.create(gmailUser) 
   }
 
   return user

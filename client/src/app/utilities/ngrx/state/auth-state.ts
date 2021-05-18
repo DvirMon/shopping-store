@@ -16,7 +16,6 @@ export class AuthState {
 
     this.refreshToken = sessionStorage.getItem("jwt")
     this.isLogin = this.refreshToken !== null;
-    console.log(this.isLogin)
 
     if (this.isLogin) {
       this.user = JSON.parse(sessionStorage.getItem("user"))

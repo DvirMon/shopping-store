@@ -88,10 +88,10 @@ const loginGoogle = () => {
 
 // main middleware for contact form
 const registerForm = () => {
+
   return [
     reCaptcha,
     validateScheme(schemaService.registerSchema),
-    isUserExist,
   ]
 }
 

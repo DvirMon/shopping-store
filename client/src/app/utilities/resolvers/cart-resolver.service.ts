@@ -30,7 +30,7 @@ export class CartResolver implements Resolve<any> {
   constructor(
     private cartService: CartService,
     private cartItemsService: CartItemService,
-    private authService : AuthService,
+    private authService: AuthService,
 
     private ngrxStore: Store<{ cart: typeof cartState }>,
   ) {
@@ -52,11 +52,15 @@ export class CartResolver implements Resolve<any> {
         .pipe(
           // format cart items array
           map((cart: CartModel) => {
-            const items: CartItemModel[] = this.cartItemsService.setCartItemsAsCurrentItems(this.sessionCart)
+
+            const items: CartItemModel[] = this.cartItemsService.setCartItemsAsCurrentItems(this.sessionCart.getItems(), cart.get_id())
             return { cart, items }
           }),
           // add cart items in database
           switchMap(({ cart, items }) => {
+
+            console.log(items)
+
             return this.cartItemsService.addItems(cart, items)
           }),
           // get cart with items

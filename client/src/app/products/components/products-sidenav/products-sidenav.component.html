@@ -1,6 +1,6 @@
 <mat-toolbar>
   <span class="spacer"></span>
-  
+
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawerProduct.toggle()">
     <mat-icon>{{drawerProduct.opened ? 'navigate_before' : 'navigate_next'}}</mat-icon>
   </button>
@@ -9,7 +9,7 @@
 <mat-list>
   <mat-list-item appSidenavAdminDirective class="nav-main" *ngFor="let category of categories;  let i = index">
 
-    <button mat-icon-button (click)="onNavigate(category)">
+    <button mat-icon-button (click)="onNavigate(category)" [ngClass]="{'active-link' : category.hide}">
       <fa-icon [icon]="category.icon" size="1x"></fa-icon>
     </button>
 

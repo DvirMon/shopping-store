@@ -36,12 +36,13 @@ const loginGoogleScheme = () => {
 // joi schema for register
 const registerSchema = () => {
   return Joi.object().keys({
-    name: Joi.string().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
     email: Joi.string().regex(regex.email).required(),
     password: Joi.required(),
     confirmPassword: Joi.string().required().valid(Joi.ref("password")),
   });
-}
+} 
 
 
 // joi schema for product

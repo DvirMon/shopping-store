@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../utilities/guards/auth.guard';
 import { RoleGuard } from '../utilities/guards/role.guard';
-import { ProductsGuard } from '../utilities/guards/products.guard';
 
 import { CartResolver } from '../utilities/resolvers/cart-resolver.service';
 import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
@@ -41,7 +40,6 @@ const routes: Routes = [
       },
       {
         path: "products",
-        canActivate: [ProductsGuard],
         loadChildren: () => import('../products/products.module').then(m => m.ProductsModule),
       },
 

@@ -61,11 +61,11 @@ router.post("/login/google",
     }
 
   })
-
+ 
 
 router.post(
   "/register",
-  middleware.validate.registerForm,
+  middleware.validate.registerForm(),
   async (request, response, next) => {
     try {
 
@@ -81,6 +81,7 @@ router.post(
 
       response.json({ user, token });
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }

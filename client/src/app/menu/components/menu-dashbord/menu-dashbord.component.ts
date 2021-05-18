@@ -9,7 +9,7 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class MenuDashbordComponent implements OnInit {
 
-  public isMobile : Observable<boolean> = this.formService.isMobile()
+  public isMobile$ : Observable<boolean> = this.formService.isMobile()
 
   constructor(
     private formService : FormService

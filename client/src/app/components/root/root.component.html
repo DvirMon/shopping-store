@@ -4,11 +4,14 @@
 
   <app-members *ngIf="show"></app-members>
 
-  <!-- <mat-grid-list *ngIf="show" cols="1" [rowHeight]="(isMobile | async) ? '20vh' : '33vh'">
+  <mat-grid-list *ngIf="show" cols="1" [rowHeight]="(isMobile | async) ? '15vh' : '22vh'">
     <mat-grid-tile>
       <h1>
-        Shop by Category!
+        Join now for our new sales!
       </h1>
     </mat-grid-tile>
-  </mat-grid-list> -->
+    <mat-grid-tile>
+      <button mat-stroked-button (click)="onClick()">Join!</button>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

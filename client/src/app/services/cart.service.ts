@@ -4,23 +4,18 @@ import { HttpClient } from '@angular/common/http';
 import { FormService } from './form.service';
 
 import { CartModel } from '../utilities/models/cart-model';
-import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
+
+import { CartItemService } from './cart-item.service';
 
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
-import { store } from '../utilities/redux/store';
-// import { ActionType } from '../utilities/redux/action-type';
-
-
+// NGRX
 import { Store } from '@ngrx/store';
 import { cartState } from '../utilities/ngrx/state/cart-state';
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
-import { ActionType } from '../utilities/redux/action-type';
-import { CartItemService } from './cart-item.service';
-import { ProductModel } from '../utilities/models/product-model';
 
 @Injectable({
   providedIn: 'root'

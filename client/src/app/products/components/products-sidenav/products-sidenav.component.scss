@@ -36,3 +36,13 @@ mat-list-item {
     cursor: pointer;
   }
 }
+
+
+button.active-link {
+  color: color(info);
+
+  &:hover {
+    color: color(info);
+  }
+}
+

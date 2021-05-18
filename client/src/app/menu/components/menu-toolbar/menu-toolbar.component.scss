@@ -6,6 +6,8 @@ mat-toolbar {
   display: flex;
   justify-content: space-around;
   background-color: white;
+  height: 80px;
+
 
   &.not-mobile {
     background-color: black;
@@ -22,6 +24,17 @@ mat-toolbar {
     border-top: color(info) solid 5px;
     color: color(info);
   }
+}
 
+@media screen and (max-width: 660px) {
+  mat-toolbar {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: white;
 
+    span {
+      padding: 2%;
+    }
+  }
 }

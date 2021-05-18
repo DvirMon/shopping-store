@@ -17,9 +17,9 @@ export class BackgroundHeightDirective {
   @HostListener('window:scroll', ['$event']) public checkScroll() {
 
     const scrollPosition = window.pageYOffset
- 
+
     if (scrollPosition >= 70) {
-      this.height = this.isMobile ? "260vh" : "210vh"
+      this.height =  "210vh"
     }
 
   }
