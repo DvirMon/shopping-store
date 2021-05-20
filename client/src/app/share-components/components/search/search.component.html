@@ -4,8 +4,9 @@
       <mat-label>Please Enter Query</mat-label>
 
       <input *ngIf="(isMobile$ | async)" type="text" placeholder="Search {{totalProducts$ | async}} Products..."
-        matInput #searchInput [formControl]="searchControl">
+        matInput #searchInput [formControl]="searchControl" autocomplete="off">
 
+        
       <input *ngIf="!(isMobile$ | async)" type="text" placeholder="Search {{totalProducts$ | async}} Products..."
         matInput #searchInput [matAutocomplete]="auto" [formControl]="searchControl">
 

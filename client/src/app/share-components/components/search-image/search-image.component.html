@@ -4,8 +4,11 @@
   </div>
 
   <div class="text">
-    <span class="text" *ngIf="(results$ |async) && value">
+    <span class="text" *ngIf="(results$ |async) && (value.length >= 3)">
       No results found for query "{{value}}"
     </span>
+    <span class="text" *ngIf="(results$ |async) && (value.length < 3)">
+      Please enter at least 3 characters"
+    </span>
   </div>
-</div> 
+</div>

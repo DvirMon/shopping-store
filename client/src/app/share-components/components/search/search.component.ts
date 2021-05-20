@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit {
 
   // main search method
   public search(): void {
-    this.searchService.search(this.searchControl).subscribe(
+    this.searchService.searchProducts(this.searchControl).subscribe(
       () => {
         this.searchInput.nativeElement.focus()
       },

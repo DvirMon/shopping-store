@@ -1,15 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
+import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
 
 @Component({
   selector: 'app-order-search',
   templateUrl: './order-search.component.html',
   styleUrls: ['./order-search.component.scss']
 })
-export class OrderSearchComponent {
+export class OrderSearchComponent implements OnInit {
+
+  @ViewChild('input') input: ElementRef
 
   @Input() public drawer: MatSidenav
 
@@ -21,11 +25,28 @@ export class OrderSearchComponent {
 
   ) { }
 
+  ngOnInit(): void {
+    this.search()
+  }
+
+  private search() {
+    this.searchService.searchOrders(this.searchControl, this.authService.auth.user._id)
+      .subscribe(
+        () => {
+          this.input.nativeElement.focus()
+        },
+        (err) => {
+          this.input.nativeElement.focus()
+        }
+      )
+  }
+
 
   // EVENTS SECTION
   public onClick() {
-    this.searchService.searchOrders(this.authService.auth.user._id, this.searchControl.value).subscribe()
+
   }
+
   public onFocus() {
     this.drawer.opened ? null : this.drawer.toggle()
   }

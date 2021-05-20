@@ -1,10 +1,14 @@
+import { query } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { OrderHistoryModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
+import { OrderService } from './order.service';
+import { ProductsService } from './products.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +29,7 @@ export class SearchService {
 
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
 
@@ -33,30 +37,46 @@ export class SearchService {
   // HTTP SECTION
 
   // GET request - get search products : http://localhost:3000/api/products/search/:query
-  public searchProducts(query: string): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(this.productUrl + `/${query}`).pipe(
-      tap((products: ProductModel[]) => {
+  public searchProducts(control: FormControl): Observable<ProductModel[]> {
 
-        if (products.length === 0) {
+    return this.search(control).pipe(
+      switchMap((query: string) => {
+
+        if (!query) {
           return this.handleError()
         }
-        return this.handleProducts(products)
-      })
-    )
+
+        return this.http.get<ProductModel[]>(this.productUrl + `/${query}`).pipe(
+          tap((products: ProductModel[]) => {
+
+            if (products.length === 0) {
+              return this.handleError()
+            }
+            return this.handleProducts(products)
+          })
+        )
+      }))
   }
 
   // GET request - get search products : http://localhost:3000/api/products/search/:query
-  public searchOrders(userId: string, query: string): Observable<OrderHistoryModel[]> {
-    return this.http.get<OrderHistoryModel[]>(this.ordersUrl + `/${userId}` + `/${query}`).pipe(
-      tap((orders: OrderHistoryModel[]) => {
+  public searchOrders(control: FormControl, userId: string): Observable<OrderHistoryModel[]> {
 
-        if (!query || !query.trim() || this.validFormat(query)) {
+    return this.search(control).pipe(
+      switchMap((query: string) => {
+
+        if (!query) {
           return this.handleError()
         }
-        if (orders.length === 0) {
-          return this.handleError()
-        }
-        return this.handleOrders(orders)
+
+        return this.http.get<OrderHistoryModel[]>(this.ordersUrl + `/${userId}` + `/${query}`).pipe(
+          tap((orders: OrderHistoryModel[]) => {
+
+            if (orders.length === 0) {
+              return this.handleError()
+            }
+            return this.handleOrders(orders)
+          })
+        )
       })
     )
   }
@@ -65,16 +85,18 @@ export class SearchService {
   // LOGIC SECTION
 
   // main method for serach
-  public search(searchControl): Observable<ProductModel[]> {
+  private search(control: FormControl): Observable<string> {
 
-    return searchControl.valueChanges.pipe(
+    return control.valueChanges.pipe(
       debounceTime(600),
+      map((value: string) => value.length >= 3 ? value : null),
       distinctUntilChanged(),
       switchMap((query: string) => {
+
         if (!query || !query.trim() || this.validFormat(query)) {
-          return this.handleError()
+          return of(null)
         }
-        return this.searchProducts(query.trim().toLocaleLowerCase())
+        return of(query)
       }))
   }
 
@@ -104,7 +126,6 @@ export class SearchService {
   private handleOrders(orders: OrderHistoryModel[]): Observable<OrderHistoryModel[]> {
     this.handlerRsults.next(false)
     this.ordersSearchEntries.next(orders);
-    console.log(orders)
     return of(orders)
 
   }

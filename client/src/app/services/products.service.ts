@@ -17,7 +17,6 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 import { environment } from 'src/environments/environment';
 
 
-
 export interface ProductCartInfo {
   name: string
   imagePath: string,
@@ -37,10 +36,10 @@ export class ProductsService {
   public handleDrawerToggle = new Subject<boolean>();
 
   public handleCateogryAlias = new BehaviorSubject<string>("");
-  public alias$ : Observable<string> = this.handleCateogryAlias.asObservable();
+  public alias$: Observable<string> = this.handleCateogryAlias.asObservable();
 
-
-  // public productLandingPage: string = environment.productLandingPage
+  private searchEntries = new BehaviorSubject<ProductModel[]>([]);
+  public searchEntries$: Observable<ProductModel[]> = this.searchEntries.asObservable()
 
   constructor(
     private http: HttpClient,
@@ -97,6 +96,11 @@ export class ProductsService {
         return categories
       })
     )
+  }
+
+  // GET request - get search products : http://localhost:3000/api/products/search/:query
+  private serach(query: string): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.url + `/search/${query}`)
   }
 
   // admin actions

@@ -26,13 +26,12 @@
 
     <mat-drawer #drawer mode="over" opened="false">
       <app-order-search #searchOrder [drawer]="drawer"></app-order-search>
-      <mat-list> 
+      <mat-list>
         <app-order-product *ngFor="let order of (orderEntries$ | async)" [items]="order.items" [isMobile$]="isMobile$"
           [date]="order.shippingDate">
         </app-order-product>
       </mat-list>
-      <app-search-image [isMobile$]="isMobile$"  [searchEntries$]="orderEntries$"
-        [value]="searchOrder.searchControl.value">
+      <app-search-image [isMobile$]="isMobile$"  [searchEntries$]="orderEntries$" [value]="searchOrder.searchControl.value">
       </app-search-image>
     </mat-drawer>
 

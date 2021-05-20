@@ -23,7 +23,6 @@ export class OrderProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.isExpired$ = this.isDateExpired()
-    console.log(this.items)
   }
 
 

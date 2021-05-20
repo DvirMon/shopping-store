@@ -55,24 +55,25 @@ const searchOrders = async (userId, query) => {
 
   for (const order of orders) {
 
-    const cartRef = order.cartRef
-
     const temp = await CartItem
-      .find({ cartId: cartRef })
+      .find({ cartId: order.cartRef })
       .select({ productRef: 1 })
       .populate("productRef")
       .exec()
 
     items.push({ _id: order._id, shippingDate: order.shippingDate, items: temp })
   }
-  const results = items.map(order => {
+
+  const results = items.filter(order => {
+
     order.items = order.items.filter(item => {
       return item.productRef.name.toLowerCase().includes(query.toLowerCase())
     })
 
-    return order
+    if (order.items.length > 0) {
+      return order
+    }
   })
-
 
   return results
 
