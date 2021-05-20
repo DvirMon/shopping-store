@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
-    <app-product-banner *ngIf="!isAdmin && !(isMobile$ |async)"></app-product-banner>
+    <app-product-banner *ngIf="!isAdmin"></app-product-banner>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

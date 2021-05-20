@@ -1,1 +1,29 @@
-<p>orders-history works!</p>
+<div class="container" *ngIf="!(isMobile$ | async)">
+  <mat-toolbar>
+    Your Orders
+  </mat-toolbar>
+  <mat-toolbar *ngIf="(orders$ | async) as orders">
+    <span class="text">
+      {{orders.length}} orders places in
+    </span>
+
+    <!-- <select [(ngModel)]="model">
+      <option *ngFor="let item of list" [value]="item">{{item}}</option>
+    </select> -->
+
+  </mat-toolbar>
+  <app-order-item *ngFor="let order of (orders$ | async)" [order]="order" [isMobile$]="isMobile$"></app-order-item>
+  
+</div>
+
+<ng-container *ngIf="(isMobile$ | async)">
+  <mat-toolbar>
+    Your Orders
+  </mat-toolbar>
+  <app-order-search></app-order-search>
+  <mat-list>
+    <app-order-product *ngFor="let order of (orders$ | async)" [items]="order.items" [isMobile$]="isMobile$"
+      [date]="order.shippingDate">
+    </app-order-product>
+  </mat-list>
+</ng-container>

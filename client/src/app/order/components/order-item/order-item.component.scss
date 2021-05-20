@@ -1,0 +1,49 @@
+@import "src/style/variables";
+
+mat-toolbar {
+  border: 1px solid gainsboro;
+  border-radius: 4px 4px 0 0;
+  height: 10vh;
+
+  mat-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    mat-list-item {
+      width: fit-content;
+      div.item {
+        display: flex;
+        flex-direction: column;
+
+        div {
+          width: 100%;
+          flex-direction: row;
+          display: flex;
+        }
+
+        span.header {
+          font-size: smaller !important;
+        }
+      }
+    }
+  }
+}
+
+mat-grid-list.order-item {
+  border: 1px solid gainsboro;
+  border-radius: 0 0 4px 4px;
+}
+
+app-order-product {
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  width: 20vh;
+  &.order-btn {
+    background-color: color("info");
+    color: white;
+  }
+}

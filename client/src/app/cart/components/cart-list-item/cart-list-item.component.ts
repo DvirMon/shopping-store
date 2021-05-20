@@ -55,7 +55,6 @@ export class CartListItemComponent implements OnInit {
 
   public getProductAlias(): void {
     this.alias = this.productService.getCategoryAlias(this.cartItem.productRef)
-
   }
 
   private setReceiptItem(): void {
@@ -66,7 +65,7 @@ export class CartListItemComponent implements OnInit {
 
   // open product dialog
   public onUpdateClick(): void {
-    this.dialogService.handleProductDialog({ product: this.cartItem.productRef, alias: this.alias })
+    this.dialogService.handleProductDialog(this.cartItem.productRef)
   }
 
 }

@@ -71,7 +71,17 @@ img.logo {
 @media screen and (min-width: 1000px) {
   .grecaptcha-badge {
     z-index: 10;
-    // position: absolute;
-    // top: 100px;
+  }
+}
+
+mat-grid-tile {
+  &.order-product > figure.mat-figure {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.text > figure.mat-figure {
+    display: flex;
+    justify-content: flex-start;
   }
 }

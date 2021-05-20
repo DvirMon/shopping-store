@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"Grocery-Store.cartItems"}],"uuid":"6bb509e712974ad3a26ca72d192c130e"}

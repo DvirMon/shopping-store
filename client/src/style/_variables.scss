@@ -17,7 +17,7 @@ $grid-breakpoints: (
   lg: 992px,
   xl: 1200px,
 );
-
+ 
 @function size($breakpoints) {
   @return map-get($grid-breakpoints, $breakpoints);
 }

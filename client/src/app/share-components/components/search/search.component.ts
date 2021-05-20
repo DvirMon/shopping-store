@@ -7,7 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
 import { SearchService } from 'src/app/services/search.service';
-import { ProductsService, ProductData } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { DialogService } from 'src/app/services/dialog.service';
 
 import { store } from 'src/app/utilities/redux/store';
@@ -77,17 +77,17 @@ export class SearchComponent implements OnInit {
       this.panel.openPanel()
     }
 
-    const productData = this.handleProductDialogData(product)
+    // const productData = this.handleProductDialogData(product)
 
     this.isAdmin
-      ? this.productService.handleUpdate.next(productData)
-      : this.dialogService.handleProductDialog(productData)
+      ? this.productService.handleUpdate.next(product)
+      : this.dialogService.handleProductDialog(product)
   }
 
   // open product dialog
-  private handleProductDialogData(product: ProductModel): ProductData {
-    return { product, alias: this.handleAlias(product) }
-  }
+  // private handleProductDialogData(product: ProductModel): ProductData {
+  //   return { product, alias: this.handleAlias(product) }
+  // }
 
   // get category dialog
   private handleAlias(product): string {

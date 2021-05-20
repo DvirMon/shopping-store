@@ -50,7 +50,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   public editState$: Observable<boolean> = this.cartService.getEditState()
 
   public minQuantity: boolean = false
-  public alias: string
   public params: imageParams
 
 
@@ -265,8 +264,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private setDilaogProps(): void {
-    this.product = this.data.payload.product;
-    this.alias = this.data.payload.alias;
+    this.product = this.data.payload;
   }
 
 }

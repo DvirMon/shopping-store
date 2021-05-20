@@ -1,0 +1,14 @@
+@import "src/style/variables";
+
+button > div{
+  width: 20vh;
+  background-color: color(info);
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+
+  mat-icon {
+    color: inherit !important;
+  }
+}

@@ -1,2 +1,2 @@
-<img mat-card-image src="{{environment.imageBucket}}/{{alias ? alias : routAlias}}/{{product.imagePath}}.png"
+<img *ngIf="alias" mat-card-image src="{{environment.imageBucket}}/{{alias}}/{{product.imagePath}}.png"
   alt="Photo of a {{product.name}}" [height]="imageHeight" [width]="imageWidth">

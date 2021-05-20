@@ -44,7 +44,7 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     {
       provide: CartItemModel,
       useValue: new CartItemModel()
-    }, 
+    },
     {
       provide: CurrentItemModel,
       useValue: new CurrentItemModel()
@@ -69,7 +69,8 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     MaterialModule,
     FontAwesomeModule,
     AgmCoreModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    
 
   ]
 })

@@ -9,7 +9,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
-import { ProductsService, ProductData } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { FormService } from 'src/app/services/form.service';
 
 import { store } from 'src/app/utilities/redux/store';
@@ -72,10 +72,10 @@ export class ProductsFormComponent implements OnInit {
   // listen to subject updates
   private subscribeToSubject(): void {
     this.productService.handleUpdate.subscribe(
-      (data: ProductData) => {
-        if (data) {
-          this.handleStatusUpdate(data.product);
-          this.handleFormUpdate(data.product);
+      (product: ProductModel) => {
+        if (product) {
+          this.handleStatusUpdate(product);
+          this.handleFormUpdate(product);
         }
       })
   }

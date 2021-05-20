@@ -119,7 +119,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
   // order logic section
 
   private orderDefaultValues(): void {
-    this.order.cartId = this.cart.get_id()
+    this.order.cartRef = this.cart.get_id()
     this.order.userId = this.authService.auth.user._id
     this.order.totalPrice = this.cart.getTotalPrice()
   }

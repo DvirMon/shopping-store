@@ -32,7 +32,7 @@ export class OrderNavComponent {
   // navigate back to store
   public backToSore(): void {
     this.receiptService.resetReceiptState()
-    this.router.navigateByUrl(environment.productLandingPage)
+    this.router.navigateByUrl("home/" + environment.productLandingPage)
   }
 
 

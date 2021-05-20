@@ -1,0 +1,27 @@
+<mat-grid-list cols="3" [rowHeight]="(isMobile$ | async) ? '8vh' : '12vh'" *ngFor="let item of items">
+  <mat-grid-tile [rowspan]="(isMobile$ | async) ? '2' : '1'">
+    <app-product-thumbnail [product]="item?.productRef" [imageHeight]="(isMobile$ | async) ? '100' : '70'"
+      [imageWidth]="(isMobile$ | async) ? '100' : '70'">
+    </app-product-thumbnail>
+  </mat-grid-tile>
+  <mat-grid-tile class="text">
+    {{item.productRef.name}}
+  </mat-grid-tile>
+  <mat-grid-tile [rowspan]="(isMobile$ | async) ? '2' : '1'">
+    <button mat-menu-item color="primary" (click)="onClick(item?.productRef)">
+      <div>
+        <mat-icon>assignment_returned</mat-icon>
+        <span>Buy Again</span>
+      </div>
+    </button>
+  </mat-grid-tile>
+  <ng-container *ngIf="(isMobile$ | async)">
+    <mat-grid-tile *ngIf="(isExpired$ | async)">
+      Delivered {{date | date : "MMM d, y"}}
+    </mat-grid-tile>
+    <mat-grid-tile class="text" *ngIf="!(isExpired$ | async)">
+      In Process...
+    </mat-grid-tile>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-grid-list>

@@ -1,4 +1,4 @@
-<div (beforeClose)="true">
+<div (beforeClose)="true" *ngIf="product">
   <div class="dialog-title">
     <h2 mat-dialog-title> {{product.name | titlecase}} </h2>
     <button mat-dialog-close mat-icon-button>
@@ -8,8 +8,7 @@
   <div class="dialog-content-container">
     <div *ngIf="!(isMobile$ | async)" class="dialog-content">
       <div class="dialog-image">
-        <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="params?.height"
-          [imageWidth]="params?.width">
+        <app-product-thumbnail [product]="product" [imageHeight]="params?.height" [imageWidth]="params?.width">
         </app-product-thumbnail>
       </div>
       <div class="dialog-details">
@@ -44,8 +43,7 @@
     </div>
     <mat-grid-list *ngIf="(isMobile$ | async)" cols="1" rowHeight="11vh">
       <mat-grid-tile rowspan="2">
-        <app-product-thumbnail [product]="product" [alias]="alias" [imageHeight]="params?.height"
-          [imageWidth]="params?.width">
+        <app-product-thumbnail [product]="product" [imageHeight]="params?.height" [imageWidth]="params?.width">
         </app-product-thumbnail>
       </mat-grid-tile>
       <mat-grid-tile>
@@ -63,7 +61,6 @@
           [disableRipple]="true" mat-icon-button matSuffix matTooltipPosition="right">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
-        <!-- </div> -->
       </mat-grid-tile>
       <mat-grid-tile>
         Total Price : {{(product.price * cartItem.quantity) | currency}}

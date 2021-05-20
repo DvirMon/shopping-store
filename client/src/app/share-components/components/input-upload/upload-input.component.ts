@@ -17,7 +17,7 @@ import { ProductsService } from 'src/app/services/products.service';
     },
   ]
 })
-export class InputUploadComponent implements OnInit {
+export class InputUploadComponent  {
 
   @Input() control: FormControl
   @Input() editMode: boolean = false
@@ -35,28 +35,13 @@ export class InputUploadComponent implements OnInit {
 
   public file: File | null = null;
   public preview: string
-  public alias: string
 
   constructor(
     private host: ElementRef<HTMLInputElement>,
     private formService: FormService,
-    private productService: ProductsService,
 
   ) { }
 
-  ngOnInit() {
-    this.subscribeToSubject()
-  }
-
-  private subscribeToSubject() {
-    this.productService.handleUpdate.subscribe(
-      (data) => {
-        this.preview = ""
-        if (data) {
-          this.alias = data.alias
-        }
-      })
-  }
 
   writeValue(value: null) {
 

@@ -9,7 +9,7 @@ import { CategoryModel } from '../utilities/models/category-model';
 import { FormService } from './form.service';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { store } from '../utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
@@ -17,10 +17,6 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 import { environment } from 'src/environments/environment';
 
 
-export interface ProductData {
-  product: ProductModel,
-  alias: string
-}
 
 export interface ProductCartInfo {
   name: string
@@ -36,7 +32,7 @@ export class ProductsService {
 
   private url: string = `${environment.server}/api/products`
 
-  public handleUpdate = new BehaviorSubject<ProductData | null>(null)
+  public handleUpdate = new BehaviorSubject<ProductModel>(null)
   public handleSearchEntries = new BehaviorSubject<ProductModel[]>([]);
   public handleDrawerToggle = new Subject<boolean>();
 
@@ -96,6 +92,7 @@ export class ProductsService {
         })
 
 
+
         this.formService.handleStore(ActionType.GetCategories, categories)
         return categories
       })
@@ -146,7 +143,7 @@ export class ProductsService {
 
   // get product category alias
   public getCategoryAlias(product: ProductModel): string {
-    const categories = store.getState().products.categories
+    const categories = store.getState().products?.categories
     if (product) {
       return categories.find(category => category._id === product.categoryId).alias
     }

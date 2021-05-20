@@ -2,12 +2,12 @@ import { Injectable, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { ProductData } from './products.service';
-
 import { DialogComponent } from 'src/app/share-components/components/dialog/dialog.component';
 import { ProductsDialogComponent } from 'src/app/products/components/products-dialog/products-dialog.component';
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
 import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
+
+import { ProductModel } from '../utilities/models/product-model';
 
 
 export interface DialogData {
@@ -56,8 +56,8 @@ export class DialogService {
   }
 
   // open product dialog
-  public handleProductDialog(payload: ProductData): void {
-    const data = this.handleDate("product", payload)
+  public handleProductDialog(product: ProductModel, alias? : string): void {
+    const data = this.handleDate("product", product)
     this.dialog.open(ProductsDialogComponent, this.handleConfig(data))
   }
 
@@ -100,19 +100,19 @@ export class DialogService {
         dialogConfig.data = data
         dialogConfig.panelClass = "dialog-error"
         break
-        case "order":
-          dialogConfig.height = '200px'
+      case "order":
+        dialogConfig.height = '200px'
         dialogConfig.width = '450px'
         dialogConfig.hasBackdrop = true;
         dialogConfig.disableClose = true;
         dialogConfig.panelClass = "dialog-order"
         break
-        case "auth":
-          dialogConfig.height = 'auto'
-          dialogConfig.width = '450px'
-          dialogConfig.hasBackdrop = true;
-          dialogConfig.disableClose = true;
-          dialogConfig.data = data
+      case "auth":
+        dialogConfig.height = 'auto'
+        dialogConfig.width = '450px'
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.disableClose = true;
+        dialogConfig.data = data
         dialogConfig.panelClass = "dialog-auth"
         break
       case "spinner":

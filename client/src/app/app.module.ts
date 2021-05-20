@@ -31,9 +31,7 @@ import { environment } from '../environments/environment';
 // NGRX
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ngrxStore } from './utilities/ngrx/store';
-import { OrdersHistoryComponent } from './order/components/orders-history/orders-history.component';
-
+import { store } from './utilities/ngrx/store';
 
 
 @NgModule({
@@ -44,7 +42,6 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
     PageNotFoundComponent,
     HomePageComponent,
     MembersComponent,
-    OrdersHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +50,7 @@ import { OrdersHistoryComponent } from './order/components/orders-history/orders
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    StoreModule.forRoot(ngrxStore),
+    StoreModule.forRoot(store),
     StoreDevtoolsModule.instrument({
       name: 'NgRx App',
       logOnly: environment.production, // Restrict extension to log-only mode

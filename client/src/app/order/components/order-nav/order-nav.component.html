@@ -1,17 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isMobile$ | async) ? 'over' : 'side'" [opened]="!(isMobile$ | async)">
-    <app-cart-list [orderMode]="true"  [drawer]="drawer"></app-cart-list>
+    [mode]="(isMobile$ | async) ? 'over' : 'side'" position="end" [opened]="true">
+    <app-cart-list [orderMode]="true" [drawer]="drawer"></app-cart-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar *ngIf="!(isMobile$ | async)">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <!-- <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
-      </button>
-      <span>
-      </span>
+      </button> -->
       <span class="spacer"></span>
-      <button mat-button type="button" (click)="backToSore()">to store</button>
+      <button mat-button type="button" (click)="backToSore()">Cancel</button>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

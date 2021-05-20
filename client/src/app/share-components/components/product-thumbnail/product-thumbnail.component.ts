@@ -16,30 +16,16 @@ export class ProductThumbnailComponent implements OnInit {
   @Input() product: ProductModel;
   @Input() imageHeight: number;
   @Input() imageWidth: number;
-  @Input() alias: string;
 
-  public routAlias: string
+  public alias: string
   public environment = environment
 
   constructor(
-    private activeRoute: ActivatedRoute,
     private productService: ProductsService
   ) { }
 
 
   ngOnInit(): void {
-    this.alias ? this.alias : this.getAlias()
-  }
-
-  private subscribeToRoute() {
-    this.activeRoute.params.subscribe(
-      (params) => {
-        this.routAlias = params.alias
-      }
-    )
-  }
-
-  private getAlias() {
     this.alias = this.productService.getCategoryAlias(this.product)
   }
 

@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { OrderModel } from '../utilities/models/order-model';
+import { OrderHistoryModel, OrderModel } from '../utilities/models/order-model';
 
 import { CartService } from './cart.service';
 import { DialogService } from './dialog.service';
 import { FormService } from './form.service';
 import { ReceiptService } from './receipt.service';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { ActionType } from '../utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
+import { CartItemService } from './cart-item.service';
 
 
 @Injectable({
@@ -27,6 +28,7 @@ export class OrderService {
   constructor(
     private http: HttpClient,
     private cartService: CartService,
+    private cartItemService: CartItemService,
     private dialogService: DialogService,
     private receiptService: ReceiptService,
     private formService: FormService,
@@ -44,7 +46,7 @@ export class OrderService {
       switchMap((order: OrderModel) => {
         this.formService.handleStore(ActionType.GetOrderData, order)
         this.receiptService.handleReceiptData()
-        return this.cartService.deactivateCart(order.cartId)
+        return this.cartService.deactivateCart(order.cartRef)
       }),
     ).subscribe(
       () => {
@@ -66,11 +68,14 @@ export class OrderService {
         if (this.isLeapYear()) {
           dates = dates.map(date => date + 1)
         }
-
         return dates
-
       })
     )
+  }
+
+  // GET request - order occupied dates : http://localhost:3000/api/orders/history/:userId
+  public getOrdersHistory(userId: string): Observable<OrderHistoryModel[]> {
+    return this.http.get<OrderHistoryModel[]>(this.url + `/history/${userId}`)
   }
 
   // end of request section

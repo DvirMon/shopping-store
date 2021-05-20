@@ -22,9 +22,12 @@ const CartItemSchema = mongoose.Schema(
 );
 
 CartItemSchema.statics.findItem = async function (_id) {
-  return await this.findById({ _id }).populate("productRef").exec()
+  return await CartItem.findById({ _id }).populate("productRef").exec()
 }
 
+CartItemSchema.statics.findItemsByCart = async function (cartId) {
+  return await CartItem.find({ cartId }).populate("productRef").exec()
+}
 
 const CartItem = mongoose.model("CartItem", CartItemSchema, "cartItems");
 module.exports = CartItem

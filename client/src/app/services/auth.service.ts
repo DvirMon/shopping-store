@@ -178,7 +178,7 @@ export class AuthService {
     }
 
     return this.auth.user.isAdmin ?
-      this.router.navigateByUrl("home/admin" + environment.productLandingPage)
+    this.router.navigateByUrl("home/admin" + environment.productLandingPage)
       : this.router.navigateByUrl("home")
   }
 

@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const Cart = require("./cart-model");
+const CartItem = require("./cartItem-model")
 const User = require("./user-model");
+
 const validation = require("../services/schema");
+const { getAllCartItemsByCartAsync } = require("../business-layer-logic/cart-item-logic");
 
 // format credit card number
 const obfuscate = (cc) => {
@@ -15,7 +18,7 @@ const OrderSchema = mongoose.Schema(
       ref: User,
       required: true
     },
-    cartId: {
+    cartRef: {
       type: mongoose.Types.ObjectId,
       ref: Cart,
       required: true
@@ -51,10 +54,31 @@ const OrderSchema = mongoose.Schema(
     versionKey: false,
   }
 );
+ 
 
 OrderSchema.statics.getOrdersHistory = async function (userId) {
-  return await Order.find({ userId }).populate('cartId').populate('productsRef')
+  const orders = await Order.find({ userId }).select({ _id: 1, shippingDate: 1, orderDate : 1, cartRef: 1, totalPrice: 1 })
+  let history = []
+
+  for (const order of orders) {
+    const items = await CartItem.findItemsByCart(order.cartRef)
+    history.push({ order, items })
+  }
+
+  return history.map(order => {
+
+    return {
+      _id : order.order._id,
+      cartRef : order.order.cartRef,
+      shippingDate : order.order.shippingDate,
+      orderDate : order.order.orderDate,
+      totalPrice : order.order.totalPrice,
+      items : order.items
+    }
+  })
 }
+
+
 
 const Order = mongoose.model("Order", OrderSchema, "orders");
 module.exports = Order

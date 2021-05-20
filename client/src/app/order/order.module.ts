@@ -13,15 +13,26 @@ import { DateInputComponent } from './components/date-input/date-input.component
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
 import { OrderNavComponent } from './components/order-nav/order-nav.component';
 
+import { OrdersHistoryComponent } from './components/orders-history/orders-history.component';
+import { OrderItemComponent } from './components/order-item/order-item.component';
+import { OrderProductComponent } from './components/order-product/order-product.component';
+import { OrderSearchComponent } from './components/order-search/order-search.component';
+
 
 @NgModule({
   declarations: [
     OrderComponent,
     OrderFormComponent,
     OrderDialogComponent,
+
+    OrderItemComponent,
+    OrdersHistoryComponent,
+
     DateInputComponent,
     CreditCardComponent,
     OrderNavComponent,
+    OrderProductComponent,
+    OrderSearchComponent,
   ],
   imports: [
     CoreModule,

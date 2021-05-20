@@ -2,7 +2,8 @@
 
 <mat-toolbar *ngIf="!orderMode">
 
-  <button *ngIf="!(isMobile$ | async)" mat-button type="button" disableClose="true" opened="true" (click)="drawer.toggle()">Close</button>
+  <button *ngIf="!(isMobile$ | async)" mat-button type="button" disableClose="true" opened="true"
+    (click)="drawer.toggle()">Close</button>
   <span class="spacer"></span>
   <button mat-icon-button type="button" (click)="deleteAllCartItems()">
     <mat-icon>delete</mat-icon>
@@ -11,7 +12,7 @@
   <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to store</button>
 
 </mat-toolbar>
- 
+
 <!-- end of tool bar header - products-->
 
 <!-- tool bar header - order-->
@@ -19,10 +20,12 @@
 <mat-toolbar *ngIf="orderMode">
 
   <!-- search input -->
-  <mat-form-field class="search-input">
-    <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
-    <mat-icon>search</mat-icon>
-  </mat-form-field>
+  <form >
+    <mat-form-field class="search-input">
+      <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
+      <mat-icon>search</mat-icon>
+    </mat-form-field>
+  </form>
 
   <span class="spacer"></span>
 
@@ -30,12 +33,13 @@
 </mat-toolbar>
 
 <!-- end of tool bar header - order-->
+
 <!--products list  -->
-<mat-nav-list>
+<mat-list>
   <app-cart-list-item *ngFor="let cartItem of (cart$ | async).getItems()" [cartItem]="cartItem" [orderMode]="orderMode"
     [searchTerm]="searchControl.value">
   </app-cart-list-item>
-</mat-nav-list>
+</mat-list>
 
 <!--   footer  - products-->
 <mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">

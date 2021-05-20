@@ -8,11 +8,11 @@ import { CartModel } from '../utilities/models/cart-model';
 import { CartItemService } from './cart-item.service';
 
 import { map, switchMap, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { CartState, cartState } from '../utilities/ngrx/state/cart-state';
+import { CartState } from '../utilities/ngrx/state/cart-state';
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
@@ -23,7 +23,7 @@ import { cartSelecotr } from '../utilities/ngrx/cart-selector';
 })
 export class CartService {
 
-  public cart$: Observable<CartModel> = this.ngrxStore.select(cartSelecotr);
+  public cart$: Observable<CartModel> = this.store.select(cartSelecotr);
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()
@@ -32,8 +32,7 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
-    private ngrxStore: Store<{ cart: CartState }>,
-    private formService: FormService,
+    private store: Store<{ cart: CartState }>,
     private cartItemService: CartItemService
   ) { }
 
@@ -84,7 +83,7 @@ export class CartService {
   public deleteCartAndCartItems(_id) {
     this.http.delete(this.url + `/${_id}`).subscribe(
       () => {
-        this.ngrxStore.dispatch(new CartActions.DeleteCart())
+        this.store.dispatch(new CartActions.DeleteCart())
       }
     )
   }
@@ -111,7 +110,7 @@ export class CartService {
   public updateCart(cart: CartModel) {
     return this.updateUserCart(cart).pipe(
       tap((cart: CartModel) => {
-        this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+        this.store.dispatch(new CartActions.AddCart(cart))
         sessionStorage.removeItem("cart")
       })
     )
@@ -127,7 +126,7 @@ export class CartService {
   // LOGIC SECTION
   public createTempCart() {
     const cart = CartModel.getSessionCart()
-    this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+    this.store.dispatch(new CartActions.AddCart(cart))
     CartModel.setSeeeionCart(cart)
     this.emitEditState(true)
   }

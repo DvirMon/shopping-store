@@ -3,11 +3,9 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { DialogService } from 'src/app/services/dialog.service';
-import { ProductsService, ProductData } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
-
-import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-products-item',
@@ -20,8 +18,6 @@ export class ProductsItemComponent implements OnInit {
 
   public isMobile: Observable<boolean> = this.productService.isMobile()
   public isAdmin: boolean = this.authService.auth.user.isAdmin;
-  
-  public alias: string;
 
   constructor(
     private authService : AuthService,
@@ -30,18 +26,16 @@ export class ProductsItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.alias = this.productService.getCategoryAlias(this.product)
+    // this.alias = this.productService.getCategoryAlias(this.product)
   }
 
   public handleProductDialog(): void {
 
     this.isAdmin
-      ? this.productService.handleUpdate.next(this.handleProductData())
-      : this.dialogService.handleProductDialog(this.handleProductData())
+      ? this.productService.handleUpdate.next(this.product)
+      : this.dialogService.handleProductDialog(this.product)
   }
 
-  private handleProductData(): ProductData {
-    return { product: this.product, alias: this.alias }
-  }
+
 }
 

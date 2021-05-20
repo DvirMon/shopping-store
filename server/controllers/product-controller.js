@@ -12,7 +12,7 @@ const key = process.env.JWT_ACCESS;
 router.get(
   "/categories",
   async (request, response, next) => {
-    try { 
+    try {
       const categories = await productLogic.getAllCategories();
       response.json(categories);
     } catch (err) {
@@ -35,7 +35,7 @@ router.get("/total", async (request, response, next) => {
 router.post(
   "/pagination/:page/:limit",
   middleware.pagination,
-  async (request, response, next) => { 
+  async (request, response, next) => {
     try {
       const categoryId = request.body.categoryId;
 
@@ -53,7 +53,7 @@ router.post(
       return response.json({ products, pagination });
     } catch (err) {
       next(err);
-    } 
+    }
   }
 );
 

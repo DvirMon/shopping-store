@@ -1,11 +1,17 @@
 @import "~src/style/variables";
 
 .sidenav-container {
-  height: 92vh;
+  height: 90vh;
 }
 
 .sidenav {
-  width: 500px;
+  width: 450px;
+  height: 88vh;
+}
+
+mat-sidenav-content {
+  height: 88vh;
+  overflow: hidden;
 }
 
 .spacer {

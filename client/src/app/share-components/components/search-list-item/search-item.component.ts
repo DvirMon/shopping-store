@@ -10,23 +10,11 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './search-item.component.html',
   styleUrls: ['./search-item.component.scss']
 })
-export class SearchItemComponent implements OnInit {
+export class SearchItemComponent   {
 
   @Input() public product: ProductModel;
   @Input() public searchTerm: string;
 
-  public categories: CategoryModel[];
-  public alias: string;
 
-  constructor(
-  ) {
-    this.categories = store.getState().products.categories
-  }
-
-  ngOnInit() {
-    this.alias = this.categories.find(
-      category => category._id === this.product.categoryId
-    ).alias
-  }
 
 }

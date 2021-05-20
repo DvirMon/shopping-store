@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
-import { UserModel } from 'src/app/utilities/models/user-model';
 import { CartModel } from 'src/app/utilities/models/cart-model';
-import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
 
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
@@ -15,8 +13,6 @@ import { ReceiptService } from 'src/app/services/receipt.service';
 
 import { Observable } from 'rxjs';
 import { cartState } from 'src/app/utilities/ngrx/state/cart-state';
-
-import { store } from 'src/app/utilities/redux/store';
 
 import { environment } from 'src/environments/environment'
 import { FormService } from 'src/app/services/form.service';

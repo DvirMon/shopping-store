@@ -9,7 +9,7 @@ const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
 
-// get orders history
+// GET REQUEST - http://localhost:3000/api/orders/history/:userId
 router.get(
   "/history/:userId",
   // middleware.authorize(false, key),

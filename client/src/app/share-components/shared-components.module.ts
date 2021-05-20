@@ -15,6 +15,8 @@ import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 // SHRED COMPONENTS
 import { AboutComponent } from './components/about/about.component';
 
+import { InputComponent } from './components/input/input.component';
+import { InputPasswordComponent } from './components/input-password/input-password.component';
 import { InputUploadComponent } from './components/input-upload/upload-input.component';
 
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -22,6 +24,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchItemComponent } from './components/search-list-item/search-item.component';
 
+import { ProductsCategoriesComponent } from './components/products-categories/products-categories.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
 
 import { AddressComponent } from './components/address/address.component';
@@ -36,9 +39,7 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
 import { environment } from 'src/environments/environment'
-import { InputComponent } from './components/input/input.component';
-import { InputPasswordComponent } from './components/input-password/input-password.component';
-import { ProductsCategoriesComponent } from './components/products-categories/products-categories.component';
+
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ProductsCategoriesComponent } from './components/products-categories/pr
     ProductsCategoriesComponent,
 
     AddressComponent,
+    
     HighLightPipe,
 
     BarBackgroundColorDirective,
