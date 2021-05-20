@@ -25,6 +25,7 @@
 }
 
 mat-list {
+  
   mat-list-item {
     height: 15vh;
     padding: 2%;
@@ -41,34 +42,8 @@ mat-toolbar {
 
   .search-form {
     width: 100%;
-    font-size: 16px;
+    font-size: 14px;
     padding-top: 15px;
   }
 }
 
-div.search {
-  height: 80vh;
-  flex: 1 1 0%;
-  margin: 0px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-
-  div.img {
-    margin-bottom: 5%;
-  }
-
-  div.text {
-    width: 100%;
-    text-align: center;
-    span.text {
-      font-size: 16px;
-      font-family: Roboto, sans-serif;
-      font-weight: 500;
-      line-height: 1.5;
-      z-index: 10;
-      color: black;
-    }
-  }
-}

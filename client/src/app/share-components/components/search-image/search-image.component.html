@@ -1,0 +1,11 @@
+<div class="search" *ngIf="(isMobile$ | async) && (searchEntries$ | async)?.length === 0">
+  <div class="img">
+    <img src="https://gstatic.gitbook.com/images/7f9239ce726764aa22093884902e018d.svg" alt="">
+  </div>
+
+  <div class="text">
+    <span class="text" *ngIf="(results$ |async) && value">
+      No results found for query "{{value}}"
+    </span>
+  </div>
+</div> 

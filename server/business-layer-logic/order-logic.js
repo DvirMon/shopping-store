@@ -1,4 +1,5 @@
 const Order = require("../models/order-model");
+const CartItem = require("../models/cartItem-model");
 
 const getAllOrdersAsync = async () => {
   return await Order.find({}).exec();
@@ -43,6 +44,42 @@ const countOrdersByDate = async () => {
   return dates;
 };
 
+const searchOrders = async (userId, query) => {
+
+  const orders = await Order
+    .find({ userId })
+    .select({ shippingDate: 1, cartRef: 1 })
+
+
+  let items = []
+
+  for (const order of orders) {
+
+    const cartRef = order.cartRef
+
+    const temp = await CartItem
+      .find({ cartId: cartRef })
+      .select({ productRef: 1 })
+      .populate("productRef")
+      .exec()
+
+    items.push({ _id: order._id, shippingDate: order.shippingDate, items: temp })
+  }
+  const results = items.map(order => {
+    order.items = order.items.filter(item => {
+      return item.productRef.name.toLowerCase().includes(query.toLowerCase())
+    })
+
+    return order
+  })
+
+
+  return results
+
+
+
+}
+
 // function to get day of year as a number
 const dayOfYear = () => {
   const date = new Date();
@@ -57,7 +94,7 @@ const dayOfYear = () => {
 const isLeapYear = (date) => {
   const year = date.getFullYear();
   return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
-}; 
+};
 
 module.exports = {
   getAllOrdersAsync,
@@ -65,5 +102,6 @@ module.exports = {
   getTotalDocsAsync,
   addOrderAsync,
   getLatestOrderAsync,
+  searchOrders,
   countOrdersByDate,
 };

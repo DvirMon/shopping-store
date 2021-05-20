@@ -29,8 +29,7 @@ export class SearchComponent implements OnInit {
   public searchControl = new FormControl();
 
   public isMobile$: Observable<boolean> = this.productService.isMobile()
-  public results$: Observable<boolean> = this.searchService.results$
-  public searchEntries$: Observable<ProductModel[]> = this.searchService.serachEntries$
+  public searchEntries$: Observable<ProductModel[]> = this.searchService.productsEntries$
   public totalProducts$: Observable<number> = this.productService.getTotalNumberOfProducts()
 
   public isAdmin: boolean = this.authService.auth.user.isAdmin;

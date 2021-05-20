@@ -22,8 +22,8 @@ export class OrderProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.isExpired$ = this.isDateExpired()
+    console.log(this.items)
   }
 
 
@@ -33,14 +33,10 @@ export class OrderProductComponent implements OnInit {
   }
 
   public isDateExpired(): Observable<boolean> {
-    console.log(this.date)
-    console.log(new Date(this.date))
     if (new Date(this.date).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0)) {
-      console.log(true)
       return of(true)
     }
 
-    console.log(false)
     return of(false);
   };
 

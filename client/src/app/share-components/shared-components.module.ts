@@ -23,6 +23,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 
 import { SearchComponent } from './components/search/search.component';
 import { SearchItemComponent } from './components/search-list-item/search-item.component';
+import { SearchImageComponent } from './components/search-image/search-image.component'
 
 import { ProductsCategoriesComponent } from './components/products-categories/products-categories.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
@@ -38,7 +39,7 @@ import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.dire
 // PIPES
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { environment } from 'src/environments/environment'
     DialogComponent,
 
     SearchComponent,
+    SearchImageComponent,
     SearchItemComponent,
 
     ProductThumbnailComponent,
@@ -85,7 +87,7 @@ import { environment } from 'src/environments/environment'
 
     SearchComponent,
     SearchItemComponent,
-
+    SearchImageComponent,
 
     HighLightPipe,
 

@@ -14,6 +14,8 @@ export class SearchItemComponent   {
 
   @Input() public product: ProductModel;
   @Input() public searchTerm: string;
+  @Input() public orderMode: boolean;
+  @Input() public cartMode: boolean;
 
 
 

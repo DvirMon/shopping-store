@@ -1,11 +1,19 @@
 @import "src/style/variables";
+mat-toolbar.search {
+  background: rgb(132, 215, 226);
+  background: linear-gradient(
+    100deg,
+    rgba(132, 215, 226, 1) 0%,
+    rgba(166, 231, 207, 1) 100%
+  );
+  form {
+    width: 100%;
+    font-size: 14px;
+    padding-top: 15px;
+    text-align: center;
 
-.search-form {
-  width: 100%;
-  font-size: 16px;
-  padding-top: 15px;
-
-  mat-form-field {
-    width: 90%;
+    mat-form-field {
+      width: 90%;
+    }
   }
 }

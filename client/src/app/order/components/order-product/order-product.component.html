@@ -5,15 +5,23 @@
     </app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile class="text">
-    {{item.productRef.name}}
+
+    {{item.productRef.name | titlecase}}
+
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="(isMobile$ | async) ? '2' : '1'">
-    <button mat-menu-item color="primary" (click)="onClick(item?.productRef)">
+    <button mat-raised-button color="primary" (click)="onClick(item?.productRef)">
+      <span>Buy Again</span>
+      <!-- <div>
+        <mat-icon>assignment_returned</mat-icon>
+      </div> -->
+    </button>
+    <!-- <button mat-menu-item color="primary" (click)="onClick(item?.productRef)">
       <div>
         <mat-icon>assignment_returned</mat-icon>
         <span>Buy Again</span>
       </div>
-    </button>
+    </button> -->
   </mat-grid-tile>
   <ng-container *ngIf="(isMobile$ | async)">
     <mat-grid-tile *ngIf="(isExpired$ | async)">

@@ -37,14 +37,5 @@
   </mat-list-item>
 </mat-list>
 
-  <div class="search" *ngIf="(isMobile$ | async) && (searchEntries$ | async)?.length === 0">
-    <div class="img">
-      <img src="https://gstatic.gitbook.com/images/7f9239ce726764aa22093884902e018d.svg" alt="">
-    </div>
-
-    <div class="text">
-      <span class="text" *ngIf="(results$ |async) && searchControl.value">
-        No results found for query "{{searchControl.value}}"
-      </span>
-    </div>
-  </div>
+<app-search-image [isMobile$]="isMobile$" [value]="searchControl.value" [searchEntries$]="searchEntries$">
+</app-search-image>

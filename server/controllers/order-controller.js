@@ -9,6 +9,23 @@ const middleware = require("../services/middleware");
 const key = process.env.JWT_ACCESS;
 
 
+// GET request - search for product
+router.get(
+  "/search/:userId/:query",
+  async (request, response, next) => {
+    try {
+
+      const { userId, query } = request.params
+
+      const orders = await orderLogic.searchOrders(userId, query)
+
+      response.json(orders);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 // GET REQUEST - http://localhost:3000/api/orders/history/:userId
 router.get(
   "/history/:userId",

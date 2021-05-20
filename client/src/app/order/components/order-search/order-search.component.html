@@ -1,8 +1,11 @@
-<mat-toolbar>
-  <form class="search-form">
+<mat-toolbar class="search">
+  <form>
     <mat-form-field>
-      <input type="text" placeholder="Search Orders" matInput #searchInput [formControl]="searchControl">
+      <input type="text" placeholder="Search all orders" matInput [formControl]="searchControl"
+        autocomplete="off" (focus)="onFocus()">
     </mat-form-field>
-    <mat-icon>search</mat-icon>
+    <button mat-icon-button (click)="onClick()">
+      <mat-icon>search</mat-icon> 
+    </button>
   </form>
 </mat-toolbar>

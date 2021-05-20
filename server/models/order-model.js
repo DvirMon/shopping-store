@@ -57,7 +57,10 @@ const OrderSchema = mongoose.Schema(
  
 
 OrderSchema.statics.getOrdersHistory = async function (userId) {
-  const orders = await Order.find({ userId }).select({ _id: 1, shippingDate: 1, orderDate : 1, cartRef: 1, totalPrice: 1 })
+  const orders = await Order
+  .find({ userId })
+  .select({ _id: 1, shippingDate: 1, orderDate : 1, cartRef: 1, totalPrice: 1 })
+  
   let history = []
 
   for (const order of orders) {

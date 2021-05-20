@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { FormService } from 'src/app/services/form.service';
 import { OrderService } from 'src/app/services/order.service';
-import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-orders-history',
@@ -13,9 +15,9 @@ import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
 export class OrdersHistoryComponent implements OnInit {
 
 
+  public isMobile$: Observable<boolean>
   public orders$: Observable<OrderHistoryModel[]>
-
-  public isMobile$ : Observable<boolean> = this.formService.isMobile()
+  public orderEntries$: Observable<OrderHistoryModel[]>
 
   public slectStates: [
 
@@ -24,15 +26,14 @@ export class OrdersHistoryComponent implements OnInit {
   constructor(
     private orderServcie: OrderService,
     private authService: AuthService,
-    private formService : FormService
+    private searchService: SearchService,
+    private formService: FormService
   ) { }
 
   ngOnInit(): void {
-    this.getOrdersHistory()
-  }
-
-  private getOrdersHistory() {
+    this.isMobile$ = this.formService.isMobile()
     this.orders$ = this.orderServcie.getOrdersHistory(this.authService.auth.user._id)
+    this.orderEntries$ = this.searchService.orderEntries$
   }
 
 }
