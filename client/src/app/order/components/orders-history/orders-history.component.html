@@ -19,13 +19,13 @@
 <ng-container *ngIf="(isMobile$ | async)">
   <mat-drawer-container autosize>
 
-    <app-order-search [drawer]="drawer"></app-order-search>
+    <app-order-search #search [drawer]="drawer"></app-order-search>
     <mat-toolbar>
       Your Orders
     </mat-toolbar>
 
-    <mat-drawer #drawer mode="over" opened="false">
-      <app-order-search #searchOrder [drawer]="drawer"></app-order-search>
+    <mat-drawer #drawer mode="over"  opened="false" position="end" (closedStart)="onCloseStart()">
+      <app-order-search #searchOrder [drawer]="search.drawer"></app-order-search>
       <mat-list>
         <app-order-product *ngFor="let order of (orderEntries$ | async)" [items]="order.items" [isMobile$]="isMobile$"
           [date]="order.shippingDate">

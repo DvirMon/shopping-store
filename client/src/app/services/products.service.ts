@@ -8,13 +8,15 @@ import { ProductModel } from '../utilities/models/product-model';
 import { CategoryModel } from '../utilities/models/category-model';
 import { FormService } from './form.service';
 
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { store } from '../utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
+import { SearchService } from './search.service';
+import { FormControl } from '@angular/forms';
 
 
 export interface ProductCartInfo {
@@ -44,18 +46,18 @@ export class ProductsService {
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private router: Router
+    private searchService: SearchService
 
   ) { }
 
-  // GET request - total products in store : http://localhost:3000/api/products/total
+  // HTTP SECTION
 
+  // GET request - total products in store : http://localhost:3000/api/products/total
   public getTotalNumberOfProducts(): Observable<number> {
     return this.http.get<number>(this.url + "/total")
   }
 
   // POST request - get products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
-
   public getProductsPagination(page: number, limit: number, categoryId?: string, alias?: string): Observable<PaginationDataModel> {
 
     const pagination: string = `pagination/${page}/${limit}`
@@ -75,7 +77,7 @@ export class ProductsService {
 
 
   // GET request - get search products : http://localhost:3000/api/products/search/:query
-  public searchProducts(query: string): Observable<ProductModel[]> {
+  private searchProducts(query: string): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.url + `/search/${query}`)
   }
 
@@ -90,8 +92,6 @@ export class ProductsService {
           return category
         })
 
-
-
         this.formService.handleStore(ActionType.GetCategories, categories)
         return categories
       })
@@ -103,7 +103,7 @@ export class ProductsService {
     return this.http.get<ProductModel[]>(this.url + `/search/${query}`)
   }
 
-  // admin actions
+  // ADMIN ACTIONS SECTION
 
   // POST request - add product : http://localhost:3000/api/products
   public addProduct(data: FormData | ProductModel): Observable<ProductModel> {
@@ -115,10 +115,8 @@ export class ProductsService {
     return this.http.put<ProductModel>(this.url + `/${_id}`, data)
   }
 
-  // end of requests section
 
-  // logic section
-
+  // LOGIC SECTION
 
   private handleProductsStoreState(products: ProductModel[], pagination: PaginationModel, alias: string): void {
 
@@ -132,17 +130,14 @@ export class ProductsService {
     }
   }
 
+  // add product to store
   public addProductToStore(product: ProductModel, alias: string): void {
     this.formService.handleStore(ActionType.AddProduct, { product, alias })
   }
 
+  // update product in store
   public updateProductToStore(product: ProductModel, alias: string): void {
     this.formService.handleStore(ActionType.UpdateProduct, { product, alias })
-  }
-
-  // navigate to products landing page
-  public productsLandingPage(): Promise<boolean> {
-    return this.router.navigateByUrl(environment.productLandingPage)
   }
 
   // get product category alias
@@ -153,9 +148,48 @@ export class ProductsService {
     }
   }
 
+  public search(control: FormControl): Observable<ProductModel[]> {
+
+    return this.searchService.search(control).pipe(
+      switchMap((query: string) => {
+
+        if (!query) {
+          this.searchEntries.next([])
+          return of([])
+        }
+
+        return this.searchProducts(query).pipe(
+          tap((products: ProductModel[]) => {
+
+            if (products.length === 0) {
+              return this.handleError()
+            }
+            return this.handleSuccess(products)
+          })
+        )
+      }))
+  }
+
   // get screen size
-  public isMobile() {
+  public isMobile(): Observable<boolean> {
     return this.formService.isMobile()
   }
+
+  // SUBJECT SECTION
+
+  // handle search error
+  private handleError(): Observable<[]> {
+    this.searchService.handlerRsults.next(true)
+    this.searchEntries.next([])
+    return of([]);
+  }
+
+  // handle search success
+  private handleSuccess(products: ProductModel[]): Observable<ProductModel[]> {
+    this.searchService.handlerRsults.next(false)
+    this.searchEntries.next(products)
+    return of(products)
+  }
+
 
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { OrderSearchComponent } from '../order-search/order-search.component';
+
 import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,6 +16,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class OrdersHistoryComponent implements OnInit {
 
+  @ViewChild('search') searchRef: OrderSearchComponent
 
   public isMobile$: Observable<boolean>
   public orders$: Observable<OrderHistoryModel[]>
@@ -35,5 +38,10 @@ export class OrdersHistoryComponent implements OnInit {
     this.orders$ = this.orderServcie.getOrdersHistory(this.authService.auth.user._id)
     this.orderEntries$ = this.searchService.orderEntries$
   }
+
+  public onCloseStart() {
+    this.searchRef.inputRef.nativeElement.blur()
+  }
+
 
 }

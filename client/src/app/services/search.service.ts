@@ -24,7 +24,7 @@ export class SearchService {
   private ordersSearchEntries = new BehaviorSubject<OrderHistoryModel[]>([]);
   public orderEntries$: Observable<OrderHistoryModel[]> = this.ordersSearchEntries.asObservable()
 
-  private handlerRsults: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public handlerRsults: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public results$: Observable<boolean> = this.handlerRsults.asObservable()
 
 
@@ -43,7 +43,7 @@ export class SearchService {
       switchMap((query: string) => {
 
         if (!query) {
-          return this.handleError()
+          return of([])
         }
 
         return this.http.get<ProductModel[]>(this.productUrl + `/${query}`).pipe(
@@ -65,8 +65,7 @@ export class SearchService {
       switchMap((query: string) => {
 
         if (!query) {
-          return this.handleError()
-        }
+          return of([])        }
 
         return this.http.get<OrderHistoryModel[]>(this.ordersUrl + `/${userId}` + `/${query}`).pipe(
           tap((orders: OrderHistoryModel[]) => {
@@ -85,7 +84,7 @@ export class SearchService {
   // LOGIC SECTION
 
   // main method for serach
-  private search(control: FormControl): Observable<string> {
+  public search(control: FormControl): Observable<string> {
 
     return control.valueChanges.pipe(
       debounceTime(600),

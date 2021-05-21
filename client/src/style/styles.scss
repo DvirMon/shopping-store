@@ -85,3 +85,12 @@ mat-grid-tile {
     justify-content: flex-start;
   }
 }
+
+mat-toolbar.search {
+  background: rgb(132, 215, 226);
+  background: linear-gradient(
+    100deg,
+    rgba(132, 215, 226, 1) 0%,
+    rgba(166, 231, 207, 1) 100%
+  );
+}

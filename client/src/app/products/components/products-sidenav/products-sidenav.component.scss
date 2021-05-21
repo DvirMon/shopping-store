@@ -1,48 +1,47 @@
 @import "~src/style/styles";
 
 .mat-toolbar {
-  color: black;
-  height: 64px;
+  background-color: black;
+  color: white;
+  height: 10vh;
 }
 
 button {
   font-size: 16px;
+  color: white;
+}
+
+mat-list {
+  background-color: black;
+
+  mat-list-item.nav-main {
+    color: white;
+    padding: 0;
+  }
 }
 
 @media screen and (min-width: size(lg)) {
   mat-list > .nav-main {
-    margin-left: 1%;
     width: auto;
+    margin-left: 1%;
 
-    mat-list-item {
+    mat-list-item.nav-main {
       width: auto;
+      color: white;
     }
   }
 }
 
 @media screen and (max-width: size(md)) {
   mat-list {
-
-    .nav-main {
-      height: 60px;
-      margin-left: 0;
-    }
+    // height: 60px;
+    margin-left: 0;
   }
 }
 
-mat-list-item {
+mat-list-item.nav-main {
   &:hover {
-    filter: brightness(1%);
     cursor: pointer;
+    color: white;
   }
 }
-
-
-button.active-link {
-  color: color(info);
-
-  &:hover {
-    color: color(info);
-  }
-}
-

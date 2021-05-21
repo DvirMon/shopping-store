@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { MatSidenav } from '@angular/material/sidenav';
@@ -15,12 +15,14 @@ import { store } from 'src/app/utilities/redux/store';
   templateUrl: './products-nav.component.html',
   styleUrls: ['./products-nav.component.scss']
 })
-export class ProductsNavComponent  {
+export class ProductsNavComponent {
 
   @Input() drawerProduct: MatSidenav
   @Input() drawerCart: MatSidenav
   @Input() drawerSearch: MatSidenav
   @Input() isAdmin: boolean
+
+  @Output() searchMode = new EventEmitter<boolean>()
 
   public isMobile$: Observable<boolean> = this.productsService.isMobile()
   public currentItems: CurrentItemModel[]
@@ -33,7 +35,8 @@ export class ProductsNavComponent  {
 
   // LOGIC SECTION
 
-  public onDrawerProducts() {
+  public onDrawerProducts(search: boolean) {
+    this.searchMode.emit(search)
     this.drawerProduct.toggle()
   }
 

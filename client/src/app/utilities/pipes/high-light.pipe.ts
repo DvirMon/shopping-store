@@ -2,7 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
-  name: 'highLight'
+  name: 'highLight',
+  pure: true
+
 })
 export class HighLightPipe implements PipeTransform {
 

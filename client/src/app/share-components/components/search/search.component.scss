@@ -1,31 +1,21 @@
 @import "~src/style/styles";
 
-@mixin search-input($width) {
-  font-size: 14px;
-  width: $width;
-}
+mat-toolbar {
+  justify-content: center;
+  height: 10vh;
 
-// from 560px down
-@media (max-width: size(sm)) {
-  mat-toolbar {
-    .mat-form-field {
-      @include search-input(75%);
-    }
-  }
-}
+  form {
+    width: inherit;
+    font-size: 14px;
+    padding-top: 15px;
 
-// from 84px up
-@media (min-width: size(md)) {
-  mat-toolbar {
-    .mat-form-field {
-      padding-left: 5vh;
-      @include search-input(75%);
+    mat-form-field {
+      width: 85%;
     }
   }
 }
 
 mat-list {
-  
   mat-list-item {
     height: 15vh;
     padding: 2%;
@@ -36,14 +26,9 @@ mat-list {
   }
 }
 
-mat-toolbar {
-  justify-content: center;
-  height: 75px;
-
-  .search-form {
-    width: 100%;
-    font-size: 14px;
-    padding-top: 15px;
+// from 84px up
+@media (min-width: size(md)) {
+  form {
+    padding-top: 0px;
   }
 }
-

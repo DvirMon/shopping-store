@@ -1,16 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductsService } from 'src/app/services/products.service';
+
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { UserModel } from 'src/app/utilities/models/user-model';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { ProductsService } from 'src/app/services/products.service';
+
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({
   selector: 'app-products-categories',
   templateUrl: './products-categories.component.html',
-  styleUrls: ['./products-categories.component.scss']
+  styleUrls: ['./products-categories.component.scss'],
+  changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class ProductsCategoriesComponent implements OnInit {
 
@@ -20,7 +24,7 @@ export class ProductsCategoriesComponent implements OnInit {
   public isMobile$: Observable<boolean> = this.productService.isMobile()
   public categories: CategoryModel[]
 
-  private user : UserModel = this.authService.auth.user
+  private user: UserModel = this.authService.auth.user
   private isLoggin: boolean = this.authService.auth.isLogin
 
 
@@ -31,9 +35,7 @@ export class ProductsCategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.getCategories()
-
   }
 
 
@@ -51,7 +53,14 @@ export class ProductsCategoriesComponent implements OnInit {
     if (store.getState().products.categories.length === 0) {
       return this.getCategoriesHttp()
     } else {
-      this.categories = store.getState().products.categories
+      this.categories = [...store.getState().products.categories].map(
+        (category: CategoryModel) => {
+          category.hide = true
+          return category
+        }
+
+      )
+
     }
   }
 

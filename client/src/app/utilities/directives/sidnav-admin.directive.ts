@@ -25,17 +25,17 @@ export class SidenavAdminDirective {
     private authServcie : AuthService
   ) {
 
-    this.isMobile.subscribe(
-      (isMobile : boolean) => {
-        if (isMobile) {
-          this.color = "black"
-        }
-        else {
-          this.isAdmin
-            ? this.color = "white"
-            : this.color = "black"
-        }
-      })
+    this.color = "white"
+    // this.isMobile.subscribe(
+    //   (isMobile : boolean) => {
+    //     if (isMobile) {
+    //     }
+    //     else {
+    //       this.isAdmin
+    //         ? this.color = "white"
+    //         : this.color = "white"
+    //     }
+    //   })
 
   }
 

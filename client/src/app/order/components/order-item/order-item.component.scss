@@ -42,8 +42,9 @@ app-order-product {
 
 button {
   width: 20vh;
+  background-color: gainsboro;
+
   &.order-btn {
-    background-color: color("info");
-    color: white;
+    background-color: #fac943;
   }
 }

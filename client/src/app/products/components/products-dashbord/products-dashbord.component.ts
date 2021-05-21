@@ -29,21 +29,20 @@ export class ProductsDashbordComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   public isAdmin: boolean = this.authService.auth.user.isAdmin
+  public isMobile$: Observable<boolean> = this.productService.isMobile();
+  public searchMode: boolean = false
 
   public categories: CategoryModel[] = []
   public products: ProductModel[] = []
-  public searchEntries: ProductModel[] = [];
   public paginationData: PaginationDataModel;
   public pagination: PaginationModel = new PaginationModel();
 
-  public isMobile: Observable<boolean> = this.productService.isMobile();
-  public cartOpen: boolean = true;
-  public categoryId: string;
-  public alias: string;
+  private categoryId: string;
+  private alias: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private authService : AuthService,
+    private authService: AuthService,
     private productService: ProductsService,
     private paginationService: PaginationService,
   ) { }
@@ -51,7 +50,6 @@ export class ProductsDashbordComponent implements OnInit {
   ngOnInit(): void {
     this.subscribeToRoute();
     this.subscribeToStore();
-    this.subscribeToSearchResults();
   }
 
   ngAfterViewInit(): void {
@@ -110,15 +108,6 @@ export class ProductsDashbordComponent implements OnInit {
     }
   }
 
-
-  private subscribeToSearchResults() {
-    this.productService.handleSearchEntries.subscribe(
-      (searchEntries: ProductModel[]) => {
-        this.searchEntries = searchEntries
-      }
-    )
-  }
-
   private subscribeToSort(): void {
     this.sort.sortChange.subscribe(
       (sort) => this.paginationService.getSortedData(this.alias, this.sort)
@@ -171,6 +160,20 @@ export class ProductsDashbordComponent implements OnInit {
     const pagination = this.paginator ? this.paginator : this.pagination
     const products = store.getState().products[this.alias].products
     return this.paginationService.getPagedData([...products], pagination)
+  }
+
+
+  // SIDENAV LOGIC SECTION
+
+  // handle 
+  public handleMode(event: boolean) {
+    this.searchMode = event
+  }
+
+  // 
+  public onCloseStart() {
+    console.log(1)
+    this.searchMode = false
   }
 
 

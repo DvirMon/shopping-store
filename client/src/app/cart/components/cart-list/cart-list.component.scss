@@ -3,7 +3,7 @@
 .mat-toolbar {
   background-color: color(info);
   color: color(text);
-  height: 80px;
+  height: 10vh;
 }
 
 mat-list {
@@ -46,15 +46,20 @@ app-product-list-item {
   display: block;
 }
 
-.search-input {
-  width: 280px;
-  font-size: initial;
+form {
+  width: 95%;
+  font-size: 14px;
+  text-align: center;
+  
+  mat-form-field {
+    width: inherit;
+    margin-top: 4%;
+
+  
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .search-input {
-    width: 250px;
-  }
 
   mat-nav-list {
     height: 61vh;

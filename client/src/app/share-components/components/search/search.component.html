@@ -1,42 +1,47 @@
-<mat-toolbar>
-  <form class="search-form">
+<mat-toolbar class="search">
+  <form>
+
     <mat-form-field>
       <mat-label>Please Enter Query</mat-label>
 
-      <input *ngIf="(isMobile$ | async)" type="text" placeholder="Search {{totalProducts$ | async}} Products..."
-        matInput #searchInput [formControl]="searchControl" autocomplete="off">
+      <input type="text" placeholder="Search {{totalProducts$ | async}} Products..." matInput #searchInput
+        [formControl]="searchControl" autocomplete="off">
 
-        
-      <input *ngIf="!(isMobile$ | async)" type="text" placeholder="Search {{totalProducts$ | async}} Products..."
-        matInput #searchInput [matAutocomplete]="auto" [formControl]="searchControl">
-
+      <!-- <input *ngIf="!(isMobile$ | async)" type="text" placeholder="Search {{totalProducts$ | async}} Products..."
+        matInput #searchInput [matAutocomplete]="auto" [formControl]="searchControl"> -->
     </mat-form-field>
+
+    <button type="button" mat-icon-button (click)="searchControl.reset()">
+      <mat-icon>clear</mat-icon>
+    </button>
+
+    <button *ngIf="(isMobile$ | async)" type="button" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+
   </form>
 
-  <span class="spacer"></span>
+  <!-- <span class="spacer"></span> -->
 
 
-  <button type="button" mat-icon-button (click)="searchControl.reset()">
-    <mat-icon>clear</mat-icon>
-  </button>
-
-  <button *ngIf="(isMobile$ | async)" type="button" mat-icon-button (click)="drawer.toggle()">
-    <mat-icon>navigate_next</mat-icon>
-  </button>
 
 </mat-toolbar>
 
-<mat-autocomplete class="d-none d-lg-block single-autocomplete" autoActiveFirstOption #panel #auto="matAutocomplete">
+<!-- <mat-autocomplete class="d-none d-lg-block single-autocomplete" autoActiveFirstOption #panel #auto="matAutocomplete">
   <mat-option *ngFor="let option of searchEntries$ | async as products" (click)="onSelect(option)">
     <app-search-item [product]="option" [searchTerm]="searchControl.value?.trim()"></app-search-item>
   </mat-option>
-</mat-autocomplete>
+  <mat-option>
+    <app-search-image [isMobile$]="isMobile$" [value]="searchControl.value" [searchEntries$]="searchEntries$">
+    </app-search-image>
+  </mat-option>
+</mat-autocomplete> -->
 
-<mat-list *ngIf="(isMobile$ | async)">
+<mat-list>
   <mat-list-item *ngFor="let option of searchEntries$ | async" (click)="onSelect(option)">
     <app-search-item [product]="option" [searchTerm]="searchControl.value?.trim()"></app-search-item>
   </mat-list-item>
 </mat-list>
 
-<app-search-image [isMobile$]="isMobile$" [value]="searchControl.value" [searchEntries$]="searchEntries$">
+<app-search-image [value]="searchControl.value" [searchEntries$]="searchEntries$">
 </app-search-image>

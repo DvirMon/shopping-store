@@ -5,7 +5,7 @@
         autocomplete="off" (focus)="onFocus()">
     </mat-form-field>
     <button mat-icon-button (click)="onClick()">
-      <mat-icon>search</mat-icon>
+      <mat-icon>{{drawer.opened ? 'navigate_next' : 'search'}}</mat-icon>
     </button>
   </form>
 </mat-toolbar>

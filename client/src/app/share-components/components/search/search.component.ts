@@ -28,24 +28,27 @@ export class SearchComponent implements OnInit {
 
   public searchControl = new FormControl();
 
-  public isMobile$: Observable<boolean> = this.productService.isMobile()
-  public searchEntries$: Observable<ProductModel[]> = this.searchService.productsEntries$
-  public totalProducts$: Observable<number> = this.productService.getTotalNumberOfProducts()
+  public isMobile$: Observable<boolean>
+  public searchEntries$: Observable<ProductModel[]>
+  public totalProducts$: Observable<number>
+  public results$ : Observable<boolean>
 
   public isAdmin: boolean = this.authService.auth.user.isAdmin;
 
   constructor(
     private dialogService: DialogService,
     private productService: ProductsService,
-    private searchService: SearchService,
-    private authService  :AuthService
+    private authService: AuthService
 
-  ) { }
+  ) {
+    this.isMobile$ = this.productService.isMobile()
+    this.searchEntries$ = this.productService.searchEntries$
+    this.totalProducts$ = this.productService.getTotalNumberOfProducts()
+
+  }
 
 
   ngOnInit(): void {
-
-    // this.getStoreProducts();
     this.search();
   }
 
@@ -54,7 +57,7 @@ export class SearchComponent implements OnInit {
 
   // main search method
   public search(): void {
-    this.searchService.searchProducts(this.searchControl).subscribe(
+    this.productService.search(this.searchControl).subscribe(
       () => {
         this.searchInput.nativeElement.focus()
       },
@@ -73,25 +76,12 @@ export class SearchComponent implements OnInit {
   public onSelect(product: ProductModel) {
 
     if (this.panel) {
-      this.panel.openPanel()
+      // this.panel.openPanel()
     }
-
-    // const productData = this.handleProductDialogData(product)
 
     this.isAdmin
       ? this.productService.handleUpdate.next(product)
       : this.dialogService.handleProductDialog(product)
   }
-
-  // open product dialog
-  // private handleProductDialogData(product: ProductModel): ProductData {
-  //   return { product, alias: this.handleAlias(product) }
-  // }
-
-  // get category dialog
-  private handleAlias(product): string {
-    return this.productService.getCategoryAlias(product)
-  }
-
 
 }

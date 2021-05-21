@@ -1,11 +1,15 @@
-.mat-toolbar.mat-primary {
+.mat-toolbar{
   position: sticky;
   top: 0;
-  height: 15vh;
+  height: 10vh;
   z-index: 1;
+
+  button.search-btn {
+    margin-left: 4%;
+  }
 }
 
 app-search {
   width: 100%;
-  background-color: transparent;
+  background-color: white;
 }

@@ -1,41 +1,54 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <mat-sidenav #drawerCart class="sidenav" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'" mode="over"
-    [opened]="!(isMobile | async) && isAdmin" position="end">
+  <!-- SIDENAV LEFT -->
+  <mat-sidenav #drawerProduct [ngClass]="{'sidenav-products' : !(searchMode), 'sidenav-search' : searchMode}"
+    [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'" [mode]="(isMobile$ | async) ? 'over' : 'push'"
+    opened="false" position="start" (closedStart)="onCloseStart()">
 
+    <!-- PRODUCTS MENU DRAWER -->
+    <app-products-sidenav *ngIf="!searchMode" [drawerProduct]="drawerProduct" [isExpanded]="drawerProduct.opened">
+    </app-products-sidenav>
 
-    <ng-container *ngIf="!(isMobile | async) && isAdmin">
+    <!-- DESKTOP SEARCH -->
+    <app-search *ngIf="searchMode"></app-search>
+
+  </mat-sidenav>
+
+  <!-- SIDENAV RIGHT -->
+  <mat-sidenav #drawerCart class="sidenav" [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'" mode="over"
+    [opened]="!(isMobile$ | async) && isAdmin" position="end">
+
+    <!-- ADMIN PRODUCTS FORM -->
+    <ng-container *ngIf="!(isMobile$ | async) && isAdmin">
       <app-products-form [drawer]="drawerCart"></app-products-form>
     </ng-container>
 
-    <ng-container *ngIf="!(isMobile | async) && !isAdmin">
+    <!-- CART LIST -->
+    <ng-container *ngIf="!(isMobile$ | async) && !isAdmin">
       <app-cart-list [drawer]="drawerCart" [orderMode]="false"></app-cart-list>
     </ng-container>
 
-    <ng-container *ngIf="(isMobile | async) && !isAdmin">
+    <!-- MOBILE SEARCH -->
+    <ng-container *ngIf="(isMobile$ | async) && !isAdmin">
       <app-search [drawer]="drawerCart"></app-search>
     </ng-container>
 
   </mat-sidenav>
 
-  <mat-sidenav #drawerProduct class="sidenav-products" [attr.role]="(isMobile | async) ? 'dialog' : 'navigation'"
-    [mode]="(isMobile | async) ? 'over' : 'push'" opened="false" position="start">
-    <app-products-sidenav [drawerProduct]="drawerProduct" [isExpanded]="drawerProduct.opened"></app-products-sidenav>
-  </mat-sidenav>
-
 
   <mat-sidenav-content class="container-products">
 
-    <app-products-nav [drawerCart]="drawerCart" [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"></app-products-nav>
+    <app-products-nav [drawerCart]="drawerCart" [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"
+      (searchMode)="handleMode($event)"></app-products-nav>
 
-    <mat-grid-list class="conatiner" [cols]="(isMobile | async) ? '1' : '3'"
-      [rowHeight]="(isMobile | async) ? '15vh' : '40vh'">
+    <mat-grid-list class="conatiner" [cols]="(isMobile$ | async) ? '1' : '3'"
+      [rowHeight]="(isMobile$ | async) ? '15vh' : '40vh'">
       <mat-grid-tile *ngFor="let product of products">
         <app-products-item [product]="product"></app-products-item>
       </mat-grid-tile>
     </mat-grid-list>
 
-    <mat-paginator *ngIf="!(isMobile | async)" #paginator
+    <mat-paginator *ngIf="!(isMobile$ | async)" #paginator
       [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
       [pageSize]="6" [pageSizeOptions]="[6]">
     </mat-paginator>

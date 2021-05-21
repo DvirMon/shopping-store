@@ -1,10 +1,10 @@
 <!-- cart item -->
-<mat-grid-list cols="4" *ngIf="cartItem" rowHeight="5vh">
+<mat-grid-list cols="5" *ngIf="cartItem" rowHeight="5vh">
   <mat-grid-tile rowspan="2">
     <app-product-thumbnail [product]="cartItem?.productRef" [imageHeight]="50" [imageWidth]="50">
     </app-product-thumbnail>
   </mat-grid-tile>
-  <mat-grid-tile rowspan="2">
+  <mat-grid-tile colspan="2" rowspan="2">
     <span [innerHTML]="cartItem.productRef?.name  | titlecase | highLight: searchTerm"></span>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="orderMode ? '2' : '1'" class="align-left">

@@ -16,8 +16,6 @@ import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons/faDrumstickBi
 import { faCandyCane } from "@fortawesome/free-solid-svg-icons/faCandyCane"
 import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
 
-import { Observable } from 'rxjs';
-
 import { store } from 'src/app/utilities/redux/store';
 import { AuthService } from 'src/app/services/auth.service';
 
