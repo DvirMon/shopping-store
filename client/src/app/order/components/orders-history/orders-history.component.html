@@ -1,8 +1,8 @@
 <div class="container" *ngIf="!(isMobile$ | async)">
-  <mat-toolbar>
+  <mat-toolbar class="order">
     Your Orders
   </mat-toolbar>
-  <mat-toolbar *ngIf="(orders$ | async) as orders">
+  <mat-toolbar class="order" *ngIf="(orders$ | async) as orders">
     <span class="text">
       {{orders.length}} orders places in
     </span>
@@ -20,7 +20,7 @@
   <mat-drawer-container autosize>
 
     <app-order-search #search [drawer]="drawer"></app-order-search>
-    <mat-toolbar>
+    <mat-toolbar class="order">
       Your Orders
     </mat-toolbar>
 

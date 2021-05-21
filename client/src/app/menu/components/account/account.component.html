@@ -1,3 +1,18 @@
-<div>
-  <button mat-raised-button type="button" (click)="onClick()">Logout</button>
+<!-- <div class="mobile" *ngIf="(isMobile$ | async)">
+</div> -->
+
+
+<div class="container">
+  <mat-toolbar>
+    <span class="mat-h1">Your Account</span>
+  </mat-toolbar>
+  <mat-grid-list [cols]="(isMobile$ | async) ? '1' : '3'" [rowHeight]="(isMobile$ | async) ? '15vh' : '18vh'"
+    [gutterSize]="(isMobile$ | async) ? '1' : '20'">
+    <mat-grid-tile *ngFor="let item of items">
+      <app-account-item [item]="item"></app-account-item>
+    </mat-grid-tile>
+    <mat-grid-tile *ngIf="(isMobile$ | async)">
+      <button mat-raised-button type="button" (click)="onClick()">Logout</button>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

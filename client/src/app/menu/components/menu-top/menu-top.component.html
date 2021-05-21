@@ -22,9 +22,11 @@
         <mat-icon>{{route.icon}}</mat-icon>
         <span>{{route.name}}</span>
       </button>
+      <button mat-menu-item (click)="onClick(isLogin ? 'logout' : '/auth/login')">
+        <mat-icon>{{isLogin ? 'login' : 'logout'}}</mat-icon>
+        <span>{{isLogin ? 'Logout' : 'Login'}}</span>
+      </button>
     </mat-menu>
   </ng-container>
 
 </mat-toolbar>
-
-

@@ -1,0 +1,10 @@
+mat-grid-list.account-item {
+  border: solid 1px gainsboro;
+  border-radius: 4px;
+  padding: 14px 18px;
+
+  span.break-word {
+    width: 90%;
+    word-break: normal;
+  }
+}

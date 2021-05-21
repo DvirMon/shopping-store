@@ -41,6 +41,8 @@
     <app-products-nav [drawerCart]="drawerCart" [drawerProduct]="drawerProduct" [isAdmin]="isAdmin"
       (searchMode)="handleMode($event)"></app-products-nav>
 
+    <app-product-banner *ngIf="!isAdmin"></app-product-banner>
+
     <mat-grid-list class="conatiner" [cols]="(isMobile$ | async) ? '1' : '3'"
       [rowHeight]="(isMobile$ | async) ? '15vh' : '40vh'">
       <mat-grid-tile *ngFor="let product of products">
@@ -48,7 +50,7 @@
       </mat-grid-tile>
     </mat-grid-list>
 
-    <mat-paginator *ngIf="!(isMobile$ | async)" #paginator
+    <mat-paginator #paginator
       [length]="pagination.length > paginationData.products.length ? pagination.length :  paginationData.products.length"
       [pageSize]="6" [pageSizeOptions]="[6]">
     </mat-paginator>

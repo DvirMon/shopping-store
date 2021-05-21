@@ -15,6 +15,7 @@ import { MenuBottomComponent } from './components/menu-bottom/menu-bottom.compon
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LastPurchaseComponent } from './components/last-purchase/last-purchase.component';
+import { AccountItemComponent } from './components/account-item/account-item.component';
 
 
 
@@ -27,7 +28,8 @@ import { LastPurchaseComponent } from './components/last-purchase/last-purchase.
     AccountComponent,
     CartComponent,
     LastPurchaseComponent,
-    MenuBottomComponent
+    MenuBottomComponent,
+    AccountItemComponent
   ],
   imports: [
     CoreModule,

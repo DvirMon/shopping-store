@@ -21,10 +21,12 @@ export class MenuTopComponent implements OnInit {
 
   @Input() isMobile: Observable<boolean>
 
+  public isLogin: boolean
+
+
   public routes: PathModel[] = [
     { path: "/home/account", icon: "account_circle", name: "My Account" },
     { path: "/home/order/history", icon: "local_shipping", name: "My Orders" },
-    { path: "logout", icon: "logout", name: "Logout" },
   ]
 
   public items: number
@@ -32,7 +34,10 @@ export class MenuTopComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-  ) { }
+  ) {
+
+    this.isLogin = this.authService.auth.isLogin
+  }
 
   ngOnInit(): void {
   }

@@ -19,7 +19,7 @@
       <div class="item mat-body">
         <span class="mat-small">ORDER # {{order._id}}</span>
         <div>
-          <span><a >View order</a> </span>
+          <span><a>View order</a> </span>
           <span class="spacer"></span>
           <span><a>View invoice</a> </span>
         </div>
@@ -42,15 +42,20 @@
   <mat-grid-tile class="order-product" colspan="2" [rowspan]="order?.items.length * 2">
     <app-order-product [items]="order?.items" [isMobile$]="isMobile$"></app-order-product>
   </mat-grid-tile>
-  <mat-grid-tile  colspan="1">
+
+  <mat-grid-tile cols="1" rowspan="2">
     <button class="order-btn" mat-raised-button>Track package</button>
   </mat-grid-tile>
-  <mat-grid-tile  colspan="1">
+
+
+  <mat-grid-tile colspan="1" *ngIf="order?.items.length > 1">
     <button mat-raised-button>Problem with order</button>
   </mat-grid-tile>
-  <mat-grid-tile  colspan="1">
+
+  <mat-grid-tile colspan="1" *ngIf="order?.items.length > 2">
     <button mat-raised-button>Contact us</button>
   </mat-grid-tile>
+
 </mat-grid-list>
 <mat-grid-list cols="1" rowHeight="10vh">
   <mat-grid-tile colspan="1">

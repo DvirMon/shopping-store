@@ -2,8 +2,6 @@ mat-sidenav-container.sidenav-container {
   height: 100%;
 
   mat-sidenav {
-
-       
     width: 450px;
     box-shadow: -3px 0 6px rgba(0, 0, 0, 0.24);
     background-color: white;
@@ -46,14 +44,18 @@ mat-sidenav-container.sidenav-container {
 }
 
 @media screen and (max-width: 660px) {
-mat-sidenav-container.sidenav-container {
+  mat-sidenav-container.sidenav-container {
+    mat-sidenav {
+      width: 100%;
 
-  mat-sidenav {
-    width: 100%; 
+      &.sidenav-products {
+        width: 45%;
+      }
+    }
 
-    &.sidenav-products {
-      width: 45%;
+    mat-paginator {
+      display: flex;
+      justify-content: center;
     }
   }
-}
 }

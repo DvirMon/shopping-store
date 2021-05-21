@@ -1,10 +1,28 @@
-<mat-grid-list *ngIf="product" cols="1" rowHeight="6vh">
+<mat-grid-list *ngIf="product && !(isMobile$ | async)" cols="5" rowHeight="40vh">
   <mat-grid-tile>
-    You recently purchase :
   </mat-grid-tile>
-  <mat-grid-tile [rowspan]="(isMobile$ | async) ? '4' :'5'">
-    <app-product-thumbnail [product]="product" [imageHeight]="(isMobile$ | async) ? 120 : 200"
-      [imageWidth]="(isMobile$ | async) ? 120 : 200"></app-product-thumbnail>
+  <mat-grid-tile class="mat-display-1">
+    You recently added :
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-product-thumbnail [product]="product" [imageHeight]="200" [imageWidth]="200"></app-product-thumbnail>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button type="type" mat-raised-button color="primary" (click)="OnClick()">Complete Purchase!</button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list *ngIf="product && (isMobile$ | async)" cols="1" rowHeight="8vh">
+  <mat-grid-tile class="mat-h1">
+    You recently added :
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="2">
+    <app-product-thumbnail [product]="product" [imageHeight]="120" [imageWidth]="120"></app-product-thumbnail>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button type="type" mat-raised-button color="primary" (click)="OnClick()">Complete Purchase!</button>
   </mat-grid-tile>
 </mat-grid-list>
 

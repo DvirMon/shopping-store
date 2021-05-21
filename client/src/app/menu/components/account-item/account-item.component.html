@@ -1,0 +1,18 @@
+<mat-grid-list class="account-item" cols="3" rowHeight="2.5vh">
+  <mat-grid-tile rowspan="6">
+    <img #img src="/assets/images/account/{{item.imageUrl}}.png" alt="" width="66px" height="66px">
+  </mat-grid-tile>
+  <!-- <div></div> -->
+  <mat-grid-tile class="mat-body-strong text"  colspan="2">
+  </mat-grid-tile>
+  <mat-grid-tile class="mat-body-strong text" rowspan="2" colspan="2">
+    {{item.title}}
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2" class="mat-body text" rowspan="2">
+    <span class="break-word">
+      {{item.text}}
+    </span>
+  </mat-grid-tile>
+  <!-- <mat-grid-tile colspan="2" class="mat-body text">
+  </mat-grid-tile> -->
+</mat-grid-list>

@@ -38,7 +38,7 @@ export class ProductsDashbordComponent implements OnInit {
   public pagination: PaginationModel = new PaginationModel();
 
   private categoryId: string;
-  private alias: string;
+  private alias: string; 
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -165,12 +165,12 @@ export class ProductsDashbordComponent implements OnInit {
 
   // SIDENAV LOGIC SECTION
 
-  // handle 
+  // handle
   public handleMode(event: boolean) {
     this.searchMode = event
   }
 
-  // 
+  //
   public onCloseStart() {
     console.log(1)
     this.searchMode = false

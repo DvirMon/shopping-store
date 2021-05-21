@@ -54,13 +54,14 @@ const OrderSchema = mongoose.Schema(
     versionKey: false,
   }
 );
- 
+
 
 OrderSchema.statics.getOrdersHistory = async function (userId) {
   const orders = await Order
-  .find({ userId })
-  .select({ _id: 1, shippingDate: 1, orderDate : 1, cartRef: 1, totalPrice: 1 })
-  
+    .find({ userId })
+    .sort({ shippingDate: 'desc' })
+    .select({ _id: 1, shippingDate: 1, orderDate: 1, cartRef: 1, totalPrice: 1 })
+
   let history = []
 
   for (const order of orders) {
@@ -71,12 +72,12 @@ OrderSchema.statics.getOrdersHistory = async function (userId) {
   return history.map(order => {
 
     return {
-      _id : order.order._id,
-      cartRef : order.order.cartRef,
-      shippingDate : order.order.shippingDate,
-      orderDate : order.order.orderDate,
-      totalPrice : order.order.totalPrice,
-      items : order.items
+      _id: order.order._id,
+      cartRef: order.order.cartRef,
+      shippingDate: order.order.shippingDate,
+      orderDate: order.order.orderDate,
+      totalPrice: order.order.totalPrice,
+      items: order.items
     }
   })
 }
