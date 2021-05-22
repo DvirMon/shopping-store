@@ -12,16 +12,17 @@ import { ReceiptService } from 'src/app/services/receipt.service';
 
 
 import { Observable } from 'rxjs';
-import { cartState } from 'src/app/utilities/ngrx/state/cart-state';
+import { CartState, cartState } from 'src/app/utilities/ngrx/state/cart-state';
 
 import { environment } from 'src/environments/environment'
 import { FormService } from 'src/app/services/form.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss'],
-  changeDetection : ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent implements OnInit {
 
@@ -29,22 +30,28 @@ export class CartListComponent implements OnInit {
   @Input() public orderMode: boolean = false;
 
   public searchControl = new FormControl();
-  public cartTotalPrice: number;
 
-  public isMobile$ : Observable<boolean> = this.formService.isMobile()
+  public isMobile$: Observable<boolean>
+  public cart$: Observable<CartModel>
 
-  public cart$: Observable<typeof cartState> = this.cartService.cart$
+  public totalPrice: number;
+
+  private isLogin: boolean
 
   constructor(
     private router: Router,
 
-    private formService : FormService,
+    private formService: FormService,
     private cartService: CartService,
+    private authService: AuthService,
     private receiptService: ReceiptService,
 
-
     private cart: CartModel
-  ) { }
+  ) {
+    this.isLogin = this.authService.auth.isLogin
+    this.isMobile$ = this.formService.isMobile()
+    this.cart$ = this.cartService.cart$
+  }
 
   ngOnInit(): void {
     this.subscribeToCartState()
@@ -54,8 +61,9 @@ export class CartListComponent implements OnInit {
 
   private subscribeToCartState() {
     this.cart$.subscribe(
-      (state: typeof cartState) => {
+      (state: CartModel) => {
         this.cart = state
+        this.totalPrice = this.cart.getTotalPrice()
       }
     )
   }
@@ -76,7 +84,10 @@ export class CartListComponent implements OnInit {
     if (!answer) {
       return
     }
-    this.cartService.deleteCartAndCartItems(this.cart.get_id())
+
+    this.isLogin
+    ? this.cartService.deleteCartAndCartItems(this.cart.get_id())
+    : this.cartService.deleteTempCart()
   }
 
 

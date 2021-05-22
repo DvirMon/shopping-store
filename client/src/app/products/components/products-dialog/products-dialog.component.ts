@@ -57,7 +57,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
     private formService: FormService,
-    private authService : AuthService,
+    private authService: AuthService,
     private cartService: CartService,
     private cartItemService: CartItemService,
 
@@ -198,7 +198,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
         })
     } else {
       this.handleAddTmepItem()
-      CartModel.setSeeeionCart(this.cart)
+
     }
   }
 
@@ -215,11 +215,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
         })
       return
     }
-    const currentItem = this.cartItemService.updateTempItem(this.product, this.quantityControl.value)
-    this.cartItemService.emitCurrentItem(currentItem)
-    CartModel.setSeeeionCart(this.cart)
-    this.distinctChange = false
-
+    this.handleUpdateTmepItem()
   }
 
   // main method to handle http request success
@@ -228,13 +224,12 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     this.cartItemService.emitCurrentItem(currentItem)
   }
 
-  private handleAddTmepItem(): void {
-    const currentItem = this.cartItemService.addTempItem(this.product, this.quantityControl.value)
-    this.cartService.emitEditState(true)
-    this.cartItemService.emitCurrentItem(currentItem)
-  }
 
   // LOGIC SECTION
+
+  private setDilaogProps(): void {
+    this.product = this.data.payload;
+  }
 
   // set cart item values
   private handleCartItemData(): void {
@@ -263,8 +258,19 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
     this.cartService.emitEditState(false);
   }
 
-  private setDilaogProps(): void {
-    this.product = this.data.payload;
+// handle temp cart add items
+  private handleAddTmepItem(): void {
+    const currentItem = this.cartItemService.addTempItem(this.product, this.quantityControl.value)
+    this.cartService.emitEditState(true)
+    this.cartItemService.emitCurrentItem(currentItem)
+    CartModel.setSeeeionCart(this.cart)
+  }
+
+  private handleUpdateTmepItem(): void {
+    const currentItem = this.cartItemService.updateTempItem(this.product, this.quantityControl.value)
+    this.cartItemService.emitCurrentItem(currentItem)
+    CartModel.setSeeeionCart(this.cart)
+    this.distinctChange = false
   }
 
 }

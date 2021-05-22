@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../utilities/guards/auth.guard';
 import { RoleGuard } from '../utilities/guards/role.guard';
+import { OrderGuard } from '../utilities/guards/order.guard';
+import { AccountGuard } from '../utilities/guards/account.guard';
 
 import { CartResolver } from '../utilities/resolvers/cart-resolver.service';
 import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.service';
@@ -11,8 +13,7 @@ import { CategoriesResolver } from '../utilities/resolvers/categories-resolver.s
 import { RootComponent } from './components/root/root.component';
 import { MenuDashbordComponent } from './components/menu-dashbord/menu-dashbord.component';
 import { AccountComponent } from './components/account/account.component';
-import { CartComponent } from './components/cart/cart.component';
-import { OrderGuard } from '../utilities/guards/order.guard';
+import { CartComponent } from './components/menu-cart/cart.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
       },
       {
         path: "account",
+        canActivate: [AccountGuard],
         component: AccountComponent
       },
       {

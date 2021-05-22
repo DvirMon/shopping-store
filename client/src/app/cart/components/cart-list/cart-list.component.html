@@ -20,13 +20,13 @@
 <mat-toolbar *ngIf="orderMode">
 
   <!-- search input -->
-  <form>
-    <mat-form-field >
-      <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
-      <span class="spacer"></span>
-      <mat-icon>search</mat-icon>
-    </mat-form-field>
-  </form>
+    <form>
+      <mat-form-field >
+        <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
+        <span class="spacer"></span>
+        <mat-icon>search</mat-icon>
+      </mat-form-field>
+    </form>
 
 
   <!-- <button mat-button type="button" (click)="drawer.toggle()">Close View</button> -->
@@ -46,7 +46,7 @@
   <mat-grid-tile mat-icon class="my-cart">
     <mat-icon [matBadge]="(cart$ | async).getItems().length" matBadgeColor="warn">shopping_cart</mat-icon>
   </mat-grid-tile>
-  <mat-grid-tile class="my-cart" colspan="2">{{(cart$ | async).getTotalPrice() | currency}}</mat-grid-tile>
+  <mat-grid-tile class="my-cart" colspan="2">{{totalPrice | currency}}</mat-grid-tile>
   <mat-grid-tile class="payment" colspan="2">
     <button class="btn-payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
   </mat-grid-tile>
@@ -54,5 +54,5 @@
 
 <!-- toll bar footer  - order-->
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
-  <mat-grid-tile class="my-cart">Total : {{(cart$ | async).getTotalPrice() | currency}}</mat-grid-tile>
+  <mat-grid-tile class="my-cart">Total : {{totalPrice | currency}}</mat-grid-tile>
 </mat-grid-list>

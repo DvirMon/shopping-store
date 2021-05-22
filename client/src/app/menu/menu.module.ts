@@ -13,12 +13,12 @@ import { MenuTopComponent } from './components/menu-top/menu-top.component';
 import { MenuBottomComponent } from './components/menu-bottom/menu-bottom.component';
 
 import { AccountComponent } from './components/account/account.component';
-import { CartComponent } from './components/cart/cart.component';
+import { CartComponent } from './components/menu-cart/cart.component';
 import { LastPurchaseComponent } from './components/last-purchase/last-purchase.component';
 import { AccountItemComponent } from './components/account-item/account-item.component';
 
 
-
+ 
 @NgModule({
   declarations: [
     RootComponent,

@@ -113,7 +113,12 @@ export class CartService {
         this.store.dispatch(new CartActions.AddCart(cart))
         sessionStorage.removeItem("cart")
       })
-    )
+      )
+    }
+
+    public deleteTempCart() {
+      this.store.dispatch(new CartActions.DeleteCart())
+      sessionStorage.removeItem("cart")
   }
 
 
