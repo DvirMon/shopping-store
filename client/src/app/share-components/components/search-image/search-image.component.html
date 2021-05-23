@@ -1,14 +1,26 @@
-<div class="search" *ngIf="(searchEntries$ | async)?.length === 0">
+<!-- <div class="search" *ngIf="(searchEntries$ | async)?.length === 0">
   <div class="img">
-    <img src="https://gstatic.gitbook.com/images/7f9239ce726764aa22093884902e018d.svg" alt="">
   </div>
 
   <div class="text">
-    <span class="text" *ngIf="(results$ |async) && (value?.length >= 3)">
-      No results found for query "{{value}}"
-    </span>
-    <span class="text" *ngIf="(results$ |async) && (value?.length < 3) && value">
-      Please enter at least 3 characters"
-    </span>
   </div>
-</div>
+</div> -->
+
+<mat-grid-list cols="1" [rowHeight]="(isMobile$  |async) ? '72vh' : '80vh'"
+  *ngIf="(searchEntries$ | async)?.length === 0">
+  <mat-grid-tile>
+  <mat-grid-list cols="1" rowHeight="5vh">
+    <mat-grid-tile rowspan="3">
+      <img src="https://gstatic.gitbook.com/images/7f9239ce726764aa22093884902e018d.svg" alt="">
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span class="text" *ngIf="(results$ |async) && (value?.length >= 3)">
+        No results found for query "{{value}}"
+      </span>
+      <span class="text" *ngIf="(results$ |async) && (value?.length < 3) && value">
+        Please enter at least 3 characters"
+      </span>
+    </mat-grid-tile>
+  </mat-grid-list>
+  </mat-grid-tile>
+</mat-grid-list>

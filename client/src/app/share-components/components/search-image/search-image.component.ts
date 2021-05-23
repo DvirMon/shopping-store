@@ -9,12 +9,13 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class SearchImageComponent  {
 
+  @Input() public state: boolean
   @Input() public value: string
   @Input() public searchEntries$: Observable<any[]>
-  @Input() public isMobile$: Observable<boolean> 
-  
-  public results$: Observable<boolean> = this.searchService.results$ 
-  
+  @Input() public isMobile$: Observable<boolean>
+
+  public results$: Observable<boolean> = this.searchService.results$
+
   constructor(
    private searchService : SearchService
  ) {}

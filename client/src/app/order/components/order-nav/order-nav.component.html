@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isMobile$ | async) ? 'over' : 'side'" position="end" [opened]="true">
+    [mode]="(isMobile$ | async) ? 'over' : 'side'" position="end" [opened]="(isMobile$ | async) ? false : true">
     <app-cart-list [orderMode]="true" [drawer]="drawer"></app-cart-list>
   </mat-sidenav>
   <mat-sidenav-content>

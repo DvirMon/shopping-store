@@ -20,6 +20,10 @@ mat-sidenav-container.sidenav-container {
     background-color: white;
     text-align: center;
 
+      mat-grid-tile:hover {
+        outline: red 1px solid;
+      }
+
     mat-paginator {
       display: flex;
       justify-content: center;

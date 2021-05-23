@@ -6,8 +6,7 @@ import { CartModel } from "../../models/cart-model";
 
 export function cartReducer(oldState = new CartState(), action: CartActions) {
 
-  let newState: CartState = { ...oldState }
-
+  const newState: CartState = { ...oldState }
   const cart: CartModel = CartModel.create(oldState.cart)
 
 
@@ -45,7 +44,7 @@ export function cartReducer(oldState = new CartState(), action: CartActions) {
       break
     }
     case CartActionType.RESET_CART: {
-      newState = new CartState()
+      newState.cart = new CartModel()
       break
     }
   }

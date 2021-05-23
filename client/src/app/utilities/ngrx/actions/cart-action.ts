@@ -56,10 +56,10 @@ export class ResetCart implements Action {
 }
 
 export type CartActions =
-  AddCart |
-  SetCartItems |
-  AddCartItem |
-  UpdateCartItem |
-  DeleteCartItem |
-  DeleteCart |
-  ResetCart
+  | AddCart
+  | SetCartItems
+  | AddCartItem
+  | UpdateCartItem
+  | DeleteCartItem
+  | DeleteCart
+  | ResetCart

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -11,7 +11,7 @@ import { ProductsService } from 'src/app/services/products.service';
 import { DialogService } from 'src/app/services/dialog.service';
 
 import { store } from 'src/app/utilities/redux/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -19,21 +19,23 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnDestroy {
 
-  @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild('input') input: ElementRef;
   @ViewChild(MatAutocompleteTrigger) panel: MatAutocompleteTrigger;
 
   @Input() public drawer: MatSidenav;
 
-  public searchControl = new FormControl();
+  public control = new FormControl();
 
   public isMobile$: Observable<boolean>
   public searchEntries$: Observable<ProductModel[]>
   public totalProducts$: Observable<number>
-  public results$ : Observable<boolean>
+  public results$: Observable<boolean>
 
-  public isAdmin: boolean = this.authService.auth.user.isAdmin;
+  public isAdmin: boolean
+
+  private subscibtion: Subscription
 
   constructor(
     private dialogService: DialogService,
@@ -44,12 +46,13 @@ export class SearchComponent implements OnInit {
     this.isMobile$ = this.productService.isMobile()
     this.searchEntries$ = this.productService.searchEntries$
     this.totalProducts$ = this.productService.getTotalNumberOfProducts()
-
+    this.isAdmin = this.authService.auth.user.isAdmin;
   }
 
-
-  ngOnInit(): void {
-    this.search();
+  ngOnDestroy(): void {
+    if (this.subscibtion) {
+      this.subscibtion.unsubscribe()
+    }
   }
 
 
@@ -57,12 +60,12 @@ export class SearchComponent implements OnInit {
 
   // main search method
   public search(): void {
-    this.productService.search(this.searchControl).subscribe(
+    this.subscibtion = this.productService.search(this.control).subscribe(
       () => {
-        this.searchInput.nativeElement.focus()
+        this.input.nativeElement.focus()
       },
       (err) => {
-        this.searchInput.nativeElement.focus()
+        this.input.nativeElement.focus()
       }
     )
   }
@@ -82,6 +85,18 @@ export class SearchComponent implements OnInit {
     this.isAdmin
       ? this.productService.handleUpdate.next(product)
       : this.dialogService.handleProductDialog(product)
+  }
+
+  public onClose() {
+    this.drawer.toggle()
+    this.control.reset()
+    this.productService.handleSearchEntries.next([])
+  }
+
+  public onClear() {
+    this.control.reset()
+    this.productService.handleSearchEntries.next([])
+
   }
 
 }

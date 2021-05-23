@@ -9,6 +9,7 @@ mat-toolbar {
   position: fixed;
   z-index: 10;
   bottom: 0;
+  height: 8vh;
 
   .active-link {
     border-top: color(info) solid 5px;

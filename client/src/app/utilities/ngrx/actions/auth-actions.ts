@@ -9,7 +9,7 @@ export class Login implements Action {
 
   constructor
     (public payload?: any) { }
-  }
+}
 
 
 export class AddSocielUser implements Action {
@@ -40,15 +40,15 @@ export class Logout implements Action {
 
   public type = AuthActionType.LOGOUT
   constructor
-  (public payload?: any) { }
+    (public payload?: any) { }
 
 }
 
 
 export type AuthActions =
-  Login |
-  AddSocielUser |
-  AddAccessToken |
-  AddRefreshToken |
-  Logout
+  | Login
+  | AddSocielUser
+  | AddAccessToken
+  | AddRefreshToken
+  | Logout
 

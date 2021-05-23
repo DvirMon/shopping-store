@@ -34,14 +34,13 @@ export class ProductsService {
   private url: string = `${environment.server}/api/products`
 
   public handleUpdate = new BehaviorSubject<ProductModel>(null)
-  public handleSearchEntries = new BehaviorSubject<ProductModel[]>([]);
   public handleDrawerToggle = new Subject<boolean>();
 
   public handleCateogryAlias = new BehaviorSubject<string>("");
   public alias$: Observable<string> = this.handleCateogryAlias.asObservable();
 
-  private searchEntries = new BehaviorSubject<ProductModel[]>([]);
-  public searchEntries$: Observable<ProductModel[]> = this.searchEntries.asObservable()
+  public handleSearchEntries = new BehaviorSubject<ProductModel[]>([]);
+  public searchEntries$: Observable<ProductModel[]> = this.handleSearchEntries.asObservable()
 
   constructor(
     private http: HttpClient,
@@ -154,7 +153,7 @@ export class ProductsService {
       switchMap((query: string) => {
 
         if (!query) {
-          this.searchEntries.next([])
+          this.handleSearchEntries.next([])
           return of([])
         }
 
@@ -180,14 +179,14 @@ export class ProductsService {
   // handle search error
   private handleError(): Observable<[]> {
     this.searchService.handlerRsults.next(true)
-    this.searchEntries.next([])
+    this.handleSearchEntries.next([])
     return of([]);
   }
 
   // handle search success
   private handleSuccess(products: ProductModel[]): Observable<ProductModel[]> {
     this.searchService.handlerRsults.next(false)
-    this.searchEntries.next(products)
+    this.handleSearchEntries.next(products)
     return of(products)
   }
 

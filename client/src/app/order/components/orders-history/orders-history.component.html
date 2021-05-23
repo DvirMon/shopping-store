@@ -26,7 +26,7 @@
 
     <mat-drawer #drawer mode="over"  opened="false" position="end" (closedStart)="onCloseStart()">
       <app-order-search #searchOrder [drawer]="search.drawer"></app-order-search>
-      <mat-list>
+      <mat-list *ngIf="(orderEntries$ | async).length > 0">
         <app-order-product *ngFor="let order of (orderEntries$ | async)" [items]="order.items" [isMobile$]="isMobile$"
           [date]="order.shippingDate">
         </app-order-product>

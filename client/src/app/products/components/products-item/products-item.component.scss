@@ -3,14 +3,12 @@ mat-grid-tile {
   padding: 0;
 }
 
-mat-grid-list {
+mat-grid-list.item {
   box-sizing: border-box;
   cursor: pointer;
   margin-top: 2px;
 
-  &:hover {
-    border: red 1px solid;
-  }
+
 }
 
 .price {

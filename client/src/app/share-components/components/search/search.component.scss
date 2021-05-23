@@ -16,6 +16,8 @@ mat-toolbar {
 }
 
 mat-list {
+  width: 100%;
+  height: 100%;
   mat-list-item {
     height: 15vh;
     padding: 2%;
@@ -24,6 +26,11 @@ mat-list {
       height: 100%;
     }
   }
+}
+
+app-search-image {
+  width: 100%;
+  height: 100%;
 }
 
 // from 84px up

@@ -1,58 +1,64 @@
 <!-- tool bar header - products-->
 
 <mat-toolbar *ngIf="!orderMode">
-
   <button *ngIf="!(isMobile$ | async)" mat-button type="button" disableClose="true" opened="true"
     (click)="drawer.toggle()">Close</button>
+  <!-- <mat-icon *ngIf="(isMobile$ | async)" [matBadge]="(cart$ | async).getItems().length" matBadgeColor="warn">shopping_cart</mat-icon> -->
+  <span *ngIf="(isMobile$ | async)">
+    Total Price {{totalPrice | currency}}
+  </span>
   <span class="spacer"></span>
   <button mat-icon-button type="button" (click)="deleteAllCartItems()">
     <mat-icon>delete</mat-icon>
   </button>
-
   <button *ngIf="orderMode" mat-button type="button" (click)="backToSore()">Back to store</button>
-
 </mat-toolbar>
 
-<!-- end of tool bar header - products-->
 
-<!-- tool bar header - order-->
-
+<!-- search input -->
 <mat-toolbar *ngIf="orderMode">
-
-  <!-- search input -->
-    <form>
-      <mat-form-field >
-        <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
-        <span class="spacer"></span>
-        <mat-icon>search</mat-icon>
-      </mat-form-field>
-    </form>
-
-
+  <form>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Search in order..." [formControl]="searchControl" autocomplete="off">
+      <span class="spacer"></span>
+      <mat-icon>search</mat-icon>
+    </mat-form-field>
+  </form>
   <!-- <button mat-button type="button" (click)="drawer.toggle()">Close View</button> -->
 </mat-toolbar>
 
 <!-- end of tool bar header - order-->
 
 <!--products list  -->
-<mat-list>
-  <app-cart-list-item *ngFor="let cartItem of (cart$ | async).getItems()" [cartItem]="cartItem" [orderMode]="orderMode"
-    [searchTerm]="searchControl.value">
-  </app-cart-list-item>
-</mat-list>
+<mat-grid-list [rowHeight]="(isMobile$| async) ? '62vh' : '70vh'" cols="1">
+  <mat-grid-tile>
+    <mat-list>
+      <app-cart-list-item *ngFor="let cartItem of (cart$ | async).getItems()" [cartItem]="cartItem"
+        [orderMode]="orderMode" [searchTerm]="searchControl.value">
+      </app-cart-list-item>
+    </mat-list>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<!--   footer  - products-->
-<mat-grid-list *ngIf="!orderMode" cols="5" rowHeight="10vh" gutterSize="0">
+<!--   footer cart desktop-->
+<mat-grid-list *ngIf="!orderMode && !(isMobile$| async)" cols="5" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile mat-icon class="my-cart">
     <mat-icon [matBadge]="(cart$ | async).getItems().length" matBadgeColor="warn">shopping_cart</mat-icon>
   </mat-grid-tile>
   <mat-grid-tile class="my-cart" colspan="2">{{totalPrice | currency}}</mat-grid-tile>
-  <mat-grid-tile class="payment" colspan="2">
+  <mat-grid-tile colspan="2">
     <button class="btn-payment" [disableRipple]="true" (click)="goToOrder()" mat-button>Purchase</button>
   </mat-grid-tile>
 </mat-grid-list>
 
-<!-- toll bar footer  - order-->
+<!--   footer cart mobile-->
+<mat-grid-list *ngIf="!orderMode && (isMobile$| async)" cols="1" rowHeight="10vh" gutterSize="0">
+  <mat-grid-tile>
+    <button class="btn-payment" (click)="goToOrder()" mat-button>Purchase</button>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<!--footer order-->
 <mat-grid-list *ngIf="orderMode" cols="1" rowHeight="10vh" gutterSize="0">
   <mat-grid-tile class="my-cart">Total : {{totalPrice | currency}}</mat-grid-tile>
 </mat-grid-list>
