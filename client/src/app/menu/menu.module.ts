@@ -18,7 +18,7 @@ import { LastPurchaseComponent } from './components/last-purchase/last-purchase.
 import { AccountItemComponent } from './components/account-item/account-item.component';
 
 
- 
+
 @NgModule({
   declarations: [
     RootComponent,
@@ -35,7 +35,8 @@ import { AccountItemComponent } from './components/account-item/account-item.com
     CoreModule,
     SharedModule,
     MenuRoutingModule,
-    CartModule
+    CartModule,
+    
   ]
 })
 export class MenuModule { }

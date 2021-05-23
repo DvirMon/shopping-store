@@ -101,12 +101,15 @@ export class FormService {
 
   // RESET PASSWORD FORM
 
-  public resetForm(): FormControl {
-    return this.fb.control('',
-      [
-        Validators.required,
-        Validators.pattern(this.validationService.regex.emailPhone),
+  public resetForm(): FormGroup {
+    return this.fb.group({
+      phone: ['',
+        [
+          Validators.required,
+          Validators.pattern(this.validationService.regex.emailPhone)
+        ]
       ]
+    }
 
     )
   }

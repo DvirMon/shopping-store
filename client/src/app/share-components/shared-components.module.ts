@@ -35,6 +35,7 @@ import { AddressComponent } from './components/address/address.component';
 import { BarBackgroundColorDirective } from '../utilities/directives/bar-background-color.directive';
 import { BackgroundHeightDirective } from '../utilities/directives/background-height.directive';
 import { SidenavAdminDirective } from '../utilities/directives/sidnav-admin.directive';
+import { TollbarDirective } from '../utilities/directives/tollbar-position.directive';
 
 // PIPES
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
@@ -60,12 +61,13 @@ import { environment } from 'src/environments/environment';
     ProductsCategoriesComponent,
 
     AddressComponent,
-    
+
     HighLightPipe,
 
     BarBackgroundColorDirective,
     BackgroundHeightDirective,
     SidenavAdminDirective,
+    TollbarDirective
 
   ],
   imports: [
@@ -94,6 +96,7 @@ import { environment } from 'src/environments/environment';
     BarBackgroundColorDirective,
     BackgroundHeightDirective,
     SidenavAdminDirective,
+    TollbarDirective
   ],
   providers: [
     {

@@ -23,7 +23,7 @@ router.post("/code",
       const code = confirmation.getPassword()
 
       // save code in database
-      const reset = await Reset.getEntry({ contact, code })
+      await Reset.getEntry({ contact, code })
 
       // save hash code in session
       // request.session.code = reset.code
@@ -31,16 +31,16 @@ router.post("/code",
       // create token with hash code
       const token = await tokenService.getConfirmationToken(contact)
 
-      if (contact.includes("@")) {
-        await email.send(contact, request.user.fullName, code)
-      }
-      else {
+      await sms.send(contact, code)
 
-        const phone = reset.formatPhone(contact)
-        await sms.send(phone, code)
-      }
- 
-      response.json({ token , contact})
+      // if (contact.includes("@")) {
+      //   await email.send(contact, request.user.fullName, code)
+      // }
+      // else {
+
+      // }
+
+      response.json({ token, contact })
     }
     catch (err) {
       next(err)

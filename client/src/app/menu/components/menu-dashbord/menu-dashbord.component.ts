@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormService } from 'src/app/services/form.service';
 
@@ -9,11 +9,23 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class MenuDashbordComponent implements OnInit {
 
-  public isMobile$ : Observable<boolean> = this.formService.isMobile()
+  @HostListener('window:scroll', ['$event']) public checkScroll() {
+    const scrollPosition = window.pageYOffset
+
+    if (scrollPosition >= 75) {
+    }
+
+    if (scrollPosition >= 75) {
+    }
+  }
+
+  public isMobile$: Observable<boolean> = this.formService.isMobile()
 
   constructor(
-    private formService : FormService
+    private formService: FormService
   ) { }
+
+
 
   ngOnInit(): void {
   }

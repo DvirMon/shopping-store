@@ -1,7 +1,7 @@
 <div class="main">
 
   <div class="container">
-    <mat-horizontal-stepper #stepper linear>
+    <mat-horizontal-stepper #stepper linear >
       <mat-step #authStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Authentication Details</ng-template>
         <app-reset-auth (next)="next(authStep)"></app-reset-auth>

@@ -9,8 +9,6 @@ import { store } from '../redux/store';
 })
 export class BackgroundHeightDirective {
 
-  private isMobile : boolean;
-
 
   @HostBinding("style.height") public height: string;
 
@@ -19,7 +17,7 @@ export class BackgroundHeightDirective {
     const scrollPosition = window.pageYOffset
 
     if (scrollPosition >= 70) {
-      this.height =  "210vh"
+      this.height = "210vh"
     }
 
   }
@@ -28,11 +26,6 @@ export class BackgroundHeightDirective {
   constructor(
     private formService: FormService
   ) {
-    this.formService.isMobile().subscribe(
-      (isMobile) => {
-        this.isMobile = isMobile
-      }
-    )
   }
 
 

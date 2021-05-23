@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter,  OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
 import { FormService } from 'src/app/services/form.service';
 import { ResetModel, ResetService } from 'src/app/services/reset.service';
@@ -14,10 +15,10 @@ import { ResetModel, ResetService } from 'src/app/services/reset.service';
 })
 export class ResetAuthComponent implements OnInit {
 
+  @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
   @Output() public next = new EventEmitter();
 
-  public control: FormControl = this.formService.resetForm()
-  public prefix: string;
+  public phoneForm: FormGroup = this.formService.resetForm()
   public serverError: string
 
   constructor(
@@ -29,42 +30,44 @@ export class ResetAuthComponent implements OnInit {
     this.subscribtToControl()
   }
 
-
   // SUBSCRIBTION SECTION
 
   private subscribtToControl() {
 
-    this.control.valueChanges.subscribe((value: string) => {
 
-      if (value.includes('@')) {
-        this.prefix = ""
-      }
-      else if (+value && value.length >= 3) {
+    this.phoneForm.valueChanges.subscribe((value: string) => {
 
-        if (value.startsWith("0")) {
-          this.control.setValue(value.substring(1))
-        }
+      // console.log(this.inputPhone.value)
 
-        this.prefix = "+972-"
+      // if (value.includes('@')) {
+      //   this.prefix = ""
+      // }
+      // else if (+value && value.length >= 3) {
 
-      } else {
-        this.prefix = ""
+      //   if (value.startsWith("0")) {
+      //     // this.control.setValue(value.substring(1))
+      //   }
 
-      }
+      //   this.prefix = "+972-"
+
+      // } else {
+      //   this.prefix = ""
+
+      // }
     })
   }
 
   // HTTP SECTION
 
   public onSubmit() {
-    this.resetService.getConfirmationCode(this.control.value).subscribe(
+    this.resetService.getConfirmationCode(this.inputPhone.value).subscribe(
       (payload: ResetModel) => {
         this.resetService.setResetData(payload);
         this.next.emit()
       },
       (err: HttpErrorResponse) => {
         this.serverError = err.error
-        this.control.setErrors({ serverError: true })
+        this.phoneForm.controls['phone'].setErrors({ serverError: true })
 
       }
 
@@ -72,6 +75,9 @@ export class ResetAuthComponent implements OnInit {
 
   }
 
+  public onChange() {
+
+  }
 
 
 }

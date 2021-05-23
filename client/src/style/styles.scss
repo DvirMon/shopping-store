@@ -95,3 +95,13 @@ mat-toolbar.search {
     rgba(166, 231, 207, 1) 100%
   );
 }
+
+ngx-mat-intl-tel-input {
+  width: 100%;
+  height: 100%;
+
+  button.mat-focus-indicator {
+    opacity: 1 !important;
+    margin-bottom: 10px;
+  }
+}

@@ -174,7 +174,8 @@ export class AuthService {
   public handleRoleRoute(): Promise<boolean> {
 
     if (!this.auth.user) {
-      return this.router.navigateByUrl("home")
+      console.log(1)
+      return this.router.navigateByUrl("auth/reset")
     }
 
     return this.auth.user.isAdmin ?
@@ -188,7 +189,6 @@ export class AuthService {
     if (this.auth.socialUser) {
       this.googleService.logoutGoogle().subscribe()
     }
-
 
     this.store.dispatch(new AuthActions.Logout())
     this.store.dispatch(new CartActions.ResetCart())

@@ -99,8 +99,8 @@ const registerForm = () => {
 const contactForm = () => {
   return [
     validateScheme(schemaService.contactFormSchema),
-    isContactEmailExist,
-    isUserExist
+    // isContactEmailExist,
+    // isUserExist
   ]
 
 }
@@ -111,7 +111,7 @@ const newPasswordForm = () => {
     authorize(false, process.env.JWT_CONFIRMATION),
     validateScheme(schemaService.newPasswordScheme),
     isUserExist,
-    isEmailMatch,
+    // isEmailMatch,
   ]
 }
 

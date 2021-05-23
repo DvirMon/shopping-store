@@ -1,4 +1,4 @@
-<mat-toolbar class="top">
+<mat-toolbar appTollbar class="top">
 
   <ng-container *ngIf="!(isMobile | async)">
     <button type="button" mat-button routerLink="/home">
@@ -11,6 +11,13 @@
     Our Grocery Store
   </span>
   <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
+
+  <ng-container *ngIf="(isMobile | async)">
+    <span class="spacer"></span>
+    <button class="auth-btn" mat-stroked-button (click)="onClick(isLogin ? 'logout' : '/auth/login')">
+      <span>{{isLogin ? 'Logout' : 'Login'}}</span>
+    </button>
+  </ng-container>
 
   <ng-container *ngIf="!(isMobile | async)">
     <span class="spacer"></span>
