@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  height: 91vh;
+  height: 90vh;
 
   .space {
     width: 100%;
@@ -15,47 +15,41 @@
 
   .container {
     border-radius: 5%;
-  }
 
-  .main-card {
-    width: 70%;
-    height: 70vh;
-    margin: auto;
-    display: flex;
-
-    .left,
-    .right {
-      width: 50%;
-    }
-
-    .left {
-      background-color: rgba($color: white, $alpha: 0.4);
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
-    }
-    .right {
-      padding: 3%;
+    mat-grid-list.main-card {
+      width: 70%;
+      // height: 100%;
+      margin: auto;
+      display: flex;
       background-color: white;
-      border-top-right-radius: 6px;
-      border-bottom-right-radius: 6px;
 
-      form {
+      mat-grid-list.left,
+      mat-grid-list.right {
+        width: 50%;
+      }
+
+      mat-grid-list .left {
+        background-color: rgba($color: white, $alpha: 0.4);
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+      }
+
+      mat-grid-list.right {
+        padding: 3%;
+        background-color: white;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+    @media screen and (max-width: 660px) {
+      mat-grid-list.main-card,
+      mat-grid-list.right {
         width: 100%;
-        margin: auto;
       }
     }
   }
-
-  @media screen and (max-width: 600px) {
-    .main-card,
-    .main-card > .right {
-      width: 100%;
-    }
-  }
-
-  @media screen and (min-width: 800px) {
-    .main-card {
-      height: 60vh;
-    }
+  form {
+    width: 100%;
+    margin: auto;
   }
 }
