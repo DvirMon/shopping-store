@@ -3,7 +3,8 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS, M
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { DialogComponent } from 'src/app/share-components/components/dialog/dialog.component';
-import { ProductsDialogComponent } from 'src/app/products/components/products-dialog/products-dialog.component';
+import { ProductsDialogComponent } from 'src/app/share-components/components/products-dialog/products-dialog.component';
+
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
 import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
 
@@ -56,7 +57,7 @@ export class DialogService {
   }
 
   // open product dialog
-  public handleProductDialog(product: ProductModel, alias? : string): void {
+  public handleProductDialog(product: ProductModel): void {
     const data = this.handleDate("product", product)
     this.dialog.open(ProductsDialogComponent, this.handleConfig(data))
   }
@@ -122,7 +123,7 @@ export class DialogService {
         dialogConfig.panelClass = "dialog-spinner"
         break
       case "product":
-        dialogConfig.height = '600px'
+        dialogConfig.height = '65vh'
         dialogConfig.width = '880px'
         dialogConfig.hasBackdrop = true;
         dialogConfig.autoFocus = false;

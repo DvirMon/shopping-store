@@ -3,7 +3,7 @@
   <mat-grid-tile rowspan="2">
     <h1>Enter your phone number</h1>
   </mat-grid-tile>
-  >
+
   <form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
     <mat-grid-tile rowspan="4">
 
@@ -11,8 +11,8 @@
 
         <ngx-mat-intl-tel-input [onlyCountries]="['il']" [enablePlaceholder]="true" [name]="phoneForm.controls['phone']"
           [formControl]="phoneForm.controls['phone']" #phone></ngx-mat-intl-tel-input>
-        <mat-error *ngIf="phoneForm.controls['phone'].errors?.required">Email or phone number are required</mat-error>
-        <mat-error *ngIf="phoneForm.controls['phone'].errors?.pattern">Email or phone number are not in valid format
+        <mat-error *ngIf="phoneForm.controls['phone'].errors?.required">Phone number is required</mat-error>
+        <mat-error *ngIf="phoneForm.controls['phone'].errors?.pattern">Phone number is not in valid format
         </mat-error>
         <mat-error *ngIf="phoneForm.controls['phone'].errors?.serverError">{{serverError}}</mat-error>
         <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>

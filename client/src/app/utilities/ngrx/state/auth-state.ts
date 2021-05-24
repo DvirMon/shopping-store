@@ -6,13 +6,12 @@ export class AuthState {
   public user: UserModel = new UserModel();
   public isLogin: boolean
   public socialUser: SocialUser
-  public refreshToken: any
-  public accessToken: any
+  public refreshToken: string
+  public accessToken: string
 
   constructor(
 
   ) {
-
 
     this.refreshToken = sessionStorage.getItem("jwt")
     this.isLogin = this.refreshToken !== null;

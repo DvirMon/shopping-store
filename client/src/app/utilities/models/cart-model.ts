@@ -35,7 +35,7 @@ export class CartModel {
 
   }
 
-  static setSeeeionCart(cart) {
+  static setSeeeionCart(cart : CartModel) : void {
     sessionStorage.setItem("cart", JSON.stringify(cart))
   }
 

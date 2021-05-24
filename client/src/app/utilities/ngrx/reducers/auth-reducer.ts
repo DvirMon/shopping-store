@@ -31,7 +31,7 @@ export function authReducer(oldState = new AuthState(), action: AuthActions) {
       break
   }
 
-  return newState
+  return { ...newState }
 
 
 }

@@ -23,11 +23,6 @@
   width: 80%;
 }
 
-@media screen and (max-width: 600px) {
-  .container {
-    width: 80%;
-  }
-}
 
 mat-grid-tile.input-error {
   color: color(input-error);
@@ -35,4 +30,10 @@ mat-grid-tile.input-error {
 
 mat-grid-tile > h1 {
   text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 80%;
+  }
 }

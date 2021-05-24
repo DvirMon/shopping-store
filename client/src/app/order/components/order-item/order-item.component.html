@@ -28,22 +28,20 @@
   </mat-list>
 </mat-toolbar>
 
-<mat-grid-list class="order-item" cols="3" rowHeight="6vh">
-  <mat-grid-tile colspan="3">
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1">
-    <h2>
-      Delivery {{order.shippingDate | date : "MMM d, y"}}
-    </h2>
+<mat-grid-list class="order-item" cols="3" rowHeight="10vh">
+  <!-- <mat-grid-tile colspan="3">
+  </mat-grid-tile> -->
+  <mat-grid-tile class="mat-h1" colspan="1">
+    Delivery {{order.shippingDate | date : "MMM d, y"}}
   </mat-grid-tile>
   <mat-grid-tile colspan="2">
   </mat-grid-tile>
 
-  <mat-grid-tile class="order-product" colspan="2" [rowspan]="order?.items.length * 2">
+  <mat-grid-tile class="order-product" colspan="2" [rowspan]="order?.items.length">
     <app-order-product [items]="order?.items" [isMobile$]="isMobile$"></app-order-product>
   </mat-grid-tile>
 
-  <mat-grid-tile cols="1" rowspan="2">
+  <mat-grid-tile cols="1">
     <button class="order-btn" mat-raised-button>Track package</button>
   </mat-grid-tile>
 

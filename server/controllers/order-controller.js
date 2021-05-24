@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Order = require("../models/order-model");
+
 const orderLogic = require("../business-layer-logic/order-logic");
 
 const middleware = require("../services/middleware");
@@ -17,7 +18,7 @@ router.get(
 
       const { userId, query } = request.params
 
-      const orders = await orderLogic.searchOrders(userId, query)
+      const orders = await orderLogic.searchProductInOrders(userId, query)
 
       response.json(orders);
     } catch (err) {
@@ -44,11 +45,24 @@ router.get(
 // get order dates
 router.get(
   "/dates",
-  middleware.authorize(false, key),
+  // middleware.authorize(false, key),
   async (request, response, next) => {
     try {
       const totalDocs = await orderLogic.countOrdersByDate();
       response.json(totalDocs);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.get(
+  "/year/:userId",
+  async (request, response, next) => {
+    try {
+      const userId = request.params.userId
+      const years = await orderLogic.getOrdersYears(userId);
+      response.json(years);
     } catch (err) {
       next(err);
     }
@@ -63,6 +77,21 @@ router.get(
     try {
       const order = await orderLogic.getLatestOrderAsync(request.params.cartId);
       response.json(order);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// add new order
+router.post(
+  "/dates",
+  // middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const {userId, day} = request.body
+      const dates = await orderLogic.getOrdersByDay({userId, day})
+      response.json(dates);
     } catch (err) {
       next(err);
     }

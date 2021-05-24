@@ -12,7 +12,7 @@ import { ProductModel } from 'src/app/utilities/models/product-model';
   templateUrl: './products-item.component.html',
   styleUrls: ['./products-item.component.scss']
 })
-export class ProductsItemComponent implements OnInit {
+export class ProductsItemComponent {
 
   @Input() public product: ProductModel;
 
@@ -24,10 +24,6 @@ export class ProductsItemComponent implements OnInit {
     private dialogService: DialogService,
     private productService: ProductsService,
   ) { }
-
-  ngOnInit(): void {
-    // this.alias = this.productService.getCategoryAlias(this.product)
-  }
 
   public handleProductDialog(): void {
 

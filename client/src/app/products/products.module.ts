@@ -19,7 +19,6 @@ import { ProductsDashbordComponent } from './components/products-dashbord/produc
 import { ProductsItemComponent } from './components/products-item/products-item.component';
 import { ProductsFormComponent } from './components/products-form/products-form.component';
 
-import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
 import { ProductBannerComponent } from './components/product-banner/product-banner.component';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { ProductBannerComponent } from './components/product-banner/product-bann
     ProductsBarComponent,
     ProductsItemComponent,
 
-    ProductsDialogComponent,
     ProductsFormComponent,
 
     ProductsNavComponent,
@@ -48,7 +46,6 @@ import { ProductBannerComponent } from './components/product-banner/product-bann
     RootComponent,
     ProductsBarComponent,
     ProductsItemComponent,
-    ProductsDialogComponent,
   ]
 })
 export class ProductsModule { }

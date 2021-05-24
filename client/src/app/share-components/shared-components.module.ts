@@ -41,6 +41,7 @@ import { TollbarDirective } from '../utilities/directives/tollbar-position.direc
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
 import { environment } from 'src/environments/environment';
+import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { environment } from 'src/environments/environment';
 
     ProductThumbnailComponent,
     ProductsCategoriesComponent,
+    ProductsDialogComponent,
 
     AddressComponent,
 
@@ -79,7 +81,8 @@ import { environment } from 'src/environments/environment';
 
     ProductThumbnailComponent,
     ProductsCategoriesComponent,
-
+    ProductsDialogComponent,
+    
     InputComponent,
     InputPasswordComponent,
     InputUploadComponent,

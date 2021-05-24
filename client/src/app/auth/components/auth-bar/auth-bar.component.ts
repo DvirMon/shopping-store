@@ -3,13 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserModel } from 'src/app/utilities/models/user-model';
-import { AuthService } from 'src/app/services/auth.service';
 
-import { GoogleService } from 'src/app/services/google.service';
 import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
-import { isLoggin, userSelecotr } from 'src/app/utilities/ngrx/auth-selectors';
+import { isLoggin, userSelecotr } from 'src/app/utilities/ngrx/selectors';
 import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 
 @Component({

@@ -28,6 +28,7 @@ export class OrderProductComponent implements OnInit {
 
 
   public onClick(product: ProductModel) {
+    console.log(product)
     this.dialodService.handleProductDialog(product)
   }
 

@@ -2,7 +2,7 @@
 
 .main {
 
-  background-color: white;
+  // background-color: color("info");
 
   app-login {
     height: 100%;
@@ -56,3 +56,10 @@ button {
 .btn-shopping {
   @include pos-top(0);
 }
+
+@media screen and (max-width: 600px) {
+  form {
+    width: 80%;
+  }
+}
+

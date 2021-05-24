@@ -10,7 +10,7 @@ import { TokenService } from './token.service';
 // MODELS
 import { UserModel } from '../utilities/models/user-model';
 
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ import { AuthState } from '../utilities/ngrx/state/auth-state';
 import * as  AuthActions from "../utilities/ngrx/actions/auth-actions";
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
-import { userSelecotr } from '../utilities/ngrx/auth-selectors';
+import { userSelecotr } from '../utilities/ngrx/selectors';
 
 declare const gapi: any;
 
@@ -138,14 +138,14 @@ export class AuthService {
         }))
   }
 
-  // method to set refreshToken and set user
+  // method to set refresh token and user in store
   private setUser(): Observable<UserModel> {
     return this.tokenService.getRefreshToken()
       .pipe(
         map((response: AuthData) => {
           this.store.dispatch(new AuthActions.AddRefreshToken(response.token))
           this.store.dispatch(new AuthActions.Login(response))
-          return response.user
+          return this.auth.user
         }))
   }
 
@@ -174,7 +174,6 @@ export class AuthService {
   public handleRoleRoute(): Promise<boolean> {
 
     if (!this.auth.user) {
-      console.log(1)
       return this.router.navigateByUrl("auth/reset")
     }
 
@@ -194,7 +193,5 @@ export class AuthService {
     this.store.dispatch(new CartActions.ResetCart())
     return this.router.navigateByUrl(`/`)
   }
-
-  // end of login/register logic
 
 }

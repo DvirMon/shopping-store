@@ -1,7 +1,7 @@
-<mat-grid-list cols="3" [rowHeight]="(isMobile$ | async) ? '8vh' : '12vh'" *ngFor="let item of items">
+<mat-grid-list cols="3" [rowHeight]="(isMobile$ | async) ? '8vh' : '10vh'" *ngFor="let item of items">
   <mat-grid-tile [rowspan]="(isMobile$ | async) ? '2' : '1'">
-    <app-product-thumbnail [product]="item?.productRef" [imageHeight]="(isMobile$ | async) ? '80' : '70'"
-      [imageWidth]="(isMobile$ | async) ? '80' : '70'">
+    <app-product-thumbnail [product]="item?.productRef" [imageHeight]="(isMobile$ | async) ? '80' : '60'"
+      [imageWidth]="(isMobile$ | async) ? '80' : '60'">
     </app-product-thumbnail>
   </mat-grid-tile>
   <mat-grid-tile  class="text">

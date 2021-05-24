@@ -51,7 +51,7 @@ export function cartReducer(oldState = new CartState(), action: CartActions) {
 
 
 
-  return newState
+  return { ...newState }
 
 
 }

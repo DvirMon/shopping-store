@@ -1,5 +1,8 @@
+const mongoose = require("mongoose");
 const Order = require("../models/order-model");
 const CartItem = require("../models/cartItem-model");
+
+const dateService = require('../services/date');
 
 const getAllOrdersAsync = async () => {
   return await Order.find({}).exec();
@@ -31,7 +34,7 @@ const countOrdersByDate = async () => {
     },
     {
       $match: {
-        _id: { $gte: dayOfYear() },
+        _id: { $gte: dateService.dayOfYear(new Date()) },
         orders: { $gte: 3 },
       },
     },
@@ -44,7 +47,73 @@ const countOrdersByDate = async () => {
   return dates;
 };
 
-const searchOrders = async (userId, query) => {
+
+const getOrdersHistory = async (userId, day) => {
+
+  const orders = await Order
+    .find({ userId })
+    .sort({ shippingDate: 'desc' })
+    .select({ _id: 1, shippingDate: 1, orderDate: 1, cartRef: 1, totalPrice: 1 })
+
+  // const orders = await getOrdersByDay(userId, day)
+
+  let history = []
+
+  for (const order of orders) {
+    const items = await CartItem.findItemsByCart(order.cartRef)
+    history.push({ order, items })
+  }
+
+  return history.map(order => {
+
+    return {
+      _id: order.order._id,
+      cartRef: order.order.cartRef,
+      shippingDate: order.order.shippingDate,
+      orderDate: order.order.orderDate,
+      totalPrice: order.order.totalPrice,
+      items: order.items
+    }
+  })
+}
+
+
+const getOrdersYears = async (userId) => {
+
+  const temp = await Order.aggregate([
+    {
+      $match: { userId: new mongoose.Types.ObjectId(userId) },
+    },
+    {
+      $group: {
+        _id: { $year: "$orderDate" }
+      },
+    },
+    {
+      $sort: { year: 1 },
+    },
+  ]);
+
+  const years = temp.map((obj) => {
+    return obj._id
+  });
+
+  return years;
+};
+
+const getOrdersByDay = async ({ userId, day }) => {
+
+  const date = dateService.getLastDaysDate(day)
+
+  return await Order
+    .find({ userId })
+    .where('orderDate').gt(date)
+    .sort({ shippingDate: 'desc' })
+    .select({ _id: 1, shippingDate: 1, orderDate: 1, cartRef: 1 })
+};
+
+
+const searchProductInOrders = async (userId, query) => {
 
   const orders = await Order
     .find({ userId })
@@ -81,21 +150,7 @@ const searchOrders = async (userId, query) => {
 
 }
 
-// function to get day of year as a number
-const dayOfYear = () => {
-  const date = new Date();
-  const x = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-  const y = Date.UTC(date.getFullYear(), 0, 0);
 
-  const day = (x - y) / 24 / 60 / 60 / 1000;
-  return isLeapYear(date) ? day + 1 : day;
-};
-
-// function to valid leap year
-const isLeapYear = (date) => {
-  const year = date.getFullYear();
-  return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
-};
 
 module.exports = {
   getAllOrdersAsync,
@@ -103,6 +158,10 @@ module.exports = {
   getTotalDocsAsync,
   addOrderAsync,
   getLatestOrderAsync,
-  searchOrders,
+  
   countOrdersByDate,
+  searchProductInOrders,
+  getOrdersHistory,
+  getOrdersYears,
+  getOrdersByDay
 };
