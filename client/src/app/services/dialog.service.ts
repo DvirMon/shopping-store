@@ -123,7 +123,7 @@ export class DialogService {
         dialogConfig.panelClass = "dialog-spinner"
         break
       case "product":
-        dialogConfig.height = '65vh'
+        dialogConfig.height = '70vh'
         dialogConfig.width = '880px'
         dialogConfig.hasBackdrop = true;
         dialogConfig.autoFocus = false;

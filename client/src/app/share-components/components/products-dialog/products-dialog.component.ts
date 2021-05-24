@@ -83,9 +83,9 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    // this.InvokeQuantityFormControl()
-    // this.setControlValidators()
-    // this.subscribeToControls()
+    this.InvokeQuantityFormControl()
+    this.setControlValidators()
+    this.subscribeToControls()
   }
 
   ngOnDestroy(): void {
@@ -97,8 +97,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   // FORM SECTION
 
   private InvokeQuantityFormControl() {
-    console.log(this.product)
-    console.log(this.cartItemQuantity)
     this.quantityControl = this.cartItemQuantity.control
   }
 

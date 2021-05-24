@@ -8,7 +8,7 @@
 
 @mixin dialog-title($padding) {
   background-color: #048bf3;
-  height: 15vh;
+  height: 18vh;
   color: white;
   font-size: 30px;
   padding: $padding;
@@ -42,7 +42,7 @@ input[type="number"]::-webkit-inner-spin-button {
   .dialog-title {
     @include dialog-title(3%);
 
-    h3 {
+    h2 {
       width: 90%;
       font-size: 30px;
       float: left;
@@ -91,7 +91,7 @@ input[type="number"]::-webkit-inner-spin-button {
     @include dialog-title(7%);
     padding-right: 0%;
 
-    h3 {
+    h2 {
       width: 80%;
       float: left;
     }
