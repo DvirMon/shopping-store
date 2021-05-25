@@ -14,14 +14,22 @@ app-order-search {
   }
 }
 
-span.text {
-  font-size: smaller;
-}
-
 mat-toolbar.order {
   background-color: white;
   display: flex;
   vertical-align: middle;
+
+  div.order-dates {
+    width: 50%;
+
+    mat-form-field {
+      margin-left: 2%;
+      font-size: 14px;
+    }
+  }
+
+  .text {
+  }
 }
 
 mat-drawer-container {

@@ -10,7 +10,7 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { OrderDialogComponent } from './components/order-dialog/order-dialog.component';
 
 import { DateInputComponent } from './components/date-input/date-input.component';
-import { CreditCardComponent } from './components/credit-card/credit-card.component';
+import { OrderPaymentComponent } from './components/order-payment/order-payment.component';
 import { OrderNavComponent } from './components/order-nav/order-nav.component';
 
 import { OrdersHistoryComponent } from './components/orders-history/orders-history.component';
@@ -29,7 +29,7 @@ import { OrderSearchComponent } from './components/order-search/order-search.com
     OrdersHistoryComponent,
 
     DateInputComponent,
-    CreditCardComponent,
+    OrderPaymentComponent,
     OrderNavComponent,
     OrderProductComponent,
     OrderSearchComponent,

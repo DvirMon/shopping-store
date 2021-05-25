@@ -4,7 +4,6 @@ const CartItem = require("./cartItem-model")
 const User = require("./user-model");
 
 const validation = require("../services/schema");
-const { getAllCartItemsByCartAsync } = require("../business-layer-logic/cart-item-logic");
 
 // format credit card number
 const obfuscate = (cc) => {

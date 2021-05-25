@@ -22,9 +22,10 @@ export class OrderHistoryModel {
     public _id?: string,
     public cartRef?: string,
     public totalPrice?: number,
+    public user?: { fullName: string },
     public shippingDate?: Date | string,
     public orderDate?: Date | string,
-    public items? : CurrentItemModel[]
+    public items?: CurrentItemModel[]
   ) { }
 }
 

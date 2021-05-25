@@ -31,7 +31,7 @@ import { environment } from '../environments/environment';
 // NGRX
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { store } from './utilities/ngrx/store';
+import { appReducer, store } from './utilities/ngrx/store';
 
 
 @NgModule({
@@ -50,7 +50,7 @@ import { store } from './utilities/ngrx/store';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    StoreModule.forRoot(store),
+    StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       name: 'NgRx App',
       logOnly: environment.production, // Restrict extension to log-only mode

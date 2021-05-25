@@ -46,6 +46,10 @@ UserSchema.virtual("fullName").get(function () {
 })
 
 
+UserSchema.statics.build = function (user) {
+  return new User(user)
+}
+
 UserSchema.statics.findUser = async function (email) {
   return await this.findOne({ email })
 }

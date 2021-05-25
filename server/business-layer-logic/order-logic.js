@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Order = require("../models/order-model");
 const CartItem = require("../models/cartItem-model");
+const User = require("../models/user-model")
 
 const dateService = require('../services/date');
 
@@ -48,14 +49,11 @@ const countOrdersByDate = async () => {
 };
 
 
-const getOrdersHistory = async (userId, day) => {
+const getOrdersHistory = async (userId, days) => {
 
-  const orders = await Order
-    .find({ userId })
-    .sort({ shippingDate: 'desc' })
-    .select({ _id: 1, shippingDate: 1, orderDate: 1, cartRef: 1, totalPrice: 1 })
-
-  // const orders = await getOrdersByDay(userId, day)
+  const orders = days > 90
+    ? await getOrdersByYear(userId, days)
+    : await getOrdersByDay(userId, days)
 
   let history = []
 
@@ -72,6 +70,7 @@ const getOrdersHistory = async (userId, day) => {
       shippingDate: order.order.shippingDate,
       orderDate: order.order.orderDate,
       totalPrice: order.order.totalPrice,
+      user: { fullName: order.order.userId.fullName },
       items: order.items
     }
   })
@@ -79,6 +78,7 @@ const getOrdersHistory = async (userId, day) => {
 
 
 const getOrdersYears = async (userId) => {
+
 
   const temp = await Order.aggregate([
     {
@@ -90,7 +90,7 @@ const getOrdersYears = async (userId) => {
       },
     },
     {
-      $sort: { year: 1 },
+      $sort: { _id: -1 },
     },
   ]);
 
@@ -101,15 +101,42 @@ const getOrdersYears = async (userId) => {
   return years;
 };
 
-const getOrdersByDay = async ({ userId, day }) => {
+const getOrdersByDay = async (userId, days) => {
 
-  const date = dateService.getLastDaysDate(day)
+  const date = dateService.getLastDaysDate(days)
 
   return await Order
-    .find({ userId })
+    .find({ userId: new mongoose.Types.ObjectId(userId) })
+    .populate("userId")
     .where('orderDate').gt(date)
     .sort({ shippingDate: 'desc' })
-    .select({ _id: 1, shippingDate: 1, orderDate: 1, cartRef: 1 })
+};
+
+const getOrdersByYear = async (userId, year) => {
+
+  const orders = await Order.aggregate([
+    { $match: { userId: new mongoose.Types.ObjectId(userId) } },
+    {
+      $project: {
+        shippingDate: 1,
+        orderDate: 1,
+        cartRef: 1,
+        totalPrice: 1,
+        userId: 1,
+        year: { $year: "$orderDate" }
+      }
+    },
+    { $sort: { orderDate: -1 } },
+    { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'userId' } },
+    { $match: { year: parseInt(year) } }
+  ]);
+
+  return orders.map((order) => {
+    order.userId = User.build(order.userId[0])
+    return order
+  })
+
+
 };
 
 
@@ -158,10 +185,12 @@ module.exports = {
   getTotalDocsAsync,
   addOrderAsync,
   getLatestOrderAsync,
-  
+
   countOrdersByDate,
   searchProductInOrders,
+
   getOrdersHistory,
   getOrdersYears,
-  getOrdersByDay
+
+  getOrdersByYear
 };

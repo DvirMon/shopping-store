@@ -1,38 +1,59 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+// MODELS
 import { OrderHistoryModel, OrderModel } from '../utilities/models/order-model';
 
+// SERVICES
 import { CartService } from './cart.service';
 import { DialogService } from './dialog.service';
 import { FormService } from './form.service';
 import { ReceiptService } from './receipt.service';
+import { AuthService } from './auth.service';
 
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+// RXJS
+import { Observable } from 'rxjs';
+import { switchMap, map, tap } from 'rxjs/operators';
 
+// NGRX
+import { Store } from '@ngrx/store';
+import { OrderState } from '../utilities/ngrx/state/orders.state';
 import { ActionType } from '../utilities/redux/action-type';
+import { hisotrySelecotr, yearsSelecotr } from '../utilities/ngrx/selectors';
+import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 
+// ENVIROMENT
 import { environment } from 'src/environments/environment';
-import { CartItemService } from './cart-item.service';
-
+import { UserModel } from '../utilities/models/user-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
+  public url: string = `${environment.server}/api/orders`;
 
-  public url: string = `${environment.server}/api/orders`
+  public orderState$: Observable<OrderState> = this.store.select('order');
+
+  public ordersHistory$: Observable<OrderHistoryModel[]> = this.store.select(hisotrySelecotr);
+  public years$: Observable<number[]> = this.store.select(yearsSelecotr);
+
+  private user: UserModel = this.authService.auth.user
 
   constructor(
     private http: HttpClient,
+
     private cartService: CartService,
-    private cartItemService: CartItemService,
     private dialogService: DialogService,
     private receiptService: ReceiptService,
     private formService: FormService,
-  ) { }
+    private authService: AuthService,
+
+    private store: Store<{ order: OrderState }>
+
+  ) {
+
+  }
 
   // GET request - total products in store : http://localhost:3000/api/orders/total
   public getTotalNumberOfOrders(): Observable<number> {
@@ -73,14 +94,28 @@ export class OrderService {
     )
   }
 
-  // GET request - order occupied dates : http://localhost:3000/api/orders/history/:userId
-  public getOrdersHistory(userId: string): Observable<OrderHistoryModel[]> {
-    return this.http.get<OrderHistoryModel[]>(this.url + `/history/${userId}`)
+  // GET request - order occupied dates : http://localhost:3000/api/orders/history/:userId/:days
+  public getOrdersHistory(date: number) {
+    this.http.get<OrderHistoryModel[]>(this.url + `/history/${this.user._id}/${date}`)
+      .subscribe(
+        (history: OrderHistoryModel[]) => {
+          this.store.dispatch(new OrderActions.SetHistory(history))
+        })
   }
 
-  // end of request section
+  // GET request - get order history years : http://localhost:3000/api/orders/years/:userId
+  public getOrdersYeras() {
+    this.http.get<number[]>(this.url + `/years/${this.user._id}`)
+      .subscribe(
+        (years: number[]) => {
+          this.store.dispatch(new OrderActions.SetYears(years))
 
-  // logic section
+        }
+      )
+
+  }
+
+  // LOGIC SECTION
 
   private isLeapYear(): boolean {
     const date = new Date()

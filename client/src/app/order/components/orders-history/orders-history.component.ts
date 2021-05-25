@@ -4,10 +4,10 @@ import { OrderSearchComponent } from '../order-search/order-search.component';
 
 import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
 
-import { AuthService } from 'src/app/services/auth.service';
 import { FormService } from 'src/app/services/form.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SearchService } from 'src/app/services/search.service';
+import { UserModel } from 'src/app/utilities/models/user-model';
 
 @Component({
   selector: 'app-orders-history',
@@ -18,29 +18,38 @@ export class OrdersHistoryComponent implements OnInit {
 
   @ViewChild('search') searchRef: OrderSearchComponent
 
+  public selected: number;
   public isMobile$: Observable<boolean>
   public orders$: Observable<OrderHistoryModel[]>
+  public values$: Observable<number[]>
   public orderEntries$: Observable<OrderHistoryModel[]>
-
-  public slectStates: [
-
-  ]
 
   constructor(
     private orderServcie: OrderService,
-    private authService: AuthService,
     private searchService: SearchService,
     private formService: FormService
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.isMobile$ = this.formService.isMobile()
-    this.orders$ = this.orderServcie.getOrdersHistory(this.authService.auth.user._id)
+    this.orders$ = this.orderServcie.ordersHistory$
+    this.values$ = this.orderServcie.years$
     this.orderEntries$ = this.searchService.orderEntries$
   }
 
+  ngOnInit(): void {
+
+    this.orderServcie.getOrdersHistory(90)
+    this.orderServcie.getOrdersYeras()
+  }
+
+  // SUBSCRIBE SECTION
+
   public onCloseStart() {
     this.searchRef.inputRef.nativeElement.blur()
+  }
+
+  public onSelect() {
+    console.log(this.selected)
+    this.orderServcie.getOrdersHistory(this.selected)
   }
 
 

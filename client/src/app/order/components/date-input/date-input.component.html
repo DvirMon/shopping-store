@@ -1,4 +1,4 @@
-<mat-grid-list cols="1" rowHeight="150px">
+<mat-grid-list cols="1" rowHeight="30vh">
   <mat-grid-tile>
     <mat-form-field>
       <mat-label>Choose a date</mat-label>
@@ -10,11 +10,11 @@
     </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-grid-list cols="2" rowHeight="65vh">
+<mat-grid-list cols="2" rowHeight="20vh">
   <mat-grid-tile>
-    <button mat-button matStepperPrevious type="button">Back</button>
+    <button color="primary" mat-raised-button matStepperPrevious type="button">Back</button>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button [disabled]=control.invalid mat-button matStepperNext type="button">Next</button>
+    <button [disabled]=control.invalid  color="primary" mat-raised-button matStepperNext type="button">Next</button>
   </mat-grid-tile>
 </mat-grid-list>

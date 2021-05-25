@@ -27,14 +27,17 @@ router.get(
   }
 );
 
-// GET REQUEST - http://localhost:3000/api/orders/history/:userId
+// GET REQUEST - http://localhost:3000/api/orders/history/:userId/:date
 router.get(
-  "/history/:userId",
+  "/history/:userId/:date",
   // middleware.authorize(false, key),
   async (request, response, next) => {
     try {
 
-      const orders = await Order.getOrdersHistory(request.params.userId)
+      const { userId, date } = request.params
+            
+      const orders = await orderLogic.getOrdersHistory(userId, date)
+
       response.json(orders)
 
     } catch (err) {
@@ -57,7 +60,7 @@ router.get(
 );
 
 router.get(
-  "/year/:userId",
+  "/years/:userId",
   async (request, response, next) => {
     try {
       const userId = request.params.userId
@@ -89,8 +92,9 @@ router.post(
   // middleware.authorize(false, key),
   async (request, response, next) => {
     try {
-      const {userId, day} = request.body
-      const dates = await orderLogic.getOrdersByDay({userId, day})
+      const { userId, days } = request.body
+      console.log(days)
+      const dates = await orderLogic.getOrdersByDay(userId, days)
       response.json(dates);
     } catch (err) {
       next(err);

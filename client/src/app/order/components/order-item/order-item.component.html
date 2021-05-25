@@ -3,16 +3,21 @@
     <mat-list-item>
       <div class="item">
         <span class="mat-small">ORDER PLACED</span>
-        <span>{{order.orderDate | date : "MMM d, y"}}</span>
+        <span class="mat-body">{{order.orderDate | date : "MMM d, y"}}</span>
       </div>
     </mat-list-item>
     <mat-list-item>
       <div class="item">
         <span class="mat-small">TOTAL</span>
-        <span>{{order.totalPrice | currency : "USD"}}</span>
+        <span class="mat-body">{{order.totalPrice | currency : "USD"}}</span>
       </div>
     </mat-list-item>
-    <mat-list-item></mat-list-item>
+    <mat-list-item>
+      <div class="item">
+        <span class="mat-small">SHIP TO</span>
+        <span class="mat-body">{{order.user.fullName}}</span>
+      </div>
+    </mat-list-item>
     <span class="spacer"></span>
     <mat-list-item></mat-list-item>
     <mat-list-item>
@@ -29,8 +34,6 @@
 </mat-toolbar>
 
 <mat-grid-list class="order-item" cols="3" rowHeight="10vh">
-  <!-- <mat-grid-tile colspan="3">
-  </mat-grid-tile> -->
   <mat-grid-tile class="mat-h1" colspan="1">
     Delivery {{order.shippingDate | date : "MMM d, y"}}
   </mat-grid-tile>

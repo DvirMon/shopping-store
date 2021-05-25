@@ -12,11 +12,11 @@ import { CreditCardModel } from 'src/app/utilities/models/credit-card-model';
 import Cleave from 'src/cleave.js-master'
 
 @Component({
-  selector: 'app-credit-card',
-  templateUrl: './credit-card.component.html',
-  styleUrls: ['./credit-card.component.scss']
+  selector: 'app-order-payment',
+  templateUrl: './order-payment.component.html',
+  styleUrls: ['./order-payment.component.scss']
 })
-export class CreditCardComponent implements OnInit, AfterViewInit {
+export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') input: ElementRef
 

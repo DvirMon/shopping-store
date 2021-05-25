@@ -3,10 +3,10 @@
 
 <div class="payment">
   <form [formGroup]="orderForm">
-    <mat-horizontal-stepper #stepper>
+    <mat-horizontal-stepper #stepper >
       <mat-step [stepControl]="address">
         <ng-template matStepLabel>Address : Enter Address</ng-template>
-        <app-address [controlGroup]="address" [rowHeight]=200></app-address>
+        <app-address [controlGroup]="address" [rowHeight]="20"></app-address>
       </mat-step>
       <mat-step [stepControl]="shippingDate">
         <ng-template matStepLabel>Choose date: </ng-template>
@@ -14,10 +14,10 @@
       </mat-step>
       <mat-step [stepControl]="creditCard">
         <ng-template matStepLabel>Payment</ng-template>
-        <app-credit-card [control]="creditCard"></app-credit-card>
-        <mat-grid-list cols="1" rowHeight="5vh">
+        <app-order-payment [control]="creditCard"></app-order-payment>
+        <mat-grid-list cols="1" rowHeight="15vh">
           <mat-grid-tile>
-            <button mat-button [disabled]="orderForm.invalid" type="button" (click)="onPayment()">Confirm And
+            <button mat-raised-button color="primary" [disabled]="orderForm.invalid" type="button" (click)="onPayment()">Confirm And
               Pay</button>
           </mat-grid-tile>
         </mat-grid-list>

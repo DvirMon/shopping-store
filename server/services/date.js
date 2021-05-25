@@ -16,7 +16,6 @@ const isLeapYear = (date) => {
 };
 
 const getLastDaysDate = (days) => {
-  console.log(days)
   return new Date(moment().subtract(days, 'days'))
 }
 

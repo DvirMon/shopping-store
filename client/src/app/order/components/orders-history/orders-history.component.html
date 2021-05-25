@@ -3,13 +3,22 @@
     Your Orders
   </mat-toolbar>
   <mat-toolbar class="order" *ngIf="(orders$ | async) as orders">
-    <span class="text">
-      {{orders.length}} orders places in
-    </span>
-
-    <!-- <select [(ngModel)]="model">
-      <option *ngFor="let item of list" [value]="item">{{item}}</option>
-    </select> -->
+    <div class="order-dates">
+      <span class="text mat-body-strong">
+        {{orders.length}}
+      </span>
+      <span class="mat-body">
+        orders places in
+      </span>
+      <mat-form-field>
+        <mat-label *ngIf="!selected">past 3 mouths</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="onSelect()">
+          <mat-option value="30">last 30 days</mat-option>
+          <mat-option value="90">past 3 mouths</mat-option>
+          <mat-option *ngFor="let date of (values$ | async)" [value]="date">{{date}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
   </mat-toolbar>
   <app-order-item *ngFor="let order of (orders$ | async)" [order]="order" [isMobile$]="isMobile$"></app-order-item>
@@ -24,14 +33,15 @@
       Your Orders
     </mat-toolbar>
 
-    <mat-drawer #drawer mode="over"  opened="false" position="end" (closedStart)="onCloseStart()">
+    <mat-drawer #drawer mode="over" opened="false" position="end" (closedStart)="onCloseStart()">
       <app-order-search #searchOrder [drawer]="search.drawer"></app-order-search>
       <mat-list *ngIf="(orderEntries$ | async).length > 0">
         <app-order-product *ngFor="let order of (orderEntries$ | async)" [items]="order.items" [isMobile$]="isMobile$"
           [date]="order.shippingDate">
         </app-order-product>
       </mat-list>
-      <app-search-image [isMobile$]="isMobile$"  [searchEntries$]="orderEntries$" [value]="searchOrder.searchControl.value">
+      <app-search-image [isMobile$]="isMobile$" [searchEntries$]="orderEntries$"
+        [value]="searchOrder.searchControl.value">
       </app-search-image>
     </mat-drawer>
 

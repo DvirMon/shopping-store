@@ -12,28 +12,21 @@
   </span>
   <img mat-card-avatar src="assets/images/logo.jpg" class="logo" alt="logo">
 
-  <ng-container *ngIf="(isMobile | async)">
-    <span class="spacer"></span>
-    <button class="auth-btn" mat-stroked-button (click)="onClick(isLogin ? 'logout' : '/auth/login')">
-      <span>{{isLogin ? 'Logout' : 'Login'}}</span>
-    </button>
-  </ng-container>
+  <span class="spacer"></span>
 
-  <ng-container *ngIf="!(isMobile | async)">
-    <span class="spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngFor="let route of routes" (click)="onClick(route.path)">
-        <mat-icon>{{route.icon}}</mat-icon>
-        <span>{{route.name}}</span>
-      </button>
-      <button mat-menu-item (click)="onClick(isLogin ? 'logout' : '/auth/login')">
-        <mat-icon>{{isLogin ? 'login' : 'logout'}}</mat-icon>
+  <mat-list>
+    <ng-container *ngIf="!(isMobile | async)">
+      <mat-list-item *ngFor="let route of routes" (click)="onClick(route.path)">
+        <button mat-stroked-button>
+          <span>{{route.name}}</span>
+        </button>
+      </mat-list-item>
+    </ng-container>
+    <mat-list-item>
+      <button mat-stroked-button (click)="onClick(isLogin ? 'logout' : '/auth/login')">
         <span>{{isLogin ? 'Logout' : 'Login'}}</span>
       </button>
-    </mat-menu>
-  </ng-container>
+    </mat-list-item>
+  </mat-list>
 
 </mat-toolbar>

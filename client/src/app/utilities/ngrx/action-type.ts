@@ -8,7 +8,6 @@ export enum CartActionType {
   UPDATE_CART_ITEM = 'UPDATE_CART_ITEMS',
   DELETE_CART = 'DELETE_CART',
   RESET_CART = 'RESET_CART'
-
 }
 
 export enum AuthActionType {
@@ -17,5 +16,11 @@ export enum AuthActionType {
   ADD_SOCIEL_USER = "ADD_SOCIEL_USER",
   ADD_ACCESS_TOKEN = "ADD_ACCESS_TOKEN",
   ADD_REFRESH_TOKEN = "ADD_REFRESH_TOKEN",
+}
+
+export enum OrderActionType {
+  ADD_ORDER = "ADD_ORDER",
+  SET_HISTORY = "SET_HISTORY",
+  SET_YEARS = "SET_YEARS"
 
 }

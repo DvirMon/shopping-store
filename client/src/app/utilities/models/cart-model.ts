@@ -158,7 +158,7 @@ export class CartModel {
 
   public findProduct(productIndex?: number): ProductModel {
 
-    const index: number = productIndex ? productIndex : this.items.length -1
+    const index: number = productIndex ? productIndex : this.items?.length -1
 
     if (this.items?.length > 0) {
       return this.items[index].productRef

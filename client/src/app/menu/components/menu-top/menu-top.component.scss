@@ -11,7 +11,17 @@ mat-toolbar.top {
     padding: 2%;
   }
 
-  button.auth-btn {
-    border: 1px solid white;
+  mat-list {
+    display: flex;
+
+    mat-list-item {
+      button {
+        // border: 0.5px solid rgba(238, 237, 237, 0.842);
+        color: white;
+        &:hover {
+          // background-color: rgb(221, 221, 221);
+        }
+      }
+    }
   }
 }
