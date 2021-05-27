@@ -12,7 +12,7 @@ import { ReceiptService } from './receipt.service';
 import { AuthService } from './auth.service';
 
 // RXJS
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { switchMap, map, tap } from 'rxjs/operators';
 
 // NGRX
@@ -25,6 +25,8 @@ import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 // ENVIROMENT
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../utilities/models/user-model';
+import { SearchService } from './search.service';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,9 @@ export class OrderService {
   public ordersHistory$: Observable<OrderHistoryModel[]> = this.store.select(hisotrySelecotr);
   public years$: Observable<number[]> = this.store.select(yearsSelecotr);
 
+  private ordersSearchEntries = new BehaviorSubject<OrderHistoryModel[]>([]);
+  public orderEntries$: Observable<OrderHistoryModel[]> = this.ordersSearchEntries.asObservable()
+
   private user: UserModel = this.authService.auth.user
 
   constructor(
@@ -45,9 +50,9 @@ export class OrderService {
 
     private cartService: CartService,
     private dialogService: DialogService,
-    private receiptService: ReceiptService,
-    private formService: FormService,
+    private searchService: SearchService,
     private authService: AuthService,
+    private receiptService: ReceiptService,
 
     private store: Store<{ order: OrderState }>
 
@@ -65,7 +70,8 @@ export class OrderService {
   public handleNewOrder(data: OrderModel): void {
     this.http.post<OrderModel>(this.url, data).pipe(
       switchMap((order: OrderModel) => {
-        this.formService.handleStore(ActionType.GetOrderData, order)
+        // this.formService.handleStore(ActionType.GetOrderData, order)
+        this.store.dispatch(new OrderActions.AddOrder(order))
         this.receiptService.handleReceiptData()
         return this.cartService.deactivateCart(order.cartRef)
       }),
@@ -112,16 +118,62 @@ export class OrderService {
 
         }
       )
-
   }
 
+  private searchOrders(query: string): Observable<OrderHistoryModel[]> {
+    return this.http.get<OrderHistoryModel[]>(this.url + `/search/${this.user._id}/${query}`)
+  }
+
+
+
   // LOGIC SECTION
+
+  public search(control: FormControl): Observable<OrderHistoryModel[]> {
+
+    return this.searchService.search(control).pipe(
+      switchMap((query: string) => {
+
+        if (!query) {
+          this.clearResults()
+          return of([])
+        }
+
+        return this.searchOrders(query).pipe(
+          tap((orders: OrderHistoryModel[]) => {
+
+            if (orders.length === 0) {
+              return this.handleError()
+            }
+            return this.handleSuccess(orders)
+          })
+        )
+      }))
+  }
 
   private isLeapYear(): boolean {
     const date = new Date()
     const year = date.getFullYear()
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
+
+  // handle search error
+  private handleError(): Observable<[]> {
+    this.searchService.handlerRsults.next(true)
+    this.clearResults()
+    return of([]);
+  }
+
+  private handleSuccess(orders: OrderHistoryModel[]): Observable<OrderHistoryModel[]> {
+    this.searchService.handlerRsults.next(false)
+    this.ordersSearchEntries.next(orders);
+    return of(orders)
+
+  }
+
+  public clearResults() {
+    this.ordersSearchEntries.next([]);
+  }
+
 
   // end of logic section
 

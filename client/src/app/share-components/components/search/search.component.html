@@ -3,7 +3,6 @@
 
     <mat-form-field>
       <mat-label>Please Enter Query</mat-label>
-
       <input type="text" placeholder="Search {{totalProducts$ | async}} Products..." matInput #input
         [formControl]="control" autocomplete="off" (focus)="search()">
     </mat-form-field>

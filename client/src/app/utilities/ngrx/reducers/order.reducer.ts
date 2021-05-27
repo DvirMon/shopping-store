@@ -9,8 +9,7 @@ export const orderReducer = (oldState = new OrderState(), action: OrderActions):
 
   switch (action.type) {
     case OrderActionType.ADD_ORDER:
-      // const history = [...newState.history]
-      newState.history.push(action.payload);
+      newState.currentOrder = action.payload
       break;
     case OrderActionType.SET_HISTORY:
       newState.history = [...action.payload];

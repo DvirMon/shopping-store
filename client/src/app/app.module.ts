@@ -31,7 +31,7 @@ import { environment } from '../environments/environment';
 // NGRX
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducer, store } from './utilities/ngrx/store';
+import { appReducer } from './utilities/ngrx/store';
 
 
 @NgModule({

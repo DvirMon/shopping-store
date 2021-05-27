@@ -14,8 +14,9 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
 import { Store } from '@ngrx/store';
-import { cartState } from '../utilities/ngrx/state/cart-state';
+import { CartState, cartState } from '../utilities/ngrx/state/cart-state';
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+import { AppState } from '../utilities/ngrx/store';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -24,7 +25,11 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   providedIn: 'root'
 })
 
+
+
 export class ReceiptService {
+
+  private appState: AppState
 
   private receiptBody: (string[] | {}[])[] =
     [
@@ -39,10 +44,11 @@ export class ReceiptService {
 
   constructor(
     private formService: FormService,
-    private ngrxStore: Store<{ cart: typeof cartState }>,
+    private ngrxStore: Store<AppState>,
     private receiptData: OrderModel
-  ) { }
+  ) {
 
+  }
   // function to download receipt file
   public getReceipt(): void {
     pdfMake.createPdf(this.setPdf()).download();
@@ -95,7 +101,8 @@ export class ReceiptService {
 
   // handle receipt additional data
   private setReceiptAdditionalInfo(): void {
-    this.receiptData = { ...store.getState().receipt.orderDetails }
+    // this.receiptData = { ...store.getState().receipt.orderDetails }
+
     this.formatReceiptDate()
   }
 

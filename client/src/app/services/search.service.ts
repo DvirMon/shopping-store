@@ -15,11 +15,7 @@ import { ProductsService } from './products.service';
 })
 export class SearchService {
 
-  private productUrl: string = `${environment.server}/api/products/search`
   private ordersUrl: string = `${environment.server}/api/orders/search`
-
-  private productsSearchEntries = new BehaviorSubject<ProductModel[]>([]);
-  public productsEntries$: Observable<ProductModel[]> = this.productsSearchEntries.asObservable()
 
   private ordersSearchEntries = new BehaviorSubject<OrderHistoryModel[]>([]);
   public orderEntries$: Observable<OrderHistoryModel[]> = this.ordersSearchEntries.asObservable()
@@ -34,29 +30,6 @@ export class SearchService {
 
 
 
-  // HTTP SECTION
-
-  // GET request - get search products : http://localhost:3000/api/products/search/:query
-  public searchProducts(control: FormControl): Observable<ProductModel[]> {
-
-    return this.search(control).pipe(
-      switchMap((query: string) => {
-
-        if (!query) {
-          return of([])
-        }
-
-        return this.http.get<ProductModel[]>(this.productUrl + `/${query}`).pipe(
-          tap((products: ProductModel[]) => {
-
-            if (products.length === 0) {
-              return this.handleError()
-            }
-            return this.handleProducts(products)
-          })
-        )
-      }))
-  }
 
   // GET request - get search products : http://localhost:3000/api/products/search/:query
   public searchOrders(control: FormControl, userId: string): Observable<OrderHistoryModel[]> {
@@ -110,16 +83,8 @@ export class SearchService {
   // handle search error
   private handleError(): Observable<[]> {
     this.handlerRsults.next(true)
-    this.productsSearchEntries.next([]);
     this.ordersSearchEntries.next([]);
     return of([]);
-  }
-
-  // handle search success
-  private handleProducts(products: ProductModel[]): Observable<ProductModel[]> {
-    this.handlerRsults.next(false)
-    this.productsSearchEntries.next(products);
-    return of(products)
   }
 
   private handleOrders(orders: OrderHistoryModel[]): Observable<OrderHistoryModel[]> {

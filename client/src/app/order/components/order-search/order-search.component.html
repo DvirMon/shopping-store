@@ -1,8 +1,8 @@
 <mat-toolbar class="search">
   <form>
     <mat-form-field>
-      <input type="text" #input placeholder="Search all orders" matInput [formControl]="searchControl"
-        autocomplete="off" (focus)="onFocus()">
+      <input type="text" #input placeholder="Search all orders" matInput [formControl]="control" autocomplete="off"
+        (focus)="onFocus()">
     </mat-form-field>
     <button mat-icon-button (click)="onClick()">
       <mat-icon>{{drawer.opened ? 'navigate_next' : 'search'}}</mat-icon>

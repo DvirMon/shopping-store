@@ -39,8 +39,8 @@ export class ProductsService {
   public handleCateogryAlias = new BehaviorSubject<string>("");
   public alias$: Observable<string> = this.handleCateogryAlias.asObservable();
 
-  public handleSearchEntries = new BehaviorSubject<ProductModel[]>([]);
-  public searchEntries$: Observable<ProductModel[]> = this.handleSearchEntries.asObservable()
+  public productsSearchEntries = new BehaviorSubject<ProductModel[]>([]);
+  public searchEntries$: Observable<ProductModel[]> = this.productsSearchEntries.asObservable()
 
   constructor(
     private http: HttpClient,
@@ -153,7 +153,7 @@ export class ProductsService {
       switchMap((query: string) => {
 
         if (!query) {
-          this.handleSearchEntries.next([])
+          this.productsSearchEntries.next([])
           return of([])
         }
 
@@ -179,14 +179,14 @@ export class ProductsService {
   // handle search error
   private handleError(): Observable<[]> {
     this.searchService.handlerRsults.next(true)
-    this.handleSearchEntries.next([])
+    this.productsSearchEntries.next([])
     return of([]);
   }
 
   // handle search success
   private handleSuccess(products: ProductModel[]): Observable<ProductModel[]> {
     this.searchService.handlerRsults.next(false)
-    this.handleSearchEntries.next(products)
+    this.productsSearchEntries.next(products)
     return of(products)
   }
 

@@ -8,15 +8,11 @@ import { AuthState } from "./state/auth-state";
 import { CartState } from "./state/cart-state";
 import { OrderState } from "./state/orders.state";
 
-export const store = {
-  cart: cartReducer,
-  auth: authReducer
-}
 
 export interface AppState {
   cart: CartState,
   auth: AuthState,
-  order : OrderState
+  order : OrderState 
 }
 
 export const appReducer: ActionReducerMap<AppState> = {

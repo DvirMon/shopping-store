@@ -26,13 +26,12 @@ export class OrdersHistoryComponent implements OnInit {
 
   constructor(
     private orderServcie: OrderService,
-    private searchService: SearchService,
     private formService: FormService
   ) {
     this.isMobile$ = this.formService.isMobile()
     this.orders$ = this.orderServcie.ordersHistory$
     this.values$ = this.orderServcie.years$
-    this.orderEntries$ = this.searchService.orderEntries$
+    this.orderEntries$ = this.orderServcie.orderEntries$
   }
 
   ngOnInit(): void {
@@ -48,7 +47,6 @@ export class OrdersHistoryComponent implements OnInit {
   }
 
   public onSelect() {
-    console.log(this.selected)
     this.orderServcie.getOrdersHistory(this.selected)
   }
 

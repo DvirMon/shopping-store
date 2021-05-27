@@ -1,41 +1,45 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { FormControl } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
+import { OrderService } from 'src/app/services/order.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-search',
   templateUrl: './order-search.component.html',
   styleUrls: ['./order-search.component.scss']
 })
-export class OrderSearchComponent implements OnInit, AfterViewInit {
+export class OrderSearchComponent implements OnInit, OnDestroy {
 
   @ViewChild('input') inputRef: ElementRef
-
   @Input() public drawer: MatSidenav
 
-  public searchControl = new FormControl();
+  private subscribtion: Subscription
+
+  public control = new FormControl();
 
   constructor(
-    private searchService: SearchService,
-    private authService: AuthService,
+    private orderService: OrderService
 
-  ) { }
+  ) {
+
+
+  }
 
   ngOnInit(): void {
     this.search()
   }
 
-  ngAfterViewInit(): void {
+  ngOnDestroy(): void {
+    this.subscribtion.unsubscribe()
   }
 
   private search() {
-
-
-    this.searchService.searchOrders(this.searchControl, this.authService.auth.user._id)
+    this.subscribtion = this.orderService.search(this.control)
       .subscribe(
         () => {
           this.inputRef.nativeElement.focus()
@@ -49,19 +53,27 @@ export class OrderSearchComponent implements OnInit, AfterViewInit {
 
   // EVENTS SECTION
   public onClick() {
-    this.drawer.opened = false
-    this.drawer.close()
+    this.clsoeDrawer()
+    this.resetForm()
   }
 
   public onFocus() {
     this.drawer.opened
-      ? null
+      ? this.search()
       : this.drawer.opened = true
-
-    // this.drawer.closedStart ? this.input.nativeElement.focus() : null
-
-
-
   }
+
+  // LOGIC SECTIN
+
+  private clsoeDrawer() {
+    this.drawer.opened = false
+    this.drawer.close()
+  }
+
+  private resetForm() {
+    this.control.reset()
+    this.orderService.clearResults()
+  }
+
 
 }

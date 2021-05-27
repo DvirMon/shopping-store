@@ -25,6 +25,11 @@ export const hisotrySelecotr = createSelector(
   (state) => state.history
 )
 
+export const orderSelecotr = createSelector(
+  state => state["order"],
+  (state) => state.currentOrder
+)
+
 export const yearsSelecotr = createSelector(
   state => state["order"],
   (state) => state.years

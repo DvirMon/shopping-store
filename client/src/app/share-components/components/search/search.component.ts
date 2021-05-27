@@ -90,13 +90,12 @@ export class SearchComponent implements OnDestroy {
   public onClose() {
     this.drawer.toggle()
     this.control.reset()
-    this.productService.handleSearchEntries.next([])
+    this.productService.productsSearchEntries.next([])
   }
 
   public onClear() {
     this.control.reset()
-    this.productService.handleSearchEntries.next([])
-
+    this.productService.productsSearchEntries.next([])
   }
 
 }
