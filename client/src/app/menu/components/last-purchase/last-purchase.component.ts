@@ -17,11 +17,6 @@ export class LastPurchaseComponent implements OnInit {
 
   @Input() public isMobile$ : Observable<boolean>
 
-  public images: string[] = [
-    "gluten", "organic", "lactose"
-  ]
-
-
   constructor(
     private router : Router,
     private cartService: CartService,

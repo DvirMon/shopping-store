@@ -69,7 +69,7 @@ export class CartModel {
   }
 
   public getTotalPrice(): number {
-    if (this.items.length > 0) {
+    if (this.items?.length > 0) {
       return this.items
         .map(item => item.quantity * item.productRef.price)
         .reduce((accumulator, currentValue) => accumulator + currentValue);
@@ -138,12 +138,9 @@ export class CartModel {
 
       this.setItems(items)
     }
-
-
   }
 
   public deleteitem(_id: string) {
-
     const itemIndex = this.findItemIndex(_id) >= 0
       ? this.findItemIndex(_id)
       : this.findItemIndexByProduct(_id)
