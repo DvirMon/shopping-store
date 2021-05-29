@@ -54,7 +54,7 @@ export class CartListItemComponent implements OnInit {
   // LOGIC SECTION
 
   public getProductAlias(): void {
-    this.alias = this.productService.getCategoryAlias(this.cartItem.productRef)
+    // this.alias = this.productService.getCategoryAlias(this.cartItem.productRef)
   }
 
   private setReceiptItem(): void {

@@ -4,10 +4,10 @@ import { MatSelect } from '@angular/material/select';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 import { OrderModel } from 'src/app/utilities/models/order-model';
 
 import { store } from 'src/app/utilities/redux/store';

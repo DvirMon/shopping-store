@@ -8,8 +8,10 @@ import { ProductModel } from '../utilities/models/product-model';
 import { FormService } from './form.service';
 
 import { ActionType } from '../utilities/redux/action-type';
-import { store } from '../utilities/redux/store';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ProductsState } from '../utilities/ngrx/state/products-state';
+import { ProductsService } from './products.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +20,21 @@ export class PaginationService {
 
   public scrollToTop = new BehaviorSubject<boolean>(false)
 
+  private products$: Observable<ProductModel[]>
+
+  private products: ProductModel[]
+
   constructor(
-    private formService: FormService
+    private formService: FormService,
+    private productsService : ProductsService
+    // private store: Store<{ products: ProductsState }>
   ) {
+
+
+  }
+
+  public getCurrentPage() {
+
   }
 
   public getPagedData(data: ProductModel[], paginator: PaginationModel | MatPaginator): ProductModel[] {
@@ -31,7 +45,7 @@ export class PaginationService {
 
   public getSortedData(alias: string, sort: MatSort) {
 
-    const data: ProductModel[] = store.getState().products[alias].products
+    const data: ProductModel[] = []
 
     if (!sort.active || sort.direction === '') {
       return data;
@@ -45,7 +59,7 @@ export class PaginationService {
       }
     });
 
-    this.formService.handleStore(ActionType.SetProducts, { alias, products: sortedData })
+    // this.formService.handleStore(ActionType.SetProducts, { alias, products: sortedData })
 
   }
 

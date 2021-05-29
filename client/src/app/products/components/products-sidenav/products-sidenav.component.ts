@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 
 import { FormService } from 'src/app/services/form.service';
@@ -16,8 +16,10 @@ import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons/faDrumstickBi
 import { faCandyCane } from "@fortawesome/free-solid-svg-icons/faCandyCane"
 import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
 
-import { store } from 'src/app/utilities/redux/store';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProductsService } from 'src/app/services/products.service';
+import { Observable } from 'rxjs';
+import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 
 @Component({
   selector: 'app-products-sidenav',
@@ -29,12 +31,12 @@ export class ProductsSidenavComponent {
   @Input() public drawerProduct: MatSidenav
   @Input() public isExpanded: boolean;
 
-  private user: UserModel = this.authService.auth.user
-  public isLogin: boolean = this.authService.auth.isLogin;
+  private user: UserModel
+  public isLogin: boolean
 
-  public categories: CategoryModel[] = store.getState().products.categories;
+  public categories$: Observable<CategoryModel[]>
 
-  private icons = {
+  public icons = {
     beverages: faWineBottle,
     sweets: faCandyCane,
     dairy: faCheese,
@@ -43,23 +45,32 @@ export class ProductsSidenavComponent {
     produce: faCarrot,
   }
 
-  ngOnInit(): void {
-    this.setNavigationBar();
-
-  }
-
   constructor(
     private router: Router,
     private authService: AuthService,
-  ) { }
+    private productsService: ProductsService
+  ) {
+  }
+  ngOnInit(): void {
+    this.categories$ = this.productsService.categories$;
+    this.subsbribeToAuth()
+  }
+
 
   // LOGIC SERCTION
+
+  private subsbribeToAuth() {
+    this.authService.auth$.subscribe(
+      (auth : AuthState) => {
+        this.isLogin = auth.isLogin
+        this.user = auth.user
+      }
+    )
+  }
 
   // method to navigate
   public onNavigate(category: CategoryModel): Promise<boolean> {
 
-
-    this.activeLink(category._id)
 
     if (!this.isLogin) {
       return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)
@@ -72,35 +83,6 @@ export class ProductsSidenavComponent {
 
   }
 
-  public activeLink(_id: string) {
-
-    this.categories.map((category: CategoryModel) => {
-
-      category._id === _id
-        ? category.hide = true
-        : category.hide = false
-
-    })
-
-
-  }
-
-  // method to build navigation
-  private setNavigationBar() {
-
-    for (const category of this.categories) {
-      for (const icon in this.icons) {
-        if (category.alias === icon) {
-          category.icon = this.icons[icon]
-        }
-      } 
-      // category.alias === "beverages" ? category.hide = true : category.hide = false
-      category.hide = category.alias === "beverages"
-
-    }
-
-
-  }
 
   // method to change sidnav witdh
   public toggleDrawer() {

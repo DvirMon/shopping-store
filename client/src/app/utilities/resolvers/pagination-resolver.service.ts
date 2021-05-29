@@ -1,35 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { ProductsService } from '../../services/products.service';
-import { PaginationDataModel } from '../models/pagination-model';
+import { PageModel } from '../models/pagination-model';
 
 import { store } from '../redux/store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaginationResolver implements Resolve<Observable<PaginationDataModel> | Promise<PaginationDataModel> | PaginationDataModel>{
+export class PaginationResolver implements Resolve<any>{
 
+  private subscribtion: Subscription
   constructor(
     private productService: ProductsService,
+
   ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<PaginationDataModel> | Promise<PaginationDataModel> | PaginationDataModel {
+  ): Observable<PageModel> | Promise<PageModel> | PageModel {
 
     const categoryId: string = route.params.categoryId
     const alias: string = route.params.alias
-    const pagination: PaginationDataModel = { ...store.getState().products[alias] }
 
-    if (pagination.products.length === 0) {
-      return this.productService.getProductsPagination(1, 6, categoryId, alias)
-    } else {
-      pagination.products = pagination.products.slice(0, 6)
-      return of(pagination)
-    }
+
+    return of()
+
   }
 }

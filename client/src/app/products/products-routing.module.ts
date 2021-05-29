@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: "categories/:alias/:categoryId",
         resolve: {
-          pagination: PaginationResolver,
+          // pagination: PaginationResolver,
 
         },
         component: ProductsDashbordComponent

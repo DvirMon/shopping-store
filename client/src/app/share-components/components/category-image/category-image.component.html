@@ -1,0 +1,8 @@
+<img #img src="/assets/images/categories/{{category.alias}}.png" alt="" width="100%" height="100%"
+  (mouseenter)="show = !show" (mouseleave)="show = !show">
+<div class="text" *ngIf="!(isMobile$ | async) && show">
+  {{category.name}}
+</div>
+<div *ngIf="(isMobile$ | async)" class="text">
+  {{category.name}}
+</div>

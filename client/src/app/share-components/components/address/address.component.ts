@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
@@ -22,7 +22,7 @@ export class AddressComponent {
     types: ['(cities)'],
     componentRestrictions: { country: 'IL' }
   }
-  
+
   public optionsStreet = {
     offset: 3,
     types: ['address'],

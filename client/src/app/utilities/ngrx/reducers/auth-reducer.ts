@@ -13,7 +13,6 @@ export function authReducer(oldState = new AuthState(), action: AuthActions) {
       newState.isLogin = true;
       newState.user = action.payload?.user
       newState.accessToken = action.payload?.token
-      sessionStorage.setItem("user", JSON.stringify(action.payload['user']));
       break
     case AuthActionType.ADD_SOCIEL_USER:
       newState.socialUser = action.payload
@@ -23,7 +22,7 @@ export function authReducer(oldState = new AuthState(), action: AuthActions) {
       break
     case AuthActionType.ADD_REFRESH_TOKEN:
       newState.refreshToken = action.payload
-      sessionStorage.setItem("jwt", action.payload);
+  
       break
     case AuthActionType.LOGOUT:
       sessionStorage.clear()

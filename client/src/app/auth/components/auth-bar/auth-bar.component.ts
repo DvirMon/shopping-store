@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 
 import { Observable } from 'rxjs';
 

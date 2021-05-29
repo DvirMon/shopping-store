@@ -3,12 +3,12 @@ import { Observable } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { CategoryModel } from '../models/category-model';
-import { store } from '../redux/store';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesResolver implements Resolve<Observable<CategoryModel[]> | Promise<CategoryModel[]> | CategoryModel[]>{
+export class CategoriesResolver implements Resolve<any>{
 
   constructor(
     private productService: ProductsService
@@ -17,12 +17,17 @@ export class CategoriesResolver implements Resolve<Observable<CategoryModel[]> |
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<CategoryModel[]> | Promise<CategoryModel[]> | CategoryModel[] {
+  ) {
 
-    if (store.getState().products.categories.length === 0) {
-      return this.productService.getCategories()
-    } else {
-      return store.getState().products.categories
-    }
+    // this.productService.getCategories().subscribe()
+
+
+    this.productService.categories$.subscribe(
+      (categories: CategoryModel[]) => {
+        if (categories.length === 0) {
+          this.productService.getCategories().subscribe()
+        }
+      })
+
   }
 }

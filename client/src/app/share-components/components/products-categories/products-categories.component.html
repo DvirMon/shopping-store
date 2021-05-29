@@ -1,14 +1,7 @@
 <div class="product-categories">
   <mat-grid-list [cols]="cols" [rowHeight]="rowHeight + 'vh'" gutterSize="0">
-    <mat-grid-tile *ngFor="let category of categories" (click)="onClick(category)">
-      <img #img src="/assets/images/categories/{{category.alias}}.png" alt="" width="100%" height="100%"
-        (mouseenter)="category.hide = !category.hide" (mouseleave)="category.hide = !category.hide">
-      <div *ngIf="!(isMobile$ | async) && !category.hide" class="text">
-        {{category.name}}
-      </div>
-      <div *ngIf="(isMobile$ | async)" class="text">
-        {{category.name}}
-      </div>
+    <mat-grid-tile *ngFor="let category of (categories$ | async)" (click)="onClick(category)">
+      <app-category-image [category]="category" ></app-category-image>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

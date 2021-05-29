@@ -5,14 +5,14 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 
 import { CartService } from 'src/app/services/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 
 
 import { Observable } from 'rxjs';
-import { CartState, cartState } from 'src/app/utilities/ngrx/state/cart-state';
+import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
 
 import { environment } from 'src/environments/environment'
 import { FormService } from 'src/app/services/form.service';

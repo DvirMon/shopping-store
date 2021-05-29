@@ -87,11 +87,6 @@ export class ProductsFormComponent implements OnInit {
         this.product.name = product.name;
         this.product.price = product.price;
         this.product.categoryId = product.categoryId;
-
-        if (product.categoryId) {
-          this.alias = this.productService.getCategoryAlias(this.product);
-        }
-
       }
     )
   }

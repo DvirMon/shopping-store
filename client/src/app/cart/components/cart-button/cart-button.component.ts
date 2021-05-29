@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({

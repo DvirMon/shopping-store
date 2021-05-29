@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { UserModel } from '../models/user-model';
+import { UserModel } from '../models/user.model';
 import { TokenService } from '../../services/token.service';
 
 import { store } from '../redux/store';

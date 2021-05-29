@@ -22,5 +22,17 @@ export enum OrderActionType {
   ADD_ORDER = "ADD_ORDER",
   SET_HISTORY = "SET_HISTORY",
   SET_YEARS = "SET_YEARS"
+}
 
+export enum ProductsActionType {
+
+  SET_CATEGORIES = "Set Categories",
+
+  SET_PRODUCTS = "Set Products",
+
+  SET_PRODUCTS_PAGINATION = "Set Products Page",
+  ADD_PRODUCTS_PAGINATION = "Add Products Page",
+
+  ADD_PRODUCT = "[Products] Add Product",
+  UPDATE_PRODUCT = "Update Product",
 }

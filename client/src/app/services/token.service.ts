@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../utilities/ngrx/state/auth-state';
 import * as AuthActions from '../utilities/ngrx/actions/auth-actions'
-import { UserModel } from '../utilities/models/user-model';
+import { UserModel } from '../utilities/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,12 @@ export class TokenService {
 
   // GET request - http://localhost:3000/api/auth/refresh-token
   public getRefreshToken(): Observable<AuthData> {
-    return this.http.get<AuthData>(this.url + "/refresh-token")
+    return this.http.get<AuthData>(this.url + "/refresh-token").pipe(
+      tap((auth: AuthData) => {
+        sessionStorage.setItem("jwt", auth.token);
+      }
+      )
+    )
   }
 
   // GET request - http://localhost:3000/api/auth/access-token

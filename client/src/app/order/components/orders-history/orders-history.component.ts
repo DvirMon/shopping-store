@@ -7,7 +7,7 @@ import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
 import { FormService } from 'src/app/services/form.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SearchService } from 'src/app/services/search.service';
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 
 @Component({
   selector: 'app-orders-history',

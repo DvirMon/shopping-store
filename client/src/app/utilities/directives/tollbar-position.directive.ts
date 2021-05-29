@@ -12,15 +12,6 @@ export class TollbarDirective {
   @HostListener('window:scroll', ['$event']) public checkScroll() {
 
     const scrollPosition = window.pageYOffset
-
-    // if (scrollPosition >= 75) {
-    //   this.position = "fixed"
-    //   this.zIndex = 10
-    // }
-    // if (scrollPosition < 75) {
-    //   this.position = "initial"
-    // }
-
   }
 
 }

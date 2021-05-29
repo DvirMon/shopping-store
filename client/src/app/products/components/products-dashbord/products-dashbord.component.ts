@@ -1,166 +1,171 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Data, Params } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { PaginationModel, PaginationDataModel } from 'src/app/utilities/models/pagination-model';
+import { PaginationModel, PageModel } from 'src/app/utilities/models/pagination-model';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { PaginationService } from 'src/app/services/pagination.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { store } from 'src/app/utilities/redux/store';
-import { AuthService } from 'src/app/services/auth.service';
+import { ProductsState } from 'src/app/utilities/ngrx/state/products-state';
 
 @Component({
   selector: 'app-products-dashbord',
   templateUrl: './products-dashbord.component.html',
   styleUrls: ['./products-dashbord.component.scss']
 })
-export class ProductsDashbordComponent implements OnInit {
+export class ProductsDashbordComponent implements OnInit, OnDestroy {
+
+  private subscribeToPage: Subscription
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  public products$: Observable<ProductsState>
+  private products: ProductsState
 
   public isAdmin: boolean = this.authService.auth.user.isAdmin
   public isMobile$: Observable<boolean> = this.productService.isMobile();
   public searchMode: boolean = false
 
   public categories: CategoryModel[] = []
-  public products: ProductModel[] = []
-  public paginationData: PaginationDataModel;
-  public pagination: PaginationModel = new PaginationModel();
+  public pages: PageModel[] = [];
+  public currentPage: PageModel = new PageModel()
+
+  public alias: string;
 
   private categoryId: string;
-  private alias: string; 
 
   constructor(
     private activeRoute: ActivatedRoute,
     private authService: AuthService,
     private productService: ProductsService,
     private paginationService: PaginationService,
-  ) { }
+  ) {
+
+    this.products$ = this.productService.products$
+  }
 
   ngOnInit(): void {
-    this.subscribeToRoute();
-    this.subscribeToStore();
+    this.subscribeToParams()
+    this.subscribeToProducts()
+    this.subscribeToData();
+
   }
 
   ngAfterViewInit(): void {
     this.subscribeToPaginator();
   }
 
+  ngOnDestroy(): void {
+    this.subscribeToPage.unsubscribe()
+  }
+
 
   // SUBSCTIPTION SECTION
 
-  private subscribeToStore(): void {
-    store.subscribe(
-      () => {
-        this.products = this.getPageProducts();
-        this.paginationData = store.getState().products[this.alias];
-      });
+  // subscribe to sotre
+  private subscribeToProducts() {
+    this.products$.subscribe(
+      (products) => {
+        this.products = products
+        this.pages = [...products[this.alias]]
+
+        if (this.paginator && this.pages.length > 0) {
+          this.currentPage = this.pages[this.paginator.pageIndex]
+        }
+      }
+    )
   }
 
 
-  // handle route subscription
-  private subscribeToRoute(): void {
-    this.getData();
-    this.getParams();
-  }
-
-  // get params info
-  private getParams(): void {
+  // sucscrube to router
+  private subscribeToParams(): void {
     this.activeRoute.params.subscribe(
-      (params) => {
-        this.categoryId = params.categoryId;
-        this.alias = params.alias;
-        this.paginationData = store.getState().products[this.alias];
-        this.productService.handleCateogryAlias.next(this.alias)
+      (params: Params) => {
+        this.setParams(params)
+      }
+      );
+    }
+    // sucscrube to data
+  private subscribeToData(): void {
+    this.activeRoute.params.subscribe(
+      () => {
+        this.getFirstPage()
       }
     );
   }
 
-  // get products info
-  private getData(): void {
-    this.activeRoute.data.subscribe((data: Data) => {
-      this.products = data.pagination.products;
-      this.pagination = data.pagination.pagination;
-      if (this.paginator) {
-        this.paginator.firstPage();
-
-      }
-    });
+  // set params info
+  private setParams(params: Params) {
+    this.categoryId = params.categoryId;
+    this.alias = params.alias;
+    this.productService.handleCateogryAlias.next(this.alias)
   }
 
   // sucscrube to paginator
   private subscribeToPaginator(): void {
+
     if (this.paginator) {
-      this.paginator?.page
-        .pipe(
-          tap(() => this.handleProductsSource()))
-        .subscribe()
+      this.subscribeToPage = this.paginator?.page.pipe(
+        tap((page) => {
+          return this.handleProductsSource()
+        })).subscribe()
     }
   }
 
-  private subscribeToSort(): void {
-    this.sort.sortChange.subscribe(
-      (sort) => this.paginationService.getSortedData(this.alias, this.sort)
-    )
-  }
 
   // ----------------------------------------------------------------------------------
 
   // HTTTP SECTION
 
-  // get products with page data
-  private getProductsPagination(): void {
-    this.productService.getProductsPagination(
-      (this.paginator.pageIndex + 1),
-      this.paginator.pageSize,
-      this.categoryId,
-      this.alias
-    ).subscribe(
-      (data) => {
-        this.products = data.products
-      })
+  private getFirstPage() {
+
+    this.paginator ? this.paginator.firstPage() : ""
+
+    const pages: PageModel[] = this.products[this.alias]
+
+    pages.length > 0
+      ? this.currentPage = pages[0]
+      : this.productService.getFirstPage(this.categoryId, this.alias)
+
   }
+
 
   // get products form store or server
   private handleProductsSource(): void {
 
-    if (this.isPageExist()) {
-      this.products = this.getPageProducts()
+    const currentPage: PageModel = this.products[this.alias][this.paginator.pageIndex]
 
-    } else {
-      this.getProductsPagination()
-    }
+    currentPage
+
+      // store products
+      ? this.currentPage = currentPage
+
+      :// server products
+      this.productService.addProductsPage(
+        {
+          page: (this.paginator.pageIndex + 1),
+          limit: this.paginator.pageSize,
+        },
+        this.categoryId,
+        this.alias
+      )
   }
+
 
   //---------------------------------------------------------------------------------------------------------------------
 
   // LOGIC SECTION
-
-  // valid if products page are already in store
-  private isPageExist(): boolean {
-    const page = this.paginationData.pages.find(page => page === this.paginator.pageIndex)
-    if (page === 0) {
-      return !page
-    }
-    return !!page
-  }
-
-  // get products as page products
-  private getPageProducts(): ProductModel[] {
-    const pagination = this.paginator ? this.paginator : this.pagination
-    const products = store.getState().products[this.alias].products
-    return this.paginationService.getPagedData([...products], pagination)
-  }
 
 
   // SIDENAV LOGIC SECTION
@@ -172,7 +177,6 @@ export class ProductsDashbordComponent implements OnInit {
 
   //
   public onCloseStart() {
-    console.log(1)
     this.searchMode = false
   }
 

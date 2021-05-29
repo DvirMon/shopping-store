@@ -9,7 +9,6 @@ import { store } from '../redux/store';
 })
 export class BackgroundHeightDirective {
 
-
   @HostBinding("style.height") public height: string;
 
   @HostListener('window:scroll', ['$event']) public checkScroll() {

@@ -18,13 +18,12 @@ import { switchMap, map, tap } from 'rxjs/operators';
 // NGRX
 import { Store } from '@ngrx/store';
 import { OrderState } from '../utilities/ngrx/state/orders.state';
-import { ActionType } from '../utilities/redux/action-type';
 import { hisotrySelecotr, yearsSelecotr } from '../utilities/ngrx/selectors';
 import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 
 // ENVIROMENT
 import { environment } from 'src/environments/environment';
-import { UserModel } from '../utilities/models/user-model';
+import { UserModel } from '../utilities/models/user.model';
 import { SearchService } from './search.service';
 import { FormControl } from '@angular/forms';
 

@@ -1,0 +1,13 @@
+img:hover {
+  cursor: pointer;
+  filter: brightness(50%);
+}
+.text {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  font-size: 30px;
+  color: white;
+}

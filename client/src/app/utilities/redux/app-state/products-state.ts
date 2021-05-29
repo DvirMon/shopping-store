@@ -1,14 +1,14 @@
-import { ProductModel } from 'src/app/utilities/models/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { PaginationDataModel } from '../../models/pagination-model';
+import { PageModel } from '../../models/pagination-model';
 
 export class ProductsAppState {
 
   public categories: CategoryModel[] = []
-  public beverages: PaginationDataModel = new PaginationDataModel();
-  public sweets: PaginationDataModel = new PaginationDataModel();
-  public dairy: PaginationDataModel = new PaginationDataModel();
-  public grains: PaginationDataModel = new PaginationDataModel();
-  public meat: PaginationDataModel = new PaginationDataModel();
-  public produce: PaginationDataModel = new PaginationDataModel();
+  public beverages: PageModel = null;
+  public sweets: PageModel = null;
+  public dairy: PageModel = null;
+  public grains: PageModel = null;
+  public meat: PageModel = null;
+  public produce: PageModel = null;
+
 }

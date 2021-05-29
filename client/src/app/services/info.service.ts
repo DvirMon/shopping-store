@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import {  take, map } from 'rxjs/operators'
 
-import { CartModel } from '../utilities/models/cart-model';
+import { CartModel } from '../utilities/models/cart.model';
 
 import { OrderService } from './order.service';
 import { CartService } from './cart.service';

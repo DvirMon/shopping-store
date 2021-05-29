@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
 
 import { CartItemModel, CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { DialogData } from 'src/app/services/dialog.service';
 
@@ -74,11 +74,12 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit(): void {
 
     this.setDilaogProps()
-    console.log(this.product)
+
     this.subscribeToStore();
     this.subscribeToMobile()
     this.subscribtToEditMode()
     this.subscribeToCartItem()
+
     this.handleCartItemData();
   }
 
@@ -123,6 +124,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
       this.distinctChange = true
     }
   }
+
   // SUBSCRIBTION SECTION
 
   // method to subscribt to ngrx store
@@ -133,7 +135,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
         this.cart = cart
       }
     )
-
   }
 
   private subscribeToControls() {
@@ -176,8 +177,6 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
       })
   }
 
-
-  // end of subscribe section
 
   // HTTP SECTION
 
@@ -239,21 +238,18 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   // set cart item values
   private handleCartItemData(): void {
 
-    this.cart.getItems().length > 0
-      ? this.cartItemUpdateValue()
+    const currentItem = this.cart.findCartItem(this.product._id);
+
+    this.cart.getItems().length > 0 && !!currentItem
+      ? this.cartItemUpdateValue(currentItem)
       : this.cartItemDefaultValues();
 
   }
 
   // method to update exist cart item values
-  private cartItemUpdateValue() {
-    const currentItem = this.cart.findCartItem(this.product._id);
-    if (currentItem) {
-      this.cartItemService.emitCurrentItem(currentItem)
-      this.cartService.emitEditState(true);
-    } else {
-      this.cartItemDefaultValues()
-    }
+  private cartItemUpdateValue(currentItem: CurrentItemModel) {
+    this.cartItemService.emitCurrentItem(currentItem)
+    this.cartService.emitEditState(true);
   }
 
   // default values for cart item

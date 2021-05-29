@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CartService } from 'src/app/services/cart.service';
 
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 
 

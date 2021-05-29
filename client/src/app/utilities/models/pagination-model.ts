@@ -1,24 +1,23 @@
 import { ProductModel } from './product-model';
 
-export class PaginationDataModel {
+export class PageModel {
   public constructor(
     public products?: ProductModel[],
     public pagination?: PaginationModel,
-    public pages?: number[]
+    public alias?: string,
+    public pages?: number[],
   ) {
-    this.products = [],
-      this.pagination = new PaginationModel(),
-      this.pages = []
+  }
+
+  public isPageExist(): boolean {
+    const page = this.pages.indexOf(this.pagination.pageIndex)
+    if (page > 0) {
+      return true
+    }
+    return false
   }
 }
 
-export class PageData {
-  public constructor(
-    public products?: ProductModel[],
-    public pages?: number[]
-  ) {
-  }
-}
 
 export class PaginationModel {
   public constructor(

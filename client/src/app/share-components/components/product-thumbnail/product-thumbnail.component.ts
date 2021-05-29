@@ -20,14 +20,26 @@ export class ProductThumbnailComponent implements OnInit {
   public alias: string
   public environment = environment
 
+  private categories$ = this.productService.categories$
+
   constructor(
     private productService: ProductsService
   ) { }
 
 
   ngOnInit(): void {
-    this.alias = this.productService.getCategoryAlias(this.product)
+    this.getCategoryAlias()
   }
 
+  // get product category alias
+  public getCategoryAlias() {
+    this.categories$.subscribe(
+      (categories) => {
+        if (categories.length > 0) {
+          this.alias = categories.find(category => category._id === this.product.categoryId).alias
+        }
+      }
+    )
+  }
 
 }

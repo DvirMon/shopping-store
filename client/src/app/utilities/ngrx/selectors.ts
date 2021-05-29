@@ -34,3 +34,8 @@ export const yearsSelecotr = createSelector(
   state => state["order"],
   (state) => state.years
 )
+
+export const categoriesSelecotr = createSelector(
+  state => state["products"],
+  (state) => state.categories
+)

@@ -13,10 +13,10 @@ import { store } from '../utilities/redux/store';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
+// NGRX
 import { Store } from '@ngrx/store';
-import { CartState, cartState } from '../utilities/ngrx/state/cart-state';
-import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 import { AppState } from '../utilities/ngrx/store';
+import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 

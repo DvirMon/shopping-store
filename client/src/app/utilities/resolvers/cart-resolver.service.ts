@@ -7,16 +7,14 @@ import { map, switchMap, tap } from 'rxjs/operators';
 
 import { CartService } from 'src/app/services/cart.service';
 
-import { CartModel } from '../models/cart-model';
-import { UserModel } from '../models/user-model';
+import { CartModel } from '../models/cart.model';
+import { UserModel } from '../models/user.model';
+import { CartItemModel } from '../models/cart-item-model';
 
-import { store } from '../redux/store';
-
-import { cartState } from '../ngrx/state/cart-state';
-import * as CartActions from '../ngrx/actions/cart-action'
-import { CartItemModel, CurrentItemModel } from '../models/cart-item-model';
 import { CartItemService } from 'src/app/services/cart-item.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartState } from '../ngrx/state/cart-state';
+import * as CartActions from '../ngrx/actions/cart-action'
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +30,7 @@ export class CartResolver implements Resolve<any> {
     private cartItemsService: CartItemService,
     private authService: AuthService,
 
-    private ngrxStore: Store<{ cart: typeof cartState }>,
+    private ngrxStore: Store<CartState>,
   ) {
   }
 
@@ -58,8 +56,6 @@ export class CartResolver implements Resolve<any> {
           }),
           // add cart items in database
           switchMap(({ cart, items }) => {
-
-            console.log(items)
 
             return this.cartItemsService.addItems(cart, items)
           }),

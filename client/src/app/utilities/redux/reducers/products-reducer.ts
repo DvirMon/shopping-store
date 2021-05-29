@@ -11,17 +11,12 @@ export const productsReducer = (oldAppState = new ProductsAppState(), action: Ac
     case ActionType.SetProducts:
       newAppState[action.payload.alias].products = action.payload.products
       break;
-    case ActionType.SetProducts:
-      newAppState[action.payload.alias].products = action.payload.products
-      break;
-    case ActionType.GetCategories:
+     case ActionType.GetCategories:
       newAppState.categories = action.payload;
       break;
     case ActionType.SetProductsPaginationData:
       const alias = action.payload.alias
-      newAppState[alias].products = action.payload.products
-      newAppState[alias].pagination = action.payload.pagination;
-      newAppState[alias].pages.push(action.payload.pagination.pageIndex)
+      newAppState[alias] = action.payload
       break;
       case ActionType.AddProductsPaginationData:
         newAppState[action.payload.alias].products = newAppState[action.payload.alias].products.concat(action.payload.products)

@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
 
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 
 import { store } from 'src/app/utilities/redux/store';
 import { Observable } from 'rxjs';

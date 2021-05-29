@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
-import { PaginationDataModel, PaginationModel } from '../utilities/models/pagination-model';
+import { PageModel } from '../utilities/models/pagination-model';
 
 import { ProductModel } from '../utilities/models/product-model';
 import { CategoryModel } from '../utilities/models/category-model';
@@ -18,10 +17,15 @@ import { environment } from 'src/environments/environment';
 import { SearchService } from './search.service';
 import { FormControl } from '@angular/forms';
 
+// NGRX
+import { Store } from '@ngrx/store';
+import { ProductsState } from '../utilities/ngrx/state/products-state';
+import * as  ProductsActions from '../utilities/ngrx/actions/products.actions';
+import { categoriesSelecotr } from '../utilities/ngrx/selectors';
 
-export interface ProductCartInfo {
-  name: string
-  imagePath: string,
+export interface PageData {
+  page: number
+  limit: number,
 
 }
 
@@ -33,9 +37,13 @@ export class ProductsService {
 
   private url: string = `${environment.server}/api/products`
 
+  public products$ = this.storeNgrx.select('products');
+  public categories$: Observable<CategoryModel[]> = this.storeNgrx.select(categoriesSelecotr)
+
   public handleUpdate = new BehaviorSubject<ProductModel>(null)
   public handleDrawerToggle = new Subject<boolean>();
 
+  // category alias
   public handleCateogryAlias = new BehaviorSubject<string>("");
   public alias$: Observable<string> = this.handleCateogryAlias.asObservable();
 
@@ -45,9 +53,14 @@ export class ProductsService {
   constructor(
     private http: HttpClient,
     private formService: FormService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private storeNgrx: Store<{ products: ProductsState }>
 
-  ) { }
+  ) {
+
+
+
+  }
 
   // HTTP SECTION
 
@@ -57,21 +70,33 @@ export class ProductsService {
   }
 
   // POST request - get products with pagination :  http://localhost:3000/api/products/pagination/:page/:limit",
-  public getProductsPagination(page: number, limit: number, categoryId?: string, alias?: string): Observable<PaginationDataModel> {
-
-    const pagination: string = `pagination/${page}/${limit}`
-
-    return this.http.post<PaginationDataModel>(this.url + `/${pagination}`, { categoryId }).pipe(
-      map(data => {
-        data.pagination.pageIndex = data.pagination.pageIndex - 1
-
-        if (alias) {
-          this.handleProductsStoreState(data.products, data.pagination, alias)
-        }
-
-        return data
+  public getProductsPage(page: PageData, categoryId?: string, alias?: string) {
+    return this.http.post<PageModel>(this.url + `/pagination/${page.page}/${page.limit}`, { categoryId }).pipe(
+      map(({ products, pagination }) => {
+        const page = new PageModel(products, pagination, alias, [])
+        page.pagination.pageIndex = page.pagination.pageIndex - 1
+        page.pages.push(page.pagination.pageIndex)
+        return page
       })
     )
+  }
+
+  // method to get first products
+  public getFirstPage(categoryId: string, alias: string) {
+    this.getProductsPage({ page: 1, limit: 6 }, categoryId, alias).subscribe(
+      (page) => {
+        if (alias) {
+          this.storeNgrx.dispatch(new ProductsActions.SetPage({ page, alias }))
+        }
+      }
+    )
+  }
+
+  public addProductsPage(page: PageData, categoryId?: string, alias?: string) {
+    this.getProductsPage(page, categoryId, alias).subscribe(
+      (page) => {
+        this.storeNgrx.dispatch(new ProductsActions.AddPage({ page, alias }))
+      })
   }
 
 
@@ -86,20 +111,15 @@ export class ProductsService {
       map((response: CategoryModel[]) => {
 
         const categories = response.map(category => {
-          category.icon = ""
           category.hide = true
           return category
         })
 
-        this.formService.handleStore(ActionType.GetCategories, categories)
+        this.storeNgrx.dispatch(new ProductsActions.SetCategories(categories))
+
         return categories
       })
     )
-  }
-
-  // GET request - get search products : http://localhost:3000/api/products/search/:query
-  private serach(query: string): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(this.url + `/search/${query}`)
   }
 
   // ADMIN ACTIONS SECTION
@@ -117,15 +137,20 @@ export class ProductsService {
 
   // LOGIC SECTION
 
-  private handleProductsStoreState(products: ProductModel[], pagination: PaginationModel, alias: string): void {
+  private handleProductsStoreState(page: PageModel, alias: string): void {
 
-    const storeProducts = store.getState().products[alias].products
+    const curentPage: PageModel = store.getState().products[alias]
 
-    if (storeProducts.length === 0) {
-      this.formService.handleStore(ActionType.SetProductsPaginationData, { products, pagination, alias })
+    if (!curentPage) {
+      // this.formService.handleStore(ActionType.SetProductsPaginationData, page)
 
-    } else if (storeProducts.length < pagination.length) {
-      this.formService.handleStore(ActionType.AddProductsPaginationData, { products, pagination, alias })
+      this.storeNgrx.dispatch(new ProductsActions.SetPage({ page, alias }))
+
+    } else if (curentPage.products.length < page.pagination.length) {
+      console.log("add")
+      // this.formService.handleStore(ActionType.AddProductsPaginationData, page)
+
+      this.storeNgrx.dispatch(new ProductsActions.AddPage({ page, alias }))
     }
   }
 
@@ -139,14 +164,9 @@ export class ProductsService {
     this.formService.handleStore(ActionType.UpdateProduct, { product, alias })
   }
 
-  // get product category alias
-  public getCategoryAlias(product: ProductModel): string {
-    const categories = store.getState().products?.categories
-    if (product) {
-      return categories.find(category => category._id === product.categoryId).alias
-    }
-  }
 
+
+  // serach products method
   public search(control: FormControl): Observable<ProductModel[]> {
 
     return this.searchService.search(control).pipe(
@@ -189,6 +209,5 @@ export class ProductsService {
     this.productsSearchEntries.next(products)
     return of(products)
   }
-
 
 }

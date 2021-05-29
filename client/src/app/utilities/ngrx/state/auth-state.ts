@@ -1,5 +1,5 @@
 import { SocialUser } from 'angularx-social-login';
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 
 export class AuthState {
 

@@ -4,7 +4,7 @@ import { OrderActionType } from "../action-type";
 
 export class AddOrder implements Action {
 
-  public type = OrderActionType.ADD_ORDER
+  public readonly type = OrderActionType.ADD_ORDER
 
   constructor
     (

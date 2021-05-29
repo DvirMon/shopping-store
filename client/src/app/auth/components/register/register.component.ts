@@ -3,7 +3,7 @@ import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserModel } from 'src/app/utilities/models/user-model';
+import { UserModel } from 'src/app/utilities/models/user.model';
 import { Observable } from 'rxjs';
 
 @Component({

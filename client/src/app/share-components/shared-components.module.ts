@@ -27,6 +27,7 @@ import { SearchImageComponent } from './components/search-image/search-image.com
 
 import { ProductsCategoriesComponent } from './components/products-categories/products-categories.component';
 import { ProductThumbnailComponent } from './components/product-thumbnail/product-thumbnail.component';
+import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
 
 import { AddressComponent } from './components/address/address.component';
 
@@ -41,7 +42,8 @@ import { TollbarDirective } from '../utilities/directives/tollbar-position.direc
 import { HighLightPipe } from '../utilities/pipes/high-light.pipe';
 
 import { environment } from 'src/environments/environment';
-import { ProductsDialogComponent } from './components/products-dialog/products-dialog.component';
+import { ToggleTextDirective } from '../utilities/directives/toggle-text.directive';
+import { CategoryImageComponent } from './components/category-image/category-image.component';
 
 
 @NgModule({
@@ -69,8 +71,9 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     BarBackgroundColorDirective,
     BackgroundHeightDirective,
     SidenavAdminDirective,
-    TollbarDirective
-
+    TollbarDirective,
+    ToggleTextDirective,
+    CategoryImageComponent
   ],
   imports: [
     CoreModule,
@@ -82,7 +85,7 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     ProductThumbnailComponent,
     ProductsCategoriesComponent,
     ProductsDialogComponent,
-    
+
     InputComponent,
     InputPasswordComponent,
     InputUploadComponent,
@@ -99,7 +102,8 @@ import { ProductsDialogComponent } from './components/products-dialog/products-d
     BarBackgroundColorDirective,
     BackgroundHeightDirective,
     SidenavAdminDirective,
-    TollbarDirective
+    TollbarDirective,
+    ToggleTextDirective
   ],
   providers: [
     {

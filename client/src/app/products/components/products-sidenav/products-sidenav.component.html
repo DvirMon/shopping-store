@@ -7,10 +7,10 @@
 </mat-toolbar>
 
 <mat-list>
-  <mat-list-item appSidenavAdminDirective class="nav-main" *ngFor="let category of categories;  let i = index">
+  <mat-list-item appSidenavAdminDirective class="nav-main" *ngFor="let category of (categories$ | async);  let i = index">
 
     <button mat-icon-button (click)="onNavigate(category)" [ngClass]="{'active-link' : category.hide}">
-      <fa-icon [icon]="category.icon" size="1x"></fa-icon>
+      <fa-icon [icon]="icons[category.alias]" size="1x"></fa-icon>
     </button>
 
     <ng-container *ngIf="isExpanded">

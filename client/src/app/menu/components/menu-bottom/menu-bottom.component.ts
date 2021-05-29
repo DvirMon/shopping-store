@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
-import { CartModel } from 'src/app/utilities/models/cart-model';
+import { CartModel } from 'src/app/utilities/models/cart.model';
 import { PathModel } from '../menu-top/menu-top.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { PathModel } from '../menu-top/menu-top.component';
 })
 export class MenuBottomComponent implements OnInit {
 
-  public cart$ = this.cartService.cart$ 
+  public cart$ = this.cartService.cart$
 
   public routes: PathModel[] = [
     { path: "/home", icon: "home" },
