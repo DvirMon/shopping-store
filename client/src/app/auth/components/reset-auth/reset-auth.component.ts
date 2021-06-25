@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
@@ -17,7 +17,7 @@ export class ResetAuthComponent implements OnInit {
 
   @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
   @Output() public next = new EventEmitter();
-  @Output() public method: string;
+  @Input() public method: string;
 
   public phoneForm: FormGroup = this.formService.resetForm()
   public serverError: string

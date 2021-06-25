@@ -37,7 +37,7 @@ export class ResetConfirmComponent implements OnInit {
     )
   }
 
-  public onClick() {
+  public onClick() { 
 
     this.resetService.getConfirmationCode(this.resetService.getResetData().contact).subscribe(
       (payload: ResetModel) => {

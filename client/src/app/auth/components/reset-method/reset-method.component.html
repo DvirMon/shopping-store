@@ -1,8 +1,11 @@
 <form action="">
   <mat-grid-list cols="1" rowHeight="10vh">
-    <mat-grid-tile *ngFor="let item of checkBox">
-      <mat-checkbox (change)="onCheck(item.value)" color="primary">{{item.title}}
-      </mat-checkbox>
+    <mat-grid-tile *ngFor="let button of buttons">
+      <mat-radio-button color="primary" (change)="onChange($event)" [value]="button.value">{{button.title}}</mat-radio-button>
+    </mat-grid-tile>
+
+    <mat-grid-tile rowspan="4">
+      <button mat-button color="primary" [disabled]="!method" (click)="onClick()">Continue</button>
     </mat-grid-tile>
   </mat-grid-list>
 </form>

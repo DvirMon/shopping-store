@@ -5,12 +5,14 @@
       <mat-step #methodStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Choose Method</ng-template>
         <app-reset-form title="Choose Method">
-          <app-reset-method content (next)="next(methodStep)"></app-reset-method>
+          <app-reset-method #method (next)="next(methodStep)"></app-reset-method>
         </app-reset-form>
       </mat-step>
       <mat-step #authStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Authentication Details</ng-template>
-        <app-reset-auth (next)="next(authStep)"></app-reset-auth>
+        <app-reset-form title="Enter your {{method.method}}">
+          <app-reset-auth (next)="next(authStep)" [method]="method.method"></app-reset-auth>
+        </app-reset-form>
       </mat-step>
       <mat-step #confirmStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Confirmation Code</ng-template>

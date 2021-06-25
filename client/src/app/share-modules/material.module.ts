@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -37,6 +38,7 @@ import { LayoutModule } from '@angular/cdk/layout';
   declarations: [],
   exports: [
     MatCheckboxModule,
+    MatRadioModule,
     MatDialogModule,
     MatButtonModule,
     MatInputModule,

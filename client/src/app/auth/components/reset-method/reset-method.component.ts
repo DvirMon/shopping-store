@@ -1,30 +1,29 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-reset-method',
   templateUrl: './reset-method.component.html',
   styleUrls: ['./reset-method.component.scss']
 })
-export class ResetMethodComponent implements OnInit {
+export class ResetMethodComponent {
 
   @Output() public next = new EventEmitter();
 
   constructor() { }
 
-  public checkBox = [
+  public buttons = [
     { title: "Reset with email account", value: "email" },
     { title: "Reset with phone number", value: "phone" }
   ]
 
   public method: string
 
-  ngOnInit(): void {
+  public onChange(event) {
+    this.method = event.value
   }
 
-  public onCheck(value) {
-    this.method = value
+  public onClick() {
     this.next.emit()
-
   }
 
 }
