@@ -21,6 +21,7 @@ import { ResetComponent } from './components/reset/reset.component';
 import { ResetAuthComponent } from './components/reset-auth/reset-auth.component';
 import { ResetConfirmComponent } from './components/reset-confirm/reset-confirm.component';
 import { ResetNewPasswordComponent } from './components/reset-new-password/reset-new-password.component';
+import { RestMethodComponent } from './components/rest-method/rest-method.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
     AuthDialogComponent,
     ResetComponent,
     RootComponent,
+    RestMethodComponent,
   ],
   imports: [
     CoreModule,

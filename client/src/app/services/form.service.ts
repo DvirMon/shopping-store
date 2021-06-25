@@ -89,6 +89,12 @@ export class FormService {
     })
   }
 
+  public paymentForm() :FormGroup {
+return this.fb.group({
+  name: ['', [Validators.required]]
+});
+  }
+
   // register for product form
   public productForm(): FormGroup {
     return this.fb.group({

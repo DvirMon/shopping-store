@@ -1,0 +1,20 @@
+<div class="container">
+
+  <form novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
+    <mat-form-field class="full-width" appearance="fill">
+      <input type="text" placeholder="Jane Doe" matInput [formControl]="stripeTest.controls['name']" name="name"
+        autocomplete="off">
+    </mat-form-field>
+    <div class="payment">
+      <ngx-stripe-card [elementsOptions]="elementsOptions"></ngx-stripe-card>
+    </div>
+    <mat-toolbar>
+      <button mat-raised-button color="primary" type="submit">
+        Create token
+      </button>
+      <button mat-raised-button color="primary" type="button" (click)="onCheckout()">
+        Checkout
+      </button>
+    </mat-toolbar>
+  </form>
+</div>

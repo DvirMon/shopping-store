@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../share-components/shared-components.module';
 import { CartModule } from '../cart/cart.module';
 
+import { NgxStripeModule } from 'ngx-stripe';
+
 import { OrderComponent } from './components/root/order.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderFormComponent } from './components/order-form/order-form.component';
@@ -17,6 +19,8 @@ import { OrdersHistoryComponent } from './components/orders-history/orders-histo
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { OrderProductComponent } from './components/order-product/order-product.component';
 import { OrderSearchComponent } from './components/order-search/order-search.component';
+import { OrderPaymentStripComponent } from './components/order-payment-strip/order-payment-strip.component';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -33,13 +37,15 @@ import { OrderSearchComponent } from './components/order-search/order-search.com
     OrderNavComponent,
     OrderProductComponent,
     OrderSearchComponent,
+    OrderPaymentStripComponent,
   ],
   imports: [
     CoreModule,
-    RouterModule,
+    RouterModule, 
     SharedModule,
     OrderRoutingModule,
     CartModule,
+    NgxStripeModule.forRoot(environment.stripeApi)
   ]
 })
 export class OrderModule { }

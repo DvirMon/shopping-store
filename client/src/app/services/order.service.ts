@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { StripeCardComponent, StripeService } from 'ngx-stripe';
+
 // MODELS
 import { OrderHistoryModel, OrderModel } from '../utilities/models/order-model';
 
 // SERVICES
 import { CartService } from './cart.service';
 import { DialogService } from './dialog.service';
-import { FormService } from './form.service';
 import { ReceiptService } from './receipt.service';
 import { AuthService } from './auth.service';
 
@@ -119,8 +120,46 @@ export class OrderService {
       )
   }
 
+  // Get request - get search orders
   private searchOrders(query: string): Observable<OrderHistoryModel[]> {
     return this.http.get<OrderHistoryModel[]>(this.url + `/search/${this.user._id}/${query}`)
+  }
+
+
+  public checkout(stripeService : StripeService) {
+    // Check the server.js tab to see an example implementation
+    this.http.post(this.url + '/checkout', {})
+      .pipe(
+        switchMap((id: string) => {
+          console.log(id)
+          return stripeService.redirectToCheckout({ sessionId: id })
+        })
+      )
+      .subscribe((result: any) => {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using `error.message`.
+        console.log(result);
+        if (result.error) {
+          console.log(result.error.message);
+        }
+      });
+  }
+
+  public createToken(stripeService : StripeService, name: string, card: StripeCardComponent): void {
+
+    stripeService
+      .createToken(card.element, { name })
+      .subscribe((result) => {
+        if (result.token) {
+          // Use the token
+          console.log(result.token.id);
+        } else if (result.error) {
+          // Error creating the token
+          console.log(result.error);
+          console.log(result.error.message);
+        }
+      });
   }
 
 

@@ -7,6 +7,8 @@ const orderLogic = require("../business-layer-logic/order-logic");
 
 const middleware = require("../services/middleware");
 
+const checkoutService = require("../services/checkout")
+
 const key = process.env.JWT_ACCESS;
 
 
@@ -35,7 +37,7 @@ router.get(
     try {
 
       const { userId, date } = request.params
-            
+
       const orders = await orderLogic.getOrdersHistory(userId, date)
 
       response.json(orders)
@@ -96,6 +98,19 @@ router.post(
       console.log(days)
       const dates = await orderLogic.getOrdersByDay(userId, days)
       response.json(dates);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.post(
+  "/checkout",
+  // middleware.authorize(false, key),
+  async (request, response, next) => {
+    try {
+      const session = await checkoutService.checkout()
+      response.json(session.id);
     } catch (err) {
       next(err);
     }

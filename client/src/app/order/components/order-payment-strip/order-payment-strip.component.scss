@@ -1,0 +1,23 @@
+.container {
+  padding: 5%;
+
+  mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  form > ngx-stripe-card {
+    width: 50vh;
+    display: flex;
+    flex-direction: column;
+    color: #31325f;
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
+  }
+
+  .payment {
+    width: 50%;
+    background-color: white;
+  }
+}

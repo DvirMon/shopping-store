@@ -23,7 +23,7 @@ const UserSchema = mongoose.Schema(
       //   "password must conation at least one number, character a-z, A-Z",
       // ],
     },
-    firstName: { 
+    firstName: {
       type: String,
       required: true,
       minlength: [3],
@@ -61,7 +61,7 @@ UserSchema.statics.loginGoogle = async function (gmailUser) {
   if (!user) {
 
     // sign in with google
-    return await User.create(gmailUser) 
+    return await User.create(gmailUser)
   }
 
   return user
@@ -93,11 +93,6 @@ UserSchema.plugin(uniqueValidator, {
   type: "mongoose-unique-validator",
   message: "This {PATH} ({VALUE}) is already in use",
 });
-
-// UserSchema.path('email').validate(async (email) => {
-//   const emailCount = await mongoose.models.users.countDocuments({ email })
-//   return !emailCount
-// }, 'Email already exists')
 
 // hush password
 UserSchema.pre("save", async function (next) {

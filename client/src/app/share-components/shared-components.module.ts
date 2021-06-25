@@ -11,6 +11,7 @@ import { AuthInterceptorService } from '../utilities/interceptors/auth-intercept
 import { SpinnerInterceptorService } from '../utilities/interceptors/spinner-interceptor.service';
 import { ErrorsService } from '../utilities/interceptors/errors.service';
 import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { NgxStripeModule } from 'ngx-stripe';
 
 // SHRED COMPONENTS
 import { AboutComponent } from './components/about/about.component';

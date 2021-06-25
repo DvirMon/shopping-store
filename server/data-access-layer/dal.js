@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const config = require("../config");
 
+const URI = `mongodb+srv://${process.env.MONGO_USER}:mongo3000@shopping-store-yfdwj.mongodb.net/Grocery`
+
 const connectAsync = () => {
   return new Promise((resolve, reject) => {
     mongoose.connect(

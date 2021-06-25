@@ -3,7 +3,7 @@ const handleError = (err, request, response, next) => {
   if (process.env.NODE_ENV === "production") {
     return response
       .status(500)
-      .send("an error has occurred, please ty again later");
+      .send("An error has occurred, please ty again later");
   }
  
   if (err.status) {

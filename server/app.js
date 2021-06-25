@@ -8,8 +8,10 @@ const cors = require("cors");
 const compression = require("compression");
 const rateLimit = require("express-rate-limit");
 
-// IMPORT 
+const helmet = require("helmet");
 const path = require("path"); 
+
+// IMPORT 
 const config = require('./config')
 
 // init server
@@ -33,6 +35,8 @@ const resetController = require('./controllers/reset.controller')
 
 // MIDDLEWARE METHODS     
 server.use(cors());
+server.use(helmet())
+server.use(compression());
 
 server.use(
   "/api/",
@@ -43,10 +47,9 @@ server.use(
   })
 );
 server.use(express.json({ limit: "50mb" }));
-server.use(session(config.session))
+// server.use(session(config.session))
 server.use(sanitize);
 server.use("/uploads", express.static("uploads"));
-server.use(compression());
 
 
 // MIDDLEWARE CONTROLLERS
@@ -62,9 +65,6 @@ server.use("/api/token", tokenController);
 if (process.env.NODE_ENV === "production") {
 
   server.use(express.static("public/client"));
-
-  console.log("production")
-
   server.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "public/client", "index.html"));
   });

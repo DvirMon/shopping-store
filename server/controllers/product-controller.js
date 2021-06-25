@@ -51,7 +51,7 @@ router.post(
       delete pagination.docs;
 
       return response.json({ products, pagination });
-    } catch (err) {
+    } catch (err) { 
       next(err);
     }
   }

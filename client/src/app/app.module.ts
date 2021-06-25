@@ -57,7 +57,6 @@ import { appReducer } from './utilities/ngrx/store';
     }),
     MaterialModule,
     SocialLoginModule,
-
   ],
   providers: [
     {
