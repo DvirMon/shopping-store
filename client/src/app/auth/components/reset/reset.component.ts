@@ -25,7 +25,6 @@ export class ResetComponent implements OnInit {
   public next(step: MatStep) {
     step.completed = true;
     this.stepper.next()
-
   }
 
 }

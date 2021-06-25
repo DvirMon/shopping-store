@@ -1,0 +1,11 @@
+<mat-grid-list cols="1" rowHeight="10vh">
+  <mat-grid-tile>
+    <h1>{{title}}</h1>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="5">
+    <ng-content select="[content]"></ng-content>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <ng-content select="[button]"></ng-content>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,7 +1,7 @@
 <mat-grid-list cols="1" rowHeight="5vh">
   <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile rowspan="2">
-    <h1>Enter your phone number</h1>
+    <h1>{{method}}</h1>
   </mat-grid-tile>
 
   <form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
@@ -17,6 +17,9 @@
         <mat-error *ngIf="phoneForm.controls['phone'].errors?.serverError">{{serverError}}</mat-error>
         <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
       </mat-form-field>
+
+
+
     </mat-grid-tile>
     <mat-grid-tile rowspan="3">
       <button type="button" (click)="onSubmit()" color="primary" [disabled]="!phoneForm.valid" mat-raised-button>Get

@@ -7,6 +7,10 @@ div.main {
   background-attachment: fixed;
   background-position: center;
   height: 90vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container {
@@ -15,9 +19,15 @@ div.main {
   justify-content: center;
   margin: auto;
 
-  mat-horizontal-stepper {
-    height: 81vh;
-    margin-top: 5vh;
+  mat-card {
+    width: 50%;
+    height: 80%;
+
+    mat-horizontal-stepper {
+      height: 81vh;
+      margin-top: 5vh;
+    }
+
   }
 
   @media screen and (max-width: 600px) {
@@ -25,4 +35,9 @@ div.main {
       width: 95%;
     }
   }
+}
+
+app-reset-method {
+  height: 100%;
+  width: 100%;
 }

@@ -17,6 +17,7 @@ export class ResetAuthComponent implements OnInit {
 
   @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
   @Output() public next = new EventEmitter();
+  @Output() public method: string;
 
   public phoneForm: FormGroup = this.formService.resetForm()
   public serverError: string

@@ -1,22 +1,27 @@
 <div class="main">
+  <!-- <div class="container"> -->
   <mat-card>
-    <div class="container">
-      <mat-horizontal-stepper #stepper>
-        <mat-step #authStep completed="false">
-          <ng-template *ngIf="!(isMobile | async)" matStepLabel>Authentication Details</ng-template>
-          <app-reset-auth (next)="next(authStep)"></app-reset-auth>
-        </mat-step>
-        <mat-step #confirmStep completed="false">
-          <ng-template *ngIf="!(isMobile | async)" matStepLabel>Confirmation Code</ng-template>
-          <app-reset-confirm (next)="next(confirmStep)"></app-reset-confirm>
-        </mat-step>
-        <mat-step>
-          <ng-template *ngIf="!(isMobile | async)" matStepLabel>New Password</ng-template>
-          <app-reset-new-password></app-reset-new-password>
-        </mat-step>
+    <mat-horizontal-stepper #stepper>
+      <mat-step #methodStep completed="false">
+        <ng-template *ngIf="!(isMobile | async)" matStepLabel>Choose Method</ng-template>
+        <app-reset-form title="Choose Method">
+          <app-reset-method content (next)="next(methodStep)"></app-reset-method>
+        </app-reset-form>
+      </mat-step>
+      <mat-step #authStep completed="false">
+        <ng-template *ngIf="!(isMobile | async)" matStepLabel>Authentication Details</ng-template>
+        <app-reset-auth (next)="next(authStep)"></app-reset-auth>
+      </mat-step>
+      <mat-step #confirmStep completed="false">
+        <ng-template *ngIf="!(isMobile | async)" matStepLabel>Confirmation Code</ng-template>
+        <app-reset-confirm (next)="next(confirmStep)"></app-reset-confirm>
+      </mat-step>
+      <mat-step>
+        <ng-template *ngIf="!(isMobile | async)" matStepLabel>New Password</ng-template>
+        <app-reset-new-password></app-reset-new-password>
+      </mat-step>
 
-      </mat-horizontal-stepper>
-    </div>
+    </mat-horizontal-stepper>
   </mat-card>
-
+  <!-- </div> -->
 </div>

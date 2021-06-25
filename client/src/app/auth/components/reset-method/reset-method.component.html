@@ -1,0 +1,8 @@
+<form action="">
+  <mat-grid-list cols="1" rowHeight="10vh">
+    <mat-grid-tile *ngFor="let item of checkBox">
+      <mat-checkbox (change)="onCheck(item.value)" color="primary">{{item.title}}
+      </mat-checkbox>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
