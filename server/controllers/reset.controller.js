@@ -96,8 +96,6 @@ router.post("/new-password",
     try {
       const payload = request.body
 
-      console.log(payload)
-
       const user = await request.user.updatePassword(payload.password)
 
       await email.send('password', payload.email, user.fullName, payload.password)
