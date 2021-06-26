@@ -57,18 +57,6 @@ const isContactEmailExist = async (request, response, next) => {
   next()
 }
 
-const isEmailMatch = async (request, response, next) => {
-
-  try {
-    if (request.contact.includes('@') && request.user.email !== request.contact) {
-      next({ status: 401, message: "Wrong email address" });
-    }
-    next()
-  }
-  catch (err) {
-    next(err)
-  }
-}
 
 // main middleware for contact form
 const loginForm = () => {
@@ -96,13 +84,20 @@ const registerForm = () => {
 }
 
 // main middleware for contact form
-const contactForm = () => {
+const contactEmailForm = () => {
   return [
     validateScheme(schemaService.contactFormSchema),
-    // isContactEmailExist,
-    // isUserExist
+    isContactEmailExist,
+    isUserExist
   ]
-
+  
+}
+// main middleware for contact form
+const contactPhoneForm = () => {
+  return [
+    validateScheme(schemaService.contactFormSchema),
+  ]
+  
 }
 
 // main middleware for new password form
@@ -110,8 +105,7 @@ const newPasswordForm = () => {
   return [
     authorize(false, process.env.JWT_CONFIRMATION),
     validateScheme(schemaService.newPasswordScheme),
-    isUserExist,
-    // isEmailMatch,
+    isUserExist
   ]
 }
 
@@ -120,6 +114,7 @@ module.exports = {
   loginForm,
   loginGoogle,
   registerForm,
-  contactForm,
+  contactEmailForm,
+  contactPhoneForm,
   newPasswordForm
 }

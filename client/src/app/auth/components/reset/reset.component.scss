@@ -14,7 +14,7 @@ div.main {
 }
 mat-card {
   width: 55%;
-  height: 70%;
+  height: 75%;
 
   mat-horizontal-stepper {
     height: 100%;
@@ -22,7 +22,7 @@ mat-card {
 }
 
 app-reset-method,
-app-reset-auth,
+app-reset-contact,
 app-reset-confirm,
 app-reset-new-password {
   height: 100%;

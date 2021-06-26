@@ -17,13 +17,11 @@ export class ResetNewPasswordComponent {
   @ViewChild(MatInput) input: HTMLInputElement;
 
   @Input() public method: string
-
   public newPassword: FormGroup = this.formService.newPasswordForm();
   public serverError: string
 
   constructor(
     private router: Router,
-
     private formService: FormService,
     private resetService: ResetService,
     private authServcie: AuthService

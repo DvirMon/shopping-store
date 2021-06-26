@@ -22,6 +22,7 @@ const handleTransporter = () => {
     }
   });
 
+
   return transporter
 }
 
@@ -31,17 +32,23 @@ const setEmail = async (html, email) => {
     from: process.env.EMAIL,
     to: email,
     subject: 'Reset Password',
-    html
+    html 
   });
 
 }
 
-const setTemplate = async (name, code) => {
+const setTemplate = async ({ type, name, code }) => {
 
   return new Promise((resolve, reject) => {
 
+    console.log(type)
+
+    const emailPath = path + (type === 'reset' ? "/views/reset.ejs" : "/views/password.ejs")
+
+    console.log(emailPath)
+
     ejs.renderFile(
-      path + "/views/reset.ejs",
+      emailPath,
       {
         name,
         code
@@ -59,8 +66,9 @@ const setTemplate = async (name, code) => {
 
 
 
-const send = async (email, name, code) => {
-  const html = await setTemplate(name, code);
+const send = async (type, email, name, code) => {
+  console.log(email)
+  const html = await setTemplate({ type, name, code });
   await setEmail(html, email)
 }
 

@@ -12,8 +12,8 @@ const sms = require('../services/sms');
 const email = require('../services/email')
 const tokenService = require('../services/token')
 
-router.post("/code",
-  middleware.validate.contactForm(),
+router.post("/code/email",
+  middleware.validate.contactEmailForm(),
   async (request, response, next) => {
     try {
 
@@ -25,22 +25,39 @@ router.post("/code",
       // save code in database
       await Reset.getEntry({ contact, code })
 
-      // save hash code in session
-      // request.session.code = reset.code
+      // create token with hash code
+      const token = await tokenService.getConfirmationToken(contact)
+
+      await email.send('reset', contact, request.user.fullName, code)
+
+      response.json({ token, contact, method: "email" })
+    }
+    catch (err) {
+      console.log(err)
+      next(err)
+    }
+
+  })
+
+router.post("/code/phone",
+  middleware.validate.contactPhoneForm(),
+  async (request, response, next) => {
+    try {
+
+      const contact = request.body.contact
+
+      // generate code
+      const code = confirmation.getPassword()
+
+      // save code in database
+      await Reset.getEntry({ contact, code })
 
       // create token with hash code
       const token = await tokenService.getConfirmationToken(contact)
 
       await sms.send(contact, code)
 
-      // if (contact.includes("@")) {
-      //   await email.send(contact, request.user.fullName, code)
-      // }
-      // else {
-
-      // }
-
-      response.json({ token, contact })
+      response.json({ token, contact, method: "phone" })
     }
     catch (err) {
       next(err)
@@ -79,7 +96,11 @@ router.post("/new-password",
     try {
       const payload = request.body
 
+      console.log(payload)
+
       const user = await request.user.updatePassword(payload.password)
+
+      await email.send('password', payload.email, user.fullName, payload.password)
 
       response.json({ message: "password updated!", user })
     }

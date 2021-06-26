@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 export interface ResetModel {
   contact?: string
   token?: string
+  method: string
 }
 
 
@@ -23,15 +24,16 @@ export class ResetService {
   }
 
   // POST REQUEST = get confirmation code - http://localhost:3000/api/reset/code
-  public getConfirmationCode(contact: string): Observable<ResetModel> {
-    return this.http.post<ResetModel>(this.url + "/code", { contact })
+  public getConfirmationCode({ contact, method }): Observable<ResetModel> {
+    return this.http.post<ResetModel>(this.url + `/code/${method}`, { contact })
   }
 
-  // POST REQUEST = get confirmation code - http://localhost:3000/api/reset/confirmatin
+  // POST REQUEST = valid confirmation code - http://localhost:3000/api/reset/confirmatin
   public validConfirmationCode(code: string): Observable<boolean> {
     return this.http.post<boolean>(this.url + "/confirm", { code })
   }
 
+  // POST REQUEST = set new passowred - http://localhost:3000/api/reset/new-password
   public setNewPasswored(payload: { password: string, email: string }) {
 
     return this.http.post<string>(this.url + "/new-password", payload)

@@ -20,7 +20,7 @@ import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.compon
 import { ResetComponent } from './components/reset/reset.component';
 import { ResetFormComponent } from './components/reset-steper/reset-form.component';
 import { ResetMethodComponent } from './components/reset-method/reset-method.component';
-import { ResetAuthComponent } from './components/reset-contact/reset-auth.component';
+import { ResetContactComponent } from './components/reset-contact/reset-contact.component';
 import { ResetConfirmComponent } from './components/reset-confirm/reset-confirm.component';
 import { ResetNewPasswordComponent } from './components/reset-new-password/reset-new-password.component';
 
@@ -31,7 +31,7 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
     LoginComponent,
     RegisterComponent,
 
-    ResetAuthComponent,
+    ResetContactComponent,
     ResetConfirmComponent,
     ResetNewPasswordComponent,
 

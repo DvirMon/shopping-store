@@ -67,7 +67,6 @@ const newPasswordScheme = () => {
   return Joi.object().keys({
     email: Joi.string().regex(regex.email).required(),
     password: Joi.required(),
-    confirmPassword: Joi.string().required().valid(Joi.ref("password")),
   });
 
 };
@@ -98,7 +97,6 @@ const validCreditCard = (cc) => {
 
 module.exports = {
   validCreditCard,
-
   loginScheme,
   loginGoogleScheme,
   registerSchema,

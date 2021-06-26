@@ -190,7 +190,7 @@ export class AuthService {
 
     this.store.dispatch(new AuthActions.Logout())
     this.store.dispatch(new CartActions.ResetCart())
-    return this.router.navigateByUrl(`/auth/register`)
+    return this.router.navigateByUrl(`/`)
   }
 
 }
