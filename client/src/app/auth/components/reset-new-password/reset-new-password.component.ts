@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
@@ -12,9 +12,11 @@ import { ResetService } from 'src/app/services/reset.service';
   templateUrl: './reset-new-password.component.html',
   styleUrls: ['./reset-new-password.component.scss']
 })
-export class ResetNewPasswordComponent  {
+export class ResetNewPasswordComponent {
 
   @ViewChild(MatInput) input: HTMLInputElement;
+
+  @Input() public method: string
 
   public newPassword: FormGroup = this.formService.newPasswordForm();
   public serverError: string

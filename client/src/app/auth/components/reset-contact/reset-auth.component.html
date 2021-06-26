@@ -7,12 +7,13 @@
         <!-- Email input -->
         <ng-container *ngSwitchCase="'email'">
           <mat-form-field class="full-width" appearance="fill">
-            <input #resetInput matInput type="text" placeholder="Enter your email" [formControl]="control"
-              name="control" autocomplete="off" required>
+            <input matInput type="text" placeholder="Enter your email" [formControl]="control" name="control"
+              autocomplete="off" required>
             <mat-error *ngIf="control.errors?.required">Email is required</mat-error>
             <mat-error *ngIf="control.errors?.pattern">Email is not in valid format
             </mat-error>
             <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
+            <mat-hint>Enter your email</mat-hint>
           </mat-form-field>
         </ng-container>
 
@@ -25,14 +26,15 @@
             <mat-error *ngIf="control.errors?.required">Phone number is required</mat-error>
             <mat-error *ngIf="control.errors?.pattern">Phone number is not in valid format
             </mat-error>
-            <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
             <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
+            <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
           </mat-form-field>
         </ng-container>
 
       </ng-container>
 
     </mat-grid-tile>
+
     <mat-grid-tile rowspan="3">
       <button type="button" (click)="onSubmit()" color="primary" [disabled]="!control?.valid" mat-raised-button>Get
         Code</button>

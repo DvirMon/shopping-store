@@ -118,18 +118,13 @@ export class FormService {
   public newPasswordForm(): FormGroup {
     return this.fb.group({
       email: ['',
-        [Validators.required, Validators.pattern(this.validationService.regex.email)],
+        [Validators.pattern(this.validationService.regex.email)],
       ],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(24)]],
-      confirmPassword: ['',
-        [Validators.required,]],
-    },
-      {
-        validator: [this.validationService.mustMatch('password', 'confirmPassword')],
-      })
+    })
   }
 
 

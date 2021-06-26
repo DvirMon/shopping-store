@@ -1,6 +1,6 @@
 <form action="">
-  <mat-grid-list cols="1" rowHeight="10vh">
-    <mat-grid-tile *ngFor="let button of buttons">
+  <mat-grid-list cols="1" rowHeight="5vh">
+    <mat-grid-tile rowspan="2" *ngFor="let button of buttons">
       <mat-radio-button color="primary" (change)="onChange($event)" [value]="button.value">{{button.title}}</mat-radio-button>
     </mat-grid-tile>
     <mat-grid-tile rowspan="3">

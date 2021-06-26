@@ -1,6 +1,6 @@
 <div class="main">
   <mat-card>
-    <mat-horizontal-stepper #stepper>
+    <mat-horizontal-stepper #stepper linear>
       <mat-step #methodStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Choose Method</ng-template>
         <app-reset-form title="Choose Method">
@@ -9,20 +9,20 @@
       </mat-step>
       <mat-step #authStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Authentication Details</ng-template>
-        <app-reset-form title="Enter your {{method.method}}">
+        <app-reset-form title="Enter your {{method.method | titlecase}}">
           <app-reset-auth (next)="next(authStep)" [method]="method.method"></app-reset-auth>
         </app-reset-form>
       </mat-step>
       <mat-step #confirmStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Confirmation Code</ng-template>
-        <app-reset-form title="Please enter confirmation code">
+        <app-reset-form title="Enter confirmation code">
           <app-reset-confirm (next)="next(confirmStep)"></app-reset-confirm>
         </app-reset-form>
       </mat-step>
       <mat-step>
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>New Password</ng-template>
         <app-reset-form title="Almost there!">
-          <app-reset-new-password></app-reset-new-password>
+          <app-reset-new-password [method]="method.method"></app-reset-new-password>
         </app-reset-form>
       </mat-step>
 
