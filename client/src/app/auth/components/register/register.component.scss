@@ -1,27 +1,26 @@
 @import "~src/style/variables";
 
 .main {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   background-image: url("src/assets/images/auth/register-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  height: 90vh;
-
-  .space {
-    width: 100%;
-    height: 10vh;
-  }
 
   .container {
-    border-radius: 5%;
+    height: 90%;
 
-    mat-grid-list.main-card {
+    .main-card {
+      border-radius: 25px;
+      background-color: white;
       width: 70%;
-      // height: 100%;
       margin: auto;
       display: flex;
-      background-color: white;
 
       mat-grid-list.left,
       mat-grid-list.right {

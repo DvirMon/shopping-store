@@ -1,16 +1,16 @@
 @import "~src/style/variables";
 
 div.main {
-  background-image: url("src/assets/images/auth/register-2.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
   height: 90vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-image: url("src/assets/images/auth/register-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 mat-card {
   width: 55%;
