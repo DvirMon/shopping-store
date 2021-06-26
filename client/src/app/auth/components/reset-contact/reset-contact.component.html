@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()">
   <mat-grid-list cols="1" rowHeight="5vh">
-    <mat-grid-tile rowspan="4">
+    <mat-grid-tile rowspan="3">
 
       <ng-container [ngSwitch]="method">
 
@@ -35,7 +35,7 @@
 
     </mat-grid-tile>
 
-    <mat-grid-tile rowspan="3">
+    <mat-grid-tile rowspan="4">
       <button type="button" (click)="onSubmit()" color="primary" [disabled]="!control?.valid" mat-raised-button>Get
         Code</button>
     </mat-grid-tile>

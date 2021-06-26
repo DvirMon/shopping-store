@@ -28,6 +28,7 @@ import { MatRadioModule } from '@angular/material/radio';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -39,6 +40,7 @@ import { LayoutModule } from '@angular/cdk/layout';
   exports: [
     MatCheckboxModule,
     MatRadioModule,
+    MatSnackBarModule,
     MatDialogModule,
     MatButtonModule,
     MatInputModule,

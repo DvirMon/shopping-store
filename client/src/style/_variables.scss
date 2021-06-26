@@ -8,16 +8,17 @@ $colors: (
   error: #721c24,
   warning: #f8d7da,
   forbidden: #f3727d,
+  success: #1d8813,
 );
 
-$grid-breakpoints: ( 
+$grid-breakpoints: (
   xs: 0,
   sm: 576px,
   md: 840px,
   lg: 992px,
   xl: 1200px,
 );
- 
+
 @function size($breakpoints) {
   @return map-get($grid-breakpoints, $breakpoints);
 }

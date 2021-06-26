@@ -103,7 +103,7 @@ const contactPhoneForm = () => {
 // main middleware for new password form
 const newPasswordForm = () => {
   return [
-    authorize(false, process.env.JWT_CONFIRMATION),
+    // authorize(false, process.env.JWT_CONFIRMATION),
     validateScheme(schemaService.newPasswordScheme),
     isUserExist
   ]

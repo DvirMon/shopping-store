@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormService } from 'src/app/services/form.service';
 import { ResetService } from 'src/app/services/reset.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-reset-new-password',
   templateUrl: './reset-new-password.component.html',
@@ -20,11 +22,15 @@ export class ResetNewPasswordComponent {
   public newPassword: FormGroup = this.formService.newPasswordForm();
   public serverError: string
 
+  private snacBarRef
+
   constructor(
     private router: Router,
     private formService: FormService,
     private resetService: ResetService,
-    private authServcie: AuthService
+    private authServcie: AuthService,
+
+    private snackBar: MatSnackBar
   ) { }
 
 
@@ -35,7 +41,12 @@ export class ResetNewPasswordComponent {
     this.resetService.setNewPasswored(this.newPassword.value).subscribe(
       (success) => {
         sessionStorage.removeItem("confirmation")
-        this.router.navigateByUrl('/auth/login')
+        let snacBarRef = this.snackBar.open("Password reset success!", 'Dismiss');
+        snacBarRef.afterDismissed().subscribe(
+          () => {
+            this.router.navigateByUrl('/auth/login')
+          }
+        )
       },
       (err) => {
         console.log(err)
@@ -46,6 +57,7 @@ export class ResetNewPasswordComponent {
 
 
   }
+
 
 
 
