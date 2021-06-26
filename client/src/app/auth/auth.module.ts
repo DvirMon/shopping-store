@@ -18,11 +18,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 
 import { ResetComponent } from './components/reset/reset.component';
+import { ResetFormComponent } from './components/reset-steper/reset-form.component';
+import { ResetMethodComponent } from './components/reset-method/reset-method.component';
 import { ResetAuthComponent } from './components/reset-auth/reset-auth.component';
 import { ResetConfirmComponent } from './components/reset-confirm/reset-confirm.component';
 import { ResetNewPasswordComponent } from './components/reset-new-password/reset-new-password.component';
-import { ResetMethodComponent } from './components/reset-method/reset-method.component';
-import { ResetFormComponent } from './components/reset-form/reset-form.component';
 
 @NgModule({
   declarations: [

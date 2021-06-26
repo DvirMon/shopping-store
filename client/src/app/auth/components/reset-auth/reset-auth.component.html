@@ -1,20 +1,40 @@
-<form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()">
   <mat-grid-list cols="1" rowHeight="5vh">
     <mat-grid-tile rowspan="4">
 
-      <mat-form-field class="full-width" appearance="fill">
+      <ng-container [ngSwitch]="method">
 
-        <ngx-mat-intl-tel-input [onlyCountries]="['il']" [enablePlaceholder]="true" [name]="phoneForm.controls['phone']"
-          [formControl]="phoneForm.controls['phone']" #phone></ngx-mat-intl-tel-input>
-        <mat-error *ngIf="phoneForm.controls['phone'].errors?.required">Phone number is required</mat-error>
-        <mat-error *ngIf="phoneForm.controls['phone'].errors?.pattern">Phone number is not in valid format
-        </mat-error>
-        <mat-error *ngIf="phoneForm.controls['phone'].errors?.serverError">{{serverError}}</mat-error>
-        <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
-      </mat-form-field>
+        <!-- Email input -->
+        <ng-container *ngSwitchCase="'email'">
+          <mat-form-field class="full-width" appearance="fill">
+            <input #resetInput matInput type="text" placeholder="Enter your email" [formControl]="control"
+              name="control" autocomplete="off" required>
+            <mat-error *ngIf="control.errors?.required">Email is required</mat-error>
+            <mat-error *ngIf="control.errors?.pattern">Email is not in valid format
+            </mat-error>
+            <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
+          </mat-form-field>
+        </ng-container>
+
+        <!-- Phone input -->
+        <ng-container *ngSwitchCase="'phone'">
+          <mat-form-field class="full-width" appearance="fill">
+            <ngx-mat-intl-tel-input [onlyCountries]="['il']" [enablePlaceholder]="true" [name]="control"
+              [formControl]="control" #phone>
+            </ngx-mat-intl-tel-input>
+            <mat-error *ngIf="control.errors?.required">Phone number is required</mat-error>
+            <mat-error *ngIf="control.errors?.pattern">Phone number is not in valid format
+            </mat-error>
+            <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
+            <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
+          </mat-form-field>
+        </ng-container>
+
+      </ng-container>
+
     </mat-grid-tile>
     <mat-grid-tile rowspan="3">
-      <button type="button" (click)="onSubmit()" color="primary" [disabled]="!phoneForm.valid" mat-raised-button>Get
+      <button type="button" (click)="onSubmit()" color="primary" [disabled]="!control?.valid" mat-raised-button>Get
         Code</button>
     </mat-grid-tile>
     <mat-grid-tile rowspan="3">

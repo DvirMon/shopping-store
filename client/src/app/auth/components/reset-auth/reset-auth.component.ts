@@ -1,12 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
 import { FormService } from 'src/app/services/form.service';
 import { ResetModel, ResetService } from 'src/app/services/reset.service';
-
-
 
 @Component({
   selector: 'app-reset-auth',
@@ -17,9 +15,9 @@ export class ResetAuthComponent implements OnInit {
 
   @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
   @Output() public next = new EventEmitter();
-  @Input() public method: string;
+  @Input() public method;
 
-  public phoneForm: FormGroup = this.formService.resetForm()
+  public control: FormControl = this.formService.setMethodControl();
   public serverError: string
 
   constructor(
@@ -32,30 +30,15 @@ export class ResetAuthComponent implements OnInit {
   }
 
   // SUBSCRIBTION SECTION
-
   private subscribtToControl() {
 
 
-    this.phoneForm.valueChanges.subscribe((value: string) => {
+    this.control.valueChanges.subscribe(
+      (value) => {
+        console.log(this.control.errors)
+      }
+    )
 
-      // console.log(this.inputPhone.value)
-
-      // if (value.includes('@')) {
-      //   this.prefix = ""
-      // }
-      // else if (+value && value.length >= 3) {
-
-      //   if (value.startsWith("0")) {
-      //     // this.control.setValue(value.substring(1))
-      //   }
-
-      //   this.prefix = "+972-"
-
-      // } else {
-      //   this.prefix = ""
-
-      // }
-    })
   }
 
   // HTTP SECTION
@@ -68,7 +51,7 @@ export class ResetAuthComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.serverError = err.error
-        this.phoneForm.controls['phone'].setErrors({ serverError: true })
+        this.control.setErrors({ serverError: true })
 
       }
 

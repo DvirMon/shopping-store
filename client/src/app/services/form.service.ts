@@ -89,10 +89,10 @@ export class FormService {
     })
   }
 
-  public paymentForm() :FormGroup {
-return this.fb.group({
-  name: ['', [Validators.required]]
-});
+  public paymentForm(): FormGroup {
+    return this.fb.group({
+      name: ['', [Validators.required]]
+    });
   }
 
   // register for product form
@@ -107,17 +107,11 @@ return this.fb.group({
 
   // RESET PASSWORD FORM
 
-  public resetForm(): FormGroup {
-    return this.fb.group({
-      phone: ['',
-        [
-          Validators.required,
-          Validators.pattern(this.validationService.regex.emailPhone)
-        ]
-      ]
-    }
-
-    )
+  public setMethodControl(): FormControl {
+    return this.fb.control('', [
+      Validators.required,
+      Validators.pattern(this.validationService.regex.emailPhone)
+    ])
   }
 
   // register for register form

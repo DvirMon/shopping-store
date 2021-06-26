@@ -3,9 +3,8 @@
     <mat-grid-tile *ngFor="let button of buttons">
       <mat-radio-button color="primary" (change)="onChange($event)" [value]="button.value">{{button.title}}</mat-radio-button>
     </mat-grid-tile>
-
-    <mat-grid-tile rowspan="4">
-      <button mat-button color="primary" [disabled]="!method" (click)="onClick()">Continue</button>
+    <mat-grid-tile rowspan="3">
+      <button mat-raised-button color="primary" [disabled]="!method" (click)="onClick()">Continue</button>
     </mat-grid-tile>
   </mat-grid-list>
 </form>

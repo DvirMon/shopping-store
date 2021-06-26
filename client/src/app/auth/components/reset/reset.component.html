@@ -1,5 +1,4 @@
 <div class="main">
-  <!-- <div class="container"> -->
   <mat-card>
     <mat-horizontal-stepper #stepper>
       <mat-step #methodStep completed="false">
@@ -16,14 +15,17 @@
       </mat-step>
       <mat-step #confirmStep completed="false">
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>Confirmation Code</ng-template>
-        <app-reset-confirm (next)="next(confirmStep)"></app-reset-confirm>
+        <app-reset-form title="Please enter confirmation code">
+          <app-reset-confirm (next)="next(confirmStep)"></app-reset-confirm>
+        </app-reset-form>
       </mat-step>
       <mat-step>
         <ng-template *ngIf="!(isMobile | async)" matStepLabel>New Password</ng-template>
-        <app-reset-new-password></app-reset-new-password>
+        <app-reset-form title="Almost there!">
+          <app-reset-new-password></app-reset-new-password>
+        </app-reset-form>
       </mat-step>
 
     </mat-horizontal-stepper>
   </mat-card>
-  <!-- </div> -->
 </div>
