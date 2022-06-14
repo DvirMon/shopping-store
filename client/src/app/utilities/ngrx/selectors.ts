@@ -2,40 +2,40 @@ import { createSelector } from "@ngrx/store";
 
 
 // AUTH SELECTORS
-export const userSelecotr = createSelector(
+export const userSelector = createSelector(
   state => state["auth"],
   (state) => state.user
 )
 
-export const isLoggin = createSelector(
+export const isLogged = createSelector(
   state => state["auth"],
   (state) => !!state.user
 )
 
 // CART SELECTORS
-export const cartSelecotr = createSelector(
+export const cartSelector = createSelector(
   state => state["cart"],
   (state) => state.cart
 )
 
 // ORDER SELECTORS
 
-export const hisotrySelecotr = createSelector(
+export const historySelector = createSelector(
   state => state["order"],
   (state) => state.history
 )
 
-export const orderSelecotr = createSelector(
+export const orderSelector = createSelector(
   state => state["order"],
   (state) => state.currentOrder
 )
 
-export const yearsSelecotr = createSelector(
+export const yearsSelector = createSelector(
   state => state["order"],
   (state) => state.years
 )
 
-export const categoriesSelecotr = createSelector(
+export const categoriesSelector = createSelector(
   state => state["products"],
   (state) => state.categories
 )

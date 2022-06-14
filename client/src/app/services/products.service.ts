@@ -21,7 +21,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProductsState } from '../utilities/ngrx/state/products-state';
 import * as  ProductsActions from '../utilities/ngrx/actions/products.actions';
-import { categoriesSelecotr } from '../utilities/ngrx/selectors';
+import { categoriesSelector } from '../utilities/ngrx/selectors';
 
 export interface PageData {
   page: number
@@ -38,7 +38,7 @@ export class ProductsService {
   private url: string = `${environment.server}/api/products`
 
   public products$ = this.storeNgrx.select('products');
-  public categories$: Observable<CategoryModel[]> = this.storeNgrx.select(categoriesSelecotr)
+  public categories$: Observable<CategoryModel[]> = this.storeNgrx.select(categoriesSelector)
 
   public handleUpdate = new BehaviorSubject<ProductModel>(null)
   public handleDrawerToggle = new Subject<boolean>();

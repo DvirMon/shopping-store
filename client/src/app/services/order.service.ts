@@ -19,7 +19,7 @@ import { switchMap, map, tap } from 'rxjs/operators';
 // NGRX
 import { Store } from '@ngrx/store';
 import { OrderState } from '../utilities/ngrx/state/orders.state';
-import { hisotrySelecotr, yearsSelecotr } from '../utilities/ngrx/selectors';
+import { historySelector, yearsSelector } from '../utilities/ngrx/selectors';
 import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 
 // ENVIROMENT
@@ -37,8 +37,8 @@ export class OrderService {
 
   public orderState$: Observable<OrderState> = this.store.select('order');
 
-  public ordersHistory$: Observable<OrderHistoryModel[]> = this.store.select(hisotrySelecotr);
-  public years$: Observable<number[]> = this.store.select(yearsSelecotr);
+  public ordersHistory$: Observable<OrderHistoryModel[]> = this.store.select(historySelector);
+  public years$: Observable<number[]> = this.store.select(yearsSelector);
 
   private ordersSearchEntries = new BehaviorSubject<OrderHistoryModel[]>([]);
   public orderEntries$: Observable<OrderHistoryModel[]> = this.ordersSearchEntries.asObservable()

@@ -24,7 +24,7 @@ import { AuthState } from '../utilities/ngrx/state/auth-state';
 import * as  AuthActions from "../utilities/ngrx/actions/auth-actions";
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
-import { userSelecotr } from '../utilities/ngrx/selectors';
+import { userSelector } from '../utilities/ngrx/selectors';
 
 declare const gapi: any;
 
@@ -45,7 +45,7 @@ export class AuthService {
 
   // NGRX
   public auth$: Observable<AuthState> = this.store.select('auth')
-  private user$: Observable<UserModel> = this.store.select(userSelecotr)
+  private user$: Observable<UserModel> = this.store.select(userSelector)
   public auth: AuthState
 
   // SUBJECTS

@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { cartSelecotr } from '../utilities/ngrx/selectors';
+import { cartSelector } from '../utilities/ngrx/selectors';
 import { CartState } from '../utilities/ngrx/state/cart-state';
 import * as  CartActions from "../utilities/ngrx/actions/cart-action";
 
@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CartService {
 
-  public cart$: Observable<CartModel> = this.store.select(cartSelecotr);
+  public cart$: Observable<CartModel> = this.store.select(cartSelector);
 
   private editCartState = new BehaviorSubject<boolean>(false);
   private editState$: Observable<boolean> = this.editCartState.asObservable()

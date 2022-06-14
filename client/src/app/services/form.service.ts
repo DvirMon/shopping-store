@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormControl, UntypedFormGroup, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { ProductModel } from '../utilities/models/product-model';
@@ -13,6 +13,11 @@ import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
 import { HttpClient } from '@angular/common/http';
 
+export interface LoginForm {
+  email : FormControl<string>,
+  password : FormControl<string>
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +27,7 @@ export class FormService {
   public isMobile$: Observable<boolean> = this.isMobile()
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private http: HttpClient,
     private breakpointObserver: BreakpointObserver,
     private validationService: ValidationService,
@@ -32,7 +37,7 @@ export class FormService {
 
 
   //  register for login form
-  public loginForm(): UntypedFormGroup {
+  public loginForm(): FormGroup<LoginForm> {
     return this.fb.group({
       email: ['',
         [Validators.required, Validators.pattern(this.validationService.regex.email)]
