@@ -38,7 +38,7 @@
             "optimization": false,
             "namedChunks": true
           },
-          "configurations": { 
+          "configurations": {
             "production": {
               "fileReplacements": [
                 {
@@ -118,5 +118,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
