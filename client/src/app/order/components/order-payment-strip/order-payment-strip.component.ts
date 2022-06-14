@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
 
@@ -37,7 +37,7 @@ export class OrderPaymentStripComponent implements OnInit {
     locale: 'en'
   };
 
-  public stripeTest: FormGroup;
+  public stripeTest: UntypedFormGroup;
 
   constructor(
     private orderService : OrderService,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -23,7 +23,7 @@ export class ProductsFormComponent implements OnInit {
   @Input() drawer: MatSidenav;
 
   public categories: CategoryModel[] = store.getState().products.categories
-  public productForm: FormGroup
+  public productForm: UntypedFormGroup
   public editMode: boolean = false
   public formMode: boolean = false
   private alias: string
@@ -47,22 +47,22 @@ export class ProductsFormComponent implements OnInit {
   };
 
   // form section
-  private createForm(): FormGroup {
+  private createForm(): UntypedFormGroup {
     return this.productForm = this.formService.productForm()
   }
 
-  get name(): FormControl {
-    return this.productForm.get('name') as FormControl
+  get name(): UntypedFormControl {
+    return this.productForm.get('name') as UntypedFormControl
   }
-  get price(): FormControl {
-    return this.productForm.get('price') as FormControl
+  get price(): UntypedFormControl {
+    return this.productForm.get('price') as UntypedFormControl
   }
-  get categoryId(): FormControl {
-    return this.productForm.get('categoryId') as FormControl
+  get categoryId(): UntypedFormControl {
+    return this.productForm.get('categoryId') as UntypedFormControl
   }
 
-  get imagePath(): FormControl {
-    return this.productForm.get('imagePath') as FormControl
+  get imagePath(): UntypedFormControl {
+    return this.productForm.get('imagePath') as UntypedFormControl
   }
 
   // end of form section

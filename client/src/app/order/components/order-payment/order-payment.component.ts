@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { faCcMastercard } from '@fortawesome/free-brands-svg-icons';
 import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
@@ -20,7 +20,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') input: ElementRef
 
-  @Input() public control: FormControl
+  @Input() public control: UntypedFormControl
 
   public cleave: Cleave
   public creditCards : CreditCardModel[] = []

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
 import { FormService } from 'src/app/services/form.service';
@@ -17,7 +17,7 @@ export class ResetContactComponent {
   @Output() public next = new EventEmitter();
   @Input() public method;
 
-  public control: FormControl = this.formService.setMethodControl();
+  public control: UntypedFormControl = this.formService.setMethodControl();
   public serverError: string
 
   constructor(

@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -23,7 +23,7 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild(MatInput) input: HTMLInputElement;
 
-  @Input() public control: FormControl;
+  @Input() public control: UntypedFormControl;
 
   @Input() public type: string;
   @Input() public hint: string;

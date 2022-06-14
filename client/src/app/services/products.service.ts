@@ -15,7 +15,7 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
 import { SearchService } from './search.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 // NGRX
 import { Store } from '@ngrx/store';
@@ -167,7 +167,7 @@ export class ProductsService {
 
 
   // serach products method
-  public search(control: FormControl): Observable<ProductModel[]> {
+  public search(control: UntypedFormControl): Observable<ProductModel[]> {
 
     return this.searchService.search(control).pipe(
       switchMap((query: string) => {

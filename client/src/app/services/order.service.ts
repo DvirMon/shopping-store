@@ -26,7 +26,7 @@ import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../utilities/models/user.model';
 import { SearchService } from './search.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -166,7 +166,7 @@ export class OrderService {
 
   // LOGIC SECTION
 
-  public search(control: FormControl): Observable<OrderHistoryModel[]> {
+  public search(control: UntypedFormControl): Observable<OrderHistoryModel[]> {
 
     return this.searchService.search(control).pipe(
       switchMap((query: string) => {

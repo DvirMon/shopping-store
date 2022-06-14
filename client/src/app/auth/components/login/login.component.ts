@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,7 +21,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm: FormGroup
+  public loginForm: UntypedFormGroup
 
   public isLogin: boolean = this.authService.auth.isLogin
   public serverError: string
