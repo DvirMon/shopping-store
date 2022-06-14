@@ -48,94 +48,76 @@ import { CategoryImageComponent } from './components/category-image/category-ima
 
 
 @NgModule({
-  declarations: [
-    AboutComponent,
-
-    InputComponent,
-    InputPasswordComponent,
-    InputUploadComponent,
-
-    DialogComponent,
-
-    SearchComponent,
-    SearchImageComponent,
-    SearchItemComponent,
-
-    ProductThumbnailComponent,
-    ProductsCategoriesComponent,
-    ProductsDialogComponent,
-
-    AddressComponent,
-
-    HighLightPipe,
-
-    BarBackgroundColorDirective,
-    BackgroundHeightDirective,
-    SidenavAdminDirective,
-    TollbarDirective,
-    ToggleTextDirective,
-    CategoryImageComponent
-  ],
-  imports: [
-    CoreModule,
-    RecaptchaV3Module,
-  ],
-  exports: [
-    AboutComponent,
-
-    ProductThumbnailComponent,
-    ProductsCategoriesComponent,
-    ProductsDialogComponent,
-
-    InputComponent,
-    InputPasswordComponent,
-    InputUploadComponent,
-    AddressComponent,
-
-    DialogComponent,
-
-    SearchComponent,
-    SearchItemComponent,
-    SearchImageComponent,
-
-    HighLightPipe,
-
-    BarBackgroundColorDirective,
-    BackgroundHeightDirective,
-    SidenavAdminDirective,
-    TollbarDirective,
-    ToggleTextDirective
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: SpinnerInterceptorService,
-      multi: true
-    },
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
-    {
-      provide: MAT_DIALOG_DATA,
-      useValue: {}
-    },
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false, showError: true }
-    },
-    { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.reCaptchaSiteKey },
-
-    {
-      provide: ErrorHandler,
-      useClass: ErrorsService
-    },
-  ],
-  entryComponents: [
-    DialogComponent,
-  ]
-
+    declarations: [
+        AboutComponent,
+        InputComponent,
+        InputPasswordComponent,
+        InputUploadComponent,
+        DialogComponent,
+        SearchComponent,
+        SearchImageComponent,
+        SearchItemComponent,
+        ProductThumbnailComponent,
+        ProductsCategoriesComponent,
+        ProductsDialogComponent,
+        AddressComponent,
+        HighLightPipe,
+        BarBackgroundColorDirective,
+        BackgroundHeightDirective,
+        SidenavAdminDirective,
+        TollbarDirective,
+        ToggleTextDirective,
+        CategoryImageComponent
+    ],
+    imports: [
+        CoreModule,
+        RecaptchaV3Module,
+    ],
+    exports: [
+        AboutComponent,
+        ProductThumbnailComponent,
+        ProductsCategoriesComponent,
+        ProductsDialogComponent,
+        InputComponent,
+        InputPasswordComponent,
+        InputUploadComponent,
+        AddressComponent,
+        DialogComponent,
+        SearchComponent,
+        SearchItemComponent,
+        SearchImageComponent,
+        HighLightPipe,
+        BarBackgroundColorDirective,
+        BackgroundHeightDirective,
+        SidenavAdminDirective,
+        TollbarDirective,
+        ToggleTextDirective
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: SpinnerInterceptorService,
+            multi: true
+        },
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {} },
+        {
+            provide: MAT_DIALOG_DATA,
+            useValue: {}
+        },
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false, showError: true }
+        },
+        { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.reCaptchaSiteKey },
+        {
+            provide: ErrorHandler,
+            useClass: ErrorsService
+        },
+    ]
 })
 export class SharedModule { }

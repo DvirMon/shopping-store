@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -26,7 +26,7 @@ export class SearchComponent implements OnDestroy {
 
   @Input() public drawer: MatSidenav;
 
-  public control = new FormControl();
+  public control = new UntypedFormControl();
 
   public isMobile$: Observable<boolean>
   public searchEntries$: Observable<ProductModel[]>

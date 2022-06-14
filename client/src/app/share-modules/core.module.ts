@@ -5,60 +5,53 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RecaptchaModule } from 'ng-recaptcha'
+import { RecaptchaModule } from 'ng-recaptcha';
 import { MaterialModule } from './material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-import { AgmCoreModule } from '@agm/core'
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
 import { CartModel } from '../utilities/models/cart.model';
 import { UserModel } from '../utilities/models/user.model';
-import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
+import {
+  CartItemModel,
+  CurrentItemModel,
+} from '../utilities/models/cart-item-model';
 import { PaginationModel } from '../utilities/models/pagination-model';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    AgmCoreModule.forRoot({
-      apiKey: "AIzaSyDILBPfSAiKKypPQU-hO92beFbyaQGE0uw"
-    }),
-    GooglePlaceModule
-  ],
+  imports: [CommonModule, FontAwesomeModule, GooglePlaceModule],
   providers: [
     {
       provide: UserModel,
-      useValue: new UserModel()
+      useValue: new UserModel(),
     },
     {
       provide: ProductModel,
-      useValue: new ProductModel()
+      useValue: new ProductModel(),
     },
     {
       provide: CartModel,
-      useValue: new CartModel()
+      useValue: new CartModel(),
     },
     {
       provide: CartItemModel,
-      useValue: new CartItemModel()
+      useValue: new CartItemModel(),
     },
     {
       provide: CurrentItemModel,
-      useValue: new CurrentItemModel()
+      useValue: new CurrentItemModel(),
     },
     {
       provide: OrderModel,
-      useValue: new OrderModel()
+      useValue: new OrderModel(),
     },
     {
       provide: PaginationModel,
-      useValue: new PaginationModel()
-    }
-
-
+      useValue: new PaginationModel(),
+    },
   ],
   exports: [
     CommonModule,
@@ -68,10 +61,7 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     RecaptchaModule,
     MaterialModule,
     FontAwesomeModule,
-    AgmCoreModule,
     GooglePlaceModule,
-
-
-  ]
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

@@ -3,7 +3,7 @@ import { CoreModule } from '../share-modules/core.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../share-components/shared-components.module';
 import { CodeInputModule } from 'angular-code-input';
-import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input'
+// import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input'
 
 import { AuthRoutingModule } from './auth-routing.module';
 
@@ -50,7 +50,7 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
       codeLength: 6,
       isCharsCode: false,
     }),
-    NgxMatIntlTelInputModule
+    // NgxMatIntlTelInputModule
   ],
   providers: [],
   exports: []

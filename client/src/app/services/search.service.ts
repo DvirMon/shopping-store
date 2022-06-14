@@ -1,7 +1,7 @@
 import { query } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -32,7 +32,7 @@ export class SearchService {
 
 
   // GET request - get search products : http://localhost:3000/api/products/search/:query
-  public searchOrders(control: FormControl, userId: string): Observable<OrderHistoryModel[]> {
+  public searchOrders(control: UntypedFormControl, userId: string): Observable<OrderHistoryModel[]> {
 
     return this.search(control).pipe(
       switchMap((query: string) => {
@@ -57,7 +57,7 @@ export class SearchService {
   // LOGIC SECTION
 
   // main method for serach
-  public search(control: FormControl): Observable<string> {
+  public search(control: UntypedFormControl): Observable<string> {
 
     return control.valueChanges.pipe(
       debounceTime(600),

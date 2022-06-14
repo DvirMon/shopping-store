@@ -19,7 +19,7 @@
 
         <!-- Phone input -->
         <ng-container *ngSwitchCase="'phone'">
-          <mat-form-field class="full-width" appearance="fill">
+          <!-- <mat-form-field class="full-width" appearance="fill">
             <ngx-mat-intl-tel-input [onlyCountries]="['il']" [enablePlaceholder]="true" [name]="control"
               [formControl]="control" #phone>
             </ngx-mat-intl-tel-input>
@@ -28,7 +28,7 @@
             </mat-error>
             <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
             <mat-error *ngIf="control.errors?.serverError">{{serverError}}</mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
         </ng-container>
 
       </ng-container>

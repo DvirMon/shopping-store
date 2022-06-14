@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormControl, UntypedFormGroup, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { ProductModel } from '../utilities/models/product-model';
@@ -12,6 +12,11 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
 import { HttpClient } from '@angular/common/http';
+
+export interface LoginForm {
+  email : FormControl<string>,
+  password : FormControl<string>
+}
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +37,7 @@ export class FormService {
 
 
   //  register for login form
-  public loginForm(): FormGroup {
+  public loginForm(): FormGroup<LoginForm> {
     return this.fb.group({
       email: ['',
         [Validators.required, Validators.pattern(this.validationService.regex.email)]
@@ -43,7 +48,7 @@ export class FormService {
 
 
   // register for register form
-  public registerForm(): FormGroup {
+  public registerForm(): UntypedFormGroup {
     return this.fb.group({
       firstName: ['', [
         Validators.required,
@@ -73,7 +78,7 @@ export class FormService {
   }
 
   // register for order form
-  public orderForm(): FormGroup {
+  public orderForm(): UntypedFormGroup {
     return this.fb.group({
       address: this.fb.group({
         city: ['', [Validators.required]],
@@ -89,14 +94,14 @@ export class FormService {
     })
   }
 
-  public paymentForm(): FormGroup {
+  public paymentForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['', [Validators.required]]
     });
   }
 
   // register for product form
-  public productForm(): FormGroup {
+  public productForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       price: ['', [Validators.required, Validators.min(0.5), Validators.pattern(this.validationService.regex.positive)]],
@@ -107,7 +112,7 @@ export class FormService {
 
   // RESET PASSWORD FORM
 
-  public setMethodControl(): FormControl {
+  public setMethodControl(): UntypedFormControl {
     return this.fb.control('', [
       Validators.required,
       Validators.pattern(this.validationService.regex.emailPhone)
@@ -115,7 +120,7 @@ export class FormService {
   }
 
   // register for register form
-  public newPasswordForm(): FormGroup {
+  public newPasswordForm(): UntypedFormGroup {
     return this.fb.group({
       email: ['',
         [Validators.pattern(this.validationService.regex.email)],

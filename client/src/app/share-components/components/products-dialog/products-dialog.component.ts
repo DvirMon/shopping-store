@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
-import { FormControl, NgModel, Validators } from '@angular/forms';
+import { UntypedFormControl, NgModel, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
 
@@ -44,7 +44,7 @@ export class ProductsDialogComponent implements OnInit, AfterViewInit, OnDestroy
   private distinctChange: boolean = false
   private editState: boolean = false
 
-  public quantityControl: FormControl
+  public quantityControl: UntypedFormControl
 
   public isMobile$: Observable<boolean>
   public editState$: Observable<boolean>

@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { CartModel } from 'src/app/utilities/models/cart.model';
 
@@ -29,7 +29,7 @@ export class CartListComponent implements OnInit {
   @Input() public drawer: MatSidenav;
   @Input() public orderMode: boolean = false;
 
-  public searchControl = new FormControl();
+  public searchControl = new UntypedFormControl();
 
   public isMobile$: Observable<boolean>
   public cart$: Observable<CartModel>

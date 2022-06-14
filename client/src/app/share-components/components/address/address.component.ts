@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserModel } from 'src/app/utilities/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 @Component({
@@ -11,7 +11,7 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 })
 export class AddressComponent {
 
-  @Input() public controlGroup: FormGroup;
+  @Input() public controlGroup: UntypedFormGroup;
   @Input() public streetControlName: string;
   @Input() public rowHeight: string;
 

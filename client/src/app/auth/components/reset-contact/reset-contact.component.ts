@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
+import { UntypedFormControl } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
 import { ResetModel, ResetService } from 'src/app/services/reset.service';
@@ -13,11 +12,11 @@ import { ResetModel, ResetService } from 'src/app/services/reset.service';
 })
 export class ResetContactComponent {
 
-  @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
+  // @ViewChild('phone') public inputPhone: NgxMatIntlTelInputComponent
   @Output() public next = new EventEmitter();
   @Input() public method;
 
-  public control: FormControl = this.formService.setMethodControl();
+  public control: UntypedFormControl = this.formService.setMethodControl();
   public serverError: string
 
   constructor(
@@ -29,18 +28,18 @@ export class ResetContactComponent {
 
   public onSubmit() {
 
-    const value = this.method === "email" ? this.control.value : this.inputPhone.value
+    // const value = this.method === "email" ? this.control.value : this.inputPhone.value
 
-    this.resetService.getConfirmationCode({ contact: value, method: this.method }).subscribe(
-      (payload: ResetModel) => {
-        this.resetService.setResetData(payload);
-        this.next.emit()
-      },
-      (err: HttpErrorResponse) => {
-        this.serverError = err.error
-        this.control.setErrors({ serverError: true })
-      }
-    )
+    // this.resetService.getConfirmationCode({ contact: value, method: this.method }).subscribe(
+    //   (payload: ResetModel) => {
+    //     this.resetService.setResetData(payload);
+    //     this.next.emit()
+    //   },
+    //   (err: HttpErrorResponse) => {
+    //     this.serverError = err.error
+    //     this.control.setErrors({ serverError: true })
+    //   }
+    // )
 
   }
 

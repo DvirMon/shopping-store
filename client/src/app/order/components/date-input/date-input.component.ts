@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Input, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormControl, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, UntypedFormControl, ControlValueAccessor } from '@angular/forms';
 import { Data, ActivatedRoute } from '@angular/router';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
@@ -18,7 +18,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 })
 export class DateInputComponent implements OnInit, ControlValueAccessor {
 
-  @Input() public control: FormControl
+  @Input() public control: UntypedFormControl
   @Input() public hint: string
   @Input() public controlName: string
   @Input() public mobile: boolean

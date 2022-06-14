@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class ResetNewPasswordComponent {
   @ViewChild(MatInput) input: HTMLInputElement;
 
   @Input() public method: string
-  public newPassword: FormGroup = this.formService.newPasswordForm();
+  public newPassword: UntypedFormGroup = this.formService.newPasswordForm();
   public serverError: string
 
   private snacBarRef

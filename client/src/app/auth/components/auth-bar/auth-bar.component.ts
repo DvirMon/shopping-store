@@ -7,7 +7,7 @@ import { UserModel } from 'src/app/utilities/models/user.model';
 import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
-import { isLoggin, userSelecotr } from 'src/app/utilities/ngrx/selectors';
+import { isLogged, userSelector } from 'src/app/utilities/ngrx/selectors';
 import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 
 @Component({
@@ -17,8 +17,8 @@ import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 })
 export class AuthBarComponent {
 
-  private user$: Observable<UserModel> = this.store.select(userSelecotr)
-  private isLoggin$: Observable<boolean> = this.store.select(isLoggin)
+  private user$: Observable<UserModel> = this.store.select(userSelector)
+  private isLogged$: Observable<boolean> = this.store.select(isLogged)
 
   constructor(
     private router: Router,

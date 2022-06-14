@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
 import { MatSelect } from '@angular/material/select';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
 import { UserModel } from 'src/app/utilities/models/user.model';
@@ -26,7 +26,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class OrderFormComponent implements OnInit, AfterViewInit {
 
-  public orderForm: FormGroup;
+  public orderForm: UntypedFormGroup;
   public cartTotalPrice: number;
 
   public isMobile$: Observable<boolean> = this.formService.isMobile()
@@ -84,20 +84,20 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   // FORM SECTION
 
-  private createForm(): FormGroup {
+  private createForm(): UntypedFormGroup {
     return this.orderForm = this.formService.orderForm()
   }
 
-  get address(): FormGroup {
-    return this.orderForm.get('address') as FormGroup
+  get address(): UntypedFormGroup {
+    return this.orderForm.get('address') as UntypedFormGroup
   }
 
-  get shippingDate(): FormControl {
-    return this.orderForm.get('shippingDate') as FormControl
+  get shippingDate(): UntypedFormControl {
+    return this.orderForm.get('shippingDate') as UntypedFormControl
   }
 
-  get creditCard(): FormControl {
-    return this.orderForm.get('creditCard') as FormControl
+  get creditCard(): UntypedFormControl {
+    return this.orderForm.get('creditCard') as UntypedFormControl
   }
 
   // end of form section

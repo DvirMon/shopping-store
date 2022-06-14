@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -20,7 +20,7 @@ export class OrderSearchComponent implements OnInit, OnDestroy {
 
   private subscribtion: Subscription
 
-  public control = new FormControl();
+  public control = new UntypedFormControl();
 
   constructor(
     private orderService: OrderService

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormService } from 'src/app/services/form.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/utilities/models/user.model';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class RegisterComponent {
 
-  public registerForm: FormGroup
+  public registerForm: UntypedFormGroup
   public isMobile$ : Observable<boolean> = this.formService.isMobile()
   public captcha: boolean = false;
 

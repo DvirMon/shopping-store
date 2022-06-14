@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class MessageService {
 
 
   // handle input error messages
-  public getErrorMessage(control: FormControl, placeHolder: string): string {
+  public getErrorMessage(control: UntypedFormControl, placeHolder: string): string {
 
 
     if (control.hasError('required')) {
@@ -37,7 +37,7 @@ export class MessageService {
 
   }
 
-  public passwordCustomErrorMessage(control: FormControl, placeHolder: string): string {
+  public passwordCustomErrorMessage(control: UntypedFormControl, placeHolder: string): string {
     if (control.hasError('maxlength') || control.hasError('minlength')) {
       return `${placeHolder} length must be 8-24 characters long`;
     }

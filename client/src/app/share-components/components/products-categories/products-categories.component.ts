@@ -25,7 +25,7 @@ export class ProductsCategoriesComponent implements OnInit {
   public categories$: Observable<CategoryModel[]> = this.productService.categories$
 
   private user: UserModel = this.authService.auth.user
-  private isLoggin: boolean = this.authService.auth.isLogin
+  private isLogged: boolean = this.authService.auth.isLogin
 
   constructor(
     private router: Router,
@@ -45,7 +45,7 @@ export class ProductsCategoriesComponent implements OnInit {
 
   // EVENET SECTION
   public onClick(category: CategoryModel): Promise<boolean> {
-    if (this.isLoggin) {
+    if (this.isLogged) {
       return this.router.navigateByUrl(`home/products/${this.user._id}/${category.alias}/${category._id}`)
     }
     return this.router.navigateByUrl(`home/products/categories/${category.alias}/${category._id}`)

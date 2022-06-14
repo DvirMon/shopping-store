@@ -15,13 +15,13 @@ import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
 import { SearchService } from './search.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 // NGRX
 import { Store } from '@ngrx/store';
 import { ProductsState } from '../utilities/ngrx/state/products-state';
 import * as  ProductsActions from '../utilities/ngrx/actions/products.actions';
-import { categoriesSelecotr } from '../utilities/ngrx/selectors';
+import { categoriesSelector } from '../utilities/ngrx/selectors';
 
 export interface PageData {
   page: number
@@ -38,7 +38,7 @@ export class ProductsService {
   private url: string = `${environment.server}/api/products`
 
   public products$ = this.storeNgrx.select('products');
-  public categories$: Observable<CategoryModel[]> = this.storeNgrx.select(categoriesSelecotr)
+  public categories$: Observable<CategoryModel[]> = this.storeNgrx.select(categoriesSelector)
 
   public handleUpdate = new BehaviorSubject<ProductModel>(null)
   public handleDrawerToggle = new Subject<boolean>();
@@ -167,7 +167,7 @@ export class ProductsService {
 
 
   // serach products method
-  public search(control: FormControl): Observable<ProductModel[]> {
+  public search(control: UntypedFormControl): Observable<ProductModel[]> {
 
     return this.searchService.search(control).pipe(
       switchMap((query: string) => {

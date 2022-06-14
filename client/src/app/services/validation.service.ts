@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { map, debounceTime, distinctUntilChanged, switchMap, take } from 'rxjs/operators';
@@ -81,7 +81,7 @@ export class ValidationService {
 
   // validate password and confirm password match
   public mustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 
@@ -99,7 +99,7 @@ export class ValidationService {
 
   // validate file upload format
   public requiredFileType() {
-    return (control: FormControl) => {
+    return (control: UntypedFormControl) => {
       const file = control.value;
 
       if (!file) {
@@ -121,7 +121,7 @@ export class ValidationService {
 
   public creditCard() {
 
-    return (control: FormControl) => {
+    return (control: UntypedFormControl) => {
 
       const regex = this.regex.cc
       const cc = control.value;

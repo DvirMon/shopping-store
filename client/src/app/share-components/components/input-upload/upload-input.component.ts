@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Input, Output, HostListener, ElementRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
 import { ProductModel } from 'src/app/utilities/models/product-model';
 import { ProductsService } from 'src/app/services/products.service';
@@ -19,7 +19,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class InputUploadComponent  {
 
-  @Input() control: FormControl
+  @Input() control: UntypedFormControl
   @Input() editMode: boolean = false
   @Input() product: ProductModel
 
