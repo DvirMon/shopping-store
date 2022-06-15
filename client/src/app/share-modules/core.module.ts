@@ -9,6 +9,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { MaterialModule } from './material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OrderModel } from '../utilities/models/order-model';
 import { ProductModel } from '../utilities/models/product-model';
@@ -22,7 +23,12 @@ import { PaginationModel } from '../utilities/models/pagination-model';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, FontAwesomeModule, GooglePlaceModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    GooglePlaceModule,
+    FlexLayoutModule,
+  ],
   providers: [
     {
       provide: UserModel,
@@ -62,6 +68,7 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     MaterialModule,
     FontAwesomeModule,
     GooglePlaceModule,
+    FlexLayoutModule
   ],
 })
 export class CoreModule {}
