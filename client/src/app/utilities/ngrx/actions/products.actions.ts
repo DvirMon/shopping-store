@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store'
+import { ProductModel } from 'src/app/feat-modules/products/product-model'
 import { CategoryModel } from '../../models/category-model'
 import { PageModel } from '../../models/pagination-model'
-import { ProductModel } from '../../models/product-model'
 import { ProductsActionType } from '../action-type'
 
 

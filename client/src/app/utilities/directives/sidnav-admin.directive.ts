@@ -1,9 +1,9 @@
 import { Directive, HostBinding } from '@angular/core';
-import { store } from '../redux/store';
-import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
+
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Directive({
   selector: '[appSidenavAdminDirective]'
@@ -12,7 +12,7 @@ export class SidenavAdminDirective {
 
   @HostBinding("style.color") public color: string;
 
-  private isAdmin: boolean = this.authServcie.auth.user.isAdmin
+  private isAdmin: boolean = this.authService.auth.user.isAdmin
 
   private isMobile: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -22,7 +22,7 @@ export class SidenavAdminDirective {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private authServcie : AuthService
+    private authService : AuthService
   ) {
 
     this.color = "white"

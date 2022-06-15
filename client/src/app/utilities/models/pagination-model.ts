@@ -1,4 +1,4 @@
-import { ProductModel } from './product-model';
+import { ProductModel } from "src/app/feat-modules/products/product-model"
 
 export class PageModel {
   public constructor(

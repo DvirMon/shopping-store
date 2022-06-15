@@ -4,14 +4,14 @@ import { Observable, of } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import {  take, map } from 'rxjs/operators'
 
-import { CartModel } from '../utilities/models/cart.model';
+import { CartModel } from '../cart/components/cart-list/cart.model';
 
-import { OrderService } from './order.service';
-import { CartService } from './cart.service';
-import { ProductsService } from './products.service';
+import { OrderService } from '../order/order.service';
+import { CartService } from '../cart/components/cart-list/cart.service';
+import { ProductsService } from '../products/products.service';
 import { FormService } from './form.service';
 
-import {  CurrentItemModel } from '../utilities/models/cart-item-model';
+import {  CurrentItemModel } from '../cart/components/cart-list-item/cart-item-model';
 
 export interface Info {
   new: boolean,

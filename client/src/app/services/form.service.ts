@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormControl, UntypedFormGroup, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
-import { ProductModel } from '../utilities/models/product-model';
 
 import { ValidationService } from './validation.service';
 
@@ -12,6 +11,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
 import { HttpClient } from '@angular/common/http';
+import { ProductModel } from '../feat-modules/products/product-model';
 
 export interface LoginForm {
   email : FormControl<string>,

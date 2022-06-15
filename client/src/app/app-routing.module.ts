@@ -1,10 +1,10 @@
 //ANGULAR CORE
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RootComponent } from './components/root/root.component';
 
 // COMPONENTS
-import { RootComponent } from './components/root/root.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
 
@@ -15,11 +15,11 @@ const routes: Routes = [
   // LOGIN
   {
     path: "auth",
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./feat-modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule)
+    loadChildren: () => import('./feat-modules/menu/menu.module').then(m => m.MenuModule)
   },
 
   // REDIRECT TO HOME PAGE

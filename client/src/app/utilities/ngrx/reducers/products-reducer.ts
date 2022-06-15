@@ -1,7 +1,7 @@
-import { ProductModel } from '../../models/product-model';
 import { ProductsState } from '../state/products-state';
 import { ProductsActions } from '../actions/products.actions';
 import { ProductsActionType } from '../action-type';
+import { ProductModel } from 'src/app/feat-modules/products/product-model';
 
 export const productsReducer = (oldAppState = new ProductsState(), action: ProductsActions): ProductsState => {
 

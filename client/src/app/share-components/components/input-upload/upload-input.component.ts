@@ -1,8 +1,7 @@
 import { Component, OnInit, forwardRef, Input, Output, HostListener, ElementRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
+import { ProductModel } from 'src/app/feat-modules/products/product-model';
 import { FormService } from 'src/app/services/form.service';
-import { ProductModel } from 'src/app/utilities/models/product-model';
-import { ProductsService } from 'src/app/services/products.service';
 
 
 @Component({

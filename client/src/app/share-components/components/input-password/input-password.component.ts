@@ -1,9 +1,8 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
 
-import { AuthService } from 'src/app/services/auth.service';
-
 import { MatInput } from '@angular/material/input';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
 

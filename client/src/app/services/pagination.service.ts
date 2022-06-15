@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { ProductModel } from '../feat-modules/products/product-model';
 import { PaginationModel } from '../utilities/models/pagination-model';
-import { ProductModel } from '../utilities/models/product-model';
 
-import { FormService } from './form.service';
-
-import { ActionType } from '../utilities/redux/action-type';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { ProductsState } from '../utilities/ngrx/state/products-state';
-import { ProductsService } from './products.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +13,8 @@ export class PaginationService {
 
   public scrollToTop = new BehaviorSubject<boolean>(false)
 
-  private products$: Observable<ProductModel[]>
-
-  private products: ProductModel[]
 
   constructor(
-    private formService: FormService,
-    private productsService : ProductsService
-    // private store: Store<{ products: ProductsState }>
   ) {
 
 

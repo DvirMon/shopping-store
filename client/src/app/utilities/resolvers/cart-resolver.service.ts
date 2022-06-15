@@ -5,23 +5,22 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { CartService } from 'src/app/services/cart.service';
+import { User } from '../models/user.model';
 
-import { CartModel } from '../models/cart.model';
-import { UserModel } from '../models/user.model';
-import { CartItemModel } from '../models/cart-item-model';
-
-import { CartItemService } from 'src/app/services/cart-item.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { CartState } from '../ngrx/state/cart-state';
 import * as CartActions from '../ngrx/actions/cart-action'
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
+import { CartItemService } from 'src/app/feat-modules/cart/components/cart-list-item/cart-item.service';
+import { CartState } from '../ngrx/state/cart-state';
+import { CartItemModel } from 'src/app/feat-modules/cart/components/cart-list-item/cart-item-model';
+import { CartModel } from 'src/app/feat-modules/cart/components/cart-list/cart.model';
+import { CartService } from 'src/app/feat-modules/cart/components/cart-list/cart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartResolver implements Resolve<any> {
 
-  private user: UserModel
+  private user: User
   private isLogin: boolean
   private sessionCart: CartModel
 
@@ -62,7 +61,7 @@ export class CartResolver implements Resolve<any> {
           // get cart with items
           switchMap((cart) => {
             // get cart with items
-            return this.cartItemsService.getCurentCartItems(cart)
+            return this.cartItemsService.getCurrentCartItems(cart)
           }),
           tap((cart: CartModel) => {
             this.ngrxStore.dispatch(new CartActions.AddCart(cart))

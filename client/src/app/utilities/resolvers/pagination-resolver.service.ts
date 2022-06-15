@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { ProductsService } from '../../services/products.service';
 import { PageModel } from '../models/pagination-model';
-
-import { store } from '../redux/store';
+import { ProductsService } from 'src/app/feat-modules/products/products.service';
 
 @Injectable({
   providedIn: 'root'

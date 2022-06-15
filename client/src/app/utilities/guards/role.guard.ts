@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable, throwError, of } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { tap } from 'rxjs/operators';
-import { store } from '../redux/store';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RoleGuard implements CanActivate {
 
   constructor(
-    private tokenServcie: TokenService,
+    private tokenService: TokenService,
     private authService : AuthService
   ) { }
 
@@ -25,7 +24,7 @@ export class RoleGuard implements CanActivate {
 
 
     // verify token?
-    return this.tokenServcie.getAccessToken().pipe(
+    return this.tokenService.getAccessToken().pipe(
       tap(auth => {
         const user = this.authService.auth.user
         if (auth && user.isAdmin) {

@@ -1,15 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
+import { ProductsService } from 'src/app/feat-modules/products/products.service';
 
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductsService } from 'src/app/services/products.service';
-
-import { store } from 'src/app/utilities/redux/store';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products-categories',
@@ -24,7 +21,7 @@ export class ProductsCategoriesComponent implements OnInit {
 
   public categories$: Observable<CategoryModel[]> = this.productService.categories$
 
-  private user: UserModel = this.authService.auth.user
+  private user: User = this.authService.auth.user
   private isLogged: boolean = this.authService.auth.isLogin
 
   constructor(

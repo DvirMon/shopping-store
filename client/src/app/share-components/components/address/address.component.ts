@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { UserModel } from 'src/app/utilities/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/utilities/models/user.model';
 import { UntypedFormGroup } from '@angular/forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 
 @Component({
   selector: 'app-address',
@@ -15,7 +15,7 @@ export class AddressComponent {
   @Input() public streetControlName: string;
   @Input() public rowHeight: string;
 
-  public user: UserModel = this.authService.auth.user
+  public user: User = this.authService.auth.user
 
   public optionsCity = {
     offset: 3,
