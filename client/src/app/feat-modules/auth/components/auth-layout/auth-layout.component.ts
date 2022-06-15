@@ -11,11 +11,11 @@ import { isLogged, userSelector } from 'src/app/utilities/ngrx/selectors';
 import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 
 @Component({
-  selector: 'app-auth-bar',
-  templateUrl: './auth-bar.component.html',
-  styleUrls: ['./auth-bar.component.scss']
+  selector: 'app-auth-layout',
+  templateUrl: './auth-layout.component.html',
+  styleUrls: ['./auth-layout.component.scss']
 })
-export class AuthBarComponent {
+export class AuthLayoutComponent {
 
   private user$: Observable<User> = this.store.select(userSelector)
   private isLogged$: Observable<boolean> = this.store.select(isLogged)

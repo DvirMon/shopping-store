@@ -1,11 +1,14 @@
-<mat-grid-list cols="3" rowHeight="90vh" gutterSize="0">
-
+<!-- <mat-grid-list cols="3" rowHeight="90vh" gutterSize="0">
   <mat-grid-tile [colspan]="(isMobile | async) ? '3' : '2'" class="main">
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="1" rowHeight="8vh">
         <mat-grid-tile>
-          <button color="primary" mat-raised-button type="button" (click)="loginGoogle()">
+          <button
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="loginGoogle()"
+          >
             Continue with Google
           </button>
         </mat-grid-tile>
@@ -22,17 +25,109 @@
       </mat-grid-list>
       <mat-grid-list cols="1" rowHeight="9vh">
         <mat-grid-tile>
-          <button class="login" [disabled]="loginForm.invalid" mat-raised-button type="submit">Login</button>
+          <button
+            class="login"
+            [disabled]="loginForm.invalid"
+            mat-raised-button
+            type="submit"
+          >
+            Login
+          </button>
         </mat-grid-tile>
         <mat-grid-tile>
-          <button color="primary" mat-raised-button type="button" (click)="onForget()">
-            Forget your password ?</button>
+          <button
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="onForget()"
+          >
+            Forget your password ?
+          </button>
         </mat-grid-tile>
       </mat-grid-list>
     </form>
+  </mat-grid-tile>
 
-  </mat-grid-tile>
-  <!-- DISABLE ON MOBILE -->
-  <mat-grid-tile *ngIf="!(isMobile | async)" class="fig">
-  </mat-grid-tile>
-</mat-grid-list>
+  <mat-grid-tile *ngIf="!(isMobile | async)" class="fig"> </mat-grid-tile>
+</mat-grid-list> -->
+
+<div fxLayout="row" class="main">
+  <div fxFlex="66" fxLayout="column" fxLayoutAlign="center center">
+    <div
+      fxFlex="66"
+      fxLayout="row"
+      fxLayoutGap="3rem"
+      fxLayoutAlign="center start"
+    >
+      <mat-card fxFlex>
+        <mat-card-content fxLayout="row" fxLayoutGap="1rem">
+          <form
+            fxLayout="column"
+            fxLayoutGap="1rem"
+            [formGroup]="loginForm"
+            (ngSubmit)="onSubmit()"
+            fxLayoutAlign="center center"
+          >
+            <!-- user name -->
+            <div
+              class="input-wrapper"
+              fxLayoutAlign="center center"
+              fxLayout="row"
+            >
+              <mat-form-field appearance="fill" fxFlex="60">
+                <mat-label>Email</mat-label>
+                <input autocomplete="off" formControlName="email" matInput />
+                <mat-hint>enter a valid email format : dom@gmail.com</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div
+              class="input-wrapper"
+              fxLayoutAlign="center center"
+              fxLayout="row"
+            >
+              <mat-form-field appearance="fill" fxFlex="60">
+                <mat-label>Password</mat-label>
+                <input autocomplete="off" formControlName="password" matInput />
+                <mat-hint>enter your password</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="column" fxLayoutGap="1rem">
+              <button
+                class="login"
+                [disabled]="loginForm.invalid"
+                mat-raised-button
+                type="submit"
+              >
+                Login
+              </button>
+              <button
+                color="primary"
+                mat-raised-button
+                type="button"
+                (click)="onForget()"
+              >
+                Forget your password ?
+              </button>
+            </div>
+          </form>
+
+          <mat-divider [vertical]="true"></mat-divider>
+
+          <div fxFlex>
+            <button
+              color="primary"
+              mat-raised-button
+              type="button"
+              (click)="loginGoogle()"
+            >
+              Continue with Google
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div fxFlex class="fig"></div>
+</div>

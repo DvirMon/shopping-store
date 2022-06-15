@@ -26,15 +26,13 @@ export class GoogleService {
     private socialAuthService: SocialAuthService,
     private reCaptchaV3Service: ReCaptchaV3Service,
 
-    private formService: FormService,
-
     private store: Store<{ auth: AuthState }>
   ) { }
 
 
   public authStatus() {
-    this.socialAuthService.authState.subscribe((socielUser: SocialUser) => {
-      this.store.dispatch(new AuthActions.AddSocielUser(socielUser))
+    this.socialAuthService.authState.subscribe((socialUser: SocialUser) => {
+      this.store.dispatch(new AuthActions.AddSocialUser(socialUser))
     });
   }
 
