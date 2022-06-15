@@ -11,15 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { OrderModel } from '../order/components/order-form/order-model';
-import { ProductModel } from '../products/product-model';
-import { CartModel } from '../cart/components/cart-list/cart.model';
-import { User } from '../utilities/models/user.model';
-import {
-  CartItemModel,
-  CurrentItemModel,
-} from '../cart/components/cart-list-item/cart-item-model';
 import { PaginationModel } from '../utilities/models/pagination-model';
+import { CartItemModel, CurrentItemModel } from '../feat-modules/cart/components/cart-list-item/cart-item-model';
+import { CartModel } from '../feat-modules/cart/components/cart-list/cart.model';
+import { OrderModel } from '../feat-modules/order/components/order-form/order-model';
+import { ProductModel } from '../feat-modules/products/product-model';
 
 @NgModule({
   declarations: [],

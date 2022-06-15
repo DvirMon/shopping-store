@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { ProductsService } from 'src/app/products/products.service';
-
-import { ProductModel } from 'src/app/products/product-model';
+import { ProductModel } from 'src/app/feat-modules/products/product-model';
+import { ProductsService } from 'src/app/feat-modules/products/products.service';
 
 import { environment } from 'src/environments/environment';
 

@@ -1,4 +1,4 @@
-import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
+import { CartModel } from "src/app/feat-modules/cart/components/cart-list/cart.model"
 
 export class CartState {
 

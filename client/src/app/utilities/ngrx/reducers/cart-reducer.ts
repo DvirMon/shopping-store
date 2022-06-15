@@ -1,8 +1,8 @@
 import { CartState } from "../state/cart-state";
 import { CartActions } from "../actions/cart-action";
 import { CartActionType } from "../action-type";
+import { CartModel } from "src/app/feat-modules/cart/components/cart-list/cart.model";
 
-import { CartModel } from "../../../cart/components/cart-list/cart.model";
 
 export function cartReducer(oldState = new CartState(), action: CartActions) {
 

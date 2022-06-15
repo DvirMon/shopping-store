@@ -5,10 +5,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { OrderHistoryModel } from '../order/components/order-form/order-model';
-import { ProductModel } from '../products/product-model';
-import { OrderService } from '../order/order.service';
-import { ProductsService } from '../products/products.service';
+import { OrderHistoryModel } from '../feat-modules/order/components/order-form/order-model';
 
 @Injectable({
   providedIn: 'root'

@@ -5,19 +5,19 @@ import { UntypedFormControl, NgModel, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { CartItemModel, CurrentItemModel } from 'src/app/cart/components/cart-list-item/cart-item-model';
-import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
-import { ProductModel } from 'src/app/products/product-model';
 import { DialogData } from 'src/app/services/dialog.service';
 
-import { CartItemService } from 'src/app/cart/components/cart-list-item/cart-item.service';
 import { FormService } from 'src/app/services/form.service';
-import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 
 import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { store } from 'src/app/utilities/redux/store';
-import { AuthService } from 'src/app/auth/auth.service';
+
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
+import { CartItemModel, CurrentItemModel } from 'src/app/feat-modules/cart/components/cart-list-item/cart-item-model';
+import { CartItemService } from 'src/app/feat-modules/cart/components/cart-list-item/cart-item.service';
+import { CartModel } from 'src/app/feat-modules/cart/components/cart-list/cart.model';
+import { CartService } from 'src/app/feat-modules/cart/components/cart-list/cart.service';
+import { ProductModel } from 'src/app/feat-modules/products/product-model';
 
 export interface imageParams {
   cols: number,

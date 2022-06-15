@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
 
-import { AuthService } from 'src/app/auth/auth.service';
 import { TokenService } from '../../services/token.service';
 import { DialogService } from '../../services/dialog.service';
 
-import { ResetModel } from 'src/app/auth/components/reset/reset.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
+import { ResetModel } from 'src/app/feat-modules/auth/components/reset/reset.service';
 
 @Injectable({
   providedIn: 'root'

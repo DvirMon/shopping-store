@@ -5,10 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DialogComponent } from 'src/app/share-components/components/dialog/dialog.component';
 import { ProductsDialogComponent } from 'src/app/share-components/components/products-dialog/products-dialog.component';
 
-import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
-import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
-
-import { ProductModel } from '../products/product-model';
+import { AuthDialogComponent } from '../feat-modules/auth/components/auth-dialog/auth-dialog.component';
+import { OrderDialogComponent } from '../feat-modules/order/components/order-dialog/order-dialog.component';
+import { ProductModel } from '../feat-modules/products/product-model';
 
 
 export interface DialogData {

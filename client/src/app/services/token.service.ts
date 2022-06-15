@@ -4,9 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 // SERVICES
-import { AuthData } from '../auth/auth.service';
 
-
+import { AuthData } from '../feat-modules/auth/auth.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthState } from '../utilities/ngrx/state/auth-state';

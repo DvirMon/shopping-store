@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductsService } from 'src/app/products/products.service';
+import { ProductsService } from 'src/app/feat-modules/products/products.service';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 
 @Component({

@@ -1,7 +1,5 @@
 import { Directive, HostBinding } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
-import { store } from '../redux/store';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 
 @Directive({
   selector: '[appBarBackgroundColor]'
@@ -11,10 +9,10 @@ export class BarBackgroundColorDirective {
   @HostBinding("style.backgroundColor") public backgroundColor: string;
   @HostBinding("style.color") public color: string;
 
-  public isAdmin: boolean = this.authServcie.auth.user.isAdmin
+  public isAdmin: boolean = this.authService.auth.user.isAdmin
 
   constructor(
-    private authServcie : AuthService
+    private authService : AuthService
   ) {
     if (this.isAdmin) {
       this.backgroundColor = "#f44336"

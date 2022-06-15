@@ -1,4 +1,4 @@
-import { OrderHistoryModel, OrderModel } from "../../../order/components/order-form/order-model";
+import { OrderHistoryModel, OrderModel } from "src/app/feat-modules/order/components/order-form/order-model"
 
 export class OrderState {
 

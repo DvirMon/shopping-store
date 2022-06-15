@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/utilities/models/user.model';
-import { AuthService } from 'src/app/auth/auth.service';
 import { UntypedFormGroup } from '@angular/forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 
 @Component({
   selector: 'app-address',
