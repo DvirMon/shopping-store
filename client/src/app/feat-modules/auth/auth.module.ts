@@ -10,7 +10,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 // IMPORT COMPONENTS
 
 import { RootComponent } from './components/root/root.component';
-import { AuthBarComponent } from './components/auth-bar/auth-bar.component';
+import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -26,7 +26,7 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
 
 @NgModule({
   declarations: [
-    AuthBarComponent,
+    AuthLayoutComponent,
 
     LoginComponent,
     RegisterComponent,
@@ -36,6 +36,7 @@ import { ResetNewPasswordComponent } from './components/reset-new-password/reset
     ResetNewPasswordComponent,
 
     AuthDialogComponent,
+    
     ResetComponent,
     RootComponent,
     ResetMethodComponent,

@@ -12,7 +12,7 @@ export class Login implements Action {
 }
 
 
-export class AddSocielUser implements Action {
+export class AddSocialUser implements Action {
 
   public type = AuthActionType.ADD_SOCIEL_USER
 
@@ -47,7 +47,7 @@ export class Logout implements Action {
 
 export type AuthActions =
   | Login
-  | AddSocielUser
+  | AddSocialUser
   | AddAccessToken
   | AddRefreshToken
   | Logout

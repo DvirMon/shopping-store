@@ -1,9 +1,17 @@
 <mat-form-field class="full-width" appearance="fill">
-
-  <mat-label>{{placeHolder | titlecase}}</mat-label>
-  <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
-    (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" required #input>
-
+  <mat-label>{{ placeHolder | titlecase }}</mat-label>
+  <input
+    matInput
+    [type]="type"
+    [disabled]="disabled"
+    control="control"
+    autocomplete="off"
+    (input)="handleChange($event.target.value)"
+    [name]="type"
+    (focusout)="validate()"
+    required
+    #input
+  />
 
   <!-- price icons -->
   <ng-container *ngIf="placeHolder === 'Price'">
@@ -11,31 +19,38 @@
     <span *ngIf="placeHolder === 'Price'" matSuffix>.00</span>
   </ng-container>
 
-
   <!-- shred input hint -->
-  <mat-hint *ngIf="control.invalid && !customHint">{{'Please enter '+ hint}}</mat-hint>
-  <mat-hint *ngIf="control.invalid && customHint">{{customHint}}</mat-hint>
-
+  <mat-hint *ngIf="control.invalid && !customHint">{{
+    "Please enter " + hint
+  }}</mat-hint>
+  <mat-hint *ngIf="control.invalid && customHint">{{ customHint }}</mat-hint>
 
   <!-- verifying in database hint -->
   <mat-hint *ngIf="control.pending">verifying in database...</mat-hint>
 
-
   <!-- INPUT FOR ADDRESS -->
-  <mat-hint *ngIf="addressHint">Double click on the icon for auto complete</mat-hint>
+  <mat-hint *ngIf="addressHint"
+    >Double click on the icon for auto complete</mat-hint
+  >
 
   <mat-hint *ngIf="control.valid" class="success">Good job!</mat-hint>
 
   <!-- shred input error -->
-  <mat-error *ngIf=control.errors>{{error}}</mat-error>
+  <mat-error *ngIf="control.errors">{{ error }}</mat-error>
   <!-- <mat-error *ngIf="control.errors?.required">{{placeHolder | lowercase}} is required</mat-error> -->
 
   <!-- costume input error -->
-  <mat-error *ngIf="control.errors?.serverError && serverErrorMode">{{serverError}}</mat-error>
-  <mat-error *ngIf=control.errors?.unique>This {{placeHolder.toLocaleLowerCase()}} is already in use</mat-error>
-  <mat-error *ngIf=control.errors?.exist>No account with that address exist</mat-error>
+  <mat-error *ngIf="control.errors?.serverError && serverErrorMode">{{
+    serverError
+  }}</mat-error>
+  <mat-error *ngIf="control.errors?.unique"
+    >This {{ placeHolder.toLocaleLowerCase() }} is already in use</mat-error
+  >
+  <mat-error *ngIf="control.errors?.exist"
+    >No account with that address exist</mat-error
+  >
   <!-- <mat-error *ngIf=control.errors?.mustMatch>Passwords are not match</mat-error> -->
-  <mat-error *ngIf=control.errors?.creditCard>We only get AMEX, JBC Mastercard and VISA</mat-error>
-
+  <mat-error *ngIf="control.errors?.creditCard"
+    >We only get AMEX, JBC Mastercard and VISA</mat-error
+  >
 </mat-form-field>
-

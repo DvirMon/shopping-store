@@ -45,7 +45,7 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     private authService: AuthService,
-    private messageServcie: MessageService
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -113,7 +113,7 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
 
   // function to generate password
   public generatePassword() {
-    this.password = this.messageServcie.generate()
+    this.password = this.messageService.generate()
   }
 
   // function to update password to the control
@@ -124,11 +124,11 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
   // function to handle validation messages
   public validate() {
 
-    this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+    this.error = this.messageService.getErrorMessage(this.control, this.placeHolder)
 
     this.control.valueChanges.subscribe(
       () => {
-        this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.messageService.getErrorMessage(this.control, this.placeHolder)
       }
     )
   }

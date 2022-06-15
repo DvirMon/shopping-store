@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@an
 
 
 import { MatInput } from '@angular/material/input';
-import { AuthService } from 'src/app/feat-modules/auth/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
 
@@ -23,75 +22,74 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild(MatInput) input: HTMLInputElement;
 
-  @Input() public control: UntypedFormControl;
+  @Input()  control: UntypedFormControl;
 
-  @Input() public type: string;
-  @Input() public hint: string;
-  @Input() public controlName: string;
-  @Input() public placeHolder: string;
-  @Input() public customHint: string;
+  @Input()  type: string;
+  @Input()  hint: string;
+  @Input()  controlName: string;
+  @Input()  placeHolder: string;
+  @Input()  customHint: string;
 
-  @Input() public serverErrorMode: boolean;
-  @Input() public loginHint: boolean;
-  @Input() public addressHint: boolean;
-  @Input() public pendingHint: boolean;
+  @Input()  serverErrorMode: boolean;
+  @Input()  loginHint: boolean;
+  @Input()  addressHint: boolean;
+  @Input()  pendingHint: boolean;
 
-  public value: any
-  public error: string
-  public serverError: string
-  public password: string
+   value: any
+   error: string
+   serverError: string
+   password: string
 
   onChange: (event) => void
   onTouched: () => void
   disabled: boolean
 
   constructor(
-    private authService: AuthService,
-    private messageServcie: MessageService
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
 
-    this.subscribeToSubject();
+    // this.subscribeToSubject();
     this.subscribeToControl();
   }
 
   // ControlValueAccessor logic
 
-  public writeValue(value: any): void {
+   writeValue(value: any): void {
     this.value = value ? value : ""
   }
 
-  public registerOnChange(fn: any): void {
+   registerOnChange(fn: any): void {
     this.onChange = fn
   }
 
-  public registerOnTouched(fn: any): void {
+   registerOnTouched(fn: any): void {
     this.onTouched = fn
   }
 
-  public setDisabledState?(isDisabled: boolean): void {
+   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled
   }
 
-  public handleChange(value: any) {
+   handleChange(value: any) {
     this.value = value
 
   }
 
   // subscription section
 
-  private subscribeToSubject() {
-    this.authService.serverError.subscribe(
-      (error) => {
-        this.serverError = error
-        if (this.serverError) {
-          this.control.setErrors({ serverError: true });
-          this.input.focus()
-        }
-      }
-    )
-  }
+  // private subscribeToSubject() {
+  //   this.authService.serverError.subscribe(
+  //     (error) => {
+  //       this.serverError = error
+  //       if (this.serverError) {
+  //         this.control.setErrors({ serverError: true });
+  //         this.input.focus()
+  //       }
+  //     }
+  //   )
+  // }
 
   private subscribeToControl() {
     this.control.statusChanges.subscribe(
@@ -108,13 +106,13 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   // LOGIC SECTION
 
   // method to handle validation messages
-  public validate() {
+   validate() {
 
-    this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+    this.error = this.messageService.getErrorMessage(this.control, this.placeHolder)
 
     this.control.valueChanges.subscribe(
       () => {
-        this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.messageService.getErrorMessage(this.control, this.placeHolder)
       }
     )
   }
