@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { FormService } from 'src/app/services/form.service';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.autoLogin() 
+    this.authService.autoLogin()
   }
 
 }

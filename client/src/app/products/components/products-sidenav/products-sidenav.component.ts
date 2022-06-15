@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 
 import { FormService } from 'src/app/services/form.service';
@@ -16,8 +16,8 @@ import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons/faDrumstickBi
 import { faCandyCane } from "@fortawesome/free-solid-svg-icons/faCandyCane"
 import { faWineBottle } from "@fortawesome/free-solid-svg-icons/faWineBottle"
 
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ProductsService } from 'src/app/products/products.service';
 import { Observable } from 'rxjs';
 import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 
@@ -31,7 +31,7 @@ export class ProductsSidenavComponent {
   @Input() public drawerProduct: MatSidenav
   @Input() public isExpanded: boolean;
 
-  private user: UserModel
+  private user: User
   public isLogin: boolean
 
   public categories$: Observable<CategoryModel[]>

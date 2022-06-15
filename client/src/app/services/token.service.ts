@@ -4,18 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 // SERVICES
-import { FormService } from './form.service';
-import { AuthData, AuthService } from './auth.service';
+import { AuthData } from '../auth/auth.service';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 
-import { Store } from '@ngrx/store';
 import { AuthState } from '../utilities/ngrx/state/auth-state';
+import { User } from '../utilities/models/user.model';
+
+import { Store } from '@ngrx/store';
 import * as AuthActions from '../utilities/ngrx/actions/auth-actions'
-import { UserModel } from '../utilities/models/user.model';
+
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,7 @@ export class TokenService {
   }
 
   // POST request - http://localhost:3000/api/token
-  public getRefreshTokenWhenExpired(user: UserModel) {
+  public getRefreshTokenWhenExpired(user: User) {
     return this.http.post<AuthData>(this.url, user).pipe(
       tap(({ token }: AuthData) => {
         this.store.dispatch(new AuthActions.AddRefreshToken(token))

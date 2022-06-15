@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderSearchComponent } from '../order-search/order-search.component';
 
-import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
+import { OrderHistoryModel } from 'src/app/order/components/order-form/order-model';
 
 import { FormService } from 'src/app/services/form.service';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/order/order.service';
 import { SearchService } from 'src/app/services/search.service';
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
 @Component({
   selector: 'app-orders-history',

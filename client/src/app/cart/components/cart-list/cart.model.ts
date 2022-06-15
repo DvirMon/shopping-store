@@ -1,5 +1,5 @@
-import { CartItemModel, CurrentItemModel } from './cart-item-model'
-import { ProductModel } from './product-model';
+import { CartItemModel, CurrentItemModel } from '../cart-list-item/cart-item-model'
+import { ProductModel } from '../../../products/product-model';
 
 export class CartModel {
 

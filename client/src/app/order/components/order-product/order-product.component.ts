@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
-import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
-import { ProductModel } from 'src/app/utilities/models/product-model';
+import { CurrentItemModel } from 'src/app/cart/components/cart-list-item/cart-item-model';
+import { ProductModel } from 'src/app/products/product-model';
 
 @Component({
   selector: 'app-order-product',

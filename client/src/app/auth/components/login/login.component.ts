@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { FormGroup, UntypedFormGroup } from '@angular/forms';
 
 import { FormService, LoginForm } from 'src/app/services/form.service';
-import { AuthService, Login } from 'src/app/services/auth.service';
+import { AuthService, Login } from 'src/app/auth/auth.service';
 
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
 import { Observable } from 'rxjs';
 import { GoogleService } from 'src/app/services/google.service';
@@ -17,22 +17,21 @@ import { DialogService } from 'src/app/services/dialog.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup<LoginForm>;
+  loginForm: FormGroup<LoginForm>;
 
-  public isLogin: boolean = this.authService.auth.isLogin;
-  public serverError: string;
+  isLogin: boolean = this.authService.auth.isLogin;
+  serverError: string;
 
-  public isMobile: Observable<boolean> = this.formService.isMobile();
+  isMobile: Observable<boolean> = this.formService.isMobile();
+
+  user: User;
 
   constructor(
     private router: Router,
-
     private formService: FormService,
     private authService: AuthService,
     private googleService: GoogleService,
-    private dialogService: DialogService,
-
-    public user: UserModel
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -42,26 +41,26 @@ export class LoginComponent implements OnInit {
 
   // FORM SECTION
 
-  public createForm(): void {
+  createForm(): void {
     this.loginForm = this.formService.loginForm();
   }
 
   // HTTP SECTION
 
   // login
-  public onSubmit(): void {
+  onSubmit(): void {
     const value = this.loginForm.value as Login;
 
     this.authService.login(value).subscribe(
-      (user: UserModel) => this.authService.handleRoleRoute(),
+      (user: User) => this.authService.handleRoleRoute(),
       (err) => this.authService.serverError.next(err.error)
     );
   }
 
   // login with google
-  public loginGoogle() {
+  loginGoogle() {
     this.authService.loginGoogle().subscribe(
-      (user: UserModel) => this.authService.handleRoleRoute(),
+      (user: User) => this.authService.handleRoleRoute(),
       (err) => this.dialogService.handleErrorDialog(err)
     );
   }
@@ -69,12 +68,12 @@ export class LoginComponent implements OnInit {
   // NAVIGATE SECTION
 
   // navigate to register page
-  public onRegister(): Promise<boolean> {
+  onRegister(): Promise<boolean> {
     return this.router.navigateByUrl(`/register`);
   }
 
   // navigate to restart password
-  public onForget(): Promise<boolean> {
+  onForget(): Promise<boolean> {
     return this.router.navigateByUrl(`/auth/reset`);
   }
 }

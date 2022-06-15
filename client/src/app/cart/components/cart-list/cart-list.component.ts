@@ -5,9 +5,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 
-import { CartModel } from 'src/app/utilities/models/cart.model';
+import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
 
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 
 
@@ -16,7 +16,7 @@ import { CartState } from 'src/app/utilities/ngrx/state/cart-state';
 
 import { environment } from 'src/environments/environment'
 import { FormService } from 'src/app/services/form.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-cart-list',

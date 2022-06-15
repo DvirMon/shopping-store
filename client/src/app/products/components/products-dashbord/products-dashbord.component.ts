@@ -4,13 +4,13 @@ import { ActivatedRoute, Data, Params } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { ProductModel } from 'src/app/utilities/models/product-model';
+import { ProductModel } from 'src/app/products/product-model';
 import { CategoryModel } from 'src/app/utilities/models/category-model';
 import { PaginationModel, PageModel } from 'src/app/utilities/models/pagination-model';
 
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/products/products.service';
 import { PaginationService } from 'src/app/services/pagination.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 import { Observable, Subscription } from 'rxjs';

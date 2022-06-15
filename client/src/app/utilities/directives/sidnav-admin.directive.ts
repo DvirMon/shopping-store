@@ -3,7 +3,7 @@ import { store } from '../redux/store';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Directive({
   selector: '[appSidenavAdminDirective]'

@@ -1,7 +1,7 @@
 import { ProductsAppState } from '../app-state/products-state';
 import { ActionType } from '../action-type';
 import { Action } from '../action';
-import { ProductModel } from '../../models/product-model';
+import { ProductModel } from '../../../products/product-model';
 
 export const productsReducer = (oldAppState = new ProductsAppState(), action: Action): ProductsAppState => {
 

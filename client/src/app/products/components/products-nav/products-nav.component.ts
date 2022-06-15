@@ -3,10 +3,10 @@ import { Observable } from 'rxjs';
 
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CurrentItemModel } from 'src/app/cart/components/cart-list-item/cart-item-model';
 
-import { ProductsService } from 'src/app/services/products.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { ProductsService } from 'src/app/products/products.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { store } from 'src/app/utilities/redux/store';
 

@@ -3,9 +3,9 @@ import { UntypedFormGroup } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { FormService } from 'src/app/services/form.service';
-import { ResetService } from 'src/app/services/reset.service';
+import { ResetService } from 'src/app/auth/components/reset/reset.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 

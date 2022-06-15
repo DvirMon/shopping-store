@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { StripeCardComponent, StripeService } from 'ngx-stripe';
 
 // MODELS
-import { OrderHistoryModel, OrderModel } from '../utilities/models/order-model';
+import { OrderHistoryModel, OrderModel } from './components/order-form/order-model';
 
 // SERVICES
-import { CartService } from './cart.service';
-import { DialogService } from './dialog.service';
-import { ReceiptService } from './receipt.service';
-import { AuthService } from './auth.service';
+import { CartService } from '../cart/components/cart-list/cart.service';
+import { DialogService } from '../services/dialog.service';
+import { ReceiptService } from '../services/receipt.service';
+import { AuthService } from '../auth/auth.service';
 
 // RXJS
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -24,8 +24,8 @@ import * as  OrderActions from '../utilities/ngrx/actions/order-action';
 
 // ENVIROMENT
 import { environment } from 'src/environments/environment';
-import { UserModel } from '../utilities/models/user.model';
-import { SearchService } from './search.service';
+import { User } from '../utilities/models/user.model';
+import { SearchService } from '../services/search.service';
 import { UntypedFormControl } from '@angular/forms';
 
 @Injectable({
@@ -43,7 +43,7 @@ export class OrderService {
   private ordersSearchEntries = new BehaviorSubject<OrderHistoryModel[]>([]);
   public orderEntries$: Observable<OrderHistoryModel[]> = this.ordersSearchEntries.asObservable()
 
-  private user: UserModel = this.authService.auth.user
+  private user: User = this.authService.auth.user
 
   constructor(
     private http: HttpClient,

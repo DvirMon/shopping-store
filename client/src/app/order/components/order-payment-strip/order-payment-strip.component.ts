@@ -5,7 +5,7 @@ import { FormService } from 'src/app/services/form.service';
 
 import { StripeCardComponent, StripeService } from 'ngx-stripe';
 import { StripeElementsOptions } from '@stripe/stripe-js'
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/order/order.service';
 
 
 @Component({
@@ -56,7 +56,7 @@ export class OrderPaymentStripComponent implements OnInit {
   public createToken() {
 
     const name = this.stripeTest.get('name').value;
- 
+
 
     this.orderService.createToken(this.stripeService, name, this.card)
   }

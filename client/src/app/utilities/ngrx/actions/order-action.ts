@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { OrderHistoryModel } from "../../models/order-model";
+import { OrderHistoryModel } from "../../../order/components/order-form/order-model";
 import { OrderActionType } from "../action-type";
 
 export class AddOrder implements Action {

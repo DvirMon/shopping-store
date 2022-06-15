@@ -4,11 +4,11 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { TokenService } from '../../services/token.service';
 import { DialogService } from '../../services/dialog.service';
 
-import { ResetModel } from 'src/app/services/reset.service';
+import { ResetModel } from 'src/app/auth/components/reset/reset.service';
 
 @Injectable({
   providedIn: 'root'

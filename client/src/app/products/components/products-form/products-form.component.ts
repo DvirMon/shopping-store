@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { ProductModel } from 'src/app/utilities/models/product-model';
+import { ProductModel } from 'src/app/products/product-model';
 
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/products/products.service';
 import { FormService } from 'src/app/services/form.service';
 
 import { store } from 'src/app/utilities/redux/store';

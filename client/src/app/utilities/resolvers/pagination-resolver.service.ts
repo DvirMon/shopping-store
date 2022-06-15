@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../products/products.service';
 import { PageModel } from '../models/pagination-model';
 
 import { store } from '../redux/store';

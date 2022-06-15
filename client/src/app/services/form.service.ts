@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormControl, UntypedFormGroup, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
-import { ProductModel } from '../utilities/models/product-model';
+import { ProductModel } from '../products/product-model';
 
 import { ValidationService } from './validation.service';
 

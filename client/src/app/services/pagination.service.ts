@@ -3,7 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { PaginationModel } from '../utilities/models/pagination-model';
-import { ProductModel } from '../utilities/models/product-model';
+import { ProductModel } from '../products/product-model';
 
 import { FormService } from './form.service';
 
@@ -11,7 +11,7 @@ import { ActionType } from '../utilities/redux/action-type';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProductsState } from '../utilities/ngrx/state/products-state';
-import { ProductsService } from './products.service';
+import { ProductsService } from '../products/products.service';
 
 @Injectable({
   providedIn: 'root'

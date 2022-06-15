@@ -8,7 +8,7 @@ import { ProductsDialogComponent } from 'src/app/share-components/components/pro
 import { OrderDialogComponent } from 'src/app/order/components/order-dialog/order-dialog.component';
 import { AuthDialogComponent } from 'src/app/auth/components/auth-dialog/auth-dialog.component';
 
-import { ProductModel } from '../utilities/models/product-model';
+import { ProductModel } from '../products/product-model';
 
 
 export interface DialogData {

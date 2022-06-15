@@ -1,4 +1,4 @@
-import { ProductModel } from "./product-model";
+import { ProductModel } from "../../../products/product-model";
 
 export class CartItemModel {
 
@@ -9,8 +9,8 @@ export class CartItemModel {
     public cartId?: string,
   ) { }
 
-  static create(curentItem: CurrentItemModel): CartItemModel {
-    return new CartItemModel(curentItem._id, curentItem.productRef._id, curentItem.quantity, curentItem.cartId)
+  static create(currentItem: CurrentItemModel): CartItemModel {
+    return new CartItemModel(currentItem._id, currentItem.productRef._id, currentItem.quantity, currentItem.cartId)
   }
 }
 
@@ -20,7 +20,7 @@ export class CurrentItemModel {
     public productRef?: ProductModel,
     public quantity?: number,
     public cartId?: string,
-  ) { } 
+  ) { }
 
   static create(product: ProductModel, quantity: number, cartId: string): CurrentItemModel {
     return new CurrentItemModel(null, product, quantity, cartId)

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResetModel, ResetService } from 'src/app/services/reset.service';
+import { ResetModel, ResetService } from 'src/app/auth/components/reset/reset.service';
 
 @Component({
   selector: 'app-reset-confirm',

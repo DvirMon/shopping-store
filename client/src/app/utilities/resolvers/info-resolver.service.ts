@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 import { store } from '../redux/store';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class InfoResolver implements Resolve<any> {
   constructor(
     private cartService : CartService
   ) {
- 
+
   }
 
   resolve(

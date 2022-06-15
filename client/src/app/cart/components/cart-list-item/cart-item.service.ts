@@ -6,14 +6,14 @@ import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 // MODELS
-import { ProductModel } from '../utilities/models/product-model';
-import { CartItemModel, CurrentItemModel } from '../utilities/models/cart-item-model';
-import { CartModel } from '../utilities/models/cart.model';
+import { ProductModel } from '../../../products/product-model';
+import { CartItemModel, CurrentItemModel } from './cart-item-model';
+import { CartModel } from '../cart-list/cart.model';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { CartState } from '../utilities/ngrx/state/cart-state';
-import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+import { CartState } from '../../../utilities/ngrx/state/cart-state';
+import * as  CartActions from "../../../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
 

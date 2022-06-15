@@ -1,4 +1,4 @@
-import { CurrentItemModel } from "./cart-item-model";
+import { CurrentItemModel } from "../../../cart/components/cart-list-item/cart-item-model";
 
 export class OrderModel {
 
@@ -22,7 +22,7 @@ export class OrderHistoryModel {
     public _id?: string,
     public cartRef?: string,
     public totalPrice?: number,
-    public user?: { fullName: string },
+    public user?: { fillName: string },
     public shippingDate?: Date | string,
     public orderDate?: Date | string,
     public items?: CurrentItemModel[]

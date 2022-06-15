@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormService } from 'src/app/services/form.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -40,9 +40,9 @@ export class RegisterComponent {
   // request section
 
   public onSubmit() {
-    const user: UserModel = { ...this.registerForm.value }
+    const user: User = { ...this.registerForm.value }
     this.authService.register(user).subscribe(
-      (user: UserModel) => this.router.navigateByUrl(`/home`)
+      (user: User) => this.router.navigateByUrl(`/home`)
     )
   }
   // end of request section

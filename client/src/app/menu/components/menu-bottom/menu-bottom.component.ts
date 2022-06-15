@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { CartService } from 'src/app/services/cart.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 
-import { CartModel } from 'src/app/utilities/models/cart.model';
+import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
 import { PathModel } from '../menu-top/menu-top.component';
 
 @Component({

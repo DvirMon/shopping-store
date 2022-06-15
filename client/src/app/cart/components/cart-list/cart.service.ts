@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CartModel } from '../utilities/models/cart.model';
+import { CartModel } from './cart.model';
 
-import { CartItemService } from './cart-item.service';
+import { CartItemService } from '../cart-list-item/cart-item.service';
 
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { cartSelector } from '../utilities/ngrx/selectors';
-import { CartState } from '../utilities/ngrx/state/cart-state';
-import * as  CartActions from "../utilities/ngrx/actions/cart-action";
+import { cartSelector } from '../../../utilities/ngrx/selectors';
+import { CartState } from '../../../utilities/ngrx/state/cart-state';
+import * as  CartActions from "../../../utilities/ngrx/actions/cart-action";
 
 import { environment } from 'src/environments/environment';
 

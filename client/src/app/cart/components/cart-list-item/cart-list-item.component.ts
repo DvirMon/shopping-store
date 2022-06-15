@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
+import { CurrentItemModel } from 'src/app/cart/components/cart-list-item/cart-item-model';
 
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/products/products.service';
 import { ReceiptService } from 'src/app/services/receipt.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { CartItemService } from 'src/app/services/cart-item.service';
+import { CartItemService } from 'src/app/cart/components/cart-list-item/cart-item.service';
 
 @Component({
   selector: 'app-cart-list-item',

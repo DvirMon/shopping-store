@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/products/products.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 

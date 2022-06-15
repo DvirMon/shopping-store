@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
 import { ReceiptService } from 'src/app/services/receipt.service';
 
 import { store } from 'src/app/utilities/redux/store';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-order-dialog',

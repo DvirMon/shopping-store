@@ -2,10 +2,10 @@ import { Component,  Input,  OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 
-import { CartModel } from 'src/app/utilities/models/cart.model';
-import { ProductModel } from 'src/app/utilities/models/product-model';
+import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
+import { ProductModel } from 'src/app/products/product-model';
 
 
 @Component({

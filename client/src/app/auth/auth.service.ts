@@ -4,17 +4,17 @@ import { Router } from '@angular/router';
 import { SocialUser } from 'angularx-social-login';
 
 // SERVICES
-import { GoogleService } from './google.service';
-import { TokenService } from './token.service';
+import { GoogleService } from '../services/google.service';
+import { TokenService } from '../services/token.service';
 
 // MODELS
-import { UserModel } from '../utilities/models/user.model';
+import { User } from '../utilities/models/user.model';
 
 import { Subject, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
-import { CartModel } from '../utilities/models/cart.model';
+import { CartModel } from '../cart/components/cart-list/cart.model';
 
 // NGRX
 import { Store } from '@ngrx/store';
@@ -34,7 +34,7 @@ export interface Login {
 }
 
 export interface AuthData {
-  user: UserModel
+  user: User
   token: string
 }
 
@@ -45,7 +45,7 @@ export class AuthService {
 
   // NGRX
   public auth$: Observable<AuthState> = this.store.select('auth')
-  private user$: Observable<UserModel> = this.store.select(userSelector)
+  private user$: Observable<User> = this.store.select(userSelector)
   public auth: AuthState
 
   // SUBJECTS
@@ -84,12 +84,12 @@ export class AuthService {
 
 
   // POST request - http://localhost:3000/api/auth/login
-  public login(payload: Login): Observable<UserModel> {
+  public login(payload: Login): Observable<User> {
     return this.handleUser("/login", payload)
   }
 
   // POST request - http://localhost:3000/api/auth/login/google
-  public loginGoogle(): Observable<UserModel> {
+  public loginGoogle(): Observable<User> {
     return this.googleService.loginGoogle().pipe(
       switchMap((socialUser: SocialUser) => {
         return this.handleUser("/login/google", socialUser)
@@ -98,14 +98,14 @@ export class AuthService {
   }
 
   // POST request - http://localhost:3000/api/auth/register
-  public register(registerInfo: UserModel): Observable<UserModel> {
+  public register(registerInfo: User): Observable<User> {
     return this.handleUser("/register", registerInfo)
   }
 
   // LOGIC SECTION
 
   // generic method to user login/register
-  private handleUser(path: string, data: any): Observable<UserModel | null> {
+  private handleUser(path: string, data: any): Observable<User | null> {
 
     //  handle recaptcha
     return this.googleService.getReCaptcha('login')
@@ -132,7 +132,7 @@ export class AuthService {
   }
 
   // method to set refresh token and user in store
-  private getRefreshToken(): Observable<UserModel> {
+  private getRefreshToken(): Observable<User> {
     return this.tokenService.getRefreshToken()
       .pipe(
         map((auth: AuthData) => {
@@ -141,7 +141,7 @@ export class AuthService {
   }
 
   // set user data in store
-  private handleUserData(auth: AuthData): UserModel {
+  private handleUserData(auth: AuthData): User {
     this.store.dispatch(new AuthActions.AddRefreshToken(auth.token));
     this.store.dispatch(new AuthActions.Login(auth));
     sessionStorage.setItem("user", JSON.stringify(auth.user));

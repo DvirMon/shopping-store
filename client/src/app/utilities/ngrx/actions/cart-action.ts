@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
-import { CurrentItemModel } from "../../models/cart-item-model";
-import { CartModel } from "../../models/cart.model";
+import { CurrentItemModel } from "../../../cart/components/cart-list-item/cart-item-model";
+import { CartModel } from "../../../cart/components/cart-list/cart.model";
 import { CartActionType } from "../action-type";
 
 export class AddCart implements Action {

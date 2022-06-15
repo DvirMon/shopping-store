@@ -3,9 +3,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { UntypedFormControl } from '@angular/forms';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { SearchService } from 'src/app/services/search.service';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/order/order.service';
 import { Subscription } from 'rxjs';
 
 @Component({

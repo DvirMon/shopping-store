@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderHistoryModel } from 'src/app/utilities/models/order-model';
+import { OrderHistoryModel } from 'src/app/order/components/order-form/order-model';
 
 @Component({
   selector: 'app-order-item',

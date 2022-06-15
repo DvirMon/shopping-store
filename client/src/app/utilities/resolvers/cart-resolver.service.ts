@@ -5,14 +5,14 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
 
-import { CartModel } from '../models/cart.model';
-import { UserModel } from '../models/user.model';
-import { CartItemModel } from '../models/cart-item-model';
+import { CartModel } from '../../cart/components/cart-list/cart.model';
+import { User } from '../models/user.model';
+import { CartItemModel } from '../../cart/components/cart-list-item/cart-item-model';
 
-import { CartItemService } from 'src/app/services/cart-item.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { CartItemService } from 'src/app/cart/components/cart-list-item/cart-item.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { CartState } from '../ngrx/state/cart-state';
 import * as CartActions from '../ngrx/actions/cart-action'
 
@@ -21,7 +21,7 @@ import * as CartActions from '../ngrx/actions/cart-action'
 })
 export class CartResolver implements Resolve<any> {
 
-  private user: UserModel
+  private user: User
   private isLogin: boolean
   private sessionCart: CartModel
 

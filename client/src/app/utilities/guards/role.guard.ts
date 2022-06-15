@@ -4,7 +4,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { TokenService } from '../../services/token.service';
 import { tap } from 'rxjs/operators';
 import { store } from '../redux/store';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Injectable({

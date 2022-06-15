@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { PageModel } from '../utilities/models/pagination-model';
 
-import { ProductModel } from '../utilities/models/product-model';
+import { ProductModel } from './product-model';
 import { CategoryModel } from '../utilities/models/category-model';
-import { FormService } from './form.service';
+import { FormService } from '../services/form.service';
 
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { store } from '../utilities/redux/store';
 import { ActionType } from 'src/app/utilities/redux/action-type';
 
 import { environment } from 'src/environments/environment';
-import { SearchService } from './search.service';
+import { SearchService } from '../services/search.service';
 import { UntypedFormControl } from '@angular/forms';
 
 // NGRX

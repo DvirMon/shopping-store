@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
 import { Observable } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { AuthState } from 'src/app/utilities/ngrx/state/auth-state';
 })
 export class AuthBarComponent {
 
-  private user$: Observable<UserModel> = this.store.select(userSelector)
+  private user$: Observable<User> = this.store.select(userSelector)
   private isLogged$: Observable<boolean> = this.store.select(isLogged)
 
   constructor(

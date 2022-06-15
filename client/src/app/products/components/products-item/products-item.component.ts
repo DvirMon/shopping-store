@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { DialogService } from 'src/app/services/dialog.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductsService } from 'src/app/products/products.service';
 
-import { ProductModel } from 'src/app/utilities/models/product-model';
+import { ProductModel } from 'src/app/products/product-model';
 
 @Component({
   selector: 'app-products-item',

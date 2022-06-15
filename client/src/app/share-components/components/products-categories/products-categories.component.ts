@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CategoryModel } from 'src/app/utilities/models/category-model';
-import { UserModel } from 'src/app/utilities/models/user.model';
+import { User } from 'src/app/utilities/models/user.model';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ProductsService } from 'src/app/products/products.service';
 
 import { store } from 'src/app/utilities/redux/store';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class ProductsCategoriesComponent implements OnInit {
 
   public categories$: Observable<CategoryModel[]> = this.productService.categories$
 
-  private user: UserModel = this.authService.auth.user
+  private user: User = this.authService.auth.user
   private isLogged: boolean = this.authService.auth.isLogin
 
   constructor(

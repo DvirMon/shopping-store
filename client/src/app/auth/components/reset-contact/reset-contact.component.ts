@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { UntypedFormControl } from '@angular/forms';
 
 import { FormService } from 'src/app/services/form.service';
-import { ResetModel, ResetService } from 'src/app/services/reset.service';
+import { ResetModel, ResetService } from 'src/app/auth/components/reset/reset.service';
 
 @Component({
   selector: 'app-reset-contact',

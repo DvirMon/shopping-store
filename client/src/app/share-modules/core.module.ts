@@ -11,14 +11,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { OrderModel } from '../utilities/models/order-model';
-import { ProductModel } from '../utilities/models/product-model';
-import { CartModel } from '../utilities/models/cart.model';
-import { UserModel } from '../utilities/models/user.model';
+import { OrderModel } from '../order/components/order-form/order-model';
+import { ProductModel } from '../products/product-model';
+import { CartModel } from '../cart/components/cart-list/cart.model';
+import { User } from '../utilities/models/user.model';
 import {
   CartItemModel,
   CurrentItemModel,
-} from '../utilities/models/cart-item-model';
+} from '../cart/components/cart-list-item/cart-item-model';
 import { PaginationModel } from '../utilities/models/pagination-model';
 
 @NgModule({
@@ -30,10 +30,6 @@ import { PaginationModel } from '../utilities/models/pagination-model';
     FlexLayoutModule,
   ],
   providers: [
-    {
-      provide: UserModel,
-      useValue: new UserModel(),
-    },
     {
       provide: ProductModel,
       useValue: new ProductModel(),

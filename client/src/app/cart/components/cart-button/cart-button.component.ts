@@ -1,10 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
-import { CartService } from 'src/app/services/cart.service';
-import { ProductsService } from 'src/app/services/products.service';
-import { CurrentItemModel } from 'src/app/utilities/models/cart-item-model';
-import { CartModel } from 'src/app/utilities/models/cart.model';
+import { CartService } from 'src/app/cart/components/cart-list/cart.service';
+import { ProductsService } from 'src/app/products/products.service';
+import { CurrentItemModel } from 'src/app/cart/components/cart-list-item/cart-item-model';
+import { CartModel } from 'src/app/cart/components/cart-list/cart.model';
 import { store } from 'src/app/utilities/redux/store';
 
 @Component({

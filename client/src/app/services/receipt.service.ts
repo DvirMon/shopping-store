@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { FormService } from './form.service';
 
-import { CurrentItemModel } from '../utilities/models/cart-item-model';
+import { CurrentItemModel } from '../cart/components/cart-list-item/cart-item-model';
 import { ReceiptItemModel } from '../utilities/models/receipt-model';
-import { ProductModel } from '../utilities/models/product-model';
-import { OrderModel } from '../utilities/models/order-model';
+import { ProductModel } from '../products/product-model';
+import { OrderModel } from '../order/components/order-form/order-model';
 
 import { ActionType } from '../utilities/redux/action-type';
 import { store } from '../utilities/redux/store';
