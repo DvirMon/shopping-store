@@ -138,14 +138,14 @@ export class ProductsService {
 
   private handleProductsStoreState(page: PageModel, alias: string): void {
 
-    const curentPage: PageModel = store.getState().products[alias]
+    const currentPage: PageModel = store.getState().products[alias]
 
-    if (!curentPage) {
+    if (!currentPage) {
       // this.formService.handleStore(ActionType.SetProductsPaginationData, page)
 
       // this.storeNgrx.dispatch(new ProductsActions.SetPage({ page, alias }))
 
-    } else if (curentPage.products.length < page.pagination.length) {
+    } else if (currentPage.products.length < page.pagination.length) {
       console.log("add")
       // this.formService.handleStore(ActionType.AddProductsPaginationData, page)
 

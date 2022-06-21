@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 
@@ -14,6 +12,7 @@ import { CartState } from '../ngrx/state/cart-state';
 import { CartItemModel } from 'src/app/feat-modules/cart/components/cart-list-item/cart-item-model';
 import { CartModel } from 'src/app/feat-modules/cart/components/cart-list/cart.model';
 import { CartService } from 'src/app/feat-modules/cart/components/cart-list/cart.service';
+import { Observable, map, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class CartResolver implements Resolve<any> {
     private cartItemsService: CartItemService,
     private authService: AuthService,
 
-    private ngrxStore: Store<CartState>,
+    private store: Store<CartState>,
   ) {
   }
 
@@ -64,7 +63,7 @@ export class CartResolver implements Resolve<any> {
             return this.cartItemsService.getCurrentCartItems(cart)
           }),
           tap((cart: CartModel) => {
-            this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+            this.store.dispatch(new CartActions.AddCart(cart))
             sessionStorage.removeItem("cart")
           })
         )
@@ -74,7 +73,7 @@ export class CartResolver implements Resolve<any> {
 
       return this.cartService.getCart(this.user._id).pipe(
         tap((cart: CartModel) => {
-          this.ngrxStore.dispatch(new CartActions.AddCart(cart))
+          this.store.dispatch(new CartActions.AddCart(cart))
         })
       )
     }
